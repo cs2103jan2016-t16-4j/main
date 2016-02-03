@@ -6,14 +6,19 @@ high priority
 #9 - remainders set by default or user input
 #10 - leisure tasks
 #11 - search bar and update tasks by number
-#13 - a set advance due date for adding new tasks
+#13 - a set advance due date for adding new tasks ----DONT QUITE UNDERSTAND WHAT THIS MEANS
 #14 - prompt if no deadline
+NEW - Add undo functionality 
 
-medium/low priority
+medium priority
 -----------------------
-#1 - a user can see a percentage bar for task completion
 #2 - a user can colour code tasks
 #3 - most used/recently used commands
 #4 - add priority to the task as the due date approaches or overdue
 #6 - categorize tasks
+
+low priority
+----------------------
+#1 - a user can see a percentage bar for task completion
 #12 - block days with important events
+
