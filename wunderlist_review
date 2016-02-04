@@ -1,0 +1,31 @@
+Wunderlist 
+------------------
++ Comes in multiple platforms which allows sychronizing your list between platforms
++ Have standard categories + able to add custom category
++ Able to email list
++ Able to print list
++ Able to see your to-do list in weekly format
++ Able to quickly indicate task if "completed" by a simple tick
++ Able to search for tasks
++ Able to edit task
++ Able to have setup custom lists
++ Able to set reminders for tasks incase user forgotten
++ Able to sort by alphabetically, creation date, due date, priority and assignee
++ Able to see history of completed to-dos 
++ Beautiful user interface and background
++ Utilize swipe-gestures for ease of using
++ Plenty of features for savvy users
+ 
+- Only able to set 1 level of importance (priority)
+- Prompts user to do app review (rate)
+- Only 1 standard color for the task font (black)
+- No days indication towards deadline
+- No help guide in Settings on the usage of program or meaning of certain options
+- May be overkill for average home user
+- No start dates for tasks
+- No geotagging
+- Must create an user account
+- No voice support
+- Creating the task in 'Inbox' (assuming its the default screen window) does not give you
+the option to specify the category it belongs initially.
+- When specifying the due date, doesnt give you the option to view in calendar view as some dead line are "next Friday" etc.
