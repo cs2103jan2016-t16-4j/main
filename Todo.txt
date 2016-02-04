@@ -1,0 +1,16 @@
+Advantages
+1)
+
+Disadvatages
+1) Not easy to use
+2) Must use cli
+3) Usable by 
+
+Android 
+Advantages
+1) Have scheduler
+2) sync with drop box
+3) Can share
+
+Disadvatages
+1) Simple
