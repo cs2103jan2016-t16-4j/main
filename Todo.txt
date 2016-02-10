@@ -1,8 +1,9 @@
 Strengths: 
 Desktop Application:
 +List tasks by keywords or project
-+add tasks according to projects or keywords
-+color coded by priority
++Add tasks according to projects or keywords
++Color coded by priority
++Data stored in text files (done.tx, report.txt, todo.txt)
 
 Android Application:
 +Sync to Dropbox
@@ -14,7 +15,7 @@ Android Application:
 +Able to set auto archive completed tasks
 +Able to prioritize file
 +Able to press a button to add task to google calendar
-+add tasks according to projects or keywords
++Add tasks according to projects or keywords
 
 Weaknesses:
 Desktop Application:
