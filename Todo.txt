@@ -1,16 +1,26 @@
-Advantages
-1)
+Strengths: 
+Desktop Application:
++List tasks by keywords or project
++add tasks according to projects or keywords
++color coded by priority
 
-Disadvatages
-1) Not easy to use
-2) Must use cli
-3) Usable by 
+Android Application:
++Sync to Dropbox
++Able to set Dropbox location
++Sort tasks by priority, line ascending and descending, text (A-Z), date ascending and descending
++Easy to use
++When finish a task, it crosses it off with end date and start date. (Leaves it in todo.txt until archived)
++Able to archive the completed tasks to done.txt file
++Able to set auto archive completed tasks
++Able to prioritize file
++Able to press a button to add task to google calendar
++add tasks according to projects or keywords
 
-Android 
-Advantages
-1) Have scheduler
-2) sync with drop box
-3) Can share
+Weaknesses:
+Desktop Application:
+- Not meant for people who are not computer savvy (requires cygwin)
 
-Disadvatages
-1) Simple
+Android Application:
+
+-Nothing distinctive
+-Need to add in date and time to google calendar
