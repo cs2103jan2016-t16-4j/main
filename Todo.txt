@@ -4,6 +4,7 @@ Desktop Application:
 +Add tasks according to projects or keywords
 +Color coded by priority
 +Data stored in text files (done.tx, report.txt, todo.txt)
++Free
 
 Android Application:
 +Sync to Dropbox
@@ -25,3 +26,4 @@ Android Application:
 
 -Nothing distinctive
 -Need to add in date and time to google calendar
+-Paid application
