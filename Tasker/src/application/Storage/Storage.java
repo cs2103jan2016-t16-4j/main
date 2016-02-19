@@ -1,7 +1,7 @@
-package application;
+package application.Storage;
 
 public class Storage{
 
-	\\Put in Class here
+	//Put in Class here
 	
 	}

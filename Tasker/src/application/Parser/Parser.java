@@ -1,7 +1,7 @@
-package application;
+package application.Parser;
 
 public class Parser{
 
-	\\Put in Class here
+	//Put in Class here
 	
 	}
