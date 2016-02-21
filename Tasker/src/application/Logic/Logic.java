@@ -1,60 +1,108 @@
 package application.Logic;
 
+import application.Parser.*;
+
 public class Logic {
 
 	private String previousCommand;
 	private String feedBack;
-	
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
 	}
 
-//	private void processCommand(String cmd){
-//		String[] command = Parser.getCommands(cmd);
-//		switch (command[0]){
-//			case "add":
-//			previousCommand = cmd;
-//					task = add(command[1]);
-//					feedBack = Storage.add(task);
-//					showfeedback(feedBack);
-//			break;
-//			case "delete":
-//			previousCommand = cmd;
-//					showfeedback(feedBack);
-//			break;
-//			case "search":
-//			previousCommand = cmd;
-//					showfeedback(feedBack);
-//			break;
-//			case "update":
-//			previousCommand = cmd;
-//			showfeedback(feedBack);
-//			break;
-//			case "exit":
-//					showfeedback(feedBack);
-//			System.exit(0);
-//			break;
-//			case "undo":
-//			undo();
-//			case default:
-//			previousCommand = cmd;
-//					task = add(command[1]);
-//					Storage.add(task);
-//					showfeedback(feedBack);
-//		}
-//	}
-//
-//	private String showFeedback(String feedback) {
-//		UI.displayFeedback();
-//	}
-//
-//	private Task add(String message) {
-//		Parser.decipherAdd(message);
-//	}
-//
-//	private void undo() {
-//		Parser.Storage.undo();
-//	}
+	private void processCommand(String cmd) {
+		CommandKeyword command = Parser.getCommandKeywordType(cmd);
+		switch (command) {
+		case "add":
+			previousCommand = cmd;
+			task = add(command[1]);
+			feedBack = Storage.add(task);
+			showFeedback(feedBack);
+			break;
+
+		case "delete":
+			previousCommand = cmd;
+			taskNo = delete(command[1]);
+			showFeedback(Storage.delete(task));
+			break;
+
+		case "search":
+			previousCommand = cmd;
+			message = search(command[1]);
+			showFeedback(Storage.search(message);
+			break;
+
+		case "update":
+			previousCommand = cmd;
+			message = update(command[1]);
+			showFeedback(Storage.update(message));
+			break;
+
+		case "exit":
+			showFeedback(UI.exit);
+			System.exit(0);
+			break;
+
+		case "undo":
+			undo();
+			previousCommand = cmd;
+			showFeedback(feedBack);
+			break;
+
+		default:
+
+		}
+	}
+
+	private String showFeedback(String feedback) {
+		UI.displayFeedback();
+	}
+
+	private Task add(String message) {
+		return Parser.decipherAdd(message);
+	}
+
+	private int delete(String message) {
+		return Parser.decipherDelete(message);
+	}
+
+	private String search(String message) {
+		return Parser.decipherSearch(message);
+	}
+
+	private String update(String message) {
+		return Parser.decipherUpdate(message);
+	}
+
+	private void undo() {
+		String revCommand = Parser.parseUndoCommand(previousCommand);
+		switch (revCommand) {
+		case "add":
+			task = add(command[1]);
+			feedBack = Storage.delete(taskList.size() - 1);
+			showFeedback(feedBack);
+			break;
+
+		case "delete":
+			feedBack = Storage.add(previousCommand.substring(previousCommand.indexOf(" ")));
+			showFeedback(feedBack);
+			break;
+
+		case "search":
+			showFeedback(UI.dispalyClear());
+			break;
+
+		case "update":
+			//maybe abit tricky to do since we only save last command
+			showFeedback(feedBack);
+			break;
+
+		default:
+			break;
+			
+		}
+	}
 
 }
