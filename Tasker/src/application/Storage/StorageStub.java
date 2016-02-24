@@ -1,24 +1,26 @@
 
 public class StorageStub {
-
-	public void addTaskInList() {
-		
+	
+	public void addTaskInList(String taskName, String dueDate
+        	, String remindDate, priority<level> priorityLevel) {
+		addTaskIntoList(taskName, dueDate, remindDate, priorityLevel);
+		showFeedback();
 	}
 	
-	public void closeTaskInList() {
-		
+	public void closeTaskInList(int taskIndex) {
+		showFeedback();
 	}
 	
-	public void deleteTaskInList() {
-		
+	public void deleteTaskInList(int taskIndex) {
+		showFeedback();
 	}
 
 	public void loadFile() {
-		
+		showFeedback();
 	}
 
 	public void saveFile() {
-
+		showFeedback();
 	}
 	
 	// --------------- gerald contribution onwards ----------------- //
