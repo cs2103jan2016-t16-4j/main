@@ -1,5 +1,6 @@
 package application.Parser;
 
+//ADD CONSTRUCTOR
 public class Command {
 	public enum CommandType {
 		ADD, SEARCH, DELETE, UPDATE, CLOSED, UNDO, HELP, STORAGE

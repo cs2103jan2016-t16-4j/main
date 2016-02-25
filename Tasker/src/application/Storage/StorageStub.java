@@ -1,3 +1,4 @@
+package application.Storage;
 
 public class StorageStub {
 	

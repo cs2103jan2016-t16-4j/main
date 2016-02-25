@@ -1,11 +1,12 @@
 package application.Parser;
 import java.util.Arrays;
 
-class Parser {
+//ADD CONSTRUCTOR
+public class Parser {
 	private enum CommandKeyword {
 		ADD, SEARCH, DELETE, UPDATE, CLOSED, UNDO, HELP, STORAGE, NOKEYWORD
 	}
-
+	
 	private CommandKeyword getCommandKeywordType(String userInput) {
 		CommandKeyword keywordType = CommandKeyword.NOKEYWORD;
 		String firstWord = getFirstWord(userInput);
@@ -88,6 +89,10 @@ class Parser {
 	// Haven't include the case of keyword "every" yet.
 	// This method is used to get time from a string that includes both time and
 	// location.
+	
+	
+	//THE BELOW METHOD IS HUGEEEEE!!!!
+	
 	private String getTime(String str) {
 		String timeStr = "";
 		if (checkTimeKeyword(str) == false) {
