@@ -1,7 +1,7 @@
-package application.Parser;
+package application.parser;
 import java.util.Arrays;
 
-class Parser {
+class ParserOld {
 	private enum CommandKeyword {
 		ADD, SEARCH, DELETE, UPDATE, CLOSED, UNDO, HELP, STORAGE, NOKEYWORD
 	}
@@ -175,8 +175,8 @@ class Parser {
 		return locationKeywordExists;
 	}
 
-	public Command parseInput(String str) {
-		Command commandObject = new Command();
+	public CommandOld parseInput(String str) {
+		CommandOld commandObject = new CommandOld();
 		CommandKeyword cmd = getCommandKeywordType(str);
 		switch (cmd) {
 		case ADD:

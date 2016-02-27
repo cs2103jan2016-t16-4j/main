@@ -1,6 +1,6 @@
-package application.Parser;
+package application.parser;
 
-public class Command {
+public class CommandOld {
 	public enum CommandType {
 		ADD, SEARCH, DELETE, UPDATE, CLOSED, UNDO, HELP, STORAGE
 	}

@@ -1,6 +1,6 @@
-package application.Logic;
+package application.logic;
 
-import application.Parser.*;
+import application.parser.*;
 
 public class Logic {
 
@@ -13,7 +13,7 @@ public class Logic {
 	}
 
 	private void processCommand(String cmd) {
-		CommandKeyword command = Parser.getCommandKeywordType(cmd);
+		CommandKeyword command = ParserOld.getCommandKeywordType(cmd);
 		switch (command) {
 		case "add":
 			previousCommand = cmd;
@@ -61,23 +61,23 @@ public class Logic {
 	}
 
 	private Task add(String message) {
-		return Parser.decipherAdd(message);
+		return ParserOld.decipherAdd(message);
 	}
 
 	private int delete(String message) {
-		return Parser.decipherDelete(message);
+		return ParserOld.decipherDelete(message);
 	}
 
 	private String search(String message) {
-		return Parser.decipherSearch(message);
+		return ParserOld.decipherSearch(message);
 	}
 
 	private String update(String message) {
-		return Parser.decipherUpdate(message);
+		return ParserOld.decipherUpdate(message);
 	}
 
 	private void undo() {
-		String revCommand = Parser.parseUndoCommand(previousCommand);
+		String revCommand = ParserOld.parseUndoCommand(previousCommand);
 		switch (revCommand) {
 		case "add":
 			task = add(command[1]);

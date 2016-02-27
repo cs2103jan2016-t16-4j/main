@@ -3,5 +3,8 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
+	<classpathentry kind="lib" path="E:/Important_Stuff/Courses/Software_Engineering/Project/commons-lang3-3.4-src.tar.gz"/>
+	<classpathentry kind="lib" path="E:/Important_Stuff/Courses/Software_Engineering/Project/apache-commons-lang.jar.zip"/>
+	<classpathentry kind="lib" path="E:/Important_Stuff/Courses/Software_Engineering/Project/Project/Tasker/apache-commons-lang.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
