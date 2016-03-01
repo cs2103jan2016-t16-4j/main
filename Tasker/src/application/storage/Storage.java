@@ -1,5 +1,6 @@
 package application.storage;
 import java.util.ArrayList;
+import java.io.File;
 
 public class Storage{
 
@@ -11,15 +12,26 @@ public class Storage{
 	public void addTaskInList(String taskDescription, String startDate, String endDate
 				, String endDate, String dueTime, String location
 				, String remindDate, String priority) {
-			
+		Task newTask = new Task;
+		newTask.setTaskDescription(taskDescription);
+		newTask.setStartDate(startDate);
+		newTask.setEndDate(endDate);
+		newTask.setDueTime(dueTime);
+		newTask.setLocation(location);
+		newTask.setRemindDate(remindDate);
+		newTask.setPriority(priority);
+		fileList.add(newTask);
+		showFeedback();
 	}
 	
 	public void closeTaskInList() {
-		
+		//change endtime to now
+		showFeedback();
 	}
 	
-	public void deleteTaskInList() {
-		
+	public void deleteTaskInList(int index) {
+		fileList.remove(index);
+		showFeedback();
 	}
 	
 	
@@ -67,6 +79,10 @@ public class Storage{
 
 	public void saveFile() {
 		// #1 - replace file with fileList
+		File f = new File(FILE_DATA);
+		if (!f.exists()) {
+			f.createNewFile();
+		}
 		// #2 - clear/delete file and re-load into file using ArrayList<Task>
 		// fileList
 	}
