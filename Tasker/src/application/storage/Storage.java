@@ -8,6 +8,19 @@ public class Storage{
 	static ArrayList<Task> fileList = new ArrayList<Task>();
 	private ArrayList<Task> searchList;
 
+	public void addTaskInList() {
+		
+	}
+	
+	public void closeTaskInList() {
+		
+	}
+	
+	public void deleteTaskInList() {
+		
+	}
+	
+	
 	// DD/MM/YYYY = 10 characters = 0-9 (index)
 	// takes in String as "DD/MM/YYYY" with 2 slashes included
 	// returns true = if date is before and equal
