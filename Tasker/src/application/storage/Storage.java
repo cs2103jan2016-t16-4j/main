@@ -8,8 +8,10 @@ public class Storage{
 	static ArrayList<Task> fileList = new ArrayList<Task>();
 	private ArrayList<Task> searchList;
 
-	public void addTaskInList() {
-		
+	public void addTaskInList(String taskDescription, String startDate, String endDate
+				, String endDate, String dueTime, String location
+				, String remindDate, String priority) {
+			
 	}
 	
 	public void closeTaskInList() {
