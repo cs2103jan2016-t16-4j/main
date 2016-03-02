@@ -6,18 +6,18 @@ public class Delete implements Command{
     Command delObj;
     
     
-    Delete(String[] arguments, Storage storage){
+    Delete(String[] arguments){
         String taskToDelete = getString(arguments, 0, arguments.length - 1);
-        initAppropDelete(taskToDelete, storage);
+        initAppropDelete(taskToDelete);
         
     }
     
-    public void initAppropDelete(String taskToDel, Storage storage){
+    public void initAppropDelete(String taskToDel){
         try{
             int taskNumber = Integer.parseInt(taskToDel);
-            delObj = new DeleteByNum(taskNumber, storage);
+            delObj = new DeleteByNum(taskNumber);
         }catch(NumberFormatException e){
-            delObj = new DeleteByName(taskToDel, storage);
+            delObj = new DeleteByName(taskToDel);
         }
     }
 
@@ -30,8 +30,8 @@ public class Delete implements Command{
     }
    
     
-    public String execute(){
-        String feedback = delObj.execute();
+    public String execute(Storage storage){
+        String feedback = delObj.execute(storage);
         return feedback;
     }
     

@@ -8,15 +8,13 @@ public class DeleteByNum implements Command {
     private static final String MESSAGE_DELETE_FAILURE = "We encountered a problem while deleting this task.";
     
     
-    Storage storage;
     int numToDelete;
     
-    DeleteByNum(int numToDelete, Storage storage) {
+    DeleteByNum(int numToDelete) {
         this.numToDelete = numToDelete;
-        this.storage = storage;
     }
     
-    public String execute(){
+    public String execute(Storage storage){
         try {
             boolean isSuccess = storage.deleteTaskInList(numToDelete);
             if (isSuccess){

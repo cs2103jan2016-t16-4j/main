@@ -14,7 +14,6 @@ public class Add implements Command{
             "We encountered an error while adding the task. Sorry for the inconvenience.";    
     
     
-    Storage storage;
     String[] arguments;
     String description = EMPTY;
     String startDateTime = EMPTY;
@@ -23,8 +22,7 @@ public class Add implements Command{
     String remindDate = EMPTY;
     String priority = EMPTY;
     
-    Add(Storage storage, String[] arguments){
-        this.storage = storage;
+    Add(String[] arguments){
         this.arguments =arguments;
         interpretArguments(arguments);
     }
@@ -85,7 +83,7 @@ public class Add implements Command{
         return string.trim();
     }
    
-    public String execute(){
+    public String execute(Storage storage){
         boolean isSuccess = storage.addTaskInList(description, startDateTime, 
                 endDateTime,"", location, remindDate, priority);
         if (isSuccess){

@@ -1,6 +1,5 @@
 package application.parser;
 
-import application.storage.Storage;
 import application.parser.Command;
 import org.apache.commons.lang.ArrayUtils;
 
@@ -27,13 +26,6 @@ public class Parser {
     private static final String KEYWORD_EXIT = "exit";
     
     private static final boolean WITH_KEYWORD = true; //For add function. Since we accept no keyword.
-    
-        
-    private Storage storage;
-
-    public Parser(Storage storage, String fileName) {
-        this.storage = storage;
-    }
     
     public Command interpretCommand(String userCommand) throws Exception {
         checkForError(userCommand);
@@ -95,52 +87,52 @@ public class Parser {
         if (isWithKeyWord){
             args = (String[]) ArrayUtils.remove(args, 0);
         }
-        Command command = new Add (storage, args);
+        Command command = new Add (args);
         return command;
     }
     
     private Command initializeSearch(String[] args){
         args = (String[]) ArrayUtils.remove(args, 0);
-        Command command = new Search (storage, args);
+        Command command = new Search (args);
         return command;
     }
     
     private Command initializeDelete(String[] args){
         args = (String[]) ArrayUtils.remove(args, 0);
-        Command command = new Delete (storage, args);
+        Command command = new Delete (args);
         return command;
     }
     
     private Command initializeUpdate(String[] args){
         args = (String[]) ArrayUtils.remove(args, 0);
-        Command command = new Update (storage, args);
+        Command command = new Update ( args);
         return command;
     }
     
     private Command initializeDone(String[] args){
         args = (String[]) ArrayUtils.remove(args, 0);
-        Command command = new Done (storage, args);
+        Command command = new Done ( args);
         return command;
     }
     
     private Command initializeUndo(){
-        Command command = new Undo (storage);
+        Command command = new Undo ();
         return command;
     }
     
     private Command initializeHelp(){
-        Command command = new Help (storage);
+        Command command = new Help ();
         return command;
     }
     
     private Command initializeStorageLocation(String[] args){
-        Command command = new ChangeStorageLocation (storage);
+        Command command = new ChangeStorageLocation ();
         return command;
     }
     
 
     private Command initializeExit(){
-        Command command = new Exit (storage);
+        Command command = new Exit ();
         return command;
     }
         
