@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
@@ -21,6 +22,8 @@ public class GUI extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.setTitle("Open Resource Folder");
 
 			ObservableList<String> data = FXCollections.observableArrayList();
 
@@ -33,12 +36,17 @@ public class GUI extends Application {
 			titleTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
 				public void handle(KeyEvent ke) {
 					if (ke.getCode().equals(KeyCode.ENTER)) {
-						data.add(titleTextField.getText());
-						titleTextField.clear();
+						if (titleTextField.getText().equalsIgnoreCase("exit")) {
+							System.exit(0);
+						} else {
+							data.add(titleTextField.getText());
+							titleTextField.clear();
+						}
 					}
 				}
 			});
 			VBox cli = addToVBox(scrollPane, titleTextField);
+			fileChooser.showOpenDialog(primaryStage);
 			setStage(primaryStage, cli);
 		} catch (Exception e) {
 			e.printStackTrace();
