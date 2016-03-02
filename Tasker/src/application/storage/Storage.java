@@ -1,6 +1,12 @@
-package application.storage;
+//package application.storage;
 import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class Storage{
 
@@ -10,9 +16,9 @@ public class Storage{
 	private ArrayList<Task> searchList;
 
 	public void addTaskInList(String taskDescription, String startDate, String endDate
-				, String endDate, String dueTime, String location
+				, String dueTime, String location
 				, String remindDate, String priority) {
-		Task newTask = new Task;
+		Task newTask = new Task();
 		newTask.setTaskDescription(taskDescription);
 		newTask.setStartDate(startDate);
 		newTask.setEndDate(endDate);
@@ -21,17 +27,23 @@ public class Storage{
 		newTask.setRemindDate(remindDate);
 		newTask.setPriority(priority);
 		fileList.add(newTask);
-		showFeedback();
+		showFeedback("added");
+	}
+	
+	public void clearFile() throws IOException {
+		PrintWriter fw = new PrintWriter(new BufferedWriter(new FileWriter(FILE_DATA, true)));
+		fw.print("");
+		fw.close();
 	}
 	
 	public void closeTaskInList() {
 		//change endtime to now
-		showFeedback();
+		showFeedback("closed");
 	}
 	
 	public void deleteTaskInList(int index) {
 		fileList.remove(index);
-		showFeedback();
+		showFeedback("deleted");
 	}
 	
 	
@@ -71,19 +83,64 @@ public class Storage{
 		}
 	}
 
-	public void loadFile() {
+	public void loadFile() throws IOException {
 		// open file
 		// load task details into a Task Object
 		// store into the ArrayList<Task> fileList
+		String readText;
+		BufferedReader in = new BufferedReader(new FileReader(FILE_DATA));
+		while ((readText = in.readLine()) != null) {
+			String tmp[] = readText.split("\b", 7);
+			Task task = new Task();
+			task.setTaskDescription(tmp[0]);
+			System.out.println("Task Description : "+task.getTaskDescription());
+			task.setStartDate(tmp[1]);
+			System.out.println("Start date : "+task.getStartDate());
+			task.setEndDate(tmp[2]);
+			System.out.println("End date : "+task.getEndDate());
+			task.setDueTime(tmp[3]);
+			System.out.println("Due Time : "+task.getDueTime());
+			task.setLocation(tmp[4]);
+			System.out.println("Location : "+task.getLocation());
+			task.setRemindDate(tmp[5]);
+			System.out.println("Remind date : "+task.getRemindDate());
+			task.setPriority(tmp[6]);
+			System.out.println("Priority level : "+task.getPriority());
+			fileList.add(task);
+		}
+		in.close();
+		
 	}
 
-	public void saveFile() {
+	public void saveFile() throws IOException {
 		// #1 - replace file with fileList
 		File f = new File(FILE_DATA);
 		if (!f.exists()) {
 			f.createNewFile();
 		}
 		// #2 - clear/delete file and re-load into file using ArrayList<Task>
+		clearFile();
+		for (int i = 0; i<fileList.size(); i++){
+			String textToStore = "";
+			textToStore += fileList.get(i).getTaskDescription();
+			textToStore += "\b";
+			textToStore += fileList.get(i).getStartDate();
+			textToStore += "\b";
+			textToStore += fileList.get(i).getEndDate();
+			textToStore += "\b";
+			textToStore += fileList.get(i).getDueTime();
+			textToStore += "\b";
+			textToStore += fileList.get(i).getLocation();
+			textToStore += "\b";
+			textToStore += fileList.get(i).getRemindDate();
+			textToStore += "\b";
+			textToStore += fileList.get(i).getPriority();
+			PrintWriter fw = new PrintWriter(new BufferedWriter(new FileWriter(FILE_DATA, true)));
+			System.out.println("Storing : "+textToStore);
+			fw.println(textToStore);
+			fw.close();
+		}
+		
 		// fileList
 	}
 
@@ -176,8 +233,14 @@ public class Storage{
 		searchList.add(task);
 	}
 
-	public void showFeedback() {
-
+	public String showFeedback(String type) {
+		if (type.equalsIgnoreCase("added")) {
+			return "Task successfully added!";
+		} else if (type.equalsIgnoreCase("deleted")) {
+			
+		}
+		
+		return null;
 	}
 	
 	}
