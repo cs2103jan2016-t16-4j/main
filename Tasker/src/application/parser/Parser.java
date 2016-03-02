@@ -91,7 +91,7 @@ public class Parser {
 
     }
     
-    private static Command initializeAdd(String[] args, boolean isWithKeyWord){
+    private Command initializeAdd(String[] args, boolean isWithKeyWord){
         if (isWithKeyWord){
             args = (String[]) ArrayUtils.remove(args, 0);
         }
@@ -99,47 +99,47 @@ public class Parser {
         return command;
     }
     
-    private static Command initializeSearch(String[] args){
+    private Command initializeSearch(String[] args){
         args = (String[]) ArrayUtils.remove(args, 0);
         Command command = new Search (storage, args);
         return command;
     }
     
-    private static Command initializeDelete(String[] args){
+    private Command initializeDelete(String[] args){
         args = (String[]) ArrayUtils.remove(args, 0);
         Command command = new Delete (storage, args);
         return command;
     }
     
-    private static Command initializeUpdate(String[] args){
+    private Command initializeUpdate(String[] args){
         args = (String[]) ArrayUtils.remove(args, 0);
         Command command = new Update (storage, args);
         return command;
     }
     
-    private static Command initializeDone(String[] args){
+    private Command initializeDone(String[] args){
         args = (String[]) ArrayUtils.remove(args, 0);
         Command command = new Done (storage, args);
         return command;
     }
     
-    private static Command initializeUndo(){
+    private Command initializeUndo(){
         Command command = new Undo (storage);
         return command;
     }
     
-    private static Command initializeHelp(){
+    private Command initializeHelp(){
         Command command = new Help (storage);
         return command;
     }
     
-    private static Command initializeStorageLocation(String[] args){
+    private Command initializeStorageLocation(String[] args){
         Command command = new ChangeStorageLocation (storage);
         return command;
     }
     
 
-    private static Command initializeExit(){
+    private Command initializeExit(){
         Command command = new Exit (storage);
         return command;
     }
