@@ -45,7 +45,7 @@ public class Storage{
 		showFeedback("closed");
 	}
 	
-	public void deleteTaskInList(int index) throws IOException {
+	public boolean deleteTaskInList(int index) throws IOException {
 		boolean isSuccessDelete = false;
 		for (int i = 0 ; i<fileList.size(); i++) {
 			if (fileList.get(i).getTaskIndex()==index) {
@@ -57,9 +57,9 @@ public class Storage{
 		}
 
 		if (isSuccessDelete) {
-			showFeedback("deleted");
+			return true;
 		} else {
-			showFeedback("deleted-error");
+			return false;
 		}		
 
 	}
