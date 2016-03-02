@@ -1,8 +1,9 @@
-//package application.storage;
+package application.storage;
 import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,14 +11,15 @@ import java.io.PrintWriter;
 
 public class Storage{
 
-	static final String FILE_DATA = "TaskerData.txt";
-	static final int START_LINE = 1;
-	static ArrayList<Task> fileList = new ArrayList<Task>();
+	private static final String FILE_DATA = "TaskerData.txt";
+	private static int taskIndex = 0;
+	private static ArrayList<Task> fileList = new ArrayList<Task>();
 	private ArrayList<Task> searchList;
 
 	public void addTaskInList(String taskDescription, String startDate, String endDate
 				, String dueTime, String location
 				, String remindDate, String priority) {
+		
 		Task newTask = new Task();
 		newTask.setTaskDescription(taskDescription);
 		newTask.setStartDate(startDate);
@@ -26,12 +28,14 @@ public class Storage{
 		newTask.setLocation(location);
 		newTask.setRemindDate(remindDate);
 		newTask.setPriority(priority);
+		newTask.setTaskIndex(taskIndex);
 		fileList.add(newTask);
+		taskIndex++;
 		showFeedback("added");
 	}
 	
 	public void clearFile() throws IOException {
-		PrintWriter fw = new PrintWriter(new BufferedWriter(new FileWriter(FILE_DATA, true)));
+		PrintWriter fw = new PrintWriter(FILE_DATA);
 		fw.print("");
 		fw.close();
 	}
@@ -41,9 +45,23 @@ public class Storage{
 		showFeedback("closed");
 	}
 	
-	public void deleteTaskInList(int index) {
-		fileList.remove(index);
-		showFeedback("deleted");
+	public void deleteTaskInList(int index) throws IOException {
+		boolean isSuccessDelete = false;
+		for (int i = 0 ; i<fileList.size(); i++) {
+			if (fileList.get(i).getTaskIndex()==index) {
+				fileList.remove(i);
+				System.out.println("\nDeleted : "+index);
+				isSuccessDelete = true;
+				break;
+			}
+		}
+
+		if (isSuccessDelete) {
+			showFeedback("deleted");
+		} else {
+			showFeedback("deleted-error");
+		}		
+
 	}
 	
 	
@@ -84,16 +102,32 @@ public class Storage{
 	}
 
 	public void loadFile() throws IOException {
-		// open file
-		// load task details into a Task Object
-		// store into the ArrayList<Task> fileList
+		// open file and load total task index
+		loadTaskIndex();
+		// open file and load all tasks
+		loadAllTasks();	
+	}
+
+	public void loadTaskIndex() throws IOException {
 		String readText;
 		BufferedReader in = new BufferedReader(new FileReader(FILE_DATA));
+		readText = in.readLine();
+		taskIndex = Integer.parseInt(readText);
+		System.out.println("Total task index : "+taskIndex);
+		in.close();
+	}
+	
+	public void loadAllTasks() throws FileNotFoundException, IOException {
+		String readText;
+		BufferedReader in = new BufferedReader(new FileReader(FILE_DATA));
+		// skip first line first
+		readText = in.readLine();
+		
 		while ((readText = in.readLine()) != null) {
-			String tmp[] = readText.split("\b", 7);
+			String tmp[] = readText.split("\b", 8);
 			Task task = new Task();
 			task.setTaskDescription(tmp[0]);
-			System.out.println("Task Description : "+task.getTaskDescription());
+			System.out.println("\nTask Description : "+task.getTaskDescription());
 			task.setStartDate(tmp[1]);
 			System.out.println("Start date : "+task.getStartDate());
 			task.setEndDate(tmp[2]);
@@ -106,42 +140,59 @@ public class Storage{
 			System.out.println("Remind date : "+task.getRemindDate());
 			task.setPriority(tmp[6]);
 			System.out.println("Priority level : "+task.getPriority());
+			task.setTaskIndex(Integer.parseInt(tmp[7]));
+			System.out.println("Task Index : "+task.getTaskIndex());
 			fileList.add(task);
 		}
 		in.close();
-		
 	}
 
 	public void saveFile() throws IOException {
-		// #1 - replace file with fileList
+		// #check if file exists
 		File f = new File(FILE_DATA);
 		if (!f.exists()) {
 			f.createNewFile();
 		}
-		// #2 - clear/delete file and re-load into file using ArrayList<Task>
+		// #clear file first
 		clearFile();
-		for (int i = 0; i<fileList.size(); i++){
-			String textToStore = "";
-			textToStore += fileList.get(i).getTaskDescription();
-			textToStore += "\b";
-			textToStore += fileList.get(i).getStartDate();
-			textToStore += "\b";
-			textToStore += fileList.get(i).getEndDate();
-			textToStore += "\b";
-			textToStore += fileList.get(i).getDueTime();
-			textToStore += "\b";
-			textToStore += fileList.get(i).getLocation();
-			textToStore += "\b";
-			textToStore += fileList.get(i).getRemindDate();
-			textToStore += "\b";
-			textToStore += fileList.get(i).getPriority();
-			PrintWriter fw = new PrintWriter(new BufferedWriter(new FileWriter(FILE_DATA, true)));
-			System.out.println("Storing : "+textToStore);
-			fw.println(textToStore);
-			fw.close();
-		}
 		
-		// fileList
+		// #save total task index 
+		saveTaskIndex();
+		
+		// #save all the tasks
+		saveAllTasks();
+
+	}
+
+	public void saveAllTasks() throws IOException {
+		for (int i = 0; i<fileList.size(); i++){			
+			String taskToStore = "";
+			taskToStore += fileList.get(i).getTaskDescription();
+			taskToStore += "\b";
+			taskToStore += fileList.get(i).getStartDate();
+			taskToStore += "\b";
+			taskToStore += fileList.get(i).getEndDate();
+			taskToStore += "\b";
+			taskToStore += fileList.get(i).getDueTime();
+			taskToStore += "\b";
+			taskToStore += fileList.get(i).getLocation();
+			taskToStore += "\b";
+			taskToStore += fileList.get(i).getRemindDate();
+			taskToStore += "\b";
+			taskToStore += fileList.get(i).getPriority();
+			taskToStore += "\b";
+			taskToStore += fileList.get(i).getTaskIndex();
+			PrintWriter fwz = new PrintWriter(new BufferedWriter(new FileWriter(FILE_DATA, true)));
+			fwz.println(taskToStore);
+			fwz.close();
+		}
+	}
+
+	public void saveTaskIndex() throws IOException {
+		PrintWriter fw = new PrintWriter(new BufferedWriter(new FileWriter(FILE_DATA, true)));
+		fw.println(taskIndex);
+		System.out.println("\nSaving : "+taskIndex);
+		fw.close();
 	}
 
 	public void searchByDate(String dateSearch, boolean isSearchBy) {
@@ -233,14 +284,14 @@ public class Storage{
 		searchList.add(task);
 	}
 
-	public String showFeedback(String type) {
+	public boolean showFeedback(String type) {
 		if (type.equalsIgnoreCase("added")) {
-			return "Task successfully added!";
+			return true;
 		} else if (type.equalsIgnoreCase("deleted")) {
-			
+			return true;
 		}
 		
-		return null;
+		return false;
 	}
 	
 	}
