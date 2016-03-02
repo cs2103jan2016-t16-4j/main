@@ -39,7 +39,12 @@ public class GUI extends Application {
 						if (titleTextField.getText().equalsIgnoreCase("exit")) {
 							System.exit(0);
 						} else {
-							data.add(titleTextField.getText());
+							try {
+								data.add(logic.processCommand(titleTextField.getText()));
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 							titleTextField.clear();
 						}
 					}
