@@ -1,9 +1,6 @@
 package application.parser;
 
 import java.io.IOException;
-import java.security.MessageDigestSpi;
-
-import javax.xml.ws.handler.MessageContext;
 
 import application.storage.Storage;
 
