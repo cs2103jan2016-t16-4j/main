@@ -6,5 +6,6 @@
 	<classpathentry kind="lib" path="E:/Important_Stuff/Courses/Software_Engineering/Project/commons-lang3-3.4-src.tar.gz"/>
 	<classpathentry kind="lib" path="E:/Important_Stuff/Courses/Software_Engineering/Project/apache-commons-lang.jar.zip"/>
 	<classpathentry kind="lib" path="E:/Important_Stuff/Courses/Software_Engineering/Project/Project/Tasker/apache-commons-lang.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.8.0_73/jre/lib/jfxswt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
