@@ -1,26 +1,43 @@
 package application.gui;
 
+import application.logic.Logic;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 
 public class GUI extends Application {
 	private String title = "Tasker";
+	private Logic logic;
 
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			ListView<String> listView = createList();
 
+			ObservableList<String> data = FXCollections.observableArrayList();
+
+			ListView<String> listView = new ListView<String>(data);
+			listView.setPrefSize(900, 900);
 			setProgramName(primaryStage);
+
 			ScrollPane scrollPane = addToScrollPane(listView);
 			TextField titleTextField = new TextField();
+			titleTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+				public void handle(KeyEvent ke) {
+					if (ke.getCode().equals(KeyCode.ENTER)) {
+						data.add(titleTextField.getText());
+						titleTextField.clear();
+					}
+				}
+			});
 			VBox cli = addToVBox(scrollPane, titleTextField);
 			setStage(primaryStage, cli);
 		} catch (Exception e) {
@@ -45,15 +62,6 @@ public class GUI extends Application {
 		ScrollPane scrollPane = new ScrollPane();
 		scrollPane.setContent(listView);
 		return scrollPane;
-	}
-
-	private ListView<String> createList() {
-		ObservableList<String> data = FXCollections.observableArrayList();
-
-		ListView<String> listView = new ListView<String>(data);
-		listView.setPrefSize(900, 900);
-		data.addAll("A", "B", "C", "D", "E");
-		return listView;
 	}
 
 	private void setProgramName(Stage primaryStage) {
