@@ -102,11 +102,18 @@ public class Storage{
 	}
 
 	public void loadFile() throws IOException {
-		// open file and load total task index
-		loadTaskIndex();
-		// open file and load all tasks
-		loadAllTasks();	
-	}
+		File f = new File(FILE_DATA);
+		
+		if (f.exists()) {
+			// open file and load total task index
+			loadTaskIndex();
+			// open file and load all tasks
+			loadAllTasks();	
+		} else {
+			System.out.println("No saved data file detected....");
+		}
+	} 
+
 
 	public void loadTaskIndex() throws IOException {
 		String readText;
@@ -191,7 +198,7 @@ public class Storage{
 	public void saveTaskIndex() throws IOException {
 		PrintWriter fw = new PrintWriter(new BufferedWriter(new FileWriter(FILE_DATA, true)));
 		fw.println(taskIndex);
-		System.out.println("\nSaving : "+taskIndex);
+//		System.out.println("\nSaving : "+taskIndex);
 		fw.close();
 	}
 
