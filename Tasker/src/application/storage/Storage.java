@@ -16,7 +16,7 @@ public class Storage{
 	private static ArrayList<Task> fileList = new ArrayList<Task>();
 	private ArrayList<Task> searchList;
 
-	public void addTaskInList(String taskDescription, String startDate, String endDate
+	public boolean addTaskInList(String taskDescription, String startDate, String endDate
 				, String dueTime, String location
 				, String remindDate, String priority) {
 		
@@ -31,7 +31,7 @@ public class Storage{
 		newTask.setTaskIndex(taskIndex);
 		fileList.add(newTask);
 		taskIndex++;
-		showFeedback("added");
+		return true;
 	}
 	
 	public void clearFile() throws IOException {

@@ -86,7 +86,7 @@ public class Add implements Command{
     }
     public String execute(){
         boolean isSuccess = storage.addTaskInList(description, startDateTime, 
-                endDateTime,"","", location, remindDate, priority);
+                endDateTime,"", location, remindDate, priority);
         if (isSuccess){
             return makeFeedback();
         } else {
