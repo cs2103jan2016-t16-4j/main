@@ -19,8 +19,10 @@ public class Logic {
 		// TODO Auto-generated method stub
 	}
 
-	public Command processCommand(String cmd) throws Exception {
-		return parser.interpretCommand(cmd);
+	public String processCommand(String cmd) throws Exception {
+		Command command = parser.interpretCommand(cmd);
+		String feedback = command.execute();
+		return feedback;
 
 	}
 
