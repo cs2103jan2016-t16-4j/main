@@ -1,9 +1,10 @@
 package application.parser;
 
 public class ParserStub {
-    public Command interpretCommand(){
-        return new Command();
-    }
+    //public Command interpretCommand(String userCommand){
+    //    Command cmd =  new Add({"Hello"});
+     //   return cmd;
+    //}
     
     
 }

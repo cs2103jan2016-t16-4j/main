@@ -27,7 +27,7 @@ public class Parser {
     
     private static final boolean WITH_KEYWORD = true; //For add function. Since we accept no keyword.
     
-    public Command interpretCommand(String userCommand) throws Exception {
+    public Command interpretCommand(String userCommand) /*throws Exception*/ {
         checkForError(userCommand);
         String[] inputArgs = userCommand.trim().split("\\s+");
         String commandKeyword = inputArgs[0]; //Always going to be zero so inputing magic number for now
@@ -43,7 +43,7 @@ public class Parser {
                 command = initializeAdd(args, WITH_KEYWORD );
                 break;
             
-            case KEYWORD_SEARCH :
+           /* case KEYWORD_SEARCH :
                 command = initializeSearch(args);
                 break;
             
@@ -74,7 +74,7 @@ public class Parser {
             case KEYWORD_EXIT :
                 command = initializeExit();
                 break;
-                
+            */    
             default :
                 command = initializeAdd(args, !WITH_KEYWORD);
                 break;
@@ -90,7 +90,7 @@ public class Parser {
         Command command = new Add (args);
         return command;
     }
-    
+    /*
     private Command initializeSearch(String[] args){
         args = (String[]) ArrayUtils.remove(args, 0);
         Command command = new Search (args);
@@ -135,10 +135,10 @@ public class Parser {
         Command command = new Exit ();
         return command;
     }
-        
-    private void checkForError(String userCommand) throws Error {
+    */    
+    private void checkForError(String userCommand) /*throws Error */ {
         if (userCommand == null) {
-            throw new Error(MESSAGE_NULL_ERROR);
+            /*throw new Error(MESSAGE_NULL_ERROR);*/
         }
     }
     

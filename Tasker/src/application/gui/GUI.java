@@ -17,7 +17,7 @@ import javafx.scene.layout.VBox;
 
 public class GUI extends Application {
 	private String title = "Tasker";
-	private Logic logic;
+	private Logic logic = new Logic();
 
 	@Override
 	public void start(Stage primaryStage) {

@@ -2,6 +2,7 @@ package application.logic;
 
 import application.parser.Command;
 import application.parser.Parser;
+import application.storage.Storage;
 
 /**
  * 
@@ -13,7 +14,9 @@ public class Logic {
 
 	private String previousCommand;
 	private String feedBack;
-	private Parser parser;
+	private Parser parser = new Parser();
+	private Storage storage = new Storage();
+    
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -21,7 +24,8 @@ public class Logic {
 
 	public String processCommand(String cmd) throws Exception {
 		Command command = parser.interpretCommand(cmd);
-		String feedback = command.execute();
+		String feedback = command.execute(storage);
+		storage.saveFile();
 		return feedback;
 
 	}
