@@ -1,4 +1,4 @@
-package application.storage;
+//package application.storage;
 import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -70,32 +70,36 @@ public class Storage{
 	// returns true = if date is before and equal
 	// returns false = if date is not before/equal (i.e exceeds)
 	public boolean dateIsBeforeOrEqual(String scannedDate, String dateSearch) {
-		int byYear = Integer.parseInt(dateSearch.substring(6));
-		int scannedYear = Integer.parseInt(scannedDate.substring(6));
-		System.out.println("byYear : " + byYear);
-		System.out.println("scannedYear : " + scannedYear);
-		int byMonth = Integer.parseInt(dateSearch.substring(3, 5));
-		int scannedMonth = Integer.parseInt(scannedDate.substring(3, 5));
-		int byDay = Integer.parseInt(dateSearch.substring(0, 2));
-		int scannedDay = Integer.parseInt(scannedDate.substring(0, 2));
-
-		// year exceeds
-		if (scannedYear > byYear) {
+		if (scannedDate.equals("")) {
 			return false;
-		}
-		// year doesnt exceed = before/equal
-		else {
-			// if year is equal, but month exceeds = false
-			if (scannedYear == byYear && scannedMonth > byMonth) {
+		} else {
+			int byYear = Integer.parseInt(dateSearch.substring(6));
+			int scannedYear = Integer.parseInt(scannedDate.substring(6));
+			System.out.println("byYear : " + byYear);
+			System.out.println("scannedYear : " + scannedYear);
+			int byMonth = Integer.parseInt(dateSearch.substring(3, 5));
+			int scannedMonth = Integer.parseInt(scannedDate.substring(3, 5));
+			int byDay = Integer.parseInt(dateSearch.substring(0, 2));
+			int scannedDay = Integer.parseInt(scannedDate.substring(0, 2));
+
+			// year exceeds
+			if (scannedYear > byYear) {
 				return false;
 			}
-			// if year is equal, but month didnt exceed = check day
+			// year doesnt exceed = before/equal
 			else {
-				if (scannedYear == byYear && scannedMonth == byMonth
-						&& scannedDay > byDay) {
+				// if year is equal, but month exceeds = false
+				if (scannedYear == byYear && scannedMonth > byMonth) {
 					return false;
-				} else {
-					return true;
+				}
+				// if year is equal, but month didnt exceed = check day
+				else {
+					if (scannedYear == byYear && scannedMonth == byMonth
+							&& scannedDay > byDay) {
+						return false;
+					} else {
+						return true;
+					}
 				}
 			}
 		}
@@ -272,6 +276,7 @@ public class Storage{
 			if (obj.getTaskDescription().toLowerCase()
 					.contains(taskSearch.toLowerCase())) {
 				storeSearchResults(obj);
+				System.out.println("Found a entry..");
 			}
 		}
 
@@ -280,8 +285,13 @@ public class Storage{
 
 	public ArrayList<Task> showSearchResults(ArrayList<Task> results) {
 		System.out.println("Search : " + results.size() + " results found.");
+
 		if (results.size() == 0) {
 			results = null;
+		} else {
+			for (int i = 0; i<searchList.size(); i++){
+				System.out.println("\"" + searchList.get(i).getTaskDescription() + "\" is found.");
+			}
 		}
 
 		return results;
