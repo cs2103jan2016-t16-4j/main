@@ -19,6 +19,8 @@ import javafx.scene.layout.VBox;
 public class GUI extends Application {
 	private String title = "Tasker";
 	private Logic logic = new Logic();
+	public DirectoryChooser dirChooser;
+	public Stage primaryStage;
 
 	@Override
 	public void start(Stage primaryStage) {
