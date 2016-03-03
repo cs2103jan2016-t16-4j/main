@@ -1,5 +1,6 @@
 package application.logic;
 
+import application.gui.GUI;
 import application.parser.Command;
 import application.parser.Parser;
 import application.storage.Storage;
@@ -16,18 +17,20 @@ public class Logic {
 	private String feedBack;
 	private Parser parser = new Parser();
 	private Storage storage = new Storage();
-    
+	private GUI gui = new GUI();
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-	}
-
+	//
 	public String processCommand(String cmd) throws Exception {
 		Command command = parser.interpretCommand(cmd);
 		String feedback = command.execute(storage);
 		storage.saveFile();
 		return feedback;
+	}
 
+	// Gets the GUI to prompt for a new storage location
+	public String promptNewStorage() throws Exception {
+		gui.dirChooser.showDialog(gui.primaryStage);
+		return feedBack;
 	}
 
 	// public void processCommand(String cmd) {
