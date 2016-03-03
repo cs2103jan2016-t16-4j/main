@@ -1,5 +1,6 @@
 package application.parser;
 
+import application.logic.Logic;
 import application.parser.Command;
 import org.apache.commons.lang.ArrayUtils;
 
@@ -14,6 +15,8 @@ import org.apache.commons.lang.ArrayUtils;
  */
 
 public class Parser {
+	private Logic logic = new Logic();
+	
     private static final String MESSAGE_NULL_ERROR = "command cannot be null";
     private static final String KEYWORD_ADD = "add";
     private static final String KEYWORD_SEARCH = "search";
@@ -66,15 +69,15 @@ public class Parser {
             case KEYWORD_HELP :
                 command = initializeHelp();
                 break;
-            
+            */
             case KEYWORD_STORAGE :
-                command = initializeStorageLocation(args);
+                command = initializeStorageLocation();
                 break;
                             
             case KEYWORD_EXIT :
                 command = initializeExit();
                 break;
-            */    
+                
             default :
                 command = initializeAdd(args, !WITH_KEYWORD);
                 break;
@@ -124,9 +127,12 @@ public class Parser {
         Command command = new Help ();
         return command;
     }
+    */ 
     
-    private Command initializeStorageLocation(String[] args){
-        Command command = new ChangeStorageLocation ();
+    // Requests the logic to call for new storage location from the GUI then sends the data to Storage
+    private Command initializeStorageLocation(){
+    	String args = logic.promptNewStorage();
+        Command command = new ChangeStorageLocation (args);
         return command;
     }
     
@@ -135,7 +141,7 @@ public class Parser {
         Command command = new Exit ();
         return command;
     }
-    */    
+       
     private void checkForError(String userCommand) /*throws Error */ {
         if (userCommand == null) {
             /*throw new Error(MESSAGE_NULL_ERROR);*/
