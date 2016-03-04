@@ -4,6 +4,17 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import org.junit.After;
+import org.junit.Before;
+
+import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 
 public class StorageTest {
 
@@ -72,9 +83,10 @@ public class StorageTest {
 
 	}
 
-//	@Test
+	@Test
 	public void testAdd() throws IOException {
 		Storage storage = new Storage();
+		storage.loadFile();
 		storage.addTaskInList("Do homework", "", "02/03/2018", "", "home", "02/07/2016", "high");
 		storage.addTaskInList("Go home", "", "02/05/2016", "", "", "", "");
 		storage.addTaskInList("Gym time", "", "", "", "", "", "");
@@ -98,7 +110,7 @@ public class StorageTest {
 	}
 	
 //	@Test
-	public void testClear() throws IOException {
+	public void testClearFile() throws IOException {
 		Storage storage = new Storage();
 		storage.clearFile();
 	}
@@ -121,6 +133,33 @@ public class StorageTest {
 		Storage storage = new Storage();
 		storage.loadFile();
 		storage.searchByDate("01/01/2017", true);	
+	}
+	
+//	@Test
+	public void testDirectoryFileCreated() throws IOException {		
+		Storage storage = new Storage();
+		assertFalse(storage.checkDirectoryFileCreated());
+		assertTrue(storage.checkDirectoryFileCreated());
+	}
+	
+//	@Test
+	public void testDirectoryFile() throws IOException {		
+		Storage storage = new Storage();
+		storage.checkDirectoryFileCreated();
+		assertFalse(storage.loadDirectoryFile());
+		PrintWriter fw = new PrintWriter(new BufferedWriter(new FileWriter(storage.FILE_DIRECTORY, true)));
+		fw.println("D:/Eclipse/eclipse/workspace/");
+		fw.close();
+		assertTrue(storage.loadDirectoryFile());
+	}
+	
+//	@After
+	public void deleteFiles() throws IOException {
+		Storage storage = new Storage();
+		File f = new File(storage.FILE_DIRECTORY);
+		File p = new File(storage.FILE_PATH);
+		f.delete();
+		p.delete();
 	}
 }
 
