@@ -70,7 +70,7 @@ public class GUI extends Application {
 			if (selectedDirectory != null) {
 				logic.startDirectoryPrompt(selectedDirectory.getAbsolutePath().toString());
 			} else {
-				logic.startDirectoryPrompt("src");
+				logic.startDirectoryPrompt("");
 			}
 		}
 	}
