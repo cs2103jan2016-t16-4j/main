@@ -15,7 +15,7 @@ import org.apache.commons.lang.ArrayUtils;
  */
 
 public class Parser {
-	private Logic logic = new Logic();
+//	private Logic logic = new Logic();
 	
     private static final String MESSAGE_NULL_ERROR = "command cannot be null";
     private static final String KEYWORD_ADD = "add";
@@ -70,9 +70,9 @@ public class Parser {
                 command = initializeHelp();
                 break;
             */
-            case KEYWORD_STORAGE :
-                command = initializeStorageLocation();
-                break;
+//            case KEYWORD_STORAGE :
+//                command = initializeStorageLocation();
+//                break;
                             
             case KEYWORD_EXIT :
                 command = initializeExit();
@@ -130,11 +130,11 @@ public class Parser {
     */ 
     
     // Requests the logic to call for new storage location from the GUI then sends the data to Storage
-    private Command initializeStorageLocation(){
-    	String args = logic.promptNewStorage();
-        Command command = new ChangeStorageLocation (args);
-        return command;
-    }
+//    private Command initializeStorageLocation(){
+//    	String args = logic.promptNewStorage();
+//        Command command = new ChangeStorageLocation (args);
+//        return command;
+//    }
     
 
     private Command initializeExit(){
