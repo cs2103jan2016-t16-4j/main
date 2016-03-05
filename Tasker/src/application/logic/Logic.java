@@ -1,6 +1,7 @@
 package application.logic;
 
-import application.gui.GUI;
+import java.io.IOException;
+
 import application.parser.Command;
 import application.parser.Parser;
 import application.storage.Storage;
@@ -17,7 +18,7 @@ public class Logic {
 	private String feedBack;
 	private Parser parser = new Parser();
 	private Storage storage = new Storage();
-	private GUI gui = new GUI();
+	// private GUI gui = new GUI();
 
 	//
 	public String processCommand(String cmd) throws Exception {
@@ -27,11 +28,21 @@ public class Logic {
 		return feedback;
 	}
 
-	// Gets the GUI to prompt for a new storage location
-	public String promptNewStorage() throws Exception {
-		gui.dirChooser.showDialog(gui.primaryStage);
-		return feedBack;
+	// Sends directory location back to storage
+	public void startDirectoryPrompt(String file) throws IOException {
+		storage.loadFile();
 	}
+
+	// if false means user first time starting program
+	public boolean checkIfFileExists() throws IOException {
+		return storage.checkDirectoryFileCreated();
+	}
+
+	// Gets the GUI to prompt for a new storage location
+	// public String promptNewStorage() throws Exception {
+	// gui.dirChooser.showDialog(gui.primaryStage);
+	// return feedBack;
+	// }
 
 	// public void processCommand(String cmd) {
 	// Command command = parser.interpretCommand(cmd);
