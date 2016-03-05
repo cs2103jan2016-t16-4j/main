@@ -17,7 +17,8 @@ public class Storage{
 	public static int taskIndex = 0;
 	public static ArrayList<Task> fileList = new ArrayList<Task>();
 	public ArrayList<Task> searchList;
-
+	public static ArrayList<Task> closedList = new ArrayList<Task>();
+	
 	public boolean addTaskInList(String taskDescription, String startDate, String endDate
 				, String dueTime, String location
 				, String remindDate, String priority) {
@@ -45,8 +46,23 @@ public class Storage{
 		}
 	}
 	
-	public void closeTaskInList() {
-		//change endtime to now
+	public boolean closeTaskInList(int index) {
+		boolean isSuccesClose = false;
+		for (int i = 0 ; i<fileList.size(); i++) {
+			if (fileList.get(i).getTaskIndex()==index) {
+				closedList.add(fileList.get(i));
+				fileList.remove(i);
+				//System.out.println("\nClosed : "+index);
+				isSuccesClose = true;
+				break;
+			}
+		}
+
+		if (isSuccesClose) {
+			return true;
+		} else {
+			return false;
+		}	
 		showFeedback("closed");
 	}
 	
