@@ -12,12 +12,12 @@ public class Search implements Command {
 	public static final int NOT_FOUND = -1;
 	public static final String EMPTY = "";
 
-	Storage storage;
 	String[] arguments;
 	String description = EMPTY;
+	String priority = EMPTY;
+	String date = EMPTY;
 
-	Search(Storage storage, String[] arguments) {
-		this.storage = storage;
+	Search(String[] arguments) {
 		this.arguments = arguments;
 		interpretArguments(arguments);
 	}
@@ -30,23 +30,23 @@ public class Search implements Command {
 	}
 
 	// Search <Name>
-	private void getTasksByName(String[] args) {
-
+	private void getTasksByName(String[] args, Storage storage) {
+		storage.searchByTask(args[0]);
 	}
 
 	// Search Priority <Level>
-	private void getTasksByPriority(String[] args) {
-
+	private void getTasksByPriority(String[] args, Storage storage) {
+		
 	}
 
 	// Search <Task> By <Date>
-	private void getTasksByDate(String[] args) {
-
+	private void getTasksByDate(String[] args, Storage storage) {
+		storage.searchByDate(args[0], true);
 	}
 
 	@Override
-	public String execute() {
-		// TODO Auto-generated method stub
+	public String execute(Storage storage) {
+		
 		return null;
 	}
 
