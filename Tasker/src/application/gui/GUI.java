@@ -1,5 +1,8 @@
 package application.gui;
 
+import java.io.File;
+import java.io.IOException;
+
 import application.logic.Logic;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -26,7 +29,7 @@ public class GUI extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			DirectoryChooser dirChooser = new DirectoryChooser();
-			dirChooser.setTitle("Open Resource Folder");
+			configureDirectoryChooser(dirChooser);
 
 			ObservableList<String> data = FXCollections.observableArrayList();
 
@@ -39,25 +42,36 @@ public class GUI extends Application {
 			titleTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
 				public void handle(KeyEvent ke) {
 					if (ke.getCode().equals(KeyCode.ENTER)) {
-						if (titleTextField.getText().equalsIgnoreCase("exit")) {
-							System.exit(0);
-						} else {
-							try {
-								data.add(logic.processCommand(titleTextField.getText()));
-								titleTextField.clear();
-							} catch (Exception e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+						try {
+							data.add(logic.processCommand(titleTextField.getText()));
+							titleTextField.clear();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
 					}
 				}
 			});
 			VBox cli = addToVBox(scrollPane, titleTextField);
-			dirChooser.showDialog(primaryStage);
+			firstLaunchDirectoryPrompt(primaryStage, dirChooser);
 			setStage(primaryStage, cli);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	/* Checks if save location already exists
+	 * If exists - use that location
+	 * If does not exist then prompt for new location
+	 */
+	private void firstLaunchDirectoryPrompt(Stage primaryStage, DirectoryChooser dirChooser) throws IOException {
+		if (!logic.checkIfFileExists()) {
+			final File selectedDirectory = dirChooser.showDialog(primaryStage);
+			if (selectedDirectory != null) {
+				logic.startDirectoryPrompt(selectedDirectory.getAbsolutePath().toString());
+			} else {
+				logic.startDirectoryPrompt("src");
+			}
 		}
 	}
 
@@ -82,6 +96,12 @@ public class GUI extends Application {
 
 	private void setProgramName(Stage primaryStage) {
 		primaryStage.setTitle(title);
+	}
+
+	// Configuration for directory chooser
+	private void configureDirectoryChooser(final DirectoryChooser dirChooser) {
+		dirChooser.setTitle("Open Resource Folder");
+		dirChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
 	}
 
 	public static void main(String[] args) {
