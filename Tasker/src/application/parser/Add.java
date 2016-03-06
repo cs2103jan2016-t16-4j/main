@@ -3,7 +3,10 @@ package application.parser;
 import java.util.Arrays;
 
 import application.storage.Storage;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import org.ocpsoft.prettytime.nlp.PrettyTimeParser;
 
 public class Add implements Command{
     public static final int NOT_FOUND = -1;
@@ -21,10 +24,13 @@ public class Add implements Command{
     String location = EMPTY;
     String remindDate = EMPTY;
     String priority = EMPTY;
+    PrettyTimeParser dateParser; 
     
     Add(String[] arguments){
         this.arguments =arguments;
+        dateParser = new PrettyTimeParser();
         interpretArguments(arguments);
+        
     }
     
     private void interpretArguments (String[] arguments){
@@ -70,8 +76,9 @@ public class Add implements Command{
         this.endDateTime = interpretDate(endDateTime);
     }
     
-    private String interpretDate(String date){//ADD FUNCTIONALITY TO CONVERT TO DateTime Object
-        return date;
+    private String interpretDate(String date){
+        List<Date> dateTimes = dateParser.parse(date);
+        return dateTimes.get(0).toString();
     }
     
     
