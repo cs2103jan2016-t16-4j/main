@@ -60,18 +60,20 @@ public class GUI extends Application {
 		}
 	}
 
-	/* Checks if save location already exists
-	 * If exists - use that location
-	 * If does not exist then prompt for new location
+	/*
+	 * Checks if save location already exists If exists - use that location If
+	 * does not exist then prompt for new location
 	 */
 	private void firstLaunchDirectoryPrompt(Stage primaryStage, DirectoryChooser dirChooser) throws IOException {
 		if (!logic.checkIfFileExists()) {
 			final File selectedDirectory = dirChooser.showDialog(primaryStage);
 			if (selectedDirectory != null) {
-				logic.startDirectoryPrompt(selectedDirectory.getAbsolutePath().toString());
+				logic.startDirectoryPrompt(selectedDirectory.getPath().toString() + "\\");
 			} else {
 				logic.startDirectoryPrompt("");
 			}
+		} else {
+			logic.loadDataFile();
 		}
 	}
 
