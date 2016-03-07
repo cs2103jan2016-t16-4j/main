@@ -83,9 +83,10 @@ public class StorageTest {
 
 	}
 
-	@Test
+//	@Test
 	public void testAdd() throws IOException {
 		Storage storage = new Storage();
+		storage.startUpCheck();
 		storage.loadFile();
 		storage.addTaskInList("Do homework", "", "02/03/2018", "", "home", "02/07/2016", "high");
 		storage.addTaskInList("Go home", "", "02/05/2016", "", "", "", "");
@@ -96,16 +97,20 @@ public class StorageTest {
 //	@Test
 	public void testLoad() throws IOException {
 		Storage storage = new Storage();
+		storage.startUpCheck();
 		storage.loadFile();
 	}
 	
 //	@Test
 	public void testDelete() throws IOException {		
 		Storage storage = new Storage();
+		storage.startUpCheck();
 		storage.loadFile();
+		storage.addTaskInList("Do homework", "", "02/03/2018", "", "home", "02/07/2016", "high");
+		storage.addTaskInList("Go home", "", "02/05/2016", "", "", "", "");
 		storage.deleteTaskInList(2);
 		storage.saveFile();
-		storage.loadFile();	
+		assertEquals(1,storage.fileList.size());
 
 	}
 	
@@ -124,14 +129,16 @@ public class StorageTest {
 //	@Test
 	public void testSearchTask() throws IOException {		
 		Storage storage = new Storage();
-		storage.loadFile();
+		storage.addTaskInList("Do homework", "", "02/03/2018", "", "home", "02/07/2016", "high");
+		storage.addTaskInList("Go home", "", "02/05/2016", "", "", "", "");
 		storage.searchByTask("home");
 	}
 	
 //	@Test
 	public void testSearchDate() throws IOException {		
 		Storage storage = new Storage();
-		storage.loadFile();
+		storage.addTaskInList("Do homework", "", "02/03/2018", "", "home", "02/07/2016", "high");
+		storage.addTaskInList("Go home", "", "02/05/2016", "", "", "", "");
 		storage.searchByDate("01/01/2017", true);	
 	}
 	
@@ -146,14 +153,25 @@ public class StorageTest {
 	public void testDirectoryFile() throws IOException {		
 		Storage storage = new Storage();
 		storage.checkDirectoryFileCreated();
-		assertFalse(storage.loadDirectoryFile());
+		assertEquals(null,storage.loadDirectoryFile());
 		PrintWriter fw = new PrintWriter(new BufferedWriter(new FileWriter(storage.FILE_DIRECTORY, true)));
-		fw.println("D:/Eclipse/eclipse/workspace/");
+		fw.println("D:/Eclipse/eclipse/workspace/TaskerData.txt");
 		fw.close();
-		assertTrue(storage.loadDirectoryFile());
+		assertEquals("D:/Eclipse/eclipse/workspace/TaskerData.txt",storage.loadDirectoryFile());
+	}
+
+//	@Test	
+	public void testSaveDirectory() throws IOException {
+		Storage storage = new Storage();
+		storage.checkDirectoryFileCreated();
+		storage.saveDirectory("D:/Eclipse/eclipse/workspace/");
+		storage.loadDirectoryFile();
+		storage.saveDirectory("");
+		storage.loadDirectoryFile();
+			
 	}
 	
-//	@After
+	@After
 	public void deleteFiles() throws IOException {
 		Storage storage = new Storage();
 		File f = new File(storage.FILE_DIRECTORY);

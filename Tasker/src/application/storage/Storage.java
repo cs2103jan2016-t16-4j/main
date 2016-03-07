@@ -63,7 +63,7 @@ public class Storage{
 		} else {
 			return false;
 		}	
-	//	showFeedback("closed");
+//		showFeedback("closed");
 	}
 	
 	public boolean deleteTaskInList(int index) throws IOException {
@@ -126,8 +126,27 @@ public class Storage{
 		}
 	}
 
-	public void loadFile() throws IOException {
+	public void startUpCheck() throws IOException {
 		checkDirectoryFileCreated();
+	}
+	
+	// true - if user has launched program b4
+	// false - if user first time launching program
+	public boolean checkDirectoryFileCreated() throws IOException {
+		// check whether its user first time opening program
+		File d = new File(FILE_DIRECTORY);
+		if (!d.exists()) {
+			PrintWriter fw = new PrintWriter(new BufferedWriter(new FileWriter(FILE_DIRECTORY, true)));
+			fw.print("");		// indicate path name is not specified yet 
+			fw.close();
+			return false;
+		}
+		else {
+			return true;
+		}
+	} 
+	
+	public void loadFile() throws IOException {
 		loadDirectoryFile();
 		loadDataFile();
 	}
@@ -147,7 +166,7 @@ public class Storage{
 		}
 	}
 
-	public boolean loadDirectoryFile() throws FileNotFoundException, IOException {
+	public String loadDirectoryFile() throws FileNotFoundException, IOException {
 		// check whether user specified a custom directory to save datafile
 		String readText;
 		BufferedReader in = new BufferedReader(new FileReader(FILE_DIRECTORY));
@@ -157,30 +176,13 @@ public class Storage{
 		if (readText == null) {
 			System.out.println("User has not specified directory to store data file yet. \nThus, data file will reside in the program's folder.");
 			FILE_PATH = FILE_NAME;
-			return false;
 		} else {
-			FILE_PATH = readText + FILE_NAME;
+			FILE_PATH = readText;
 			System.out.println("User specified directory : "+FILE_PATH);
-			return true;
 		}
+		
+		return readText;
 	}
-
-	// true - if user has launched program b4
-	// false - if user first time launching program
-	public boolean checkDirectoryFileCreated() throws IOException {
-		// check whether its user first time opening program
-		File d = new File(FILE_DIRECTORY);
-		if (!d.exists()) {
-			PrintWriter fw = new PrintWriter(new BufferedWriter(new FileWriter(FILE_DIRECTORY, true)));
-			fw.print("");		// indicate path name is not specified yet 
-			fw.close();
-			return false;
-		}
-		else {
-			return true;
-		}
-	} 
-
 
 	public void loadTaskIndex() throws IOException {
 		String readText;
@@ -268,6 +270,24 @@ public class Storage{
 //		System.out.println("\nSaving : "+taskIndex);
 		fw.close();
 	}
+	
+	public boolean saveDirectory(String path) throws FileNotFoundException {
+		PrintWriter fw = new PrintWriter(FILE_DIRECTORY);
+		fw.print("");
+		
+		if (path.equalsIgnoreCase("")) {
+			FILE_PATH = FILE_NAME;
+			fw.close();
+			return false;
+		}
+		else {
+			FILE_PATH = path + FILE_NAME;
+			System.out.println("To be entered : "+FILE_PATH);
+			fw.println(FILE_PATH);
+			fw.close();
+			return true;
+		}
+	}
 
 	public ArrayList<Task> searchByDate(String dateSearch, boolean isSearchBy) {
 		// initialize new search list
@@ -292,6 +312,7 @@ public class Storage{
 				}
 			}
 		}
+		
 		return showSearchResults(searchList);
 	}
 
