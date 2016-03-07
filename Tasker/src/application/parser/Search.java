@@ -1,5 +1,7 @@
 package application.parser;
 
+import java.util.Arrays;
+
 import application.storage.Storage;
 
 /**
@@ -9,8 +11,12 @@ import application.storage.Storage;
  */
 
 public class Search implements Command {
+	Command searchObj;
+
 	public static final int NOT_FOUND = -1;
 	public static final String EMPTY = "";
+
+	private Storage storage = new Storage();
 
 	String[] arguments;
 	String description = EMPTY;
@@ -26,28 +32,19 @@ public class Search implements Command {
 	 * Search <Name> Search Priority <Level> Search <Task> By <Date>
 	 */
 	private void interpretArguments(String[] arguments) {
-
-	}
-
-	// Search <Name>
-	private void getTasksByName(String[] args, Storage storage) {
-		storage.searchByTask(args[0]);
-	}
-
-	// Search Priority <Level>
-	private void getTasksByPriority(String[] args, Storage storage) {
-		
-	}
-
-	// Search <Task> By <Date>
-	private void getTasksByDate(String[] args, Storage storage) {
-		storage.searchByDate(args[0], true);
+		if (Arrays.asList(arguments).contains("Priority")) {
+			searchObj = new SearchByPriority(arguments);
+		} else if (Arrays.asList(arguments).contains("By")) {
+			searchObj = new SearchByDate(arguments);
+		} else {
+			searchObj = new SearchByName(arguments);
+		}
 	}
 
 	@Override
 	public String execute(Storage storage) {
-		
-		return null;
+		String feedback = searchObj.execute(storage);
+		return feedback;
 	}
 
 }
