@@ -126,8 +126,8 @@ public class Storage {
 		}
 	}
 
-	public void startUpCheck() throws IOException {
-		checkDirectoryFileCreated();
+	public boolean startUpCheck() throws IOException {
+		return checkDirectoryFileCreated();
 	}
 	
 	// true - if user has launched program b4
