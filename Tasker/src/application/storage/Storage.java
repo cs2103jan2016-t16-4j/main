@@ -9,15 +9,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class Storage{
+public class Storage {
 
-	public static String FILE_PATH = "";
 	public static final String FILE_NAME = "TaskerData.txt";
-	static final String FILE_DIRECTORY = "TaskerDirectory.txt";
-	public static int taskIndex = 0;
-	public static ArrayList<Task> fileList = new ArrayList<Task>();
+	public static final String FILE_DIRECTORY = "TaskerDirectory.txt";
+	public int taskIndex = 0;
+	public String filePath = "";
+	public ArrayList<Task> closedList = new ArrayList<Task>();
+	public ArrayList<Task> fileList = new ArrayList<Task>();
 	public ArrayList<Task> searchList;
-	public static ArrayList<Task> closedList = new ArrayList<Task>();
 	
 	public boolean addTaskInList(String taskDescription, String startDate, String endDate
 				, String dueTime, String location
@@ -38,9 +38,9 @@ public class Storage{
 	}
 	
 	public void clearFile() throws IOException {
-		File f = new File(FILE_PATH);
+		File f = new File(filePath);
 		if (f.exists()) {
-			PrintWriter fw = new PrintWriter(FILE_PATH);
+			PrintWriter fw = new PrintWriter(filePath);
 			fw.print("");
 			fw.close();
 		}
@@ -153,7 +153,7 @@ public class Storage{
 
 	public boolean loadDataFile() throws IOException, FileNotFoundException {
 		// load datafile if exist
-		File f = new File(FILE_PATH);		
+		File f = new File(filePath);		
 		if (f.exists()) {
 			// open file and load total task index
 			loadTaskIndex();
@@ -175,10 +175,10 @@ public class Storage{
 		in.close();
 		if (readText == null) {
 			System.out.println("User has not specified directory to store data file yet. \nThus, data file will reside in the program's folder.");
-			FILE_PATH = FILE_NAME;
+			filePath = FILE_NAME;
 		} else {
-			FILE_PATH = readText;
-			System.out.println("User specified directory : "+FILE_PATH);
+			filePath = readText;
+			System.out.println("User specified directory : "+filePath);
 		}
 		
 		return readText;
@@ -186,7 +186,7 @@ public class Storage{
 
 	public void loadTaskIndex() throws IOException {
 		String readText;
-		BufferedReader in = new BufferedReader(new FileReader(FILE_PATH));
+		BufferedReader in = new BufferedReader(new FileReader(filePath));
 		readText = in.readLine();
 		taskIndex = Integer.parseInt(readText);
 		System.out.println("Total task index : "+taskIndex);
@@ -195,7 +195,7 @@ public class Storage{
 	
 	public void loadAllTasks() throws FileNotFoundException, IOException {
 		String readText;
-		BufferedReader in = new BufferedReader(new FileReader(FILE_PATH));
+		BufferedReader in = new BufferedReader(new FileReader(filePath));
 		// skip first line first
 		readText = in.readLine();
 		
@@ -225,7 +225,7 @@ public class Storage{
 
 	public void saveFile() throws IOException {
 		// #check if file exists
-		File f = new File(FILE_PATH);
+		File f = new File(filePath);
 		if (!f.exists()) {
 			f.createNewFile();
 		}
@@ -258,14 +258,14 @@ public class Storage{
 			taskToStore += fileList.get(i).getPriority();
 			taskToStore += "\b";
 			taskToStore += fileList.get(i).getTaskIndex();
-			PrintWriter fwz = new PrintWriter(new BufferedWriter(new FileWriter(FILE_PATH, true)));
+			PrintWriter fwz = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
 			fwz.println(taskToStore);
 			fwz.close();
 		}
 	}
 
 	public void saveTaskIndex() throws IOException {
-		PrintWriter fw = new PrintWriter(new BufferedWriter(new FileWriter(FILE_PATH, true)));
+		PrintWriter fw = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
 		fw.println(taskIndex);
 //		System.out.println("\nSaving : "+taskIndex);
 		fw.close();
@@ -276,14 +276,14 @@ public class Storage{
 		fw.print("");
 		
 		if (path.equalsIgnoreCase("")) {
-			FILE_PATH = FILE_NAME;
+			filePath = FILE_NAME;
 			fw.close();
 			return false;
 		}
 		else {
-			FILE_PATH = path + FILE_NAME;
-			System.out.println("To be entered : "+FILE_PATH);
-			fw.println(FILE_PATH);
+			filePath = path + FILE_NAME;
+			System.out.println("To be entered : "+filePath);
+			fw.println(filePath);
 			fw.close();
 			return true;
 		}
