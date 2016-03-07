@@ -63,7 +63,7 @@ public class Storage{
 		} else {
 			return false;
 		}	
-		showFeedback("closed");
+	//	showFeedback("closed");
 	}
 	
 	public boolean deleteTaskInList(int index) throws IOException {
@@ -269,7 +269,7 @@ public class Storage{
 		fw.close();
 	}
 
-	public void searchByDate(String dateSearch, boolean isSearchBy) {
+	public ArrayList<Task> searchByDate(String dateSearch, boolean isSearchBy) {
 		// initialize new search list
 		searchList = new ArrayList<Task>();
 
@@ -292,7 +292,7 @@ public class Storage{
 				}
 			}
 		}
-		showSearchResults(searchList);
+		return showSearchResults(searchList);
 	}
 
 	public void findTaskAndUpdate(Task task) {
@@ -332,7 +332,7 @@ public class Storage{
 		}
 	}
 
-	public void searchByTask(String taskSearch) {
+	public ArrayList<Task> searchByTask(String taskSearch) {
 		searchList = new ArrayList<Task>();
 		for (int i = 0; i < fileList.size(); i++) {
 			Task obj = fileList.get(i);
@@ -343,7 +343,7 @@ public class Storage{
 			}
 		}
 
-		showSearchResults(searchList);
+		return showSearchResults(searchList);
 	}
 
 	public ArrayList<Task> showSearchResults(ArrayList<Task> results) {
