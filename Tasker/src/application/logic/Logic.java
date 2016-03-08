@@ -30,12 +30,17 @@ public class Logic {
 
 	// Sends directory location back to storage
 	public void startDirectoryPrompt(String file) throws IOException {
+		storage.saveDirectory(file);
+		loadDataFile();
+	}
+
+	public void loadDataFile() throws IOException {
 		storage.loadFile();
 	}
 
 	// if false means user first time starting program
 	public boolean checkIfFileExists() throws IOException {
-		return storage.checkDirectoryFileCreated();
+		return storage.startUpCheck();
 	}
 
 	// Gets the GUI to prompt for a new storage location

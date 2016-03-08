@@ -1,6 +1,5 @@
 package application.parser;
 
-import application.logic.Logic;
 import org.apache.commons.lang.ArrayUtils;
 
 /**
@@ -14,7 +13,6 @@ import org.apache.commons.lang.ArrayUtils;
  */
 
 public class Parser {
-//	private Logic logic = new Logic();
 	
     private static final String MESSAGE_NULL_ERROR = "command cannot be null";
     private static final String KEYWORD_ADD = "add";
@@ -45,11 +43,11 @@ public class Parser {
                 command = initializeAdd(args, WITH_KEYWORD );
                 break;
             
-           /* case KEYWORD_SEARCH :
+            case KEYWORD_SEARCH :
                 command = initializeSearch(args);
                 break;
             
-            case KEYWORD_DELETE :
+         /* case KEYWORD_DELETE :
                 command = initializeDelete(args);
                 break;
                 
@@ -92,13 +90,13 @@ public class Parser {
         Command command = new Add (args);
         return command;
     }
-    /*
+    
     private Command initializeSearch(String[] args){
         args = (String[]) ArrayUtils.remove(args, 0);
         Command command = new Search (args);
         return command;
     }
-    
+    /*
     private Command initializeDelete(String[] args){
         args = (String[]) ArrayUtils.remove(args, 0);
         Command command = new Delete (args);

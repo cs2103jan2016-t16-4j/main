@@ -9,15 +9,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class Storage{
+public class Storage {
 
-	public static String FILE_PATH = "";
 	public static final String FILE_NAME = "TaskerData.txt";
-	static final String FILE_DIRECTORY = "TaskerDirectory.txt";
-	public static int taskIndex = 0;
-	public static ArrayList<Task> fileList = new ArrayList<Task>();
+	public static final String FILE_DIRECTORY = "TaskerDirectory.txt";
+	public int taskIndex = 0;
+	public String filePath = "";
+	public ArrayList<Task> closedList = new ArrayList<Task>();
+	public ArrayList<Task> fileList = new ArrayList<Task>();
 	public ArrayList<Task> searchList;
-	public static ArrayList<Task> closedList = new ArrayList<Task>();
 	
 	public boolean addTaskInList(String taskDescription, String startDate, String endDate
 				, String dueTime, String location
@@ -38,9 +38,9 @@ public class Storage{
 	}
 	
 	public void clearFile() throws IOException {
-		File f = new File(FILE_PATH);
+		File f = new File(filePath);
 		if (f.exists()) {
-			PrintWriter fw = new PrintWriter(FILE_PATH);
+			PrintWriter fw = new PrintWriter(filePath);
 			fw.print("");
 			fw.close();
 		}
@@ -63,7 +63,7 @@ public class Storage{
 		} else {
 			return false;
 		}	
-		showFeedback("closed");
+//		showFeedback("closed");
 	}
 	
 	public boolean deleteTaskInList(int index) throws IOException {
@@ -126,45 +126,10 @@ public class Storage{
 		}
 	}
 
-	public void loadFile() throws IOException {
-		checkDirectoryFileCreated();
-		loadDirectoryFile();
-		loadDataFile();
+	public boolean startUpCheck() throws IOException {
+		return checkDirectoryFileCreated();
 	}
-
-	public boolean loadDataFile() throws IOException, FileNotFoundException {
-		// load datafile if exist
-		File f = new File(FILE_PATH);		
-		if (f.exists()) {
-			// open file and load total task index
-			loadTaskIndex();
-			// open file and load all tasks
-			loadAllTasks();	
-			return true;
-		} else {
-			System.out.println("No saved data file detected yet..\nStart entering tasks!");
-			return false;
-		}
-	}
-
-	public boolean loadDirectoryFile() throws FileNotFoundException, IOException {
-		// check whether user specified a custom directory to save datafile
-		String readText;
-		BufferedReader in = new BufferedReader(new FileReader(FILE_DIRECTORY));
-		// skip first line first
-		readText = in.readLine();
-		in.close();
-		if (readText == null) {
-			System.out.println("User has not specified directory to store data file yet. \nThus, data file will reside in the program's folder.");
-			FILE_PATH = FILE_NAME;
-			return false;
-		} else {
-			FILE_PATH = readText + FILE_NAME;
-			System.out.println("User specified directory : "+FILE_PATH);
-			return true;
-		}
-	}
-
+	
 	// true - if user has launched program b4
 	// false - if user first time launching program
 	public boolean checkDirectoryFileCreated() throws IOException {
@@ -180,11 +145,48 @@ public class Storage{
 			return true;
 		}
 	} 
+	
+	public void loadFile() throws IOException {
+		loadDirectoryFile();
+		loadDataFile();
+	}
 
+	public boolean loadDataFile() throws IOException, FileNotFoundException {
+		// load datafile if exist
+		File f = new File(filePath);		
+		if (f.exists()) {
+			// open file and load total task index
+			loadTaskIndex();
+			// open file and load all tasks
+			loadAllTasks();	
+			return true;
+		} else {
+			System.out.println("No saved data file detected yet..\nStart entering tasks!");
+			return false;
+		}
+	}
+
+	public String loadDirectoryFile() throws FileNotFoundException, IOException {
+		// check whether user specified a custom directory to save datafile
+		String readText;
+		BufferedReader in = new BufferedReader(new FileReader(FILE_DIRECTORY));
+		// skip first line first
+		readText = in.readLine();
+		in.close();
+		if (readText == null) {
+			System.out.println("User has not specified directory to store data file yet. \nThus, data file will reside in the program's folder.");
+			filePath = FILE_NAME;
+		} else {
+			filePath = readText;
+			System.out.println("User specified directory : "+filePath);
+		}
+		
+		return readText;
+	}
 
 	public void loadTaskIndex() throws IOException {
 		String readText;
-		BufferedReader in = new BufferedReader(new FileReader(FILE_PATH));
+		BufferedReader in = new BufferedReader(new FileReader(filePath));
 		readText = in.readLine();
 		taskIndex = Integer.parseInt(readText);
 		System.out.println("Total task index : "+taskIndex);
@@ -193,7 +195,7 @@ public class Storage{
 	
 	public void loadAllTasks() throws FileNotFoundException, IOException {
 		String readText;
-		BufferedReader in = new BufferedReader(new FileReader(FILE_PATH));
+		BufferedReader in = new BufferedReader(new FileReader(filePath));
 		// skip first line first
 		readText = in.readLine();
 		
@@ -223,7 +225,7 @@ public class Storage{
 
 	public void saveFile() throws IOException {
 		// #check if file exists
-		File f = new File(FILE_PATH);
+		File f = new File(filePath);
 		if (!f.exists()) {
 			f.createNewFile();
 		}
@@ -256,20 +258,38 @@ public class Storage{
 			taskToStore += fileList.get(i).getPriority();
 			taskToStore += "\b";
 			taskToStore += fileList.get(i).getTaskIndex();
-			PrintWriter fwz = new PrintWriter(new BufferedWriter(new FileWriter(FILE_PATH, true)));
+			PrintWriter fwz = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
 			fwz.println(taskToStore);
 			fwz.close();
 		}
 	}
 
 	public void saveTaskIndex() throws IOException {
-		PrintWriter fw = new PrintWriter(new BufferedWriter(new FileWriter(FILE_PATH, true)));
+		PrintWriter fw = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
 		fw.println(taskIndex);
 //		System.out.println("\nSaving : "+taskIndex);
 		fw.close();
 	}
+	
+	public boolean saveDirectory(String path) throws FileNotFoundException {
+		PrintWriter fw = new PrintWriter(FILE_DIRECTORY);
+		fw.print("");
+		
+		if (path.equalsIgnoreCase("")) {
+			filePath = FILE_NAME;
+			fw.close();
+			return false;
+		}
+		else {
+			filePath = path + FILE_NAME;
+			System.out.println("To be entered : "+filePath);
+			fw.println(filePath);
+			fw.close();
+			return true;
+		}
+	}
 
-	public void searchByDate(String dateSearch, boolean isSearchBy) {
+	public ArrayList<Task> searchByDate(String dateSearch, boolean isSearchBy) {
 		// initialize new search list
 		searchList = new ArrayList<Task>();
 
@@ -292,7 +312,8 @@ public class Storage{
 				}
 			}
 		}
-		showSearchResults(searchList);
+		
+		return showSearchResults(searchList);
 	}
 
 	public void findTaskAndUpdate(Task task) {
@@ -332,7 +353,7 @@ public class Storage{
 		}
 	}
 
-	public void searchByTask(String taskSearch) {
+	public ArrayList<Task> searchByTask(String taskSearch) {
 		searchList = new ArrayList<Task>();
 		for (int i = 0; i < fileList.size(); i++) {
 			Task obj = fileList.get(i);
@@ -343,7 +364,7 @@ public class Storage{
 			}
 		}
 
-		showSearchResults(searchList);
+		return showSearchResults(searchList);
 	}
 
 	public ArrayList<Task> showSearchResults(ArrayList<Task> results) {
