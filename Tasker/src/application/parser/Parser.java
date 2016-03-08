@@ -1,7 +1,6 @@
 package application.parser;
 
 import application.logic.Logic;
-import application.parser.Command;
 import org.apache.commons.lang.ArrayUtils;
 
 /**

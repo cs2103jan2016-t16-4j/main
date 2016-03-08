@@ -9,7 +9,7 @@ public class ParserTester {
         Storage storage = new Storage();
         Parser parser = new Parser();
         
-        Command cmd = parser.interpretCommand("just testing by now at then");
+        Command cmd = parser.interpretCommand("brush teeth by 7 am tomorrow at bathroom");
         System.out.println(cmd.execute(storage));
         
         
