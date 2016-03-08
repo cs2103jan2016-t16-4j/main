@@ -1,6 +1,5 @@
 package application.parser;
 
-import application.logic.Logic;
 import application.parser.Command;
 import org.apache.commons.lang.ArrayUtils;
 
@@ -15,7 +14,6 @@ import org.apache.commons.lang.ArrayUtils;
  */
 
 public class Parser {
-//	private Logic logic = new Logic();
 	
     private static final String MESSAGE_NULL_ERROR = "command cannot be null";
     private static final String KEYWORD_ADD = "add";

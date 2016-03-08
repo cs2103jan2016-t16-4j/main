@@ -16,8 +16,6 @@ public class Search implements Command {
 	public static final int NOT_FOUND = -1;
 	public static final String EMPTY = "";
 
-	private Storage storage = new Storage();
-
 	String[] arguments;
 	String description = EMPTY;
 	String priority = EMPTY;
@@ -32,9 +30,9 @@ public class Search implements Command {
 	 * Search <Name> Search Priority <Level> Search <Task> By <Date>
 	 */
 	private void interpretArguments(String[] arguments) {
-		if (Arrays.asList(arguments).contains("Priority")) {
+		if (Arrays.asList(arguments).toString().toLowerCase().contains("priority")) {
 			searchObj = new SearchByPriority(arguments);
-		} else if (Arrays.asList(arguments).contains("By")) {
+		} else if (Arrays.asList(arguments).toString().toLowerCase().contains("by")) {
 			searchObj = new SearchByDate(arguments);
 		} else {
 			searchObj = new SearchByName(arguments);
