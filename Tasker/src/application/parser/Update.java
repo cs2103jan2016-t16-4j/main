@@ -11,6 +11,7 @@ import application.storage.Storage;
 public class Update implements Command{
     public static final int NOT_FOUND = -1;
     public static final int INDEX_TASK_POSITION = 1;
+    public static final int ARRAY_INDEXING_OFFSET = 1;
     public static final String EMPTY = "";
     private static final String MESSAGE_UPDATE_FEEDBACK_NO_START_DATE = "Updated Task: %1$s, by %2$s, at %3$s.";
     private static final String MESSAGE_UPDATE_FEEDBACK_WITH_START_DATE = "Updated Task: %1$s, from %2$s to %3$s, at %4$s.";    
@@ -43,7 +44,7 @@ public class Update implements Command{
     }
     
     private int interpretPosition(String num) throws NumberFormatException{
-        return Integer.parseInt(num);
+        return (Integer.parseInt(num) - ARRAY_INDEXING_OFFSET);
     }
     
     private void setLocation(String[] args){
@@ -98,7 +99,8 @@ public class Update implements Command{
     }
    
     public String execute(Storage storage){
-        boolean isSuccess = storage.updateTaskInList(taskPosition, description, startDateTime, endDateTime
+        boolean isSuccess = storage.updateTaskInList(taskPosition, description, 
+                startDateTime, "", endDateTime
                 , "",location
                 , "", priority);
         if (isSuccess){
