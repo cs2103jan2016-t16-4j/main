@@ -5,23 +5,58 @@ import java.io.IOException;
 import application.parser.Command;
 import application.parser.Parser;
 import application.storage.Storage;
+import application.gui.Ui;
+import application.gui.Cli;
 
 /**
  * 
- * @author Shawn
+ * @author Shawn, Pratyush
  *
  */
 
 public class Logic {
 
-	private String previousCommand;
-	private String feedBack;
+    private final String MESSAGE_LOAD_ERROR = "There was some problem loading the app. "
+            + "Please restart. We regret the inconvenience.";
+    private final String MESSAGE_ERROR = "There was some problem processing your request. "
+            + "Please check your input format.";
+    
+//	private String previousCommand;
 	private Parser parser = new Parser();
 	private Storage storage = new Storage();
-	// private GUI gui = new GUI();
+	private Ui ui = new Cli();
 
-	//
-	public String processCommand(String cmd) throws Exception {
+	public static void main(String[] args){
+	    Logic tasker = new Logic();
+	    tasker.setEnvironment();
+	    tasker.ui.printWelcomeMessage();
+	    tasker.executeCommandsUntilExit();
+	}
+	
+	private void executeCommandsUntilExit(){
+	    while(true){
+	        try{
+	            String userCommand = ui.getCommand();
+	            Command cmd = parser.interpretCommand(userCommand);
+	            String feedback = cmd.execute(storage);
+	            ui.showToUser(feedback);
+	            storage.saveFile();
+	        }catch(Exception e){
+	            ui.showToUser(MESSAGE_ERROR);
+	        }
+	    }
+	}
+	
+	private void setEnvironment(){
+	    try{
+	        checkIfFileExists();
+	        loadDataFile();
+        }catch(IOException e){
+            ui.showToUser(MESSAGE_LOAD_ERROR);
+        }
+	}
+	
+	private String processCommand(String cmd) throws Exception {
 		Command command = parser.interpretCommand(cmd);
 		String feedback = command.execute(storage);
 		storage.saveFile();
@@ -29,17 +64,17 @@ public class Logic {
 	}
 
 	// Sends directory location back to storage
-	public void startDirectoryPrompt(String file) throws IOException {
+	private void startDirectoryPrompt(String file) throws IOException {
 		storage.saveDirectory(file);
 		loadDataFile();
 	}
 
-	public void loadDataFile() throws IOException {
+	private void loadDataFile() throws IOException {
 		storage.loadFile();
 	}
 
 	// if false means user first time starting program
-	public boolean checkIfFileExists() throws IOException {
+	private boolean checkIfFileExists() throws IOException {
 		return storage.startUpCheck();
 	}
 

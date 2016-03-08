@@ -1,23 +1,25 @@
 package application.parser;
 
 import java.util.Arrays;
-
-import application.storage.Storage;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
 import org.ocpsoft.prettytime.nlp.PrettyTimeParser;
 
-public class Add implements Command{
+import application.storage.Storage;
+
+public class Update implements Command{
     public static final int NOT_FOUND = -1;
+    public static final int INDEX_TASK_POSITION = 1;
     public static final String EMPTY = "";
-    private static final String MESSAGE_ADD_FEEDBACK_NO_START_DATE = "Added Task: %1$s, by %2$s, at %3$s.";
-    private static final String MESSAGE_ADD_FEEDBACK_WITH_START_DATE = "Added Task: %1$s, from %2$s to %3$s, at %4$s.";    
-    private static final String MESSAGE_ADD_ERROR = 
-            "We encountered an error while adding the task. Sorry for the inconvenience.";    
+    private static final String MESSAGE_UPDATE_FEEDBACK_NO_START_DATE = "Updated Task: %1$s, by %2$s, at %3$s.";
+    private static final String MESSAGE_UPDATE_FEEDBACK_WITH_START_DATE = "Updated Task: %1$s, from %2$s to %3$s, at %4$s.";    
+    private static final String MESSAGE_UPDATE_ERROR = 
+            "We encountered an error while updating the task. Sorry for the inconvenience.";    
     
     
     String[] arguments;
+    int taskPosition = -1;
     String description = EMPTY;
     String startDateTime = EMPTY;
     String endDateTime = EMPTY;
@@ -26,7 +28,7 @@ public class Add implements Command{
     String priority = EMPTY;
     PrettyTimeParser dateParser; 
     
-    Add(String[] arguments){
+    Update(String[] arguments){
         this.arguments =arguments;
         dateParser = new PrettyTimeParser();
         interpretArguments(arguments);
@@ -34,9 +36,14 @@ public class Add implements Command{
     }
     
     private void interpretArguments (String[] arguments){
+        this.taskPosition = interpretPosition(arguments[INDEX_TASK_POSITION]);
         int indexDateStart = setDateTime(arguments);
         this.description = getString(arguments, 0, indexDateStart - 1);
         setLocation(arguments);
+    }
+    
+    private int interpretPosition(String num) throws NumberFormatException{
+        return Integer.parseInt(num);
     }
     
     private void setLocation(String[] args){
@@ -76,7 +83,7 @@ public class Add implements Command{
         this.endDateTime = interpretDate(endDateTime);
     }
     
-    private String interpretDate(String date) throws IndexOutOfBoundsException{
+    private String interpretDate(String date){
         List<Date> dateTimes = dateParser.parse(date);
         return dateTimes.get(0).toString();
     }
@@ -91,20 +98,21 @@ public class Add implements Command{
     }
    
     public String execute(Storage storage){
-        boolean isSuccess = storage.addTaskInList(description, startDateTime, 
-                endDateTime,"", location, remindDate, priority);
+        boolean isSuccess = storage.updateTaskInList(taskPosition, description, startDateTime, endDateTime
+                , "",location
+                , "", priority);
         if (isSuccess){
             return makeFeedback();
         } else {
-            return MESSAGE_ADD_ERROR;
+            return MESSAGE_UPDATE_ERROR;
         }
     }
     
     private String makeFeedback(){
         if (startDateTime.equals(EMPTY)){
-            return String.format(MESSAGE_ADD_FEEDBACK_NO_START_DATE, description, endDateTime, location);
+            return String.format(MESSAGE_UPDATE_FEEDBACK_NO_START_DATE, description, endDateTime, location);
         } else {
-            return String.format(MESSAGE_ADD_FEEDBACK_WITH_START_DATE, description, startDateTime, endDateTime, location);
+            return String.format(MESSAGE_UPDATE_FEEDBACK_WITH_START_DATE, description, startDateTime, endDateTime, location);
         }
         
     }

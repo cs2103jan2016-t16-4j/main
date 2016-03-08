@@ -9,6 +9,8 @@ import application.storage.Task;
 public class DeleteByName implements Command {
     private static final int FIRST_INDEX = 0;
     private static final String FEEDBACK_DELETE = "Deleted Task: %1$s";
+    private static final String MESSAGE_DELETE_ERROR = "We encountered some "
+            + "problem while deleting this task. We apologise for the inconvenience.";
     
     
     String taskToDelete;
@@ -18,9 +20,13 @@ public class DeleteByName implements Command {
     }
      
     public String execute(Storage storage){
-        ArrayList<Task> taskList = storage.searchByTask(taskToDelete);
-        String feedback = takeAction(taskList, storage);
-        return feedback;
+        try{
+            ArrayList<Task> taskList = storage.searchByTask(taskToDelete);
+            String feedback = takeAction(taskList, storage);
+            return feedback;
+        }catch(IOException e){
+            return MESSAGE_DELETE_ERROR;
+        }
     }
     
     public String takeAction(ArrayList<Task> taskList, Storage storage) throws IOException{
