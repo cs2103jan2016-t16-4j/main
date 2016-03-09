@@ -19,7 +19,7 @@ public class Storage {
 	public ArrayList<Task> fileList = new ArrayList<Task>();
 	public ArrayList<Task> searchList;
 	
-	public boolean addTaskInList(String taskDescription, String startDate, String startTime, String endDate
+	public String addTaskInList(String taskDescription, String startDate, String startTime, String endDate
 				, String endTime, String location
 				, String remindDate, String priority) {
 		
@@ -35,7 +35,7 @@ public class Storage {
 		newTask.setTaskIndex(taskIndex);
 		fileList.add(newTask);
 		taskIndex++;
-		return true;
+		return showMessage(newTask);
 	}
 	
 	public void clearFile() throws IOException {
@@ -47,28 +47,70 @@ public class Storage {
 		}
 	}
 	
-	public boolean closeTaskInList(int index) {
-		boolean isSuccesClose = false;
-		for (int i = 0 ; i<fileList.size(); i++) {
-			if (fileList.get(i).getTaskIndex()==index) {
-				closedList.add(fileList.get(i));
-				fileList.remove(i);
-				//System.out.println("\nClosed : "+index);
-				isSuccesClose = true;
-				break;
+	public String closeTaskFromAll(int index) {
+			if (fileList.size()>=index) {
+				String closeMessage = showMessage(fileList.get(index));
+				closedList.add(fileList.get(index));
+				fileList.remove(index);
+				return closeMessage;
 			}
-		}
-
-		if (isSuccesClose) {
-			return true;
-		} else {
-			return false;
-		}	
-//		showFeedback("closed");
+			else {
+				return null;
+			}
 	}
 	
-	public boolean deleteTaskInList(int index) throws IOException {
+	public String closeTaskFromSearch(int index) {
+		boolean isSuccessClose = false;
+		
+		if (fileList.size()>=index) {
+			if (searchList.size()>= index) {
+				for (int i = 0; i < fileList.size(); i++) {				
+					if (searchList.get(index).getTaskIndex() == fileList.get(i).getTaskIndex()) {
+						index = i;
+						isSuccessClose = true;
+						break;
+					}
+				}
+			}	
+			if (isSuccessClose) {
+				String closeMessage = showMessage(fileList.get(index));
+				closedList.add(fileList.get(index));
+				fileList.remove(index);
+				return closeMessage;
+			} else {
+				return null;
+			}
+		}
+		else {
+			return null;
+		}
+		
+	}
+	
+	public String deleteTaskFromSearch(int index) throws IOException {
 		boolean isSuccessDelete = false;
+		
+		if (searchList.size()>= index) {
+			for (int i = 0; i < fileList.size(); i++) {				
+				if (searchList.get(index).getTaskIndex() == fileList.get(i).getTaskIndex()) {
+					index = i;
+					isSuccessDelete = true;
+					break;
+				}
+			}
+				
+			if (isSuccessDelete) {
+				String message = showMessage(fileList.get(index));
+				fileList.remove(index);
+				return message;
+			} else {
+				return null;
+			}
+			
+		} else {
+			return null;
+		}
+		/*
 		for (int i = 0 ; i<fileList.size(); i++) {
 			if (fileList.get(i).getTaskIndex()==index) {
 				fileList.remove(i);
@@ -83,7 +125,52 @@ public class Storage {
 		} else {
 			return false;
 		}		
-
+*/
+	}
+	
+	public String deleteTaskFromAll(int index) throws IOException {
+	
+		if (fileList.size()>=index) {
+			String message = showMessage(fileList.get(index));
+			fileList.remove(index);
+			return message;			
+		}
+		else {
+			return null;
+		}
+		
+	}
+	
+	public String showMessage (Task task) {
+		String message = "\"";
+		message += task.getTaskDescription();
+		
+		if (!task.getStartDate().equalsIgnoreCase("")) {
+			message += ", from " + task.getStartDate();
+			if (!task.getStartTime().equalsIgnoreCase("")){
+				message += " " + task.getStartTime();
+			}
+		}
+		
+		if (!task.getStartDate().equalsIgnoreCase("") && !task.getEndDate().equalsIgnoreCase("")) {
+			message += " to " + task.getEndDate();
+			if (!task.getEndTime().equalsIgnoreCase("")){
+				message += " " + task.getEndTime();
+			}
+		} else if (task.getStartDate().equalsIgnoreCase("") && !task.getEndDate().equalsIgnoreCase("")) {
+			message += ", by " + task.getEndDate();
+			if (!task.getEndTime().equalsIgnoreCase("")){
+				message += " " + task.getEndTime();
+			}
+		}
+		
+		if (!task.getLocation().equalsIgnoreCase("")) {
+			message += ", at " + task.getLocation();
+		}
+		
+		message += "\"";
+		
+		return message;	
 	}
 	
 	
@@ -97,8 +184,8 @@ public class Storage {
 		} else {
 			int byYear = Integer.parseInt(dateSearch.substring(6));
 			int scannedYear = Integer.parseInt(scannedDate.substring(6));
-			System.out.println("byYear : " + byYear);
-			System.out.println("scannedYear : " + scannedYear);
+//			System.out.println("byYear : " + byYear);
+//			System.out.println("scannedYear : " + scannedYear);
 			int byMonth = Integer.parseInt(dateSearch.substring(3, 5));
 			int scannedMonth = Integer.parseInt(scannedDate.substring(3, 5));
 			int byDay = Integer.parseInt(dateSearch.substring(0, 2));
@@ -161,7 +248,7 @@ public class Storage {
 			// open file and load all tasks
 			return loadAllTasks();	
 		} else {
-			System.out.println("No saved data file detected yet..\nStart entering tasks!");
+//			System.out.println("No saved data file detected yet..\nStart entering tasks!");
 			return null;
 		}
 	}
@@ -174,11 +261,11 @@ public class Storage {
 		readText = in.readLine();
 		in.close();
 		if (readText == null) {
-			System.out.println("User has not specified directory to store data file yet. \nThus, data file will reside in the program's folder.");
+//			System.out.println("User has not specified directory to store data file yet. \nThus, data file will reside in the program's folder.");
 			filePath = FILE_NAME;
 		} else {
 			filePath = readText;
-			System.out.println("User specified directory : "+filePath);
+//			System.out.println("User specified directory : "+filePath);
 		}
 		
 		return readText;
@@ -189,7 +276,7 @@ public class Storage {
 		BufferedReader in = new BufferedReader(new FileReader(filePath));
 		readText = in.readLine();
 		taskIndex = Integer.parseInt(readText);
-		System.out.println("Total task index : "+taskIndex);
+//		System.out.println("Total task index : "+taskIndex);
 		in.close();
 	}
 	
@@ -287,7 +374,7 @@ public class Storage {
 		}
 		else {
 			filePath = path + FILE_NAME;
-			System.out.println("To be entered : "+filePath);
+//			System.out.println("To be entered : "+filePath);
 			fw.println(filePath);
 			fw.close();
 			return true;
@@ -321,7 +408,7 @@ public class Storage {
 		return showSearchResults(searchList);
 	}
 
-	public boolean updateTaskFromSearch(int index, String taskDescription,
+	public String updateTaskFromSearch(int index, String taskDescription,
 			String startDate, String startTime, String endDate, String endTime,
 			String location, String remindDate, String priority) {
 		
@@ -335,6 +422,9 @@ public class Storage {
 			}
 		}
 		
+		String updateMessage = "\nOld : ";
+		updateMessage += showMessage(fileList.get(index));
+		
 		if (!taskDescription.equalsIgnoreCase("")) {
 			fileList.get(index).setTaskDescription(taskDescription);
 			isUpdateSuccess = true;
@@ -369,19 +459,23 @@ public class Storage {
 		}
 		
 		if (isUpdateSuccess) {
-			return true;
+			updateMessage += "\nNew : "+showMessage(fileList.get(index));
+			return updateMessage;
 		} else {
-			return false;
+			return null;
 		}
 	}
 	
 	// updates the task with the necessary details only
-	public boolean updateTaskFromAll(int index, String taskDescription,
+	public String updateTaskFromAll(int index, String taskDescription,
 			String startDate, String startTime, String endDate, String endTime,
 			String location, String remindDate, String priority) {
 		
 		boolean isUpdateSuccess = false;
 		
+		String updateMessage = "\nOld : ";
+		updateMessage += showMessage(fileList.get(index));
+		
 		if (!taskDescription.equalsIgnoreCase("")) {
 			fileList.get(index).setTaskDescription(taskDescription);
 			isUpdateSuccess = true;
@@ -416,9 +510,10 @@ public class Storage {
 		}
 		
 		if (isUpdateSuccess) {
-			return true;
+			updateMessage += "\nNew : "+showMessage(fileList.get(index));
+			return updateMessage;
 		} else {
-			return false;
+			return null;
 		}
 	}
 
@@ -429,7 +524,7 @@ public class Storage {
 			if (obj.getTaskDescription().toLowerCase()
 					.contains(taskSearch.toLowerCase())) {
 				storeSearchResults(obj);
-				System.out.println("Found a entry..");
+//				System.out.println("Found a entry..");
 			}
 		}
 
@@ -437,13 +532,13 @@ public class Storage {
 	}
 
 	public ArrayList<Task> showSearchResults(ArrayList<Task> results) {
-		System.out.println("Search : " + results.size() + " results found.");
+//		System.out.println("Search : " + results.size() + " results found.");
 
 		if (results.size() == 0) {
 			results = null;
 		} else {
 			for (int i = 0; i<searchList.size(); i++){
-				System.out.println("\"" + searchList.get(i).getTaskDescription() + "\" is found.");
+//				System.out.println("\"" + searchList.get(i).getTaskDescription() + "\" is found.");
 			}
 		}
 

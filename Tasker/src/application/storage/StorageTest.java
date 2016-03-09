@@ -84,10 +84,10 @@ public class StorageTest {
 		Storage storage = new Storage();
 		storage.startUpCheck();
 		storage.loadFile();
-		storage.addTaskInList("Do homework", "", "", "02/03/2018", "", "home", "02/07/2016", "high");
-		storage.addTaskInList("Go home", "", "", "02/05/2016", "", "", "", "");
-		storage.addTaskInList("Gym time", "", "", "", "", "", "", "");
-		storage.addTaskInList("Play game", "", "", "", "", "", "", "low");
+		System.out.println("Added : "+storage.addTaskInList("Do homework", "", "", "02/03/2018", "", "home", "02/07/2016", "high"));
+		System.out.println("Added : "+storage.addTaskInList("Go home", "", "", "02/05/2016", "", "", "", ""));
+		System.out.println("Added : "+storage.addTaskInList("Gym time", "", "", "", "", "", "", ""));
+		System.out.println("Added : "+storage.addTaskInList("Play game", "", "", "", "", "", "", "low"));
 		storage.saveFile();
 	}
 //	@Test
@@ -98,15 +98,31 @@ public class StorageTest {
 	}
 	
 //	@Test
-	public void testDelete() throws IOException {		
+	public void testDeleteByAll() throws IOException {		
+		Storage storage = new Storage();
+		storage.startUpCheck();
+		storage.loadFile();
+		storage.addTaskInList("Do homework", "", "", "02/03/2018", "2030", "home", "02/07/2016", "high");
+		storage.addTaskInList("Go home", "", "", "02/05/2016", "", "", "", "");
+		System.out.println("Deleted task : "+storage.deleteTaskFromAll(0));
+		storage.saveFile();
+		assertEquals(1,storage.fileList.size());
+
+	}
+	
+//	@Test
+	public void testDeleteBySearch() throws IOException {		
 		Storage storage = new Storage();
 		storage.startUpCheck();
 		storage.loadFile();
 		storage.addTaskInList("Do homework", "", "", "02/03/2018", "", "home", "02/07/2016", "high");
-		storage.addTaskInList("Go home", "", "", "02/05/2016", "", "", "", "");
-		storage.deleteTaskInList(1);
+		storage.addTaskInList("Go game", "", "", "02/05/2016", "", "", "", "");
+		storage.addTaskInList("Gym time", "", "", "", "", "", "", "");
+		storage.addTaskInList("Play game", "", "", "", "", "", "", "low");
+		storage.searchByTask("game");
+		System.out.println("Deleted task : "+storage.deleteTaskFromSearch(1));
 		storage.saveFile();
-		assertEquals(1,storage.fileList.size());
+		assertEquals(3,storage.fileList.size());
 
 	}
 	
@@ -122,7 +138,7 @@ public class StorageTest {
 		storage.loadFile();
 	}
 	
-	@Test
+//	@Test
 	public void testSearchTask() throws IOException {		
 		Storage storage = new Storage();
 		storage.startUpCheck();
@@ -178,7 +194,7 @@ public class StorageTest {
 		storage.addTaskInList("Do homework", "", "", "02/03/2018", "", "home", "02/07/2016", "high");
 		storage.addTaskInList("Go home", "", "", "02/05/2016", "", "", "", "");
 		storage.saveFile();
-		storage.updateTaskFromAll(1, "Go home and die", "", "", "", "", "", "", "");
+		System.out.println(storage.updateTaskFromAll(1, "Go home and die", "", "", "", "", "", "", ""));
 		storage.saveFile();
 	}
 	
@@ -193,11 +209,42 @@ public class StorageTest {
 		storage.addTaskInList("Go cde", "", "", "02/05/2016", "", "", "", "");
 		storage.saveFile();
 		storage.searchByTask("go");
-		storage.updateTaskFromSearch(1, "Go home and die", "", "", "", "", "", "", "");
+		System.out.println(storage.updateTaskFromSearch(1, "Go home and die", "", "", "", "", "", "", ""));
 		storage.saveFile();
 	}
 	
-	@After
+//	@Test
+	public void testCloseTaskFromAll() throws IOException {
+		Storage storage = new Storage();
+		storage.startUpCheck();
+		storage.loadFile();
+		storage.addTaskInList("Do homework", "", "", "02/03/2018", "", "home", "02/07/2016", "high");
+		storage.addTaskInList("Go home", "", "", "02/05/2016", "", "", "", "");
+		storage.addTaskInList("Go abc", "", "", "02/05/2016", "", "", "", "");
+		storage.addTaskInList("Go cde", "", "", "02/05/2016", "", "", "", "");
+		System.out.println("Closed : "+storage.closeTaskFromAll(2));
+		storage.saveFile();
+
+		
+	}
+	
+	@Test
+	public void testCloseTaskFromSearch() throws IOException {
+		Storage storage = new Storage();
+		storage.startUpCheck();
+		storage.loadFile();
+		storage.addTaskInList("Do homework", "", "", "02/03/2018", "", "home", "02/07/2016", "high");
+		storage.addTaskInList("Go home", "", "", "02/05/2016", "", "", "", "");
+		storage.addTaskInList("Go abc", "", "", "02/05/2016", "", "", "", "");
+		storage.addTaskInList("Go cde", "", "", "02/05/2016", "", "", "", "");
+		storage.saveFile();
+		storage.searchByTask("go");
+		System.out.println("Closed : "+storage.closeTaskFromSearch(1));
+		storage.saveFile();
+		
+	}
+	
+//	@After
 	public void deleteFiles() throws IOException {
 		Storage storage = new Storage();
 		storage.startUpCheck();
