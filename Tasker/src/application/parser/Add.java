@@ -11,8 +11,7 @@ import org.ocpsoft.prettytime.nlp.PrettyTimeParser;
 public class Add implements Command{
     public static final int NOT_FOUND = -1;
     public static final String EMPTY = "";
-    private static final String MESSAGE_ADD_FEEDBACK_NO_START_DATE = "Added Task: %1$s, by %2$s, at %3$s.";
-    private static final String MESSAGE_ADD_FEEDBACK_WITH_START_DATE = "Added Task: %1$s, from %2$s to %3$s, at %4$s.";    
+    private static final String MESSAGE_ADD_FEEDBACK= "Added Task: %1$s";
     private static final String MESSAGE_ADD_ERROR = 
             "We encountered an error while adding the task. Sorry for the inconvenience.";    
     
@@ -100,10 +99,11 @@ public class Add implements Command{
     }
    
     public Feedback execute(Storage storage){
-        String feedbackMessage = storage.addTaskInList(description, startDateTime, startTime
+        String feedbackMessageFromStorage = storage.addTaskInList(description, startDateTime, startTime
                 ,endDateTime, endTime, location, remindDate, priority);
-        if (feedbackMessage != null){
-            Feedback feedback = new Feedback(feedbackMessage, storage.getAllTasks()) 
+        if (feedbackMessageFromStorage != null){
+            String feedbackMessage = String.format(MESSAGE_ADD_FEEDBACK, feedbackMessageFromStorage);
+            Feedback feedback = new Feedback(feedbackMessage, storage.getAllTasks()); 
             return feedback;
         } else {
             return new Feedback(MESSAGE_ADD_ERROR, storage.getAllTasks());

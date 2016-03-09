@@ -16,6 +16,8 @@ public class Update implements Command{
     public static final String EMPTY = "";
     private static final String MESSAGE_UPDATE_ERROR = 
             "We encountered an error while updating the task. Sorry for the inconvenience.";    
+    private static final String MESSAGE_UPDATE_FEEDBACK = 
+            "Updated Task: %1$s";    
     
     
     String[] arguments;
@@ -108,11 +110,12 @@ public class Update implements Command{
    
     public Feedback execute(Storage storage){
         
-        String feedbackMessage = storage.updateTaskFromSearch(taskPosition, description, 
+        String feedbackMessageFromStorage = storage.updateTaskFromSearch(taskPosition, description, 
                 startDateTime, startTime, endDateTime
                 , endTime,location
                 , remindDate, priority);
-        if (feedbackMessage != null){
+        if (feedbackMessageFromStorage != null){
+            String feedbackMessage = String.format(MESSAGE_UPDATE_FEEDBACK, feedbackMessageFromStorage);
             return new Feedback(feedbackMessage, storage.getAllTasks());
         }else{
             return new Feedback(MESSAGE_UPDATE_ERROR, storage.getAllTasks());

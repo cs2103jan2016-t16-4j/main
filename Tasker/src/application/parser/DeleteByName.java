@@ -33,20 +33,21 @@ public class DeleteByName implements Command {
     public Feedback takeAction(ArrayList<Task> taskList, Storage storage) throws IOException{
         assert(taskList.size() > 0);
         if (taskList.size() ==  1){
-            String feedbackMessage = storage.deleteTaskFromSearch(0);
-            return new Feedback(feedbackMessage, storage.getAllTasks())
+            String feedbackFromStorage = storage.deleteTaskFromSearch(FIRST_INDEX);
+            String feedbackMessage = String.format(FEEDBACK_DELETE, feedbackFromStorage);
+            return new Feedback(feedbackMessage, storage.getAllTasks());
         } else {
             return new Feedback(MESSAGE_WHICH_DELETE, taskList);
         }
     }
 
-    private String deleteSingleTask(ArrayList<Task> taskList, Storage storage) throws IOException {
+    /*private String deleteSingleTask(ArrayList<Task> taskList, Storage storage) throws IOException {
         String feedback = String.format(FEEDBACK_DELETE, 
                 taskList.get(FIRST_INDEX).getTaskDescription());
         storage.deleteTaskFromSearch(FIRST_INDEX);
         return feedback;
     }
-    /*
+    
     private String listTasks(ArrayList<Task> taskList){
         String listed = "Which task would you like to delete?";
         int i = 1;

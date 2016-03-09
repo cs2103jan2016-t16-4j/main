@@ -6,6 +6,7 @@ import application.storage.Storage;
 
 public class DeleteByNum implements Command {
     private static final String MESSAGE_DELETE_FAILURE = "We encountered a problem while deleting this task.";
+    private static final String MESSAGE_DELETE_FEEDBACK = "Deleted Task: %1$s";
     
     
     int numToDelete;
@@ -16,7 +17,8 @@ public class DeleteByNum implements Command {
     
     public Feedback execute(Storage storage){
         try {
-            String feedbackMessage = storage.deleteTaskFromSearch(numToDelete);
+            String feedbackMessageFromStorage = storage.deleteTaskFromSearch(numToDelete);
+            String feedbackMessage = String.format(MESSAGE_DELETE_FEEDBACK,feedbackMessageFromStorage);
             return new Feedback(feedbackMessage, storage.getAllTasks());
         } catch (IOException e) {
             return new Feedback(MESSAGE_DELETE_FAILURE, storage.getAllTasks());
