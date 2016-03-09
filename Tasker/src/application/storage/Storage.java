@@ -250,7 +250,7 @@ public class Storage {
 			return loadAllTasks();	
 		} else {
 //			System.out.println("No saved data file detected yet..\nStart entering tasks!");
-			return null;
+			return fileList;
 		}
 	}
 
