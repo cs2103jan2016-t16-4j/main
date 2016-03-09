@@ -33,8 +33,8 @@ public class Delete implements Command{
     }
    
     
-    public String execute(Storage storage){
-        String feedback = delObj.execute(storage);
+    public Feedback execute(Storage storage){
+        Feedback feedback = delObj.execute(storage);
         return feedback;
     }
     

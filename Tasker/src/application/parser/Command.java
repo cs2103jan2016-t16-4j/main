@@ -4,7 +4,7 @@ import application.storage.Storage;
 
 public interface Command {
 
-    String execute(Storage storage);
+    Feedback execute(Storage storage);
     
    // String undo();
 }

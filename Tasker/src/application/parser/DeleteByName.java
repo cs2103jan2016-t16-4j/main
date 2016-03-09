@@ -9,6 +9,7 @@ import application.storage.Task;
 public class DeleteByName implements Command {
     private static final int FIRST_INDEX = 0;
     private static final String FEEDBACK_DELETE = "Deleted Task: %1$s";
+    private static final String MESSAGE_WHICH_DELETE = "Which task would you like to delete?";
     private static final String MESSAGE_DELETE_ERROR = "We encountered some "
             + "problem while deleting this task. We apologise for the inconvenience.";
     
@@ -19,34 +20,35 @@ public class DeleteByName implements Command {
         this.taskToDelete = taskToDelete;
     }
      
-    public String execute(Storage storage){
+    public Feedback execute(Storage storage){
         try{
             ArrayList<Task> taskList = storage.searchByTask(taskToDelete);
-            String feedback = takeAction(taskList, storage);
+            Feedback feedback = takeAction(taskList, storage);
             return feedback;
         }catch(IOException e){
-            return MESSAGE_DELETE_ERROR;
+            return new Feedback(MESSAGE_DELETE_ERROR, storage.getAllTasks()); 
         }
     }
     
-    public String takeAction(ArrayList<Task> taskList, Storage storage) throws IOException{
+    public Feedback takeAction(ArrayList<Task> taskList, Storage storage) throws IOException{
         assert(taskList.size() > 0);
         if (taskList.size() ==  1){
-            return deleteSingleTask(taskList, storage);
+            String feedbackMessage = storage.deleteTaskFromSearch(0);
+            return new Feedback(feedbackMessage, storage.getAllTasks())
         } else {
-            return listTasks(taskList);
+            return new Feedback(MESSAGE_WHICH_DELETE, taskList);
         }
     }
 
     private String deleteSingleTask(ArrayList<Task> taskList, Storage storage) throws IOException {
         String feedback = String.format(FEEDBACK_DELETE, 
                 taskList.get(FIRST_INDEX).getTaskDescription());
-        storage.deleteTaskInList(FIRST_INDEX);
+        storage.deleteTaskFromSearch(FIRST_INDEX);
         return feedback;
     }
-    
+    /*
     private String listTasks(ArrayList<Task> taskList){
-        String listed = "\nWhich task would you like to delete?";
+        String listed = "Which task would you like to delete?";
         int i = 1;
         for (Task task: taskList){
             listed = listed + "\n" + i + ") " + task.getTaskDescription();
@@ -54,5 +56,5 @@ public class DeleteByName implements Command {
         }
         return listed;
     }
-    
+    */
 }

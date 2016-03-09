@@ -12,7 +12,10 @@ import application.storage.Task;
  */
 
 public class SearchByName implements Command {
-	private String taskName;
+	
+    private static final String MESSAGE_SEARCH_RESULTS = "Here are the results of your search!";
+
+    private String taskName;
 	private String feedback = "";
 
 	private ArrayList<Task> taskList;
@@ -22,20 +25,20 @@ public class SearchByName implements Command {
 	}
 
 	@Override
-	public String execute(Storage storage) {
+	public Feedback execute(Storage storage) {
 		// TODO Auto-generated method stub
 		taskList = storage.searchByTask(taskName);
-		return checkIfListEmpty();
+		return checkIfListEmpty(storage);
 	}
-
-	private String checkIfListEmpty() {
+	
+	private Feedback checkIfListEmpty(Storage storage) {
 		if (taskList != null) {
-			return readArrayList(taskList);
-		} else {
-			return "Search Not Found";
-		}
+		    return new Feedback(MESSAGE_SEARCH_RESULTS,taskList);
+        } else {
+            return new Feedback("Search Not Found", storage.getAllTasks());
+        }
 	}
-
+/*
 	private String readArrayList(ArrayList<Task> tasks) {
 		int i = 0;
 		for (Task item : tasks) {
@@ -44,7 +47,7 @@ public class SearchByName implements Command {
 		}
 		return feedback.trim();
 	}
-
+*/
 	private String getString(String[] args, int start, int end) {
 		String string = "";
 		for (int i = start; i <= end; i++) {

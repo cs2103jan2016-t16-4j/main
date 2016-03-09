@@ -14,18 +14,13 @@ public class DeleteByNum implements Command {
         this.numToDelete = numToDelete;
     }
     
-    public String execute(Storage storage){
+    public Feedback execute(Storage storage){
         try {
-            boolean isSuccess = storage.deleteTaskInList(numToDelete);
-            if (isSuccess){
-                return "Deleted successfully"; //NEED TO CHANGE THIS SO THAT I SHOW DETAILS WHILE DELETING
-            }else {
-                return MESSAGE_DELETE_FAILURE;
-            }
+            String feedbackMessage = storage.deleteTaskFromSearch(numToDelete);
+            return new Feedback(feedbackMessage, storage.getAllTasks());
         } catch (IOException e) {
-            return MESSAGE_DELETE_FAILURE;
+            return new Feedback(MESSAGE_DELETE_FAILURE, storage.getAllTasks());
         }
     }
-    
 
 }

@@ -12,6 +12,8 @@ import application.storage.Task;
  */
 
 public class SearchByDate implements Command {
+    private static final String MESSAGE_SEARCH_RESULTS = "Here are the results of your search!";
+    
 	private String date;
 	private String feedback = "";
 
@@ -22,21 +24,21 @@ public class SearchByDate implements Command {
 	}
 
 	@Override
-	public String execute(Storage storage) {
+	public Feedback execute(Storage storage) {
 		// TODO Auto-generated method stub
 		taskList = storage.searchByDate(date, true);
-		return checkIfListEmpty();
+		return checkIfListEmpty(storage);
 	}
 
-	private String checkIfListEmpty() {
+	private Feedback checkIfListEmpty(Storage storage) {
 		if (taskList != null) {
-			return readArrayList(taskList);
+			return new Feedback(MESSAGE_SEARCH_RESULTS,taskList);
 		} else {
-			return "Search Not Found";
+			return new Feedback("Search Not Found", storage.getAllTasks());
 		}
 	}
-
-	private String readArrayList(ArrayList<Task> tasks) {
+/*
+	private Feedback readArrayList(ArrayList<Task> tasks) {
 		int i = 0;
 		for (Task item : tasks) {
 			i++;
@@ -44,5 +46,5 @@ public class SearchByDate implements Command {
 		}
 		return feedback.trim();
 	}
-
+*/
 }

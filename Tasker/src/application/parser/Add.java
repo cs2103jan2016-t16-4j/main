@@ -99,16 +99,17 @@ public class Add implements Command{
         return string.trim();
     }
    
-    public String execute(Storage storage){
-        boolean isSuccess = storage.addTaskInList(description, startDateTime, startTime
+    public Feedback execute(Storage storage){
+        String feedbackMessage = storage.addTaskInList(description, startDateTime, startTime
                 ,endDateTime, endTime, location, remindDate, priority);
-        if (isSuccess){
-            return makeFeedback();
+        if (feedbackMessage != null){
+            Feedback feedback = new Feedback(feedbackMessage, storage.getAllTasks()) 
+            return feedback;
         } else {
-            return MESSAGE_ADD_ERROR;
+            return new Feedback(MESSAGE_ADD_ERROR, storage.getAllTasks());
         }
     }
-    
+    /*
     private String makeFeedback(){
         if (startDateTime.equals(EMPTY)){
             return String.format(MESSAGE_ADD_FEEDBACK_NO_START_DATE, description, endDateTime, location);
@@ -116,5 +117,5 @@ public class Add implements Command{
             return String.format(MESSAGE_ADD_FEEDBACK_WITH_START_DATE, description, startDateTime, endDateTime, location);
         }
         
-    }
+    }*/
 }

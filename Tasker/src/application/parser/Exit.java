@@ -11,7 +11,7 @@ import application.storage.Storage;
 public class Exit implements Command {
 
 	@Override
-	public String execute(Storage storage) {
+	public Feedback execute(Storage storage) {
 		System.exit(0);
 		return null;
 	}

@@ -14,8 +14,6 @@ public class Update implements Command{
     public static final int INDEX_TASK_POSITION = 0;
     public static final int ARRAY_INDEXING_OFFSET = 1;
     public static final String EMPTY = "";
-    private static final String MESSAGE_UPDATE_FEEDBACK_NO_START_DATE = "Updated Task: %1$s, by %2$s, at %3$s.";
-    private static final String MESSAGE_UPDATE_FEEDBACK_WITH_START_DATE = "Updated Task: %1$s, from %2$s to %3$s, at %4$s.";    
     private static final String MESSAGE_UPDATE_ERROR = 
             "We encountered an error while updating the task. Sorry for the inconvenience.";    
     
@@ -108,18 +106,20 @@ public class Update implements Command{
         return string.trim();
     }
    
-    public String execute(Storage storage){
-        boolean isSuccess = storage.updateTaskFromSearch(taskPosition, description, 
+    public Feedback execute(Storage storage){
+        
+        String feedbackMessage = storage.updateTaskFromSearch(taskPosition, description, 
                 startDateTime, startTime, endDateTime
                 , endTime,location
-                , "", priority);
-        if (isSuccess){
-            return makeFeedback();
-        } else {
-            return MESSAGE_UPDATE_ERROR;
+                , remindDate, priority);
+        if (feedbackMessage != null){
+            return new Feedback(feedbackMessage, storage.getAllTasks());
+        }else{
+            return new Feedback(MESSAGE_UPDATE_ERROR, storage.getAllTasks());
         }
+        
     }
-    
+    /*
     private String makeFeedback(){
         if (startDateTime.equals(EMPTY)){
             return String.format(MESSAGE_UPDATE_FEEDBACK_NO_START_DATE, description, endDateTime, location);
@@ -128,4 +128,5 @@ public class Update implements Command{
         }
         
     }
+    */
 }

@@ -40,8 +40,8 @@ public class Search implements Command {
 	}
 
 	@Override
-	public String execute(Storage storage) {
-		String feedback = searchObj.execute(storage);
+	public Feedback execute(Storage storage) {
+		Feedback feedback = searchObj.execute(storage);
 		return feedback;
 	}
 
