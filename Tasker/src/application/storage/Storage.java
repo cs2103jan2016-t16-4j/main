@@ -1,4 +1,4 @@
-//package application.storage;
+package application.storage;
 import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -310,6 +310,7 @@ public class Storage {
 			fileList.add(task);
 		}
 		in.close();
+		searchList = fileList;
 		return fileList;
 	}
 
@@ -560,6 +561,7 @@ public class Storage {
 	}
 	
 	public ArrayList<Task> getAllTasks() {
+		searchList = fileList;
 		return fileList;
 	}
 	
