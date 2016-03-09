@@ -37,8 +37,10 @@ public class SearchByName implements Command {
 	}
 
 	private String readArrayList(ArrayList<Task> tasks) {
+		int i = 0;
 		for (Task item : tasks) {
-			feedback = feedback + item.getTaskDescription() + "\n";
+			i++;
+			feedback = feedback + i + ") " + item.getTaskDescription() + "\n";
 		}
 		return feedback.trim();
 	}
