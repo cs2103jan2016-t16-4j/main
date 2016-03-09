@@ -32,7 +32,7 @@ public class Cli implements Ui{
     private void showList(ArrayList<Task> tasks){
         int i = FIRST_INDEX_FOR_USER;
         for(Task task: tasks){
-            showLine(i + ". " + task.getTaskDescription());
+            showLine(i + ". " + task.showMessage());
             i++;
         }
     }
