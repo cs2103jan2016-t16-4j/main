@@ -10,11 +10,11 @@ public class Task {
 	private String location;
 	private String remindDate;
 	private String priority;
-	private int taskIndex;
+	private int taskIndex;	// to be considered
 	
 	public void storeTask(String taskInfo) {
 		// call Logic to Parser to decipher String into task
-		// gets an array[8] of string or Task objects
+		// gets an array[7] of string or Task objects
 		// store string into variables
 	}
 	
@@ -88,6 +88,38 @@ public class Task {
 
 	public String getPriority() {
 		return priority;
+	}
+	
+	public String showMessage (Task task) {
+		String message = "\"";
+		message += task.getTaskDescription();
+		
+		if (!task.getStartDate().equalsIgnoreCase("")) {
+			message += ", from " + task.getStartDate();
+			if (!task.getStartTime().equalsIgnoreCase("")){
+				message += " " + task.getStartTime();
+			}
+		}
+		
+		if (!task.getStartDate().equalsIgnoreCase("") && !task.getEndDate().equalsIgnoreCase("")) {
+			message += " to " + task.getEndDate();
+			if (!task.getEndTime().equalsIgnoreCase("")){
+				message += " " + task.getEndTime();
+			}
+		} else if (task.getStartDate().equalsIgnoreCase("") && !task.getEndDate().equalsIgnoreCase("")) {
+			message += ", by " + task.getEndDate();
+			if (!task.getEndTime().equalsIgnoreCase("")){
+				message += " " + task.getEndTime();
+			}
+		}
+		
+		if (!task.getLocation().equalsIgnoreCase("")) {
+			message += ", at " + task.getLocation();
+		}
+		
+		message += "\"";
+		
+		return message;	
 	}
 	
 }
