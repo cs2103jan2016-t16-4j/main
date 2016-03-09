@@ -20,7 +20,9 @@ public class Add implements Command{
     String[] arguments;
     String description = EMPTY;
     String startDateTime = EMPTY;
+    String startTime = EMPTY;
     String endDateTime = EMPTY;
+    String endTime = EMPTY;
     String location = EMPTY;
     String remindDate = EMPTY;
     String priority = EMPTY;
@@ -52,7 +54,7 @@ public class Add implements Command{
         }else{
             int toDateIndex = Arrays.asList(arguments).lastIndexOf("to");
             int locationIndex = Arrays.asList(arguments).lastIndexOf("at");
-            parseDateTime(arguments, fromDateIndex, toDateIndex, locationIndex);
+            setStartAndEndDateAndTime(arguments, fromDateIndex, toDateIndex, locationIndex);
         }
         return fromDateIndex;
     }
@@ -60,25 +62,32 @@ public class Add implements Command{
     private int setEndDateOnly(String[] args){
         int byDateIndex = Arrays.asList(arguments).lastIndexOf("by");
         int locationIndex = Arrays.asList(arguments).lastIndexOf("at");
-        parseDateTime(args, byDateIndex, locationIndex);
+        setEndDateAndTime(args, byDateIndex, locationIndex);
         return byDateIndex;
     }
     
-    private void parseDateTime (String[] args, int by, int loc){
-        String endDateTime = getString(arguments, by + 1, loc - 1); //MAGIC NUMBERS
-        this.endDateTime = interpretDate(endDateTime);
+    private void setStartAndEndDateAndTime (String[] arguments, int from, int to, int loc){
+        setStartDateAndTime(arguments, from, to);
+        setEndDateAndTime(arguments, to, loc);
     }
-    
-    private void parseDateTime (String[] arguments, int from, int to, int loc){
-        String startDateTime = getString(arguments, from + 1, to - 1); //MAGIC NUMBERS
-        this.startDateTime = interpretDate(startDateTime);
+
+    private void setEndDateAndTime(String[] arguments, int to, int loc) {
         String endDateTime = getString(arguments, to + 1, loc - 1); //MAGIC NUMBERS
-        this.endDateTime = interpretDate(endDateTime);
+        Date endDateAndTime = interpretDate(endDateTime);
+        this.endDateTime = (new SimpleDateFormat("dd/MM/yyyy").format(endDateAndTime));
+        this.endTime = (new SimpleDateFormat("HH:mm").format(endDateAndTime));
+    }
+
+    private void setStartDateAndTime(String[] arguments, int from, int to) {
+        String startDateTime = getString(arguments, from + 1, to - 1); //MAGIC NUMBERS
+        Date startDateAndTime = interpretDate(startDateTime);
+        this.startDateTime = (new SimpleDateFormat("dd/MM/yyyy").format(startDateAndTime));
+        this.startTime = (new SimpleDateFormat("HH:mm").format(startDateAndTime));
     }
     
-    private String interpretDate(String date) throws IndexOutOfBoundsException{
+    private Date interpretDate(String date) throws IndexOutOfBoundsException{
         List<Date> dateTimes = dateParser.parse(date);
-        return dateTimes.get(0).toString();
+        return dateTimes.get(0);
     }
     
     
@@ -91,8 +100,8 @@ public class Add implements Command{
     }
    
     public String execute(Storage storage){
-        boolean isSuccess = storage.addTaskInList(description, startDateTime, 
-                endDateTime,"", location, remindDate, priority);
+        boolean isSuccess = storage.addTaskInList(description, startDateTime, startTime
+                ,endDateTime, endTime, location, remindDate, priority);
         if (isSuccess){
             return makeFeedback();
         } else {

@@ -50,11 +50,11 @@ public class Parser {
             case KEYWORD_DELETE :
                 command = initializeDelete(args);
                 break;
-            /*    
+              
             case KEYWORD_UPDATE :
                 command = initializeUpdate(args);
                 break;
-                
+            /*    
             case KEYWORD_DONE :
                 command = initializeDone(args);
                 break;
@@ -102,13 +102,13 @@ public class Parser {
         Command command = new Delete (args);
         return command;
     }
-    /*
+    
     private Command initializeUpdate(String[] args){
         args = (String[]) ArrayUtils.remove(args, 0);
         Command command = new Update ( args);
         return command;
     }
-    
+    /*
     private Command initializeDone(String[] args){
         args = (String[]) ArrayUtils.remove(args, 0);
         Command command = new Done ( args);

@@ -1,5 +1,6 @@
 package application.parser;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -10,7 +11,7 @@ import application.storage.Storage;
 
 public class Update implements Command{
     public static final int NOT_FOUND = -1;
-    public static final int INDEX_TASK_POSITION = 1;
+    public static final int INDEX_TASK_POSITION = 0;
     public static final int ARRAY_INDEXING_OFFSET = 1;
     public static final String EMPTY = "";
     private static final String MESSAGE_UPDATE_FEEDBACK_NO_START_DATE = "Updated Task: %1$s, by %2$s, at %3$s.";
@@ -24,6 +25,8 @@ public class Update implements Command{
     String description = EMPTY;
     String startDateTime = EMPTY;
     String endDateTime = EMPTY;
+    String startTime = EMPTY;
+    String endTime = EMPTY;
     String location = EMPTY;
     String remindDate = EMPTY;
     String priority = EMPTY;
@@ -39,7 +42,7 @@ public class Update implements Command{
     private void interpretArguments (String[] arguments){
         this.taskPosition = interpretPosition(arguments[INDEX_TASK_POSITION]);
         int indexDateStart = setDateTime(arguments);
-        this.description = getString(arguments, 0, indexDateStart - 1);
+        this.description = getString(arguments, 1, indexDateStart - 1);
         setLocation(arguments);
     }
     
@@ -60,7 +63,7 @@ public class Update implements Command{
         }else{
             int toDateIndex = Arrays.asList(arguments).lastIndexOf("to");
             int locationIndex = Arrays.asList(arguments).lastIndexOf("at");
-            parseDateTime(arguments, fromDateIndex, toDateIndex, locationIndex);
+            setStartAndEndDateTime(arguments, fromDateIndex, toDateIndex, locationIndex);
         }
         return fromDateIndex;
     }
@@ -68,25 +71,32 @@ public class Update implements Command{
     private int setEndDateOnly(String[] args){
         int byDateIndex = Arrays.asList(arguments).lastIndexOf("by");
         int locationIndex = Arrays.asList(arguments).lastIndexOf("at");
-        parseDateTime(args, byDateIndex, locationIndex);
+        setEndDateAndTime(args, byDateIndex, locationIndex);
         return byDateIndex;
     }
     
-    private void parseDateTime (String[] args, int by, int loc){
-        String endDateTime = getString(arguments, by + 1, loc - 1); //MAGIC NUMBERS
-        this.endDateTime = interpretDate(endDateTime);
+    private void setStartAndEndDateTime (String[] arguments, int from, int to, int loc){
+        setStartDateAndTIme(arguments, from, to);
+        setEndDateAndTime(arguments, to, loc);
     }
-    
-    private void parseDateTime (String[] arguments, int from, int to, int loc){
-        String startDateTime = getString(arguments, from + 1, to - 1); //MAGIC NUMBERS
-        this.startDateTime = interpretDate(startDateTime);
+
+    private void setEndDateAndTime(String[] arguments, int to, int loc) {
         String endDateTime = getString(arguments, to + 1, loc - 1); //MAGIC NUMBERS
-        this.endDateTime = interpretDate(endDateTime);
+        Date endDateAndTime = interpretDate(endDateTime);
+        this.endDateTime = (new SimpleDateFormat("dd/MM/yyyy").format(endDateAndTime));
+        this.endTime = (new SimpleDateFormat("HH:mm").format(endDateAndTime));
+    }
+
+    private void setStartDateAndTIme(String[] arguments, int from, int to) {
+        String startDateTime = getString(arguments, from + 1, to - 1); //MAGIC NUMBERS
+        Date startDateAndTime = interpretDate(startDateTime);
+        this.startDateTime = (new SimpleDateFormat("dd/MM/yyyy").format(startDateAndTime));
+        this.startTime = (new SimpleDateFormat("HH:mm").format(startDateAndTime));
     }
     
-    private String interpretDate(String date){
+    private Date interpretDate(String date){
         List<Date> dateTimes = dateParser.parse(date);
-        return dateTimes.get(0).toString();
+        return dateTimes.get(0);
     }
     
     
@@ -99,9 +109,9 @@ public class Update implements Command{
     }
    
     public String execute(Storage storage){
-        boolean isSuccess = storage.updateTaskInList(taskPosition, description, 
-                startDateTime, "", endDateTime
-                , "",location
+        boolean isSuccess = storage.updateTaskFromSearch(taskPosition, description, 
+                startDateTime, startTime, endDateTime
+                , endTime,location
                 , "", priority);
         if (isSuccess){
             return makeFeedback();

@@ -46,9 +46,11 @@ public class DeleteByName implements Command {
     }
     
     private String listTasks(ArrayList<Task> taskList){
-        String listed = "";
+        String listed = "\nWhich task would you like to delete?";
+        int i = 1;
         for (Task task: taskList){
-            listed = listed + "\n" + task.getTaskDescription();
+            listed = listed + "\n" + i + ") " + task.getTaskDescription();
+            i++;
         }
         return listed;
     }

@@ -3,6 +3,9 @@ package application.parser;
 import application.storage.Storage;
 
 public class Delete implements Command{
+    
+    public static final int ARRAY_INDEXING_OFFSET = 1;
+
     Command delObj;
     
     
@@ -14,7 +17,7 @@ public class Delete implements Command{
     
     public void initAppropDelete(String taskToDel){
         try{
-            int taskNumber = Integer.parseInt(taskToDel);
+            int taskNumber = Integer.parseInt(taskToDel) - ARRAY_INDEXING_OFFSET ;
             delObj = new DeleteByNum(taskNumber);
         }catch(NumberFormatException e){
             delObj = new DeleteByName(taskToDel);
