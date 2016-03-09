@@ -1,12 +1,8 @@
 import static org.junit.Assert.*;
-
 import java.io.IOException;
-
 import org.junit.Test;
-
 import org.junit.After;
 import org.junit.Before;
-
 import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -88,10 +84,10 @@ public class StorageTest {
 		Storage storage = new Storage();
 		storage.startUpCheck();
 		storage.loadFile();
-		storage.addTaskInList("Do homework", "", "02/03/2018", "", "home", "02/07/2016", "high");
-		storage.addTaskInList("Go home", "", "02/05/2016", "", "", "", "");
-		storage.addTaskInList("Gym time", "", "", "", "", "", "");
-		storage.addTaskInList("Play game", "", "", "", "", "", "low");
+		storage.addTaskInList("Do homework", "", "", "02/03/2018", "", "home", "02/07/2016", "high");
+		storage.addTaskInList("Go home", "", "", "02/05/2016", "", "", "", "");
+		storage.addTaskInList("Gym time", "", "", "", "", "", "", "");
+		storage.addTaskInList("Play game", "", "", "", "", "", "", "low");
 		storage.saveFile();
 	}
 //	@Test
@@ -106,9 +102,9 @@ public class StorageTest {
 		Storage storage = new Storage();
 		storage.startUpCheck();
 		storage.loadFile();
-		storage.addTaskInList("Do homework", "", "02/03/2018", "", "home", "02/07/2016", "high");
-		storage.addTaskInList("Go home", "", "02/05/2016", "", "", "", "");
-		storage.deleteTaskInList(2);
+		storage.addTaskInList("Do homework", "", "", "02/03/2018", "", "home", "02/07/2016", "high");
+		storage.addTaskInList("Go home", "", "", "02/05/2016", "", "", "", "");
+		storage.deleteTaskInList(1);
 		storage.saveFile();
 		assertEquals(1,storage.fileList.size());
 
@@ -126,19 +122,22 @@ public class StorageTest {
 		storage.loadFile();
 	}
 	
-//	@Test
+	@Test
 	public void testSearchTask() throws IOException {		
 		Storage storage = new Storage();
-		storage.addTaskInList("Do homework", "", "02/03/2018", "", "home", "02/07/2016", "high");
-		storage.addTaskInList("Go home", "", "02/05/2016", "", "", "", "");
+		storage.startUpCheck();
+		storage.loadFile();
+		storage.addTaskInList("Do homework", "", "", "02/03/2018", "", "home", "02/07/2016", "high");
+		storage.addTaskInList("Go home", "", "", "02/05/2016", "", "", "", "");
 		storage.searchByTask("home");
+		storage.saveFile();
 	}
 	
 //	@Test
 	public void testSearchDate() throws IOException {		
 		Storage storage = new Storage();
-		storage.addTaskInList("Do homework", "", "02/03/2018", "", "home", "02/07/2016", "high");
-		storage.addTaskInList("Go home", "", "02/05/2016", "", "", "", "");
+		storage.addTaskInList("Do homework", "", "", "02/03/2018", "", "home", "02/07/2016", "high");
+		storage.addTaskInList("Go home", "", "", "02/05/2016", "", "", "", "");
 		storage.searchByDate("01/01/2017", true);	
 	}
 	
@@ -171,11 +170,40 @@ public class StorageTest {
 			
 	}
 	
+//	@Test
+	public void testUpdateTaskFromAll() throws IOException {
+		Storage storage = new Storage();
+		storage.startUpCheck();
+		storage.loadFile();
+		storage.addTaskInList("Do homework", "", "", "02/03/2018", "", "home", "02/07/2016", "high");
+		storage.addTaskInList("Go home", "", "", "02/05/2016", "", "", "", "");
+		storage.saveFile();
+		storage.updateTaskFromAll(1, "Go home and die", "", "", "", "", "", "", "");
+		storage.saveFile();
+	}
+	
+//	@Test
+	public void testUpdateTaskFromSearch() throws IOException {
+		Storage storage = new Storage();
+		storage.startUpCheck();
+		storage.loadFile();
+		storage.addTaskInList("Do homework", "", "", "02/03/2018", "", "home", "02/07/2016", "high");
+		storage.addTaskInList("Go home", "", "", "02/05/2016", "", "", "", "");
+		storage.addTaskInList("Go abc", "", "", "02/05/2016", "", "", "", "");
+		storage.addTaskInList("Go cde", "", "", "02/05/2016", "", "", "", "");
+		storage.saveFile();
+		storage.searchByTask("go");
+		storage.updateTaskFromSearch(1, "Go home and die", "", "", "", "", "", "", "");
+		storage.saveFile();
+	}
+	
 	@After
 	public void deleteFiles() throws IOException {
 		Storage storage = new Storage();
+		storage.startUpCheck();
+		storage.loadFile();
 		File f = new File(storage.FILE_DIRECTORY);
-		File p = new File(storage.FILE_PATH);
+		File p = new File(storage.filePath);
 		f.delete();
 		p.delete();
 	}

@@ -19,15 +19,16 @@ public class Storage {
 	public ArrayList<Task> fileList = new ArrayList<Task>();
 	public ArrayList<Task> searchList;
 	
-	public boolean addTaskInList(String taskDescription, String startDate, String endDate
-				, String dueTime, String location
+	public boolean addTaskInList(String taskDescription, String startDate, String startTime, String endDate
+				, String endTime, String location
 				, String remindDate, String priority) {
 		
 		Task newTask = new Task();
 		newTask.setTaskDescription(taskDescription);
 		newTask.setStartDate(startDate);
+		newTask.setStartTime(startTime);
 		newTask.setEndDate(endDate);
-		newTask.setDueTime(dueTime);
+		newTask.setEndTime(endTime);
 		newTask.setLocation(location);
 		newTask.setRemindDate(remindDate);
 		newTask.setPriority(priority);
@@ -146,23 +147,22 @@ public class Storage {
 		}
 	} 
 	
-	public void loadFile() throws IOException {
+	public ArrayList<Task> loadFile() throws IOException {
 		loadDirectoryFile();
-		loadDataFile();
+		return loadDataFile();
 	}
 
-	public boolean loadDataFile() throws IOException, FileNotFoundException {
+	public ArrayList<Task> loadDataFile() throws IOException, FileNotFoundException {
 		// load datafile if exist
 		File f = new File(filePath);		
 		if (f.exists()) {
 			// open file and load total task index
 			loadTaskIndex();
 			// open file and load all tasks
-			loadAllTasks();	
-			return true;
+			return loadAllTasks();	
 		} else {
 			System.out.println("No saved data file detected yet..\nStart entering tasks!");
-			return false;
+			return null;
 		}
 	}
 
@@ -193,34 +193,37 @@ public class Storage {
 		in.close();
 	}
 	
-	public void loadAllTasks() throws FileNotFoundException, IOException {
+	public ArrayList<Task> loadAllTasks() throws FileNotFoundException, IOException {
 		String readText;
 		BufferedReader in = new BufferedReader(new FileReader(filePath));
 		// skip first line first
 		readText = in.readLine();
 		
 		while ((readText = in.readLine()) != null) {
-			String tmp[] = readText.split("\b", 8);
+			String tmp[] = readText.split("\b", 9);
 			Task task = new Task();
 			task.setTaskDescription(tmp[0]);
 			//System.out.println("\nTask Description : "+task.getTaskDescription());
 			task.setStartDate(tmp[1]);
 			//System.out.println("Start date : "+task.getStartDate());
-			task.setEndDate(tmp[2]);
+			task.setStartTime(tmp[2]);
+			//System.out.println("Start time : "+task.getStartTime());
+			task.setEndDate(tmp[3]);
 			//System.out.println("End date : "+task.getEndDate());
-			task.setDueTime(tmp[3]);
-			//System.out.println("Due Time : "+task.getDueTime());
-			task.setLocation(tmp[4]);
+			task.setEndTime(tmp[4]);
+			//System.out.println("Due Time : "+task.getEndTime());
+			task.setLocation(tmp[5]);
 			//System.out.println("Location : "+task.getLocation());
-			task.setRemindDate(tmp[5]);
+			task.setRemindDate(tmp[6]);
 			//System.out.println("Remind date : "+task.getRemindDate());
-			task.setPriority(tmp[6]);
+			task.setPriority(tmp[7]);
 			//System.out.println("Priority level : "+task.getPriority());
-			task.setTaskIndex(Integer.parseInt(tmp[7]));
+			task.setTaskIndex(Integer.parseInt(tmp[8]));
 			//System.out.println("Task Index : "+task.getTaskIndex());
 			fileList.add(task);
 		}
 		in.close();
+		return fileList;
 	}
 
 	public void saveFile() throws IOException {
@@ -247,9 +250,11 @@ public class Storage {
 			taskToStore += "\b";
 			taskToStore += fileList.get(i).getStartDate();
 			taskToStore += "\b";
+			taskToStore += fileList.get(i).getStartTime();
+			taskToStore += "\b";
 			taskToStore += fileList.get(i).getEndDate();
 			taskToStore += "\b";
-			taskToStore += fileList.get(i).getDueTime();
+			taskToStore += fileList.get(i).getEndTime();
 			taskToStore += "\b";
 			taskToStore += fileList.get(i).getLocation();
 			taskToStore += "\b";
@@ -316,40 +321,104 @@ public class Storage {
 		return showSearchResults(searchList);
 	}
 
-	public void findTaskAndUpdate(Task task) {
-
-		// find the task number first
+	public boolean updateTaskFromSearch(int index, String taskDescription,
+			String startDate, String startTime, String endDate, String endTime,
+			String location, String remindDate, String priority) {
+		
+		boolean isUpdateSuccess = false;
+		
+		// find the task in the fileList first
 		for (int i = 0; i < fileList.size(); i++) {
-			if (fileList.get(i).getTaskIndex() == task.getTaskIndex()) {
-				// update the task
-				updateTaskInList(task, i);
+			if (searchList.get(index).getTaskIndex() == fileList.get(i).getTaskIndex()) {
+				index = i;
+				break;
 			}
 		}
-
+		
+		if (!taskDescription.equalsIgnoreCase("")) {
+			fileList.get(index).setTaskDescription(taskDescription);
+			isUpdateSuccess = true;
+		}
+		if (!startDate.equalsIgnoreCase("")) {
+			fileList.get(index).setStartDate(startDate);
+			isUpdateSuccess = true;
+		}
+		if (!startTime.equalsIgnoreCase("")) {
+			fileList.get(index).setStartTime(startTime);
+			isUpdateSuccess = true;
+		}
+		if (!endDate.equalsIgnoreCase("")) {
+			fileList.get(index).setEndDate(endDate);
+			isUpdateSuccess = true;
+		}
+		if (!endTime.equalsIgnoreCase("")) {
+			fileList.get(index).setEndTime(endTime);
+			isUpdateSuccess = true;
+		}
+		if (!location.equalsIgnoreCase("")) {
+			fileList.get(index).setLocation(location);
+			isUpdateSuccess = true;
+		}
+		if (!remindDate.equalsIgnoreCase("")) {
+			fileList.get(index).setRemindDate(remindDate);
+			isUpdateSuccess = true;
+		}
+		if (!priority.equalsIgnoreCase("")) {
+			fileList.get(index).setPriority(priority);
+			isUpdateSuccess = true;
+		}
+		
+		if (isUpdateSuccess) {
+			return true;
+		} else {
+			return false;
+		}
 	}
-
+	
 	// updates the task with the necessary details only
-	public void updateTaskInList(Task task, int index) {
-		if (task.getTaskDescription() != "") {
-			fileList.get(index).setTaskDescription(task.getTaskDescription());
+	public boolean updateTaskFromAll(int index, String taskDescription,
+			String startDate, String startTime, String endDate, String endTime,
+			String location, String remindDate, String priority) {
+		
+		boolean isUpdateSuccess = false;
+		
+		if (!taskDescription.equalsIgnoreCase("")) {
+			fileList.get(index).setTaskDescription(taskDescription);
+			isUpdateSuccess = true;
 		}
-		if (task.getStartDate() != "") {
-			fileList.get(index).setStartDate(task.getStartDate());
+		if (!startDate.equalsIgnoreCase("")) {
+			fileList.get(index).setStartDate(startDate);
+			isUpdateSuccess = true;
 		}
-		if (task.getEndDate() != "") {
-			fileList.get(index).setEndDate(task.getEndDate());
+		if (!startTime.equalsIgnoreCase("")) {
+			fileList.get(index).setStartTime(startTime);
+			isUpdateSuccess = true;
 		}
-		if (task.getDueTime() != "") {
-			fileList.get(index).setDueTime(task.getDueTime());
+		if (!endDate.equalsIgnoreCase("")) {
+			fileList.get(index).setEndDate(endDate);
+			isUpdateSuccess = true;
 		}
-		if (task.getLocation() != "") {
-			fileList.get(index).setLocation(task.getLocation());
+		if (!endTime.equalsIgnoreCase("")) {
+			fileList.get(index).setEndTime(endTime);
+			isUpdateSuccess = true;
 		}
-		if (task.getRemindDate() != "") {
-			fileList.get(index).setRemindDate(task.getRemindDate());
+		if (!location.equalsIgnoreCase("")) {
+			fileList.get(index).setLocation(location);
+			isUpdateSuccess = true;
 		}
-		if (task.getPriority() != "") {
-			fileList.get(index).setPriority(task.getPriority());
+		if (!remindDate.equalsIgnoreCase("")) {
+			fileList.get(index).setRemindDate(remindDate);
+			isUpdateSuccess = true;
+		}
+		if (!priority.equalsIgnoreCase("")) {
+			fileList.get(index).setPriority(priority);
+			isUpdateSuccess = true;
+		}
+		
+		if (isUpdateSuccess) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 

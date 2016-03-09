@@ -4,16 +4,17 @@ public class Task {
 
 	private String taskDescription;
 	private String startDate;
+	private String startTime;
 	private String endDate;
-	private String dueTime;
+	private String endTime;
 	private String location;
 	private String remindDate;
 	private String priority;
-	private int taskIndex;	// to be considered
+	private int taskIndex;
 	
 	public void storeTask(String taskInfo) {
 		// call Logic to Parser to decipher String into task
-		// gets an array[7] of string or Task objects
+		// gets an array[8] of string or Task objects
 		// store string into variables
 	}
 	
@@ -24,13 +25,17 @@ public class Task {
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
+	
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
 
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
 
-	public void setDueTime(String dueTime) {
-		this.dueTime = dueTime;
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
 	}
 
 	public void setLocation(String location) {
@@ -60,13 +65,17 @@ public class Task {
 	public String getStartDate() {
 		return startDate;
 	}
+	
+	public String getStartTime() {
+		return startTime;
+	}
 
 	public String getEndDate() {
 		return endDate;
 	}
 
-	public String getDueTime() {
-		return dueTime;
+	public String getEndTime() {
+		return endTime;
 	}
 
 	public String getLocation() {
