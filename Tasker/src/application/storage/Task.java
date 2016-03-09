@@ -90,31 +90,31 @@ public class Task {
 		return priority;
 	}
 	
-	public String showMessage (Task task) {
+	public String showMessage () {
 		String message = "\"";
-		message += task.getTaskDescription();
+		message += taskDescription;
 		
-		if (!task.getStartDate().equalsIgnoreCase("")) {
-			message += ", from " + task.getStartDate();
-			if (!task.getStartTime().equalsIgnoreCase("")){
-				message += " " + task.getStartTime();
+		if (!startDate.equalsIgnoreCase("")) {
+			message += ", from " + startDate;
+			if (!startTime.equalsIgnoreCase("")){
+				message += " " + startTime;
 			}
 		}
 		
-		if (!task.getStartDate().equalsIgnoreCase("") && !task.getEndDate().equalsIgnoreCase("")) {
-			message += " to " + task.getEndDate();
-			if (!task.getEndTime().equalsIgnoreCase("")){
-				message += " " + task.getEndTime();
+		if (!startDate.equalsIgnoreCase("") && !endDate.equalsIgnoreCase("")) {
+			message += " to " + endDate;
+			if (!endTime.equalsIgnoreCase("")){
+				message += " " + endTime;
 			}
-		} else if (task.getStartDate().equalsIgnoreCase("") && !task.getEndDate().equalsIgnoreCase("")) {
-			message += ", by " + task.getEndDate();
-			if (!task.getEndTime().equalsIgnoreCase("")){
-				message += " " + task.getEndTime();
+		} else if (startDate.equalsIgnoreCase("") && !endDate.equalsIgnoreCase("")) {
+			message += ", by " + endDate;
+			if (!endTime.equalsIgnoreCase("")){
+				message += " " + endTime;
 			}
 		}
 		
-		if (!task.getLocation().equalsIgnoreCase("")) {
-			message += ", at " + task.getLocation();
+		if (!location.equalsIgnoreCase("")) {
+			message += ", at " + location;
 		}
 		
 		message += "\"";

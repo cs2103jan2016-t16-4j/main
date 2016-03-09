@@ -311,6 +311,7 @@ public class Storage {
 			fileList.add(task);
 		}
 		in.close();
+		searchList = fileList;
 		return fileList;
 	}
 
@@ -561,6 +562,7 @@ public class Storage {
 	}
 	
 	public ArrayList<Task> getAllTasks() {
+		searchList = fileList;
 		return fileList;
 	}
 	
