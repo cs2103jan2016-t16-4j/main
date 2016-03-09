@@ -1,4 +1,4 @@
-package application.storage;
+//package application.storage;
 import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -557,6 +557,10 @@ public class Storage {
 		}
 		
 		return false;
+	}
+	
+	public ArrayList<Task> getAllTasks() {
+		return fileList;
 	}
 	
 	}
