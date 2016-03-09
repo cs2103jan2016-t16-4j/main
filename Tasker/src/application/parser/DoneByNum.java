@@ -6,6 +6,7 @@ import application.storage.Storage;
 
 public class DoneByNum implements Command {
     private static final String MESSAGE_DONE_FAILURE = "We encountered a problem while closing this task.";
+    private static final String MESSAGE_CLOSED_FEEDBACK = "Closed Task: %1$s";
     
     
     int numToClose;
@@ -14,16 +15,13 @@ public class DoneByNum implements Command {
         this.numToClose = numToClose;
     }
     
-    public String execute(Storage storage){
+    public Feedback execute(Storage storage){
         try {
-            boolean isSuccess = storage.closeTaskInList(numToClose);
-            if (isSuccess){
-                return "Closed successfully"; //NEED TO CHANGE THIS SO THAT I SHOW DETAILS WHILE DELETING
-            }else {
-                return MESSAGE_DONE_FAILURE;
-            }
+            String feedbackFromStorage = storage.closeTaskFromSearch(numToClose);
+            String feedbackMessage = String.format(MESSAGE_CLOSED_FEEDBACK, feedbackFromStorage);
+            return new Feedback(feedbackMessage, storage.getAllTasks()); 
         } catch (Exception e) {
-            return MESSAGE_DONE_FAILURE;
+            return new Feedback(MESSAGE_DONE_FAILURE, storage.getAllTasks());
         }
     }
     

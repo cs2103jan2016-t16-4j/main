@@ -3,6 +3,8 @@ package application.parser;
 import application.storage.Storage;
 
 public class Done implements Command{
+    private static final int ARRAY_OFFSET = 1;
+    
     Command closeObj;
     
     
@@ -14,7 +16,7 @@ public class Done implements Command{
     
     public void initAppropClose(String taskToClose){
         try{
-            int taskNumber = Integer.parseInt(taskToClose);
+            int taskNumber = Integer.parseInt(taskToClose) - ARRAY_OFFSET;
             closeObj = new DoneByNum(taskNumber);
         }catch(NumberFormatException e){
             closeObj = new DoneByName(taskToClose);
@@ -30,8 +32,8 @@ public class Done implements Command{
     }
    
     
-    public String execute(Storage storage){
-        String feedback = closeObj.execute(storage);
+    public Feedback execute(Storage storage){
+        Feedback feedback = closeObj.execute(storage);
         return feedback;
     }
     

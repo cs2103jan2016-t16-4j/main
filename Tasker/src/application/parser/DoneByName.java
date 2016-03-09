@@ -7,9 +7,10 @@ import java.util.ArrayList;
 
 public class DoneByName implements Command {
      private static final int FIRST_INDEX = 0;
-    private static final String FEEDBACK_CLOSE = "CLOSE Task: %1$s";
+    private static final String FEEDBACK_CLOSE = "Closed Task: %1$s";
     private static final String MESSAGE_CLOSE_ERROR = "We encountered some "
             + "problem while closing this task. We apologise for the inconvenience.";
+    private static final String MESSAGE_WHICH_CLOSE = "Which task would you like to close?";
     
     
   
@@ -22,32 +23,35 @@ public class DoneByName implements Command {
     }
      
     //NEED TO IMPLEMENT THIS
-    public String execute(Storage storage){
+    public Feedback execute(Storage storage){
          try{
             ArrayList<Task> taskList = storage.searchByTask(taskToClose);
-            String feedback = takeAction(taskList, storage);
+            Feedback feedback = takeAction(taskList, storage);
             return feedback;
         }catch(IOException e){
-            return MESSAGE_CLOSE_ERROR;
+            return new Feedback(MESSAGE_CLOSE_ERROR, storage.getAllTasks());
         }
     }
     
-    public String takeAction(ArrayList<Task> taskList, Storage storage) throws IOException{
+    public Feedback takeAction(ArrayList<Task> taskList, Storage storage) throws IOException{
         assert(taskList.size() > 0);
         if (taskList.size() ==  1){
-            return closeSingleTask(taskList, storage);
+            String feedbackFromStorage = storage.closeTaskFromSearch(FIRST_INDEX);
+            String feedbackMessage = String.format(FEEDBACK_CLOSE, feedbackFromStorage);
+            return new Feedback(feedbackMessage, storage.getAllTasks());
         } else {
-            return listTasks(taskList);
+            return new Feedback(MESSAGE_WHICH_CLOSE, taskList);
         }
     }
-
+/*
     private String closeSingleTask(ArrayList<Task> taskList, Storage storage) throws IOException {
         String feedback = String.format(FEEDBACK_CLOSE, 
                 taskList.get(FIRST_INDEX).getTaskDescription());
         storage.closeTaskInList(FIRST_INDEX);
         return feedback;
     }
-    
+  */  
+    /*
     private String listTasks(ArrayList<Task> taskList){
         String listed = "\nWhich task would you like to close?";
         int i = 1;
@@ -57,7 +61,7 @@ public class DoneByName implements Command {
         }
         return listed;
     }
-    
+    */
     
     
 }
