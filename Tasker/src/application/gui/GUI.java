@@ -8,63 +8,93 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
+
+/**
+ * 
+ * @author Shawn
+ *
+ */
 
 public class GUI extends Application {
 	private String title = "Tasker";
-	private Logic logic = new Logic();
-	public DirectoryChooser dirChooser;
-	public Stage primaryStage;
+	public static GUI gui = null;
+	Logic logic = new Logic();
+	private DirectoryChooser dirChooser;
+	private Stage primaryStage = new Stage();
+	private HBox root = new HBox(); // declare as root
+	private VBox leftWing = new VBox();
+	private VBox rightWing = new VBox();
+	private TextArea txtArea = new TextArea();
+	private TextField txtField = new TextField();
+	private ObservableList<String> items = FXCollections.observableArrayList();
+	private ListView<String> listView = new ListView<String>(items);
+
+	public static void setStartUpTest(GUI gui0) {
+		gui = gui0;
+	}
+
+	public GUI() {
+		setStartUpTest(this);
+	}
 
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			DirectoryChooser dirChooser = new DirectoryChooser();
-			configureDirectoryChooser(dirChooser);
+			setProgramName();
+			configureTextField();
+			addListViewToRight();
+			addLabelCliToLeft();
+			addTextFieldToRight();
+			addDataToListView();
+			addAllChildrenToRoot();
+			setScaleForComponents();
+			configureDirectoryChooser();
+			firstLaunchDirectoryPrompt();
+			show(primaryStage);
 
-			ObservableList<String> data = FXCollections.observableArrayList();
-
-			ListView<String> listView = new ListView<String>(data);
-			listView.setPrefSize(900, 900);
-			setProgramName(primaryStage);
-
-			ScrollPane scrollPane = addToScrollPane(listView);
-			TextField titleTextField = new TextField();
-			titleTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-				public void handle(KeyEvent ke) {
-					if (ke.getCode().equals(KeyCode.ENTER)) {
-						try {
-							data.add(logic.processCommand(titleTextField.getText()));
-							titleTextField.clear();
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-			});
-			VBox cli = addToVBox(scrollPane, titleTextField);
-			firstLaunchDirectoryPrompt(primaryStage, dirChooser);
-			setStage(primaryStage, cli);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	/*
-	 * Checks if save location already exists If exists - use that location If
-	 * does not exist then prompt for new location
-	 */
-	private void firstLaunchDirectoryPrompt(Stage primaryStage, DirectoryChooser dirChooser) throws IOException {
+	private void setProgramName() {
+		primaryStage.setTitle(title);
+	}
+
+	// Configuration for directory chooser
+	private void configureDirectoryChooser() throws IOException {
+		DirectoryChooser dirChooser = new DirectoryChooser();
+		dirChooser.setTitle("Open Resource Folder");
+		dirChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
+	}
+
+	private void configureTextField() {
+		txtField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent ke) {
+				if (ke.getCode().equals(KeyCode.ENTER)) {
+					try {
+						items.add(logic.processCommand(txtField.getText()));
+						txtField.clear();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+	}
+
+	private void firstLaunchDirectoryPrompt() throws IOException {
 		if (!logic.checkIfFileExists()) {
 			final File selectedDirectory = dirChooser.showDialog(primaryStage);
 			if (selectedDirectory != null) {
@@ -77,36 +107,41 @@ public class GUI extends Application {
 		}
 	}
 
-	private void setStage(Stage primaryStage, VBox cli) {
-		Scene scene = new Scene(cli, 800, 800);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+	private void addTextFieldToRight() {
+		rightWing.getChildren().add(txtField);
+	}
+
+	private void show(Stage primaryStage) {
+		Scene scene = new Scene(root, 400, 400);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
 
-	private VBox addToVBox(ScrollPane scrollPane, TextField titleTextField) {
-		VBox cli = new VBox();
-		cli.getChildren().addAll(scrollPane, titleTextField);
-		return cli;
+	private void addAllChildrenToRoot() {
+		root.getChildren().addAll(leftWing, rightWing);
 	}
 
-	private ScrollPane addToScrollPane(ListView<String> listView) {
-		ScrollPane scrollPane = new ScrollPane();
-		scrollPane.setContent(listView);
-		return scrollPane;
+	private void addDataToListView() {
+		ObservableList<String> items = FXCollections.observableArrayList();
+		listView.setItems(items);
 	}
 
-	private void setProgramName(Stage primaryStage) {
-		primaryStage.setTitle(title);
+	private void addLabelCliToLeft() {
+		rightWing.getChildren().add(txtArea);
+
 	}
 
-	// Configuration for directory chooser
-	private void configureDirectoryChooser(final DirectoryChooser dirChooser) {
-		dirChooser.setTitle("Open Resource Folder");
-		dirChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
+	private void addListViewToRight() {
+		leftWing.getChildren().add(listView);
+	}
+
+	private void setScaleForComponents() {
+		listView.setPrefSize(2500, 2500);
+		txtArea.setPrefSize(2500, 2500);
+		txtField.setPrefSize(2500, 100);
 	}
 
 	public static void main(String[] args) {
-		launch(args);
+		Application.launch(args);
 	}
 }

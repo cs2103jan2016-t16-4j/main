@@ -22,7 +22,7 @@ public class DoneByNum implements Command {
             }else {
                 return MESSAGE_DONE_FAILURE;
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             return MESSAGE_DONE_FAILURE;
         }
     }
