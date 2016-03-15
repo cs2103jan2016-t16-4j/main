@@ -11,6 +11,7 @@ import application.storage.Task;
 import application.gui.Ui;
 import application.gui.Cli;
 import application.gui.GUI;
+import application.gui.GUIHandler;
 
 /**
  * 
@@ -28,6 +29,7 @@ public class Logic {
 	private Parser parser = new Parser();
 	private Storage storage = new Storage();
 	private Ui ui = new Cli();
+	private GUIHandler guiHandler = new GUIHandler();
 
 	public static void main(String[] args){
         Logic tasker = new Logic();
