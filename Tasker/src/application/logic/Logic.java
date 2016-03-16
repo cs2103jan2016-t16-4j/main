@@ -2,6 +2,10 @@ package application.logic;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import application.parser.Command;
 import application.parser.Feedback;
@@ -11,6 +15,7 @@ import application.storage.Task;
 import application.gui.Ui;
 import application.gui.Cli;
 import application.gui.GUI;
+
 
 /**
  * 
@@ -24,30 +29,50 @@ public class Logic {
             + "Please restart. We regret the inconvenience.";
     private static final String MESSAGE_ERROR = "There was some problem processing your request. "
             + "Please check your input format.";
+    private static final String LOGGER_NAME = "logfile";
     
 	private Parser parser = new Parser();
 	private Storage storage = new Storage();
 	private Ui ui = new Cli();
+	private static Logger logger = Logger.getLogger(LOGGER_NAME);
 
-	public static void main(String[] args){
+	public static void main(String[] args) throws IOException{
+	    initializeLogger();
+	    logger.info("Initialising Logic");
         Logic tasker = new Logic();
 	    try{
+	        logger.info("Setting Environment");
             ArrayList<Task> tasks = tasker.setEnvironment();
+            logger.info("Printing welcome message.");
             tasker.ui.printWelcomeMessage(tasks);
+            logger.info("Starting execution loop");
             tasker.executeCommandsUntilExit();
 	    }catch(IOException e){
-            tasker.ui.showError(MESSAGE_LOAD_ERROR);
+	        logger.info("Printing file input output error.");
+	        tasker.ui.showError(MESSAGE_LOAD_ERROR);
         }
 	}
+
+    private static void initializeLogger() throws IOException {
+        Handler fileHandler = new FileHandler("logfile.txt", true);
+	    fileHandler.setFormatter(new SimpleFormatter());
+	    logger.setUseParentHandlers(false);
+	    logger.addHandler(fileHandler);
+    }
 	
 	private void executeCommandsUntilExit(){
 	    while(true){
 	        try{
+	            logger.info("Getting command from user");
 	            String userCommand = ui.getCommand();
+	            logger.info("Parsing command: " + userCommand);
 	            Command cmd = parser.interpretCommand(userCommand);
-	            Feedback feedback = cmd.execute(storage);
-	            feedback.display(ui);
-	            storage.saveFile();
+	            logger.info("executing above parsed command");
+                Feedback feedback = cmd.execute(storage);
+                logger.info("displaying feedback");
+                feedback.display(ui);
+                logger.info("saving tasks to file.");
+                storage.saveFile();
 	        }catch(Exception e){
 	            ui.showError(MESSAGE_ERROR);
 	        }
@@ -55,7 +80,9 @@ public class Logic {
 	}
 	
 	private ArrayList<Task> setEnvironment() throws IOException{
+	    logger.info("Checking if file exists");
 	    checkIfFileExists();
+	    logger.info("Loading tasks");
         return loadDataFile();
     }
 	/*

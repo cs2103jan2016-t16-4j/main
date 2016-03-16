@@ -1,6 +1,11 @@
 package application.parser;
 
+import java.util.ArrayList;
+import java.util.logging.Logger;
+
 import org.apache.commons.lang.ArrayUtils;
+
+import application.storage.Task;
 
 /**
  * This is the class which takes in a userInput and interprets it. If user input
@@ -13,7 +18,7 @@ import org.apache.commons.lang.ArrayUtils;
  */
 
 public class Parser {
-	
+    private static final String LOGGER_NAME = "logfile";
     private static final String MESSAGE_NULL_ERROR = "command cannot be null";
     private static final String KEYWORD_ADD = "add";
     private static final String KEYWORD_SEARCH = "search";
@@ -26,12 +31,22 @@ public class Parser {
     private static final String KEYWORD_EXIT = "exit";
     
     private static final boolean WITH_KEYWORD = true; //For add function. Since we accept no keyword.
+
+    private static Logger logger = Logger.getLogger(LOGGER_NAME);
+
+    
+
     
     public Command interpretCommand(String userCommand) /*throws Exception*/ {
+        logger.info("Checking for error in user command: " + userCommand);
         checkForError(userCommand);
+        logger.info("Splitting command into array of its words");
         String[] inputArgs = userCommand.trim().split("\\s+");
+        logger.info("Getting command key word");
         String commandKeyword = inputArgs[0]; //Always going to be zero so inputing magic number for now
+        logger.info("Converting to command object: " + commandKeyword);
         Command command = convertToCommand(commandKeyword, inputArgs);
+        logger.info("Returning command object");
         return command;
     }
     
@@ -40,22 +55,27 @@ public class Parser {
 
         switch (keyword.toLowerCase()) {
             case KEYWORD_ADD :
+                logger.info("Making add command object");
                 command = initializeAdd(args, WITH_KEYWORD );
                 break;
             
             case KEYWORD_SEARCH :
+                logger.info("Making search command object");
                 command = initializeSearch(args);
                 break;
             
             case KEYWORD_DELETE :
+                logger.info("Making delete command object");
                 command = initializeDelete(args);
                 break;
               
             case KEYWORD_UPDATE :
+                logger.info("Making update command object");
                 command = initializeUpdate(args);
                 break;
                
             case KEYWORD_DONE :
+                logger.info("Making done command object");
                 command = initializeDone(args);
                 break;
             /*    
@@ -72,13 +92,16 @@ public class Parser {
 //                break;
                             
             case KEYWORD_EXIT :
+                logger.info("Making exit command object");
                 command = initializeExit();
                 break;
                 
             default :
+                logger.info("Making add command object");
                 command = initializeAdd(args, !WITH_KEYWORD);
                 break;
         }
+        logger.info("Returning command object");
         return command;
 
     }
@@ -142,6 +165,7 @@ public class Parser {
        
     private void checkForError(String userCommand) /*throws Error */ {
         if (userCommand == null) {
+            logger.warning("null user commands");
             /*throw new Error(MESSAGE_NULL_ERROR);*/
         }
     }
