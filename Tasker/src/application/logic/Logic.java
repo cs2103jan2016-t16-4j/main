@@ -15,6 +15,7 @@ import application.storage.Task;
 import application.gui.Ui;
 import application.gui.Cli;
 import application.gui.GUI;
+import application.gui.GUIHandler;
 
 
 /**
@@ -35,6 +36,7 @@ public class Logic {
 	private Storage storage = new Storage();
 	private Ui ui = new Cli();
 	private static Logger logger = Logger.getLogger(LOGGER_NAME);
+	private GUIHandler guiHandler = new GUIHandler();
 
 	public static void main(String[] args) throws IOException{
 	    initializeLogger();
