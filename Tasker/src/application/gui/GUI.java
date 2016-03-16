@@ -1,5 +1,7 @@
 package application.gui;
 
+import java.util.logging.Logger;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
@@ -18,8 +20,11 @@ public class GUI extends Application {
 	private GUIHandler guiH;
 
 	// Constants
+    private static String LOGGER_NAME = "logfile";
 	private String title = "Tasker";
 	private String logoURL = "application/gui/files/robot.jpg";
+	
+    private static Logger logger = Logger.getLogger(LOGGER_NAME);
 	
 	// Java Controls
 	private TextField txtField = new TextField();
@@ -30,11 +35,13 @@ public class GUI extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			logger.info("Initialising GUI");
 			customiseGUIMenuBar(primaryStage);
 			createStartStage();
 			show(primaryStage);
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.severe("Failed to load GUI");
 		}
 	}
 

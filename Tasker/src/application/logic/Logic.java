@@ -4,17 +4,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
+import application.gui.Cli;
+import application.gui.GUIHandler;
+import application.gui.Ui;
+import application.logger.LoggerFormat;
 import application.parser.Command;
 import application.parser.Feedback;
 import application.parser.Parser;
 import application.storage.Storage;
 import application.storage.Task;
-import application.gui.Ui;
-import application.gui.Cli;
-import application.gui.GUI;
-import application.gui.GUIHandler;
 
 
 /**
@@ -56,7 +55,8 @@ public class Logic {
 
     private static void initializeLogger() throws IOException {
         FileHandler fileHandler = new FileHandler("logfile.txt", true);
-	    fileHandler.setFormatter(new SimpleFormatter());
+        LoggerFormat formatter = new LoggerFormat();
+	    fileHandler.setFormatter(formatter);
 	    logger.setUseParentHandlers(false);
 	    logger.addHandler(fileHandler);
     }

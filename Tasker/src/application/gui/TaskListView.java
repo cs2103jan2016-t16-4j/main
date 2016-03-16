@@ -6,6 +6,12 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
+/**
+ * 
+ * @author Shawn
+ *
+ */
+
 public class TaskListView {
 	private ObservableList<String> items = FXCollections.observableArrayList();
 	private ListView<String> listView = new ListView<String>(items);
