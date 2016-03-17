@@ -1,4 +1,4 @@
-package application.storage;
+//package application.storage;
 
 import java.util.ArrayList;
 import java.io.BufferedReader;
@@ -58,7 +58,7 @@ public class Storage {
 	}
 	
 	public String closeTaskFromAll(int index) {
-		assert(index<fileList.size() || index>=0);
+		assert(index<fileList.size() && index>=0);
 		if (fileList.size() >= index) {
 			String closeMessage = showMessage(fileList.get(index));
 			closedList.add(fileList.get(index));
@@ -70,7 +70,7 @@ public class Storage {
 	}
 	
 	public String closeTaskFromSearch(int index) {
-		assert(index<fileList.size() || index>=0);
+		assert(index<fileList.size() && index>=0);
 		boolean isSuccessClose = false;
 		
 		if (fileList.size()>=index) {
@@ -99,7 +99,7 @@ public class Storage {
 	}
 	
 	public String deleteTaskFromSearch(int index) {
-		assert(index<searchList.size() || index>=0);
+		assert(index<searchList.size() && index>=0);
 		boolean isSuccessDelete = false;
 		
 		if (searchList.size()>= index) {
@@ -125,7 +125,7 @@ public class Storage {
 	}
 	
 	public String deleteTaskFromAll(int index) {
-		assert(index<fileList.size() || index>=0);
+		assert(index<fileList.size() && index>=0);
 		if (fileList.size()>=index) {
 			String message = showMessage(fileList.get(index));
 			fileList.remove(index);
@@ -457,7 +457,7 @@ public class Storage {
 			String startDate, String startTime, String endDate, String endTime,
 			String location, String remindDate, String priority) {
 		
-		assert(index<searchList.size() || index>=0);
+		assert(index<searchList.size() && index>=0);
 		boolean isUpdateSuccess = false;
 		
 		// find the task in the fileList first
@@ -516,7 +516,7 @@ public class Storage {
 	public String updateTaskFromAll(int index, String taskDescription,
 			String startDate, String startTime, String endDate, String endTime,
 			String location, String remindDate, String priority) {
-		assert(index<fileList.size() || index>=0);
+		assert(index<fileList.size() && index>=0);
 		boolean isUpdateSuccess = false;
 		
 		String updateMessage = "\nOld : ";
