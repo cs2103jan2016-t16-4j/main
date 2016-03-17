@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Logger;
 
 public class Storage {
 
@@ -19,6 +20,8 @@ public class Storage {
 	public ArrayList<Task> closedList = new ArrayList<Task>();
 	public ArrayList<Task> fileList = new ArrayList<Task>();
 	public ArrayList<Task> searchList;
+	private static final String LOGGER_NAME = "logfile";
+	private static Logger logger = Logger.getLogger(LOGGER_NAME);
 	
 	public String addTaskInList(String taskDescription, String startDate, String startTime, String endDate
 				, String endTime, String location
@@ -39,28 +42,35 @@ public class Storage {
 		return showMessage(newTask);
 	}
 	
-	public void clearFile() throws IOException {
-		File f = new File(filePath);
+	public void clearFile() {		
+		
+		File f = new File(filePath);		
 		if (f.exists()) {
-			PrintWriter fw = new PrintWriter(filePath);
-			fw.print("");
-			fw.close();
-		}
+			PrintWriter fw;
+			try {
+				fw = new PrintWriter(filePath);
+				fw.print("");
+				fw.close();
+			} catch (FileNotFoundException e) {
+				logger.severe("File not found");
+			}			
+		}		
 	}
 	
 	public String closeTaskFromAll(int index) {
-			if (fileList.size()>=index) {
-				String closeMessage = showMessage(fileList.get(index));
-				closedList.add(fileList.get(index));
-				fileList.remove(index);
-				return closeMessage;
-			}
-			else {
-				return null;
-			}
+		assert(index<fileList.size() || index>=0);
+		if (fileList.size() >= index) {
+			String closeMessage = showMessage(fileList.get(index));
+			closedList.add(fileList.get(index));
+			fileList.remove(index);
+			return closeMessage;
+		} else {
+			return null;
+		}
 	}
 	
 	public String closeTaskFromSearch(int index) {
+		assert(index<fileList.size() || index>=0);
 		boolean isSuccessClose = false;
 		
 		if (fileList.size()>=index) {
@@ -88,7 +98,8 @@ public class Storage {
 		
 	}
 	
-	public String deleteTaskFromSearch(int index) throws IOException {
+	public String deleteTaskFromSearch(int index) {
+		assert(index<searchList.size() || index>=0);
 		boolean isSuccessDelete = false;
 		
 		if (searchList.size()>= index) {
@@ -111,26 +122,10 @@ public class Storage {
 		} else {
 			return null;
 		}
-		/*
-		for (int i = 0 ; i<fileList.size(); i++) {
-			if (fileList.get(i).getTaskIndex()==index) {
-				fileList.remove(i);
-				System.out.println("\nDeleted : "+index);
-				isSuccessDelete = true;
-				break;
-			}
-		}
-
-		if (isSuccessDelete) {
-			return true;
-		} else {
-			return false;
-		}		
-*/
 	}
 	
-	public String deleteTaskFromAll(int index) throws IOException {
-	
+	public String deleteTaskFromAll(int index) {
+		assert(index<fileList.size() || index>=0);
 		if (fileList.size()>=index) {
 			String message = showMessage(fileList.get(index));
 			fileList.remove(index);
@@ -215,19 +210,25 @@ public class Storage {
 		}
 	}
 
-	public boolean startUpCheck() throws IOException {
-		return checkDirectoryFileCreated();
+	public boolean startUpCheck() {
+			return checkDirectoryFileCreated();
 	}
 	
 	// true - if user has launched program b4
 	// false - if user first time launching program
-	public boolean checkDirectoryFileCreated() throws IOException {
+	public boolean checkDirectoryFileCreated() {
 		// check whether its user first time opening program
 		File d = new File(FILE_DIRECTORY);
 		if (!d.exists()) {
-			PrintWriter fw = new PrintWriter(new BufferedWriter(new FileWriter(FILE_DIRECTORY, true)));
-			fw.print("");		// indicate path name is not specified yet 
-			fw.close();
+			PrintWriter fw;
+			try {
+				fw = new PrintWriter(new BufferedWriter(new FileWriter(FILE_DIRECTORY, true)));
+				fw.print("");		// indicate path name is not specified yet 
+				fw.close();
+			} catch (IOException e) {
+				logger.severe("File cannot be instantiated.");
+			}
+			
 			return false;
 		}
 		else {
@@ -235,12 +236,12 @@ public class Storage {
 		}
 	} 
 	
-	public ArrayList<Task> loadFile() throws IOException {
+	public ArrayList<Task> loadFile() {
 		loadDirectoryFile();
 		return loadDataFile();
 	}
 
-	public ArrayList<Task> loadDataFile() throws IOException, FileNotFoundException {
+	public ArrayList<Task> loadDataFile() {
 		// load datafile if exist
 		File f = new File(filePath);		
 		if (f.exists()) {
@@ -254,72 +255,100 @@ public class Storage {
 		}
 	}
 
-	public String loadDirectoryFile() throws FileNotFoundException, IOException {
+	public String loadDirectoryFile() {
 		// check whether user specified a custom directory to save datafile
-		String readText;
-		BufferedReader in = new BufferedReader(new FileReader(FILE_DIRECTORY));
-		// skip first line first
-		readText = in.readLine();
-		in.close();
-		if (readText == null) {
-//			System.out.println("User has not specified directory to store data file yet. \nThus, data file will reside in the program's folder.");
-			filePath = FILE_NAME;
-		} else {
-			filePath = readText;
-//			System.out.println("User specified directory : "+filePath);
+		String readText="";
+		BufferedReader in;
+		try {
+			in = new BufferedReader(new FileReader(FILE_DIRECTORY));
+			// skip first line first
+			readText = in.readLine();
+			in.close();
+			if (readText == null) {
+//				System.out.println("User has not specified directory to store data file yet. \nThus, data file will reside in the program's folder.");
+				filePath = FILE_NAME;
+			} else {
+				filePath = readText;
+//				System.out.println("User specified directory : "+filePath);
+			}
+		} catch (FileNotFoundException e) {
+			logger.severe("File cannot be open.");
+		} catch (IOException e) {
+			logger.severe("File cannot be instantiated.");
 		}
-		
 		return readText;
+
 	}
 
-	public void loadTaskIndex() throws IOException {
+	public void loadTaskIndex() {
 		String readText;
-		BufferedReader in = new BufferedReader(new FileReader(filePath));
-		readText = in.readLine();
-		taskIndex = Integer.parseInt(readText);
-//		System.out.println("Total task index : "+taskIndex);
-		in.close();
+		BufferedReader in;
+		try {
+			in = new BufferedReader(new FileReader(filePath));
+			readText = in.readLine();
+			taskIndex = Integer.parseInt(readText);
+//			System.out.println("Total task index : "+taskIndex);
+			in.close();
+		} catch (FileNotFoundException e) {
+			logger.severe("File cannot be open.");
+		} catch (IOException e) {
+			logger.severe("File cannot be instantiated.");
+		}
+
 	}
 	
-	public ArrayList<Task> loadAllTasks() throws FileNotFoundException, IOException {
+	public ArrayList<Task> loadAllTasks() {
 		String readText;
-		BufferedReader in = new BufferedReader(new FileReader(filePath));
-		// skip first line first
-		readText = in.readLine();
-		
-		while ((readText = in.readLine()) != null) {
-			String tmp[] = readText.split("\b", 9);
-			Task task = new Task();
-			task.setTaskDescription(tmp[0]);
-			//System.out.println("\nTask Description : "+task.getTaskDescription());
-			task.setStartDate(tmp[1]);
-			//System.out.println("Start date : "+task.getStartDate());
-			task.setStartTime(tmp[2]);
-			//System.out.println("Start time : "+task.getStartTime());
-			task.setEndDate(tmp[3]);
-			//System.out.println("End date : "+task.getEndDate());
-			task.setEndTime(tmp[4]);
-			//System.out.println("Due Time : "+task.getEndTime());
-			task.setLocation(tmp[5]);
-			//System.out.println("Location : "+task.getLocation());
-			task.setRemindDate(tmp[6]);
-			//System.out.println("Remind date : "+task.getRemindDate());
-			task.setPriority(tmp[7]);
-			//System.out.println("Priority level : "+task.getPriority());
-			task.setTaskIndex(Integer.parseInt(tmp[8]));
-			//System.out.println("Task Index : "+task.getTaskIndex());
-			fileList.add(task);
+		BufferedReader in;
+		try {
+			in = new BufferedReader(new FileReader(filePath));
+			// skip first line first
+			readText = in.readLine();
+			
+			while ((readText = in.readLine()) != null) {
+				String tmp[] = readText.split("\b", 9);
+				Task task = new Task();
+				task.setTaskDescription(tmp[0]);
+				//System.out.println("\nTask Description : "+task.getTaskDescription());
+				task.setStartDate(tmp[1]);
+				//System.out.println("Start date : "+task.getStartDate());
+				task.setStartTime(tmp[2]);
+				//System.out.println("Start time : "+task.getStartTime());
+				task.setEndDate(tmp[3]);
+				//System.out.println("End date : "+task.getEndDate());
+				task.setEndTime(tmp[4]);
+				//System.out.println("Due Time : "+task.getEndTime());
+				task.setLocation(tmp[5]);
+				//System.out.println("Location : "+task.getLocation());
+				task.setRemindDate(tmp[6]);
+				//System.out.println("Remind date : "+task.getRemindDate());
+				task.setPriority(tmp[7]);
+				//System.out.println("Priority level : "+task.getPriority());
+				task.setTaskIndex(Integer.parseInt(tmp[8]));
+				//System.out.println("Task Index : "+task.getTaskIndex());
+				fileList.add(task);
+				in.close();
+				searchList = fileList;
+			}
+
+		} catch (FileNotFoundException e) {
+			logger.info("File cannot be open.");
+		} catch (IOException e) {
+			logger.info("File cannot be instantiated.");
 		}
-		in.close();
-		searchList = fileList;
+
 		return fileList;
 	}
 
-	public void saveFile() throws IOException {
+	public void saveFile() {
 		// #check if file exists
 		File f = new File(filePath);
 		if (!f.exists()) {
-			f.createNewFile();
+			try {
+				f.createNewFile();
+			} catch (IOException e) {
+				logger.info("File cannot be instantiated.");
+			}
 		}
 		// #clear file first
 		clearFile();
@@ -332,55 +361,69 @@ public class Storage {
 
 	}
 
-	public void saveAllTasks() throws IOException {
-		for (int i = 0; i<fileList.size(); i++){			
-			String taskToStore = "";
-			taskToStore += fileList.get(i).getTaskDescription();
-			taskToStore += "\b";
-			taskToStore += fileList.get(i).getStartDate();
-			taskToStore += "\b";
-			taskToStore += fileList.get(i).getStartTime();
-			taskToStore += "\b";
-			taskToStore += fileList.get(i).getEndDate();
-			taskToStore += "\b";
-			taskToStore += fileList.get(i).getEndTime();
-			taskToStore += "\b";
-			taskToStore += fileList.get(i).getLocation();
-			taskToStore += "\b";
-			taskToStore += fileList.get(i).getRemindDate();
-			taskToStore += "\b";
-			taskToStore += fileList.get(i).getPriority();
-			taskToStore += "\b";
-			taskToStore += fileList.get(i).getTaskIndex();
-			PrintWriter fwz = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
-			fwz.println(taskToStore);
-			fwz.close();
-		}
+	public void saveAllTasks()  {
+			try {
+				PrintWriter fwz = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
+				for (int i = 0; i<fileList.size(); i++){			
+					String taskToStore = "";
+					taskToStore += fileList.get(i).getTaskDescription();
+					taskToStore += "\b";
+					taskToStore += fileList.get(i).getStartDate();
+					taskToStore += "\b";
+					taskToStore += fileList.get(i).getStartTime();
+					taskToStore += "\b";
+					taskToStore += fileList.get(i).getEndDate();
+					taskToStore += "\b";
+					taskToStore += fileList.get(i).getEndTime();
+					taskToStore += "\b";
+					taskToStore += fileList.get(i).getLocation();
+					taskToStore += "\b";
+					taskToStore += fileList.get(i).getRemindDate();
+					taskToStore += "\b";
+					taskToStore += fileList.get(i).getPriority();
+					taskToStore += "\b";
+					taskToStore += fileList.get(i).getTaskIndex();
+					fwz.println(taskToStore);
+				}
+					fwz.close();
+				} catch (IOException e) {
+					logger.info("File cannot be instantiated.");
+				}		
 	}
 
-	public void saveTaskIndex() throws IOException {
-		PrintWriter fw = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
-		fw.println(taskIndex);
-//		System.out.println("\nSaving : "+taskIndex);
-		fw.close();
+	public void saveTaskIndex() {
+		try {
+			PrintWriter fw = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
+			fw.println(taskIndex);
+//			System.out.println("\nSaving : "+taskIndex);
+			fw.close();
+		} catch (IOException e) {
+			logger.info("File cannot be instantiated.");
+		}	
 	}
 	
-	public boolean saveDirectory(String path) throws FileNotFoundException {
-		PrintWriter fw = new PrintWriter(FILE_DIRECTORY);
-		fw.print("");
+	public boolean saveDirectory(String path) {
 		
-		if (path.equalsIgnoreCase("")) {
-			filePath = FILE_NAME;
-			fw.close();
-			return false;
-		}
-		else {
-			filePath = path + FILE_NAME;
-//			System.out.println("To be entered : "+filePath);
-			fw.println(filePath);
-			fw.close();
-			return true;
-		}
+		try {
+			PrintWriter fw = new PrintWriter(FILE_DIRECTORY);
+			fw.print("");
+			if (path.equalsIgnoreCase("")) {
+				filePath = FILE_NAME;
+				fw.close();
+			}
+			else {
+				filePath = path + FILE_NAME;
+//				System.out.println("To be entered : "+filePath);
+				fw.println(filePath);
+				fw.close();
+				return true;
+			}
+
+		}  catch (FileNotFoundException e) {
+			logger.info("File cannot be open.");
+		} 
+		
+		return false;
 	}
 
 	public ArrayList<Task> searchByDate(String dateSearch, boolean isSearchBy) {
@@ -414,6 +457,7 @@ public class Storage {
 			String startDate, String startTime, String endDate, String endTime,
 			String location, String remindDate, String priority) {
 		
+		assert(index<searchList.size() || index>=0);
 		boolean isUpdateSuccess = false;
 		
 		// find the task in the fileList first
@@ -472,7 +516,7 @@ public class Storage {
 	public String updateTaskFromAll(int index, String taskDescription,
 			String startDate, String startTime, String endDate, String endTime,
 			String location, String remindDate, String priority) {
-		
+		assert(index<fileList.size() || index>=0);
 		boolean isUpdateSuccess = false;
 		
 		String updateMessage = "\nOld : ";
