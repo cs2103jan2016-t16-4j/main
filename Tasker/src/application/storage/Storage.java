@@ -577,6 +577,20 @@ public class Storage {
 		return showSearchResults(searchList);
 	}
 
+	public ArrayList<Task> searchByPriority(String prioritySearch) {
+		searchList = new ArrayList<Task>();
+		for (int i = 0; i < fileList.size(); i++) {
+			Task obj = fileList.get(i);
+			if (obj.getPriority().toLowerCase()
+					.contains(prioritySearch.toLowerCase())) {
+				storeSearchResults(obj);
+//				System.out.println("Found a entry..");
+			}
+		}
+
+		return showSearchResults(searchList);
+	}
+
 	public ArrayList<Task> showSearchResults(ArrayList<Task> results) {
 //		System.out.println("Search : " + results.size() + " results found.");
 
