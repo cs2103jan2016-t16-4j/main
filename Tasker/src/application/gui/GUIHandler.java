@@ -5,7 +5,10 @@ import java.io.IOException;
 
 import application.logic.Logic;
 import application.parser.Feedback;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -59,7 +62,13 @@ public class GUIHandler {
 		}
 	}
 
-	public void textFieldSetUp(TextField txtField, TaskListView taskList, GUIHandler guiH) {
+	public void textFieldSetUp(TextField txtField, TaskListView taskList, GUIHandler guiH, Label helpLabel) {
+		txtField.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				getHints(oldValue, newValue, helpLabel);
+			}
+		});
 		txtField.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
 			public void handle(KeyEvent ke) {
@@ -70,7 +79,7 @@ public class GUIHandler {
 
 						} else {
 							Feedback feedback = guiH.executeCommands(text);
-							taskList.clearList(feedback.getTasks());
+							taskList.updateList(feedback.getTasks());
 						}
 						txtField.clear();
 					} catch (Exception e) {
@@ -81,12 +90,74 @@ public class GUIHandler {
 		});
 	}
 
+	private void getHints(String oldValue, String newValue, Label helpLabel) {
+		String oldLetter = "";
+		String newLetter = "";
+
+		if (!oldValue.isEmpty() && oldValue != null) {
+			oldLetter = getFirstLetter(oldValue);
+		}
+		if (!newValue.isEmpty() && newValue != null) {
+			newLetter = getFirstLetter(newValue);
+		}
+
+		if (newLetter == null) {
+			return;
+		}
+
+		if (newLetter.equals(oldLetter)) {
+			return;
+		} else {
+			switch (newLetter.toLowerCase()) {
+			case "a":
+				helpLabel.setText("add");
+				break;
+			case "h":
+				helpLabel.setText("help");
+				break;
+			case "d":
+				helpLabel.setText("delete");
+				// done
+				break;
+			case "u":
+				helpLabel.setText("update");
+				// undo
+				break;
+			case "e":
+				helpLabel.setText("exit");
+				break;
+			case "s":
+//				if (!newValue.isEmpty() && newValue.length() > 1) {
+//					if (getSecondLetter(newValue).equalsIgnoreCase("st")) {
+//						helpLabel.setText("storage");
+//					}
+//				} else {
+					helpLabel.setText("search");
+//				}
+				break;
+			default:
+				helpLabel.setText("");
+				break;
+			}
+		}
+	}
+
+	private String getFirstLetter(String input) {
+		String firstLetter = input.substring(0, 1);
+		return firstLetter;
+	}
+
+	private String getSecondLetter(String input) {
+		String secondLetter = input.substring(0, 2);
+		return secondLetter;
+	}
+
 	/*
 	 * Checks if save location already exists If exists - use that location If
 	 * does not exist then prompt for new location
 	 */
-	public void firstLaunchDirectoryPrompt(Stage primaryStage, DirectoryChooser dirChooser, GUIHandler guiH)
-			throws IOException {
+	public void firstLaunchDirectoryPrompt(Stage primaryStage, DirectoryChooser dirChooser, GUIHandler guiH,
+			TaskListView taskList) throws IOException {
 		if (!logic.checkIfFileExists()) {
 			final File selectedDirectory = dirChooser.showDialog(primaryStage);
 			if (selectedDirectory != null) {
@@ -95,7 +166,7 @@ public class GUIHandler {
 				logic.startDirectoryPrompt("");
 			}
 		} else {
-			logic.loadDataFile();
+			taskList.updateList(logic.loadDataFile());
 		}
 	}
 

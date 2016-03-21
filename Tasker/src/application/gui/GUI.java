@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import application.logic.Logic;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
@@ -32,6 +33,7 @@ public class GUI extends Application {
 
 	// Java Controls
 	private TextField txtField = new TextField();
+	private Label helpLabel = new Label();
 
 	// Alignment
 	private VBox root = new VBox();
@@ -47,8 +49,8 @@ public class GUI extends Application {
 			logger.info("Initialising GUI");
 			customiseGUIMenuBar(primaryStage);
 			createStartStage(taskList);
-			guiH.textFieldSetUp(txtField, taskList, guiH);
-			guiH.firstLaunchDirectoryPrompt(primaryStage, dirChooser, guiH);
+			guiH.textFieldSetUp(txtField, taskList, guiH, helpLabel);
+			guiH.firstLaunchDirectoryPrompt(primaryStage, dirChooser, guiH, taskList);
 			show(primaryStage);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -64,6 +66,7 @@ public class GUI extends Application {
 
 	public void addTextFieldToRoot() {
 		root.getChildren().add(txtField);
+		root.getChildren().add(helpLabel);
 	}
 
 	public void addTaskListToRoot(TaskListView taskList) {
@@ -88,12 +91,10 @@ public class GUI extends Application {
 	}
 
 	private void show(Stage primaryStage) {
-		Scene scene = new Scene(root, 400, 400);
+		Scene scene = new Scene(root, 800, 800);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-
-
 
 	public static void main(String[] args) {
 		launch(args);
@@ -109,14 +110,15 @@ public class GUI extends Application {
 		dirChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
 	}
 
-	// Change directory 
-//	public String changeDirectoryPrompt(Stage primaryStage, DirectoryChooser dirChooser, GUIHandler guiH) {
-//		final File selectedDirectory = dirChooser.showDialog(primaryStage);
-//		if (selectedDirectory != null) {
-//			guiH.startDirectoryPrompt(selectedDirectory.getPath().toString() + "\\");
-//		} else {
-//			guiH.startDirectoryPrompt("");
-//		}
-//	}
-	
+	// Change directory
+	// public String changeDirectoryPrompt(Stage primaryStage, DirectoryChooser
+	// dirChooser, GUIHandler guiH) {
+	// final File selectedDirectory = dirChooser.showDialog(primaryStage);
+	// if (selectedDirectory != null) {
+	// guiH.startDirectoryPrompt(selectedDirectory.getPath().toString() + "\\");
+	// } else {
+	// guiH.startDirectoryPrompt("");
+	// }
+	// }
+
 }
