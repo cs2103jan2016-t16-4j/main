@@ -129,11 +129,12 @@ public class Logic {
 	}
 
 	// for UI
-	public void executeCommand(String command) {
+	public Feedback executeCommand(String command) {
+		Feedback feedback = null;
 		try {
 			Command cmd = parser.interpretCommand(command);
 			logger.info("executing above parsed command");
-			Feedback feedback = cmd.execute(storage);
+			feedback = cmd.execute(storage);
 			logger.info("displaying feedback");
 			feedback.display(ui);
 			logger.info("saving tasks to file.");
@@ -141,6 +142,7 @@ public class Logic {
 		} catch (Exception e) {
 			ui.showError(MESSAGE_ERROR);
 		}
+		return feedback;
 
 	}
 	

@@ -1,17 +1,13 @@
 package application.gui;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.logging.Logger;
 
 import application.logic.Logic;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;

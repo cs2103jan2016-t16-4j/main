@@ -2,10 +2,9 @@ package application.gui;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import application.logic.Logic;
-import application.storage.Task;
+import application.parser.Feedback;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -22,6 +21,8 @@ import javafx.stage.Stage;
 public class GUIHandler {
 	Logic logic;
 
+	String text = "";
+
 	public GUIHandler(Logic logic) {
 		this.logic = logic;
 		// launchGUI();
@@ -36,17 +37,18 @@ public class GUIHandler {
 	// }.start();
 	// }
 
-	public void executeCommands(String cmd) {
-		logic.executeCommand(cmd);
+	public Feedback executeCommands(String cmd) {
+		Feedback feedBack = logic.executeCommand(cmd);
+		return feedBack;
 	}
 
-//	public boolean checkIfFileExists() throws IOException {
-//		return logic.checkIfFileExists();
-//	}
-//
-//	public ArrayList<Task> loadDataFile() throws IOException {
-//		return logic.loadDataFile();
-//	}
+	// public boolean checkIfFileExists() throws IOException {
+	// return logic.checkIfFileExists();
+	// }
+	//
+	// public ArrayList<Task> loadDataFile() throws IOException {
+	// return logic.loadDataFile();
+	// }
 
 	public void startDirectoryPrompt(String file) {
 		try {
@@ -63,7 +65,13 @@ public class GUIHandler {
 			public void handle(KeyEvent ke) {
 				if (ke.getCode().equals(KeyCode.ENTER)) {
 					try {
-						guiH.executeCommands(txtField.getText());
+						text = txtField.getText();
+						if (text.equalsIgnoreCase("storage")) {
+
+						} else {
+							Feedback feedback = guiH.executeCommands(text);
+							taskList.clearList(feedback.getTasks());
+						}
 						txtField.clear();
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -72,7 +80,7 @@ public class GUIHandler {
 			}
 		});
 	}
-	
+
 	/*
 	 * Checks if save location already exists If exists - use that location If
 	 * does not exist then prompt for new location
