@@ -29,5 +29,10 @@ public class TaskListView {
 		listView.setItems(items);
 		listView.setPrefSize(2500, 2500);
 	}
+	
+	public void addToList(String input) {
+		items.add(input);
+		listView.setItems(items);
+	}
 
 }
