@@ -72,7 +72,8 @@ public class GUIHandler {
 		}
 	}
 
-	public void textFieldSetUp(TextField txtField, TaskListView taskList, GUIHandler guiH, Label helpLabel) {
+	public void textFieldSetUp(TextField txtField, TaskListView taskList, GUIHandler guiH, Label helpLabel,
+			Label feedbackLabel) {
 		txtField.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -90,6 +91,7 @@ public class GUIHandler {
 						} else {
 							Feedback feedback = guiH.executeCommands(text);
 							taskList.updateList(feedback.getTasks());
+							feedbackLabel.setText(feedback.getMessage());
 						}
 						txtField.clear();
 					} catch (Exception e) {

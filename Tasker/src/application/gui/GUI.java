@@ -34,6 +34,7 @@ public class GUI extends Application {
 	// Java Controls
 	private TextField txtField = new TextField();
 	private Label helpLabel = new Label();
+	private Label feedbackLabel = new Label();
 
 	// Alignment
 	private VBox root = new VBox();
@@ -49,7 +50,7 @@ public class GUI extends Application {
 			logger.info("Initialising GUI");
 			customiseGUIMenuBar(primaryStage);
 			createStartStage(taskList);
-			guiH.textFieldSetUp(txtField, taskList, guiH, helpLabel);
+			guiH.textFieldSetUp(txtField, taskList, guiH, helpLabel, feedbackLabel);
 			guiH.firstLaunchDirectoryPrompt(primaryStage, dirChooser, guiH, taskList);
 			show(primaryStage);
 		} catch (Exception e) {
@@ -65,6 +66,7 @@ public class GUI extends Application {
 	}
 
 	public void addTextFieldToRoot() {
+		root.getChildren().add(feedbackLabel);
 		root.getChildren().add(txtField);
 		root.getChildren().add(helpLabel);
 	}
