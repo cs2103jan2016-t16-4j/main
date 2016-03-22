@@ -25,12 +25,12 @@ public class GUIHandler {
 	Logic logic;
 
 	String text = "";
-	private static final String ADD_HINT_MESSAGE = "add ";
-	private static final String HELP_HINT_MESSAGE = "help ";
-	private static final String DELETE_HINT_MESSAGE = "delete ";
-	private static final String SEARCH_HINT_MESSAGE = "search ";
-	private static final String EXIT_HINT_MESSAGE = "exit";
-	private static final String UPDATE_HINT_MESSAGE = "update";
+	private static final String ADD_HINT_MESSAGE = "To add: [task description] from [start] to [end] at [location]";
+	private static final String HELP_HINT_MESSAGE = "To get help: help";
+	private static final String DELETE_HINT_MESSAGE = "To delete: delete ";
+	private static final String SEARCH_HINT_MESSAGE = "To search: search ";
+	private static final String EXIT_HINT_MESSAGE = "To exit: exit";
+	private static final String UPDATE_HINT_MESSAGE = "To update: update";
 	private static final String EMPTY_STRING = "";
 
 	public GUIHandler(Logic logic) {
@@ -143,7 +143,7 @@ public class GUIHandler {
 				// }
 				break;
 			default:
-				helpLabel.setText(EMPTY_STRING);
+				helpLabel.setText(ADD_HINT_MESSAGE);
 				break;
 			}
 		}
