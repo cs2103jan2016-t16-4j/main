@@ -25,6 +25,13 @@ public class GUIHandler {
 	Logic logic;
 
 	String text = "";
+	private static final String ADD_HINT_MESSAGE = "add ";
+	private static final String HELP_HINT_MESSAGE = "help ";
+	private static final String DELETE_HINT_MESSAGE = "delete ";
+	private static final String SEARCH_HINT_MESSAGE = "search ";
+	private static final String EXIT_HINT_MESSAGE = "exit";
+	private static final String UPDATE_HINT_MESSAGE = "update";
+	private static final String EMPTY_STRING = "";
 
 	public GUIHandler(Logic logic) {
 		this.logic = logic;
@@ -91,8 +98,8 @@ public class GUIHandler {
 	}
 
 	private void getHints(String oldValue, String newValue, Label helpLabel) {
-		String oldLetter = "";
-		String newLetter = "";
+		String oldLetter = EMPTY_STRING;
+		String newLetter = EMPTY_STRING;
 
 		if (!oldValue.isEmpty() && oldValue != null) {
 			oldLetter = getFirstLetter(oldValue);
@@ -110,33 +117,33 @@ public class GUIHandler {
 		} else {
 			switch (newLetter.toLowerCase()) {
 			case "a":
-				helpLabel.setText("add");
+				helpLabel.setText(ADD_HINT_MESSAGE);
 				break;
 			case "h":
-				helpLabel.setText("help");
+				helpLabel.setText(HELP_HINT_MESSAGE);
 				break;
 			case "d":
-				helpLabel.setText("delete");
+				helpLabel.setText(DELETE_HINT_MESSAGE);
 				// done
 				break;
 			case "u":
-				helpLabel.setText("update");
+				helpLabel.setText(UPDATE_HINT_MESSAGE);
 				// undo
 				break;
 			case "e":
-				helpLabel.setText("exit");
+				helpLabel.setText(EXIT_HINT_MESSAGE);
 				break;
 			case "s":
-//				if (!newValue.isEmpty() && newValue.length() > 1) {
-//					if (getSecondLetter(newValue).equalsIgnoreCase("st")) {
-//						helpLabel.setText("storage");
-//					}
-//				} else {
-					helpLabel.setText("search");
-//				}
+				// if (!newValue.isEmpty() && newValue.length() > 1) {
+				// if (getSecondLetter(newValue).equalsIgnoreCase("st")) {
+				// helpLabel.setText("storage");
+				// }
+				// } else {
+				helpLabel.setText(SEARCH_HINT_MESSAGE);
+				// }
 				break;
 			default:
-				helpLabel.setText("");
+				helpLabel.setText(EMPTY_STRING);
 				break;
 			}
 		}
