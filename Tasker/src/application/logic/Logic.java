@@ -33,8 +33,9 @@ public class Logic {
 	private Storage storage = new Storage();
 	private Ui ui = new Cli();
 	private static Logger logger = Logger.getLogger(LOGGER_NAME);
-	private GUIHandler guiHandler = new GUIHandler();
+	private GUI guiHandler = new GUI();
 	private History history = History.getInstance();
+	private ArrayList<Task> tasksOnScreen;
 	
 	public static void main(String[] args) throws IOException{
 	    initializeLogger();
@@ -42,9 +43,9 @@ public class Logic {
         Logic tasker = new Logic();
 	    try{
 	        logger.info("Setting Environment");
-            ArrayList<Task> tasks = tasker.setEnvironment();
+            tasker.tasksOnScreen = tasker.setEnvironment();
             logger.info("Printing welcome message.");
-            tasker.ui.printWelcomeMessage(tasks);
+            tasker.ui.printWelcomeMessage(tasker.tasksOnScreen);
             logger.info("Starting execution loop");
             tasker.executeCommandsUntilExit();
 	    }catch(IOException e){
@@ -69,12 +70,11 @@ public class Logic {
 	            logger.info("Parsing command: " + userCommand);
 	            Command cmd = parser.interpretCommand(userCommand);
 	            logger.info("executing above parsed command");
-                Feedback feedback = cmd.execute(storage);
+                Feedback feedback = cmd.execute(storage, tasksOnScreen);
                 logger.info("displaying feedback");
                 addCommandToHistoryIfUndoable(cmd);
+                tasksOnScreen = feedback.getTasks();
                 feedback.display(ui);
-                logger.info("saving tasks to file.");
-                storage.saveFile();
 	        }catch(NoDescriptionException e){
 	            ui.showError(MESSAGE_NO_DESCRIPTION);
 	        }catch(Exception e){

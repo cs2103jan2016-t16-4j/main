@@ -24,7 +24,7 @@ public class SearchByDate implements Command {
 	}
 
 	@Override
-	public Feedback execute(Storage storage) {
+	public Feedback execute(Storage storage, ArrayList<Task> tasks) {
 		// TODO Auto-generated method stub
 		taskList = storage.searchByDate(date, true);
 		return checkIfListEmpty(storage);

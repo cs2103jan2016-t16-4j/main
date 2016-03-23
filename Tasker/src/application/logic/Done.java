@@ -1,7 +1,10 @@
 package application.logic;
 
 import application.storage.Storage;
+import application.storage.Task;
+
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,9 +53,9 @@ public class Done implements Command{
     }
    
     
-    public String execute(Storage storage){
+    public String execute(Storage storage, ArrayList<Task> tasks){
         assert storage!=null;        
-        String feedback = closeObj.execute(storage);
+        String feedback = closeObj.execute(storage, tasks);
         return feedback;
     }
     

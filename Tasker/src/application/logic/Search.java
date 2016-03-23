@@ -1,8 +1,10 @@
 package application.logic;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import application.storage.Storage;
+import application.storage.Task;
 
 /**
  * 
@@ -40,8 +42,8 @@ public class Search implements Command {
 	}
 
 	@Override
-	public Feedback execute(Storage storage) {
-		Feedback feedback = searchObj.execute(storage);
+	public Feedback execute(Storage storage, ArrayList<Task> tasks) {
+		Feedback feedback = searchObj.execute(storage,tasks );
 		return feedback;
 	}
 

@@ -24,7 +24,7 @@ public class SearchByPriority implements Command {
 	}
 
 	@Override
-	public Feedback execute(Storage storage) {
+	public Feedback execute(Storage storage, ArrayList<Task> tasks) {
 		taskList = storage.searchByPriority(priority);
 		return checkIfListEmpty(storage);
 	}

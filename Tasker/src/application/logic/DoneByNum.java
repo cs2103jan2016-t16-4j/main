@@ -1,8 +1,10 @@
 package application.logic;
 
 import application.storage.Storage;
-import java.io.IOException;
+import application.storage.Task;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +31,7 @@ public class DoneByNum implements Command {
       
     }
     
-    public String execute(Storage storage){
+    public Feedback execute(Storage storage, ArrayList<Task> tasks){
         assert storage!=null;
         try {
             boolean isSuccess = storage.closeTaskInList(numToClose);

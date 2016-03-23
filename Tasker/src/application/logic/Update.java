@@ -1,15 +1,19 @@
 package application.logic;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.ocpsoft.prettytime.nlp.PrettyTimeParser;
+import org.joda.time.DateTime;
 
 import application.storage.Storage;
+import application.storage.Task;
 
-public class Update implements UndoableCommand{
+public class Update implements Command{
     public static final int NOT_FOUND = -1;
     public static final int INDEX_TASK_POSITION = 0;
     public static final int ARRAY_INDEXING_OFFSET = 1;
@@ -18,110 +22,61 @@ public class Update implements UndoableCommand{
             "We encountered an error while updating the task. Sorry for the inconvenience.";    
     private static final String MESSAGE_UPDATE_FEEDBACK = 
             "Updated Task: %1$s";    
+    private static final String MESSAGE_UNDO_FEEDBACK = 
+            "Updated Task: %1$s";  
+    private static final String MESSAGE_UNDO_FAILURE = "We encountered an error while undoing.";
+            
     
+    Task origTask;
+    Task updatedTask;
+    Storage storage;
     
-    String[] arguments;
     int taskPosition = -1;
     String description = EMPTY;
-    String startDateTime = EMPTY;
-    String endDateTime = EMPTY;
-    String startTime = EMPTY;
-    String endTime = EMPTY;
+    Calendar startDateTime;
+    Calendar endDateTime;
     String location = EMPTY;
-    String remindDate = EMPTY;
+    Calendar remindDate;
     String priority = EMPTY;
-    PrettyTimeParser dateParser; 
     
-    Update(String[] arguments){
-        this.arguments =arguments;
-        dateParser = new PrettyTimeParser();
-        interpretArguments(arguments);
-        
+    Update(int taskPosition, String description, Calendar start, Calendar end, String location, Calendar remindDate){
+        this.taskPosition = taskPosition;
+        this.description = description;
+        this.startDateTime = start;
+        this.startDateTime = end;
+        this.location = location;
+        this.remindDate = remindDate;
     }
-    
-    private void interpretArguments (String[] arguments){
-        this.taskPosition = interpretPosition(arguments[INDEX_TASK_POSITION]);
-        int indexDateStart = setDateTime(arguments);
-        this.description = getString(arguments, 1, indexDateStart - 1);
-        setLocation(arguments);
-    }
-    
-    private int interpretPosition(String num) throws NumberFormatException{
-        return (Integer.parseInt(num) - ARRAY_INDEXING_OFFSET);
-    }
-    
-    private void setLocation(String[] args){
-        int locationIndex = Arrays.asList(arguments).lastIndexOf("at");
-        this.location = getString(arguments, locationIndex + 1, arguments.length - 1);
-    }
-    
-    private int setDateTime(String[] arguments){
-        int fromDateIndex = Arrays.asList(arguments).lastIndexOf("from");
-        if (fromDateIndex == NOT_FOUND){
-            int indexDateStart = setEndDateOnly(arguments);
-            return indexDateStart;
-        }else{
-            int toDateIndex = Arrays.asList(arguments).lastIndexOf("to");
-            int locationIndex = Arrays.asList(arguments).lastIndexOf("at");
-            setStartAndEndDateTime(arguments, fromDateIndex, toDateIndex, locationIndex);
-        }
-        return fromDateIndex;
-    }
-    
-    private int setEndDateOnly(String[] args){
-        int byDateIndex = Arrays.asList(arguments).lastIndexOf("by");
-        int locationIndex = Arrays.asList(arguments).lastIndexOf("at");
-        setEndDateAndTime(args, byDateIndex, locationIndex);
-        return byDateIndex;
-    }
-    
-    private void setStartAndEndDateTime (String[] arguments, int from, int to, int loc){
-        setStartDateAndTIme(arguments, from, to);
-        setEndDateAndTime(arguments, to, loc);
-    }
-
-    private void setEndDateAndTime(String[] arguments, int to, int loc) {
-        String endDateTime = getString(arguments, to + 1, loc - 1); //MAGIC NUMBERS
-        Date endDateAndTime = interpretDate(endDateTime);
-        this.endDateTime = (new SimpleDateFormat("dd/MM/yyyy").format(endDateAndTime));
-        this.endTime = (new SimpleDateFormat("HH:mm").format(endDateAndTime));
-    }
-
-    private void setStartDateAndTIme(String[] arguments, int from, int to) {
-        String startDateTime = getString(arguments, from + 1, to - 1); //MAGIC NUMBERS
-        Date startDateAndTime = interpretDate(startDateTime);
-        this.startDateTime = (new SimpleDateFormat("dd/MM/yyyy").format(startDateAndTime));
-        this.startTime = (new SimpleDateFormat("HH:mm").format(startDateAndTime));
-    }
-    
-    private Date interpretDate(String date){
-        List<Date> dateTimes = dateParser.parse(date);
-        return dateTimes.get(0);
-    }
-    
-    
-    private String getString(String[] args, int start, int end){
-        String string = "";
-        for(int i = start; i <= end; i++){
-            string = string + args[i] + " ";
-        }
-        return string.trim();
-    }
+  
    
-    public Feedback execute(Storage storage){
-        
-        String feedbackMessageFromStorage = storage.updateTaskFromSearch(taskPosition, description, 
-                startDateTime, startTime, endDateTime
-                , endTime,location
+    public Feedback execute(Storage storage, ArrayList<Task> tasks){
+        this.storage = storage;
+        int idTaskToDelete = tasks.get(taskPosition).getTaskIndex();
+        ArrayList<Task> returnedTasks = storage.updateTask(idTaskToDelete, description, 
+                startDateTime, endDateTime
+                ,location
                 , remindDate, priority);
-        if (feedbackMessageFromStorage != null){
-            String feedbackMessage = String.format(MESSAGE_UPDATE_FEEDBACK, feedbackMessageFromStorage);
-            return new Feedback(feedbackMessage, storage.getAllTasks());
-        }else{
-            return new Feedback(MESSAGE_UPDATE_ERROR, storage.getAllTasks());
-        }
-        
+        origTask = returnedTasks.get(0);
+        updatedTask = returnedTasks.get(1);
+        String feedbackMessage = String.format(MESSAGE_UPDATE_FEEDBACK, "\n" + "From: " 
+                + origTask.toString() + "\n" + "To: " + updatedTask.toString());
+        return new Feedback(feedbackMessage, storage.getFileList());
     }
+    
+    
+    public Feedback undo(){
+        try {
+            storage.updateTask(origTask.getTaskIndex(), origTask.getTaskDescription(), updatedTask.getStartDate(),
+                    updatedTask.getEndDate(),  updatedTask.getLocation(),  updatedTask.getRemindDate(),
+                    updatedTask.getPriority());
+            String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK, "\n" + "From: " 
+                    + updatedTask.toString() + "\n" + "To: " + origTask.toString());
+            return new Feedback(feedbackMessage, storage.getFileList());
+        }catch(IOException e){
+            return new Feedback(MESSAGE_UNDO_FAILURE, storage.getFileList());
+        }
+    }
+    
     /*
     private String makeFeedback(){
         if (startDateTime.equals(EMPTY)){

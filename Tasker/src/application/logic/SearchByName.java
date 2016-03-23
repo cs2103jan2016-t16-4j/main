@@ -25,7 +25,7 @@ public class SearchByName implements Command {
 	}
 
 	@Override
-	public Feedback execute(Storage storage) {
+	public Feedback execute(Storage storage, ArrayList<Task> tasks) {
 		// TODO Auto-generated method stub
 		taskList = storage.searchByTask(taskName);
 		return checkIfListEmpty(storage);

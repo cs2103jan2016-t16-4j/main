@@ -1,6 +1,9 @@
 package application.logic;
 
+import java.util.ArrayList;
+
 import application.storage.Storage;
+import application.storage.Task;
 
 public class Delete implements Command{
     
@@ -33,8 +36,8 @@ public class Delete implements Command{
     }
    
     
-    public Feedback execute(Storage storage){
-        Feedback feedback = delObj.execute(storage);
+    public Feedback execute(Storage storage, ArrayList<Task> tasks){
+        Feedback feedback = delObj.execute(storage, tasks);
         return feedback;
     }
     

@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import application.logic.Logic;
-import application.parser.Feedback;
+import application.logic.Feedback;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;

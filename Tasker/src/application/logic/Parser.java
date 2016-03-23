@@ -2,12 +2,14 @@ package application.logic;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Logger;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.ocpsoft.prettytime.nlp.PrettyTimeParser;
 
 
@@ -125,7 +127,10 @@ public class Parser {
         int dateStartIndex = getDateStartIndex(args);
         int locationStartIndex = Arrays.asList(args).lastIndexOf("at");
         String[] segments = getSegments(dateStartIndex, locationStartIndex, args);
-        DateTime[] dates = parseDates(segments[DATE_POS]);
+        if (segments[DESC_POS].equals(EMPTY)){
+            new NoDescriptionException();
+        }
+        Calendar[] dates = parseDates(segments[DATE_POS]);
         Command command = new Add (segments[DESC_POS], dates[0], dates[1], segments[LOC_POS]);
         return command;
     }
@@ -146,7 +151,14 @@ public class Parser {
     
     private Command initializeUpdate(String[] args){
         args = (String[]) ArrayUtils.remove(args, 0);
-        Command command = new Update ( args);
+        int taskToUpdate = Integer.parseInt(args[0]);
+        args = (String[]) ArrayUtils.remove(args, 0);
+        int dateStartIndex = getDateStartIndex(args);
+        int locationStartIndex = Arrays.asList(args).lastIndexOf("at");
+        String[] segments = getSegments(dateStartIndex, locationStartIndex, args);
+        Calendar[] dates = parseDates(segments[DATE_POS]);
+        Calendar remindDate = convertToCalendar(createEmptyDate());
+        Command command = new Update(taskToUpdate, segments[DESC_POS], dates[0], dates[1], segments[LOC_POS], remindDate);
         return command;
     }
     
@@ -188,56 +200,64 @@ public class Parser {
         }
     }
     
-    private DateTime[] parseDates(String dateString){
+    private Calendar[] parseDates(String dateString){
         List<Date> tempDates1 = dateParser.parse(dateString);
         List<Date> tempDates2 = dateParser.parse(dateString);
-        DateTime startDate = getStartDate(tempDates1, tempDates2);
-        DateTime endDate = getEndDate(tempDates1, tempDates2);
-        DateTime[] dates = {startDate, endDate};
+        Calendar startDate = getStartDate(tempDates1, tempDates2);
+        Calendar endDate = getEndDate(tempDates1, tempDates2);
+        Calendar[] dates = {startDate, endDate};
         return dates;        
     }
     
-    private DateTime getStartDate(List<Date> tempDates1,List<Date> tempDates2){
+    private Calendar getStartDate(List<Date> tempDates1,List<Date> tempDates2){
+        LocalDateTime date;
         if (tempDates1.size() == 0){
-            return createEmptyDate();
+            date = createEmptyDate();
         } else if (tempDates1.size() == 1){
-            return createEmptyDate();
+            date = createEmptyDate();
         }else{
-            return fixDate(tempDates1.get(0), tempDates2.get(0));
+            date = fixDate(tempDates1.get(0), tempDates2.get(0));
         }
+        return convertToCalendar(date);
     }
     
-    private DateTime getEndDate(List<Date> tempDates1,List<Date> tempDates2){
+    private Calendar getEndDate(List<Date> tempDates1,List<Date> tempDates2){
+        LocalDateTime date;
         if (tempDates1.size() == 0){
-            return createEmptyDate();
+            date = createEmptyDate();
         } else if (tempDates1.size() == 1){
-            return fixDate(tempDates1.get(0), tempDates2.get(0));
+            date = fixDate(tempDates1.get(0), tempDates2.get(0));
         }else{
-            return fixDate(tempDates1.get(1), tempDates2.get(1));
+            date = fixDate(tempDates1.get(1), tempDates2.get(1));
         }
+        return convertToCalendar(date);
     }
 
-    private DateTime fixDate(Date date1, Date date2){
+    private LocalDateTime fixDate(Date date1, Date date2){
         if (date1.equals(date2)){
-            return new DateTime(date1);
+            return new LocalDateTime(date1);
         }else{
-            DateTime date = new DateTime(date1);
+            LocalDateTime date = new LocalDateTime(date1);
             date = date.withMillisOfDay(1);
             return date;
         }
     }
     
-    private DateTime createEmptyDate() {
-        DateTime date = new DateTime();
+    private LocalDateTime createEmptyDate() {
+        LocalDateTime date = new LocalDateTime();
         date = date.withYear(-1);
         return date;
     }
+    
+    private Calendar convertToCalendar(LocalDateTime date){
+        Date temp = date.toDate();
+        Calendar cal = new GregorianCalendar();
+        cal.setTime(temp);
+        return cal;
+    }
         
-    private String[] getSegments(int dateIndex, int locationIndex, String[] args) throws NoDescriptionException{
+    private String[] getSegments(int dateIndex, int locationIndex, String[] args){
         String description = getDescription(dateIndex, locationIndex, args);;
-        if (description.equals(EMPTY)){
-            new NoDescriptionException();
-        }
         String date = getDateString(dateIndex, locationIndex, args);
         String location = getLocationString(dateIndex, locationIndex, args);
         String[] segments = new String[ARGUMENT_NUMBER];

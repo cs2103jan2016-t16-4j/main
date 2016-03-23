@@ -35,7 +35,7 @@ public class DoneByName implements Command {
     }
      
     //NEED TO IMPLEMENT THIS
-    public String execute(Storage storage){
+    public String execute(Storage storage, ArrayList<Task> tasks){
          try{
             ArrayList<Task> taskList = storage.searchByTask(taskToClose);
             String feedback = takeAction(taskList, storage);

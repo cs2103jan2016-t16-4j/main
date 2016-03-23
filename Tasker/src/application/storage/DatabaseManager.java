@@ -1,3 +1,5 @@
+package application.storage;
+
 import java.util.ArrayList;
 
 public class DatabaseManager {
