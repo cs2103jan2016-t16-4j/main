@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class TaskManager {
-    private static final int EMPTY = 999;
+    private static final int EMPTY = 1;
     
 	public ArrayList<Task> add(ArrayList<Task> fileList,
 			String taskDescription, Calendar startDate, Calendar endDate,
@@ -109,6 +109,7 @@ public class TaskManager {
 			String location, Calendar remindDate, String priority, int taskIndex) {
 		int index = 0;	
 		
+		// find task
 		for (int i = 0; i < fileList.size(); i++) {
 			if (fileList.get(i).getTaskIndex() == taskIndex) {
 				index = i;
@@ -116,57 +117,39 @@ public class TaskManager {
 			}
 		}
 		
-		boolean isUpdateSuccess = false;
-		String updateMessage = "\nOld : ";
-		updateMessage += fileList.get(taskIndex).toString();
-		
+		// update task
 		if (!taskDescription.equalsIgnoreCase("")) {
 			fileList.get(index).setTaskDescription(taskDescription);
-			isUpdateSuccess = true;
 		}
 		if (startDate.get(Calendar.YEAR)!=EMPTY) {
 			fileList.get(index).setStartDate(startDate);
-			isUpdateSuccess = true;
 		}
-		if (startDate.get(Calendar.MILLISECOND)!=EMPTY) {
+		if (startDate.get(Calendar.MILLISECOND)!=EMPTY && startDate.get(Calendar.HOUR_OF_DAY)!=0 && startDate.get(Calendar.MINUTE)!=0 && startDate.get(Calendar.SECOND)!=0) {
 			fileList.get(index).setStartTime(startDate);
-			isUpdateSuccess = true;
 		}
 		if (endDate.get(Calendar.YEAR)!=EMPTY) {
 			fileList.get(index).setEndDate(endDate);
-			isUpdateSuccess = true;
 		}
-		if (endDate.get(Calendar.MILLISECOND)!=EMPTY) {
+		if (endDate.get(Calendar.MILLISECOND)!=EMPTY && endDate.get(Calendar.HOUR_OF_DAY)!=0 && endDate.get(Calendar.MINUTE)!=0 && endDate.get(Calendar.SECOND)!=0) {
 			fileList.get(index).setEndTime(endDate);
-			isUpdateSuccess = true;
 		}
 		if (!location.equalsIgnoreCase("")) {
 			fileList.get(index).setLocation(location);
-			isUpdateSuccess = true;
 		}
 		if (remindDate.get(Calendar.YEAR)!=EMPTY) {
 			fileList.get(index).setRemindDate(remindDate);
-			isUpdateSuccess = true;
 		}
-		if (remindDate.get(Calendar.MILLISECOND)!=EMPTY) {
+		if (remindDate.get(Calendar.MILLISECOND)!=EMPTY && remindDate.get(Calendar.HOUR_OF_DAY)!=0 && remindDate.get(Calendar.MINUTE)!=0 && remindDate.get(Calendar.SECOND)!=0) {
 			fileList.get(index).setRemindDate(remindDate);
-			isUpdateSuccess = true;
 		}
 		if (!priority.equalsIgnoreCase("")) {
 			fileList.get(index).setPriority(priority);
-			isUpdateSuccess = true;
 		}
 		
-		if (isUpdateSuccess) {
-			updateMessage += "\nNew : "+fileList.get(taskIndex).toString();
-		}
-		
+		// return updated list
 		return fileList;
 
 	}
-	
-	
-
 }
 
 class ComparatorPriority implements Comparator<Task> {

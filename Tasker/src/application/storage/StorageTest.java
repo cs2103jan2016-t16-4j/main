@@ -22,7 +22,7 @@ public class StorageTest {
 	static Calendar cal2 = Calendar.getInstance();
 	static Calendar noDate = Calendar.getInstance();
 	static Calendar noTime = Calendar.getInstance();
-    private static final int EMPTY = 999;
+    private static final int EMPTY = 1;
 	
     @Before
 	public void before() throws IOException {
@@ -32,8 +32,13 @@ public class StorageTest {
 		storageController.initialise();
 		cal1.set(2020, Calendar.JUNE, 30);
 		cal2.set(2030, Calendar.DECEMBER, 25);
+		System.out.println(cal1.get(Calendar.MILLISECOND));
 		noDate.set(Calendar.YEAR, EMPTY);
+		System.out.println(noDate.get(Calendar.YEAR));
 		noTime.set(Calendar.MILLISECOND, EMPTY);
+		noTime.set(Calendar.HOUR_OF_DAY, 0);
+		noTime.set(Calendar.MINUTE, 0);
+		noTime.set(Calendar.SECOND, 0);
 	}
 	
 //	@Test
@@ -142,7 +147,7 @@ public class StorageTest {
 		}
 	}
 	
-	@Test
+//	@Test
 	public void sortPriority() throws IOException {
 //		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
 //		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
@@ -153,18 +158,19 @@ public class StorageTest {
 			System.out.println(i+") " +searchList.get(i).toString());
 		}
 	}
-//	@Test
+	@Test
 	public void updateTask() throws IOException {
-//		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
-//		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
-//		storageController.addTaskInList("Finish CS2103", noDate, noDate, "School", noDate, "high");
-//		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
+		storageController.addTaskInList("Finish CS2103", noDate, noDate, "School", noDate, "high");
+		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
 		Calendar newDate = Calendar.getInstance();
 		newDate.set(2035, Calendar.JUNE, 30);
-		System.out.println("Updated to :"+ storageController.updateTask(3, "Finish CS2103 and CS3230", noDate, newDate, "Home", noDate, "highest").toString());
-//		for (int i = 0; i<searchList.size(); i++) {
-//			System.out.println(i+") " +searchList.get(i).toString());
-//		}
+		ArrayList<Task> list = new ArrayList<Task>();
+		list = storageController.updateTask(3, "Finish CS2103 and CS3230", noDate, newDate, "Home", noDate, "highest");
+		System.out.println(list.size());
+		System.out.println("Old : "+list.get(0).toString());
+		System.out.println("New : "+list.get(1).toString());
 	}
 	
 //	@Test
@@ -181,7 +187,7 @@ public class StorageTest {
 		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
 	}
 
-//		@After
+		@After
 	public void after() {
 		File a = new File(FILE_DIRECTORY_NAME);
 		File b = new File(FILE_CLOSED_NAME);

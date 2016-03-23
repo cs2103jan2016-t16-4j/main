@@ -1,4 +1,4 @@
-package application.storage;
+//package application.storage;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.ArrayList;
@@ -101,21 +101,36 @@ public class Storage {
 		return databaseManager.getFileList();
 	}
 	
-	public Task updateTask(int index, String taskDescription, Calendar startDate,
+	public ArrayList<Task> updateTask(int index, String taskDescription, Calendar startDate,
 			Calendar endDate, String location, Calendar remindDate,
 			String priority) throws IOException {
+		ArrayList<Task> list = new ArrayList<Task>();
+		
+		// add original/old task 
+		int taskindex = -1;
+		for (int i = 0; i<databaseManager.getFileList().size(); i++) {
+			if (databaseManager.getFileList().get(i).getTaskIndex()==index) {
+				taskindex = i;
+				Task newTask1 = new Task();
+				newTask1 = databaseManager.getFileList().get(i);
+				list.add(newTask1);
+				System.out.println("[Before] Old : "+list.get(0).toString());
+				break;
+			}
+		}
+		
+		// update task
 		databaseManager.updateFileList(taskManager.update(
 				databaseManager.getFileList(), taskDescription, startDate,
 				endDate, location, remindDate, priority, index));
 		
-		Task updatedTask = new Task();
-		for (int i = 0; i<databaseManager.getFileList().size(); i++) {
-			if (databaseManager.getFileList().get(i).getTaskIndex()==index) {
-				updatedTask = databaseManager.getFileList().get(i);
-			}
-		}
+		
+		System.out.println("[Before] Old : "+list.get(0).toString());
+		list.add(databaseManager.getFileList().get(taskindex));
+		System.out.println("[After] New : "+list.get(1).toString());
+		
 		saveFile();
-		return updatedTask;
+		return list;
 	}
 
 }

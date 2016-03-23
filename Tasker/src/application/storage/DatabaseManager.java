@@ -1,6 +1,5 @@
-package application.storage;
-
 import java.util.ArrayList;
+package application.storage;
 
 public class DatabaseManager {
 	private int taskIndex = 0;
