@@ -162,3 +162,155 @@ Mar 16, 2016 6:07:36 PM application.logic.Logic executeCommandsUntilExit
 INFO: saving tasks to file.
 Mar 16, 2016 6:07:36 PM application.logic.Logic executeCommandsUntilExit
 INFO: Getting command from user
+Mar 16, 2016 10:37:55 PM application.logic.Logic main
+INFO: Initialising Logic
+Mar 16, 2016 10:37:55 PM application.logic.Logic main
+INFO: Setting Environment
+Mar 16, 2016 10:37:55 PM application.logic.Logic setEnvironment
+INFO: Checking if file exists
+Mar 16, 2016 10:37:55 PM application.logic.Logic setEnvironment
+INFO: Loading tasks
+Mar 16, 2016 10:37:55 PM application.logic.Logic main
+INFO: Printing welcome message.
+Mar 16, 2016 10:37:55 PM application.logic.Logic main
+INFO: Starting execution loop
+Mar 16, 2016 10:37:55 PM application.logic.Logic executeCommandsUntilExit
+INFO: Getting command from user
+Mar 16, 2016 10:38:02 PM application.logic.Logic executeCommandsUntilExit
+INFO: Parsing command: exit
+Mar 16, 2016 10:38:02 PM application.parser.Parser interpretCommand
+INFO: Checking for error in user command: exit
+Mar 16, 2016 10:38:02 PM application.parser.Parser interpretCommand
+INFO: Splitting command into array of its words
+Mar 16, 2016 10:38:02 PM application.parser.Parser interpretCommand
+INFO: Getting command key word
+Mar 16, 2016 10:38:02 PM application.parser.Parser interpretCommand
+INFO: Converting to command object: exit
+Mar 16, 2016 10:38:02 PM application.parser.Parser convertToCommand
+INFO: Making exit command object
+Mar 16, 2016 10:38:02 PM application.parser.Parser convertToCommand
+INFO: Returning command object
+Mar 16, 2016 10:38:02 PM application.parser.Parser interpretCommand
+INFO: Returning command object
+Mar 16, 2016 10:38:02 PM application.logic.Logic executeCommandsUntilExit
+INFO: executing above parsed command
+Mar 16, 2016 10:38:20 PM application.logic.Logic main
+INFO: Initialising Logic
+Mar 16, 2016 10:38:20 PM application.logic.Logic main
+INFO: Setting Environment
+Mar 16, 2016 10:38:20 PM application.logic.Logic setEnvironment
+INFO: Checking if file exists
+Mar 16, 2016 10:38:20 PM application.logic.Logic setEnvironment
+INFO: Loading tasks
+Mar 16, 2016 10:38:20 PM application.logic.Logic main
+INFO: Printing welcome message.
+Mar 16, 2016 10:38:20 PM application.logic.Logic main
+INFO: Starting execution loop
+Mar 16, 2016 10:38:20 PM application.logic.Logic executeCommandsUntilExit
+INFO: Getting command from user
+Mar 16, 2016 10:38:43 PM application.logic.Logic executeCommandsUntilExit
+INFO: Parsing command: exit
+Mar 16, 2016 10:38:43 PM application.parser.Parser interpretCommand
+INFO: Checking for error in user command: exit
+Mar 16, 2016 10:38:43 PM application.parser.Parser interpretCommand
+INFO: Splitting command into array of its words
+Mar 16, 2016 10:38:43 PM application.parser.Parser interpretCommand
+INFO: Getting command key word
+Mar 16, 2016 10:38:43 PM application.parser.Parser interpretCommand
+INFO: Converting to command object: exit
+Mar 16, 2016 10:38:43 PM application.parser.Parser convertToCommand
+INFO: Making exit command object
+Mar 16, 2016 10:38:43 PM application.parser.Parser convertToCommand
+INFO: Returning command object
+Mar 16, 2016 10:38:43 PM application.parser.Parser interpretCommand
+INFO: Returning command object
+Mar 16, 2016 10:38:43 PM application.logic.Logic executeCommandsUntilExit
+INFO: executing above parsed command
+ ----------------------  Start Thu Mar 17 16:02:21 SGT 2016 ---------------------- 
+17.03.2016 04:02:21 - INFO   - application.logic.Logic - main - Initialising Logic
+17.03.2016 04:02:21 - INFO   - application.logic.Logic - main - Setting Environment
+17.03.2016 04:02:21 - INFO   - application.logic.Logic - setEnvironment - Checking if file exists
+17.03.2016 04:02:21 - INFO   - application.logic.Logic - setEnvironment - Loading tasks
+17.03.2016 04:02:21 - INFO   - application.logic.Logic - main - Printing welcome message.
+17.03.2016 04:02:21 - INFO   - application.logic.Logic - main - Starting execution loop
+17.03.2016 04:02:21 - INFO   - application.logic.Logic - executeCommandsUntilExit - Getting command from user
+17.03.2016 04:02:23 - INFO   - application.gui.GUI - start - Initialising GUI
+17.03.2016 04:02:29 - INFO   - application.logic.Logic - executeCommandsUntilExit - Parsing command: search
+17.03.2016 04:02:29 - INFO   - application.parser.Parser - interpretCommand - Checking for error in user command: search
+17.03.2016 04:02:29 - INFO   - application.parser.Parser - interpretCommand - Splitting command into array of its words
+17.03.2016 04:02:29 - INFO   - application.parser.Parser - interpretCommand - Getting command key word
+17.03.2016 04:02:29 - INFO   - application.parser.Parser - interpretCommand - Converting to command object: search
+17.03.2016 04:02:29 - INFO   - application.parser.Parser - convertToCommand - Making search command object
+17.03.2016 04:02:29 - INFO   - application.parser.Parser - convertToCommand - Returning command object
+17.03.2016 04:02:29 - INFO   - application.parser.Parser - interpretCommand - Returning command object
+17.03.2016 04:02:29 - INFO   - application.logic.Logic - executeCommandsUntilExit - executing above parsed command
+17.03.2016 04:02:29 - INFO   - application.logic.Logic - executeCommandsUntilExit - displaying feedback
+17.03.2016 04:02:29 - INFO   - application.parser.Feedback - display - feedback object using ui to display itself to user
+17.03.2016 04:02:29 - INFO   - application.logic.Logic - executeCommandsUntilExit - saving tasks to file.
+17.03.2016 04:02:29 - INFO   - application.logic.Logic - executeCommandsUntilExit - Getting command from user
+17.03.2016 04:02:32 - INFO   - application.logic.Logic - executeCommandsUntilExit - Parsing command: exit
+17.03.2016 04:02:32 - INFO   - application.parser.Parser - interpretCommand - Checking for error in user command: exit
+17.03.2016 04:02:32 - INFO   - application.parser.Parser - interpretCommand - Splitting command into array of its words
+17.03.2016 04:02:32 - INFO   - application.parser.Parser - interpretCommand - Getting command key word
+17.03.2016 04:02:32 - INFO   - application.parser.Parser - interpretCommand - Converting to command object: exit
+17.03.2016 04:02:32 - INFO   - application.parser.Parser - convertToCommand - Making exit command object
+17.03.2016 04:02:32 - INFO   - application.parser.Parser - convertToCommand - Returning command object
+17.03.2016 04:02:32 - INFO   - application.parser.Parser - interpretCommand - Returning command object
+17.03.2016 04:02:32 - INFO   - application.logic.Logic - executeCommandsUntilExit - executing above parsed command
+ ----------------------   End  Thu Mar 17 16:02:32 SGT 2016 ---------------------- 
+ ----------------------  Start Thu Mar 17 16:21:34 SGT 2016 ---------------------- 
+17.03.2016 04:21:34 - INFO   - application.logic.Logic - main - Initialising Logic
+17.03.2016 04:21:34 - INFO   - application.logic.Logic - main - Setting Environment
+17.03.2016 04:21:34 - INFO   - application.logic.Logic - setEnvironment - Checking if file exists
+17.03.2016 04:21:34 - INFO   - application.logic.Logic - setEnvironment - Loading tasks
+17.03.2016 04:21:34 - INFO   - application.logic.Logic - main - Printing welcome message.
+17.03.2016 04:21:34 - INFO   - application.logic.Logic - main - Starting execution loop
+17.03.2016 04:21:34 - INFO   - application.logic.Logic - executeCommandsUntilExit - Getting command from user
+17.03.2016 04:21:35 - INFO   - application.gui.GUI - start - Initialising GUI
+17.03.2016 04:21:43 - INFO   - application.logic.Logic - executeCommandsUntilExit - Parsing command: by 3rd
+17.03.2016 04:21:43 - INFO   - application.parser.Parser - interpretCommand - Checking for error in user command: by 3rd
+17.03.2016 04:21:43 - INFO   - application.parser.Parser - interpretCommand - Splitting command into array of its words
+17.03.2016 04:21:43 - INFO   - application.parser.Parser - interpretCommand - Getting command key word
+17.03.2016 04:21:43 - INFO   - application.parser.Parser - interpretCommand - Converting to command object: by
+17.03.2016 04:21:43 - INFO   - application.parser.Parser - convertToCommand - Making add command object
+17.03.2016 04:21:43 - INFO   - application.logic.Logic - executeCommandsUntilExit - Getting command from user
+17.03.2016 04:21:50 - INFO   - application.logic.Logic - executeCommandsUntilExit - Parsing command: by today at
+17.03.2016 04:21:50 - INFO   - application.parser.Parser - interpretCommand - Checking for error in user command: by today at
+17.03.2016 04:21:50 - INFO   - application.parser.Parser - interpretCommand - Splitting command into array of its words
+17.03.2016 04:21:50 - INFO   - application.parser.Parser - interpretCommand - Getting command key word
+17.03.2016 04:21:50 - INFO   - application.parser.Parser - interpretCommand - Converting to command object: by
+17.03.2016 04:21:50 - INFO   - application.parser.Parser - convertToCommand - Making add command object
+17.03.2016 04:21:53 - INFO   - application.parser.Parser - convertToCommand - Returning command object
+17.03.2016 04:21:53 - INFO   - application.parser.Parser - interpretCommand - Returning command object
+17.03.2016 04:21:53 - INFO   - application.logic.Logic - executeCommandsUntilExit - executing above parsed command
+17.03.2016 04:21:53 - INFO   - application.logic.Logic - executeCommandsUntilExit - displaying feedback
+17.03.2016 04:21:53 - INFO   - application.parser.Feedback - display - feedback object using ui to display itself to user
+17.03.2016 04:21:53 - INFO   - application.logic.Logic - executeCommandsUntilExit - saving tasks to file.
+17.03.2016 04:21:53 - INFO   - application.logic.Logic - executeCommandsUntilExit - Getting command from user
+17.03.2016 04:34:12 - INFO   - application.logic.Logic - executeCommandsUntilExit - Parsing command: exit
+17.03.2016 04:34:12 - INFO   - application.parser.Parser - interpretCommand - Checking for error in user command: exit
+17.03.2016 04:34:12 - INFO   - application.parser.Parser - interpretCommand - Splitting command into array of its words
+17.03.2016 04:34:12 - INFO   - application.parser.Parser - interpretCommand - Getting command key word
+17.03.2016 04:34:12 - INFO   - application.parser.Parser - interpretCommand - Converting to command object: exit
+17.03.2016 04:34:12 - INFO   - application.parser.Parser - convertToCommand - Making exit command object
+17.03.2016 04:34:12 - INFO   - application.parser.Parser - convertToCommand - Returning command object
+17.03.2016 04:34:12 - INFO   - application.parser.Parser - interpretCommand - Returning command object
+17.03.2016 04:34:12 - INFO   - application.logic.Logic - executeCommandsUntilExit - executing above parsed command
+ ----------------------   End  Thu Mar 17 16:34:12 SGT 2016 ---------------------- 
+ ----------------------  Start Thu Mar 17 16:34:20 SGT 2016 ---------------------- 
+17.03.2016 04:34:20 - INFO   - application.logic.Logic - main - Initialising Logic
+17.03.2016 04:34:20 - INFO   - application.logic.Logic - main - Setting Environment
+17.03.2016 04:34:20 - INFO   - application.logic.Logic - setEnvironment - Checking if file exists
+17.03.2016 04:34:20 - INFO   - application.logic.Logic - setEnvironment - Loading tasks
+17.03.2016 04:34:20 - INFO   - application.storage.Storage - loadAllTasks - File cannot be instantiated.
+17.03.2016 04:34:20 - INFO   - application.logic.Logic - main - Printing welcome message.
+17.03.2016 04:34:20 - INFO   - application.logic.Logic - main - Starting execution loop
+17.03.2016 04:34:20 - INFO   - application.logic.Logic - executeCommandsUntilExit - Getting command from user
+17.03.2016 04:34:21 - INFO   - application.gui.GUI - start - Initialising GUI
+17.03.2016 04:34:26 - INFO   - application.logic.Logic - executeCommandsUntilExit - Parsing command: by today at
+17.03.2016 04:34:26 - INFO   - application.parser.Parser - interpretCommand - Checking for error in user command: by today at
+17.03.2016 04:34:26 - INFO   - application.parser.Parser - interpretCommand - Splitting command into array of its words
+17.03.2016 04:34:26 - INFO   - application.parser.Parser - interpretCommand - Getting command key word
+17.03.2016 04:34:26 - INFO   - application.parser.Parser - interpretCommand - Converting to command object: by
+17.03.2016 04:34:26 - INFO   - application.parser.Parser - convertToCommand - Making add command object
+17.03.2016 04:34:30 - INFO   - application.logic.Logic - executeCommandsUntilExit - Getting command from user

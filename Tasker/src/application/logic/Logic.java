@@ -9,9 +9,6 @@ import application.gui.Cli;
 import application.gui.GUIHandler;
 import application.gui.Ui;
 import application.logger.LoggerFormat;
-import application.parser.Command;
-import application.parser.Feedback;
-import application.parser.Parser;
 import application.storage.Storage;
 import application.storage.Task;
 
@@ -28,6 +25,7 @@ public class Logic {
             + "Please restart. We regret the inconvenience.";
     private static final String MESSAGE_ERROR = "There was some problem processing your request. "
             + "Please check your input format.";
+    private static final String MESSAGE_NO_DESCRIPTION = "You must enter a task description.";
     private static final String LOGGER_NAME = "logfile";
     
 	private Parser parser = new Parser();
@@ -35,7 +33,8 @@ public class Logic {
 	private Ui ui = new Cli();
 	private static Logger logger = Logger.getLogger(LOGGER_NAME);
 	private GUIHandler guiHandler = new GUIHandler();
-
+	private History history = History.getInstance();
+	
 	public static void main(String[] args) throws IOException{
 	    initializeLogger();
 	    logger.info("Initialising Logic");
@@ -71,14 +70,23 @@ public class Logic {
 	            logger.info("executing above parsed command");
                 Feedback feedback = cmd.execute(storage);
                 logger.info("displaying feedback");
+                addCommandToHistoryIfUndoable(cmd);
                 feedback.display(ui);
                 logger.info("saving tasks to file.");
                 storage.saveFile();
+	        }catch(NoDescriptionException e){
+	            ui.showError(MESSAGE_NO_DESCRIPTION);
 	        }catch(Exception e){
-	            ui.showError(MESSAGE_ERROR);
-	        }
+                ui.showError(MESSAGE_ERROR);
+            }
 	    }
 	}
+
+    private void addCommandToHistoryIfUndoable(Command cmd) {
+        if(cmd instanceof UndoableCommand){
+            history.add(cmd);
+        }
+    }
 	
 	private ArrayList<Task> setEnvironment() throws IOException{
 	    logger.info("Checking if file exists");
