@@ -25,4 +25,12 @@ public class Feedback {
         ui.showToUser(feedbackMessage, tasksToDisplay);
     }
     
+    public ArrayList<Task> getTasks(){
+    	return this.tasksToDisplay;
+    }
+    
+    public String getMessage(){
+    	return this.feedbackMessage;
+    }
+    
 }

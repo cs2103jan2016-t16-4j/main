@@ -1,258 +1,194 @@
+package application.storage;
 import static org.junit.Assert.*;
+
+import java.io.File;
 import java.io.IOException;
-import org.junit.Test;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+
 import org.junit.After;
 import org.junit.Before;
-import java.util.ArrayList;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import org.junit.Test;
 
 public class StorageTest {
-
+	Storage storageController;
+	static final String FILE_CLOSED_NAME = "TaskerDataHistory.txt";
+	static final String FILE_DATA_NAME = "TaskerData.txt";
+	static final String FILE_DIRECTORY_NAME = "TaskerDirectory.txt";
+	static final String CUSTOM_DIRECTORY1 = "D:/Eclipse/eclipse/workspace/";
+	static final String CUSTOM_DIRECTORY2 = "D:/Eclipse/eclipse/";
+	static Calendar cal1 = Calendar.getInstance();
+	static Calendar cal2 = Calendar.getInstance();
+	static Calendar noDate = Calendar.getInstance();
+	static Calendar noTime = Calendar.getInstance();
+    private static final int EMPTY = 999;
+	
+    @Before
+	public void before() throws IOException {
+		storageController = new Storage();
+		if(!storageController.directoryExists())	
+			storageController.setDirectory("");
+		storageController.initialise();
+		cal1.set(2020, Calendar.JUNE, 30);
+		cal2.set(2030, Calendar.DECEMBER, 25);
+		noDate.set(Calendar.YEAR, EMPTY);
+		noTime.set(Calendar.MILLISECOND, EMPTY);
+	}
+	
 //	@Test
-	public void testDateBeforeOrEqual() {
-		Storage storage = new Storage();
-		// test by year parameter only
-		// before/equal
-		assertTrue(storage.dateIsBeforeOrEqual("11/07/1950", "11/07/2016"));
-		assertTrue(storage.dateIsBeforeOrEqual("11/07/2015", "11/07/2015"));
-		// exceeds
-		assertFalse(storage.dateIsBeforeOrEqual("11/07/2018", "11/07/2015"));
-		assertFalse(storage.dateIsBeforeOrEqual("11/07/5999", "11/07/2015"));
-		
-		// test by month parameter only
-		// before/equal
-		assertTrue(storage.dateIsBeforeOrEqual("11/01/2015", "11/07/2015"));
-		assertTrue(storage.dateIsBeforeOrEqual("11/07/2015", "11/07/2015"));
-		// exceeds
-		assertFalse(storage.dateIsBeforeOrEqual("11/09/2015", "11/07/2015"));
-		assertFalse(storage.dateIsBeforeOrEqual("11/12/2015", "11/07/2015"));
-		
-		// test by day parameter only
-		// before/equal
-		assertTrue(storage.dateIsBeforeOrEqual("01/07/2015", "11/07/2015"));
-		assertTrue(storage.dateIsBeforeOrEqual("11/07/2015", "11/07/2015"));
-		// exceeds
-		assertFalse(storage.dateIsBeforeOrEqual("18/07/2015", "11/07/2015"));
-		assertFalse(storage.dateIsBeforeOrEqual("30/07/2015", "11/07/2015"));
-		
-		// test by month&year parameter only
-		// before/equal
-		assertTrue(storage.dateIsBeforeOrEqual("11/09/1985", "11/07/2016"));
-		assertTrue(storage.dateIsBeforeOrEqual("11/01/2015", "11/07/2015"));
-		// exceeds
-		assertFalse(storage.dateIsBeforeOrEqual("13/02/2018", "11/07/2015"));
-		assertFalse(storage.dateIsBeforeOrEqual("11/09/2015", "11/07/2015"));
-		
-		// test by day&year parameter only
-		// before/equal
-		assertTrue(storage.dateIsBeforeOrEqual("15/07/1985", "11/07/2016"));
-		assertTrue(storage.dateIsBeforeOrEqual("11/07/2015", "11/07/2015"));
-		// exceeds
-		assertFalse(storage.dateIsBeforeOrEqual("13/07/2018", "11/07/2015"));
-		assertFalse(storage.dateIsBeforeOrEqual("15/07/2015", "11/07/2015"));
-		
-		// test by day&month parameter only
-		// before/equal
-		assertTrue(storage.dateIsBeforeOrEqual("15/06/2015", "11/07/2015"));
-		assertTrue(storage.dateIsBeforeOrEqual("01/07/2015", "11/07/2015"));
-		// exceeds
-		assertFalse(storage.dateIsBeforeOrEqual("13/09/2015", "11/07/2015"));
-		assertFalse(storage.dateIsBeforeOrEqual("15/07/2015", "11/07/2015"));
-		
-		// test by day&month&year
-		// before/equal
-		assertTrue(storage.dateIsBeforeOrEqual("17/08/2014", "11/07/2015"));
-		assertTrue(storage.dateIsBeforeOrEqual("01/01/2000", "11/07/2015"));
-		assertTrue(storage.dateIsBeforeOrEqual("13/10/2000", "11/07/2015"));
-		// exceeds
-		assertFalse(storage.dateIsBeforeOrEqual("01/01/2016", "11/07/2015"));
-		assertFalse(storage.dateIsBeforeOrEqual("02/09/2015", "11/07/2015"));
-		assertFalse(storage.dateIsBeforeOrEqual("13/10/2018", "11/07/2015"));
-		
-		//====================================================================
-
+	public void checkDirectory() throws IOException {
+		assertFalse(storageController.directoryExists());	
+	}
+	
+//	@Test
+	public void checkInitialise() throws IOException {
+		storageController.directoryExists();	
+		storageController.setDirectory("");
+		assertTrue(storageController.initialise());
+	}
+	
+//	@Test
+	public void setDirectory() throws IOException {
+		System.out.println("Closed File Path is : "+storageController.fileManager.getClosedFilePath());
+		System.out.println("Data File Path is : "+storageController.fileManager.getDataFilePath());
+		storageController.setDirectory(CUSTOM_DIRECTORY1);
+		System.out.println("Closed File Path is : "+storageController.fileManager.getClosedFilePath());
+		System.out.println("Data File Path is : "+storageController.fileManager.getDataFilePath());
 	}
 
 //	@Test
-	public void testAdd() throws IOException {
-		Storage storage = new Storage();
-		storage.startUpCheck();
-		storage.loadFile();
-		System.out.println("Added : "+storage.addTaskInList("Do homework", "", "", "02/03/2018", "", "home", "02/07/2016", "high"));
-		System.out.println("Added : "+storage.addTaskInList("Go home", "", "", "02/05/2016", "", "", "", ""));
-		System.out.println("Added : "+storage.addTaskInList("Gym time", "", "", "", "", "", "", ""));
-		System.out.println("Added : "+storage.addTaskInList("Play game", "", "", "", "", "", "", "low"));
-		storage.saveFile();
-	}
-//	@Test
-	public void testLoad() throws IOException {
-		Storage storage = new Storage();
-		storage.startUpCheck();
-		storage.loadFile();
+	public void addTask() throws IOException {
+		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
+		storageController.addTaskInList("Finish CS2103", noDate, noDate, "School", noDate, "high");
+		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
 	}
 	
 //	@Test
-	public void testDeleteByAll() throws IOException {		
-		Storage storage = new Storage();
-		storage.startUpCheck();
-		storage.loadFile();
-		storage.addTaskInList("Do homework", "", "", "02/03/2018", "2030", "home", "02/07/2016", "high");
-		storage.addTaskInList("Go home", "", "", "02/05/2016", "", "", "", "");
-		System.out.println("Deleted task : "+storage.deleteTaskFromAll(0));
-		storage.saveFile();
-		assertEquals(1,storage.fileList.size());
-
+	public void closeTask() throws IOException {
+		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
+		storageController.closeTask(1);
 	}
 	
 //	@Test
-	public void testDeleteBySearch() throws IOException {		
-		Storage storage = new Storage();
-		storage.startUpCheck();
-		storage.loadFile();
-		storage.addTaskInList("Do homework", "", "", "02/03/2018", "", "home", "02/07/2016", "high");
-		storage.addTaskInList("Go game", "", "", "02/05/2016", "", "", "", "");
-		storage.addTaskInList("Gym time", "", "", "", "", "", "", "");
-		storage.addTaskInList("Play game", "", "", "", "", "", "", "low");
-		storage.searchByTask("game");
-		System.out.println("Deleted task : "+storage.deleteTaskFromSearch(1));
-		storage.saveFile();
-		assertEquals(3,storage.fileList.size());
-
+	public void deleteTask() throws IOException {
+		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
+		storageController.deleteTask(1);
 	}
 	
 //	@Test
-	public void testClearFile() throws IOException {
-		Storage storage = new Storage();
-		storage.clearFile();
+	public void searchName() throws IOException {
+//		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
+//		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
+//		storageController.addTaskInList("Finish CS2103", noDate, noDate, "School", noDate, "high");
+//		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		ArrayList<Task> searchList = storageController.searchTaskByName("home");
+		for (int i = 0; i<searchList.size(); i++) {
+			System.out.println("Found : "+searchList.get(i).toString());
+		}
 	}
 	
 //	@Test
-	public void testFileNotExist() throws IOException {		
-		Storage storage = new Storage();
-		storage.loadFile();
+	public void searchDate() throws IOException {
+		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
+		storageController.addTaskInList("Finish CS2103", noDate, noDate, "School", noDate, "high");
+		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		Calendar searchDate = Calendar.getInstance();
+		searchDate.set(2035, Calendar.JUNE, 30);
+		ArrayList<Task> searchList = storageController.searchTaskByDate(searchDate);
+		for (int i = 0; i<searchList.size(); i++) {
+			System.out.println("Found : "+searchList.get(i).toString());
+		}
 	}
 	
 //	@Test
-	public void testSearchTask() throws IOException {		
-		Storage storage = new Storage();
-		storage.startUpCheck();
-		storage.loadFile();
-		storage.addTaskInList("Do homework", "", "", "02/03/2018", "", "home", "02/07/2016", "high");
-		storage.addTaskInList("Go home", "", "", "02/05/2016", "", "", "", "");
-		storage.searchByTask("home");
-		storage.saveFile();
+	public void searchPriority() throws IOException {
+		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
+		storageController.addTaskInList("Finish CS2103", noDate, noDate, "School", noDate, "high");
+		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		Calendar searchDate = Calendar.getInstance();
+		searchDate.set(2035, Calendar.JUNE, 30);
+		ArrayList<Task> searchList = storageController.searchTaskByPriority("low");
+		for (int i = 0; i<searchList.size(); i++) {
+			System.out.println("Found : "+searchList.get(i).toString());
+		}
 	}
 	
 //	@Test
-	public void testSearchDate() throws IOException {		
-		Storage storage = new Storage();
-		storage.addTaskInList("Do homework", "", "", "02/03/2018", "", "home", "02/07/2016", "high");
-		storage.addTaskInList("Go home", "", "", "02/05/2016", "", "", "", "");
-		storage.searchByDate("01/01/2017", true);	
+	public void sortName() throws IOException {
+		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
+		storageController.addTaskInList("Finish CS2103", noDate, noDate, "School", noDate, "high");
+		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		ArrayList<Task> searchList = storageController.sortByName();
+		for (int i = 0; i<searchList.size(); i++) {
+			System.out.println(i+") " +searchList.get(i).toString());
+		}
 	}
 	
 //	@Test
-	public void testDirectoryFileCreated() throws IOException {		
-		Storage storage = new Storage();
-		assertFalse(storage.checkDirectoryFileCreated());
-		assertTrue(storage.checkDirectoryFileCreated());
-	}
-	
-//	@Test
-	public void testDirectoryFile() throws IOException {		
-		Storage storage = new Storage();
-		storage.checkDirectoryFileCreated();
-		assertEquals(null,storage.loadDirectoryFile());
-		PrintWriter fw = new PrintWriter(new BufferedWriter(new FileWriter(storage.FILE_DIRECTORY, true)));
-		fw.println("D:/Eclipse/eclipse/workspace/TaskerData.txt");
-		fw.close();
-		assertEquals("D:/Eclipse/eclipse/workspace/TaskerData.txt",storage.loadDirectoryFile());
-	}
-
-//	@Test	
-	public void testSaveDirectory() throws IOException {
-		Storage storage = new Storage();
-		storage.checkDirectoryFileCreated();
-		storage.saveDirectory("D:/Eclipse/eclipse/workspace/");
-		storage.loadDirectoryFile();
-		storage.saveDirectory("");
-		storage.loadDirectoryFile();
-			
-	}
-	
-//	@Test
-	public void testUpdateTaskFromAll() throws IOException {
-		Storage storage = new Storage();
-		storage.startUpCheck();
-		storage.loadFile();
-		storage.addTaskInList("Do homework", "", "", "02/03/2018", "", "home", "02/07/2016", "high");
-		storage.addTaskInList("Go home", "", "", "02/05/2016", "", "", "", "");
-		storage.saveFile();
-		System.out.println(storage.updateTaskFromAll(1, "Go home and die", "", "", "", "", "", "", ""));
-		storage.saveFile();
-	}
-	
-//	@Test
-	public void testUpdateTaskFromSearch() throws IOException {
-		Storage storage = new Storage();
-		storage.startUpCheck();
-		storage.loadFile();
-		storage.addTaskInList("Do homework", "", "", "02/03/2018", "", "home", "02/07/2016", "high");
-		storage.addTaskInList("Go home", "", "", "02/05/2016", "", "", "", "");
-		storage.addTaskInList("Go abc", "", "", "02/05/2016", "", "", "", "");
-		storage.addTaskInList("Go cde", "", "", "02/05/2016", "", "", "", "");
-		storage.saveFile();
-		storage.searchByTask("go");
-		System.out.println(storage.updateTaskFromSearch(1, "Go home and die", "", "", "", "", "", "", ""));
-		storage.saveFile();
-	}
-	
-//	@Test
-	public void testCloseTaskFromAll() throws IOException {
-		Storage storage = new Storage();
-		storage.startUpCheck();
-		storage.loadFile();
-		storage.addTaskInList("Do homework", "", "", "02/03/2018", "", "home", "02/07/2016", "high");
-		storage.addTaskInList("Go home", "", "", "02/05/2016", "", "", "", "");
-		storage.addTaskInList("Go abc", "", "", "02/05/2016", "", "", "", "");
-		storage.addTaskInList("Go cde", "", "", "02/05/2016", "", "", "", "");
-		System.out.println("Closed : "+storage.closeTaskFromAll(2));
-		storage.saveFile();
-
-		
+	public void sortDate() throws IOException {
+//		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
+//		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
+//		storageController.addTaskInList("Finish CS2103", noDate, noDate, "School", noDate, "high");
+//		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		ArrayList<Task> searchList = storageController.sortByDate();
+		for (int i = 0; i<searchList.size(); i++) {
+			System.out.println(i+") " +searchList.get(i).toString());
+		}
 	}
 	
 	@Test
-	public void testCloseTaskFromSearch() throws IOException {
-		Storage storage = new Storage();
-		storage.startUpCheck();
-		storage.loadFile();
-		storage.addTaskInList("Do homework", "", "", "02/03/2018", "", "home", "02/07/2016", "high");
-		storage.addTaskInList("Go home", "", "", "02/05/2016", "", "", "", "");
-		storage.addTaskInList("Go abc", "", "", "02/05/2016", "", "", "", "");
-		storage.addTaskInList("Go cde", "", "", "02/05/2016", "", "", "", "");
-		storage.saveFile();
-		storage.searchByTask("go");
-		System.out.println("Closed : "+storage.closeTaskFromSearch(1));
-		storage.saveFile();
-		
+	public void sortPriority() throws IOException {
+//		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
+//		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
+//		storageController.addTaskInList("Finish CS2103", noDate, noDate, "School", noDate, "high");
+//		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		ArrayList<Task> searchList = storageController.sortByPriority();
+		for (int i = 0; i<searchList.size(); i++) {
+			System.out.println(i+") " +searchList.get(i).toString());
+		}
+	}
+//	@Test
+	public void updateTask() throws IOException {
+//		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
+//		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
+//		storageController.addTaskInList("Finish CS2103", noDate, noDate, "School", noDate, "high");
+//		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		Calendar newDate = Calendar.getInstance();
+		newDate.set(2035, Calendar.JUNE, 30);
+		System.out.println("Updated to :"+ storageController.updateTask(3, "Finish CS2103 and CS3230", noDate, newDate, "Home", noDate, "highest").toString());
+//		for (int i = 0; i<searchList.size(); i++) {
+//			System.out.println(i+") " +searchList.get(i).toString());
+//		}
 	}
 	
-//	@After
-	public void deleteFiles() throws IOException {
-		Storage storage = new Storage();
-		storage.startUpCheck();
-		storage.loadFile();
-		File f = new File(storage.FILE_DIRECTORY);
-		File p = new File(storage.filePath);
-		f.delete();
-		p.delete();
+//	@Test
+	public void addAndSetDirectoryAndAdd() throws IOException {
+//		System.out.println("Closed File Path is : "+storageController.fileManager.getClosedFilePath());
+//		System.out.println("Data File Path is : "+storageController.fileManager.getDataFilePath());
+//		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
+//		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
+		
+		storageController.setDirectory(CUSTOM_DIRECTORY1);
+		System.out.println("Closed File Path is : "+storageController.fileManager.getClosedFilePath());
+		System.out.println("Data File Path is : "+storageController.fileManager.getDataFilePath());
+		storageController.addTaskInList("Finish CS2103", noDate, noDate, "School", noDate, "high");
+		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
 	}
-}
 
+//		@After
+	public void after() {
+		File a = new File(FILE_DIRECTORY_NAME);
+		File b = new File(FILE_CLOSED_NAME);
+		File c = new File(FILE_DATA_NAME);
+		a.delete();
+		b.delete();
+		c.delete();
+	}
+
+}

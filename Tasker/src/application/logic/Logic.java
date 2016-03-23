@@ -6,12 +6,12 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 import application.gui.Cli;
+import application.gui.GUI;
 import application.gui.GUIHandler;
 import application.gui.Ui;
 import application.logger.LoggerFormat;
 import application.storage.Storage;
 import application.storage.Task;
-
 
 /**
  * 
@@ -28,6 +28,7 @@ public class Logic {
     private static final String MESSAGE_NO_DESCRIPTION = "You must enter a task description.";
     private static final String LOGGER_NAME = "logfile";
     
+
 	private Parser parser = new Parser();
 	private Storage storage = new Storage();
 	private Ui ui = new Cli();
@@ -94,15 +95,39 @@ public class Logic {
 	    logger.info("Loading tasks");
         return loadDataFile();
     }
-	/*
-	public static void main(String[] args) {
-		launchGUI();
-		Logic tasker = new Logic();
-		tasker.setEnvironment();
-		tasker.ui.printWelcomeMessage();
-		tasker.executeCommandsUntilExit();
+
+	public void startDirectoryPrompt(String file) throws IOException {
+		storage.saveDirectory(file);
+		loadDataFile();
 	}
 
+	public ArrayList<Task> loadDataFile() throws IOException {
+		return storage.loadFile();
+	}
+
+	// if false means user first time starting program
+	public boolean checkIfFileExists() throws IOException {
+		return storage.startUpCheck();
+	}
+
+	// for UI
+	public Feedback executeCommand(String command) {
+		Feedback feedback = null;
+		try {
+			Command cmd = parser.interpretCommand(command);
+			logger.info("executing above parsed command");
+			feedback = cmd.execute(storage);
+			logger.info("displaying feedback");
+			feedback.display(ui);
+			logger.info("saving tasks to file.");
+			storage.saveFile();
+		} catch (Exception e) {
+			ui.showError(MESSAGE_ERROR);
+		}
+		return feedback;
+
+	}
+	
 	private static void launchGUI() {
 		new Thread() {
 			@Override
@@ -111,50 +136,10 @@ public class Logic {
 			}
 		}.start();
 	}
-
-	private void executeCommandsUntilExit() {
-		while (true) {
-			try {
-				String userCommand = ui.getCommand();
-				Command cmd = parser.interpretCommand(userCommand);
-				String feedback = cmd.execute(storage);
-				ui.showToUser(feedback);
-				storage.saveFile();
-			} catch (Exception e) {
-				ui.showToUser(MESSAGE_ERROR);
-			}
-		}
+	
+	public String promptNewStorage(){
+		return null;
 	}
 
-	private void setEnvironment() {
-		try {
-			checkIfFileExists();
-			loadDataFile();
-		} catch (IOException e) {
-			ui.showToUser(MESSAGE_LOAD_ERROR);
-		}
-	}
-
-	public Feedback processCommand(String cmd) throws Exception {
-		Command command = parser.interpretCommand(cmd);
-		Feedback feedback = command.execute(storage);
-		storage.saveFile();
-		return feedback;
-	}
-*/
-	// Sends directory location back to storage
-	public void startDirectoryPrompt(String file) throws IOException {
-		storage.saveDirectory(file);
-		loadDataFile();
-	}
-
-	private ArrayList<Task> loadDataFile() throws IOException {
-	    return storage.loadFile();
-	}
-
-	// if false means user first time starting program
-	public boolean checkIfFileExists() throws IOException {
-		return storage.startUpCheck();
-	}
 
 }
