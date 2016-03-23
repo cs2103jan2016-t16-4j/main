@@ -41,7 +41,7 @@ public class Add implements UndoableCommand{
    
     public Feedback execute(Storage storage, ArrayList<Task> tasks){
         try{
-            storage = this.storage;
+            this.storage = storage;
             addedTask = storage.addTaskInList(description, startDateTime
                     ,endDateTime, location, remindDate, priority);
             String feedbackMessage = String.format(MESSAGE_ADD_FEEDBACK, addedTask.toString());

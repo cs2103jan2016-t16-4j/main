@@ -33,7 +33,7 @@ public class Logic {
 	private Storage storage = new Storage();
 	private Ui ui = new Cli();
 	private static Logger logger = Logger.getLogger(LOGGER_NAME);
-	private GUI guiHandler = new GUI();
+	//private GUI guiHandler = new GUI();
 	private History history = History.getInstance();
 	private ArrayList<Task> tasksOnScreen;
 	
@@ -75,6 +75,7 @@ public class Logic {
                 addCommandToHistoryIfUndoable(cmd);
                 tasksOnScreen = feedback.getTasks();
                 feedback.display(ui);
+                //storage.saveFile();
 	        }catch(NoDescriptionException e){
 	            ui.showError(MESSAGE_NO_DESCRIPTION);
 	        }catch(Exception e){
@@ -97,17 +98,18 @@ public class Logic {
     }
 
 	public void startDirectoryPrompt(String file) throws IOException {
-		storage.saveDirectory(file);
+		storage.setDirectory(file);
 		loadDataFile();
 	}
 
 	public ArrayList<Task> loadDataFile() throws IOException {
-		return storage.loadFile();
+		storage.initialise();
+		return storage.getFileList();
 	}
 
 	// if false means user first time starting program
 	public boolean checkIfFileExists() throws IOException {
-		return storage.startUpCheck();
+		return storage.directoryExists();
 	}
 
 	// for UI
@@ -116,11 +118,12 @@ public class Logic {
 		try {
 			Command cmd = parser.interpretCommand(command);
 			logger.info("executing above parsed command");
-			feedback = cmd.execute(storage);
+			feedback = cmd.execute(storage, tasksOnScreen);
 			logger.info("displaying feedback");
 			feedback.display(ui);
+			tasksOnScreen = feedback.getTasks();
 			logger.info("saving tasks to file.");
-			storage.saveFile();
+			//storage.saveFile();
 		} catch (Exception e) {
 			ui.showError(MESSAGE_ERROR);
 		}

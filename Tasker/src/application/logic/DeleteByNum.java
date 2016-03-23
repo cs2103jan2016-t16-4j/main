@@ -11,6 +11,7 @@ public class DeleteByNum implements UndoableCommand {
     private static final String MESSAGE_UNDO_FAILURE = "We encountered a problem while undoing.";
     private static final String MESSAGE_DELETE_FEEDBACK = "Deleted Task: %1$s";
     private static final String MESSAGE_UNDO_FEEDBACK = "Re-added: %1$s";
+    private static final String MESSAGE_INDEX_PROBLEM = "Please enter a valid number.";
     
     Task deletedTask;
     int numToDelete;
@@ -29,6 +30,8 @@ public class DeleteByNum implements UndoableCommand {
             return new Feedback(feedbackMessage, storage.getFileList());
         } catch (IOException e) {
             return new Feedback(MESSAGE_DELETE_FAILURE, storage.getFileList());
+        } catch (IndexOutOfBoundsException e) {
+            return new Feedback(MESSAGE_INDEX_PROBLEM, storage.getFileList());
         }
     }
     

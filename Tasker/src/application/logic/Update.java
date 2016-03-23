@@ -40,7 +40,7 @@ public class Update implements Command{
     String priority = EMPTY;
     
     Update(int taskPosition, String description, Calendar start, Calendar end, String location, Calendar remindDate){
-        this.taskPosition = taskPosition;
+        this.taskPosition = taskPosition - ARRAY_INDEXING_OFFSET;
         this.description = description;
         this.startDateTime = start;
         this.startDateTime = end;
@@ -50,17 +50,21 @@ public class Update implements Command{
   
    
     public Feedback execute(Storage storage, ArrayList<Task> tasks){
-        this.storage = storage;
-        int idTaskToDelete = tasks.get(taskPosition).getTaskIndex();
-        ArrayList<Task> returnedTasks = storage.updateTask(idTaskToDelete, description, 
-                startDateTime, endDateTime
-                ,location
-                , remindDate, priority);
-        origTask = returnedTasks.get(0);
-        updatedTask = returnedTasks.get(1);
-        String feedbackMessage = String.format(MESSAGE_UPDATE_FEEDBACK, "\n" + "From: " 
-                + origTask.toString() + "\n" + "To: " + updatedTask.toString());
-        return new Feedback(feedbackMessage, storage.getFileList());
+        try{
+            this.storage = storage;
+            int idTaskToDelete = tasks.get(taskPosition).getTaskIndex();
+            ArrayList<Task> returnedTasks = storage.updateTask(idTaskToDelete, description, 
+                    startDateTime, endDateTime
+                    ,location
+                    , remindDate, priority);
+            origTask = returnedTasks.get(0);
+            updatedTask = returnedTasks.get(1);
+            String feedbackMessage = String.format(MESSAGE_UPDATE_FEEDBACK, "\n" + "From: " 
+                    + origTask.toString() + "\n" + "To: " + updatedTask.toString());
+            return new Feedback(feedbackMessage, storage.getFileList());
+        } catch (IOException e){
+            return new Feedback(MESSAGE_UPDATE_ERROR, storage.getFileList());
+        }
     }
     
     

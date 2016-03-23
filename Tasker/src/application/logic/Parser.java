@@ -270,8 +270,8 @@ public class Parser {
     private String getDescription(int dateIndex, int locationIndex, String[] args){
         String description;
         if (dateIndex == -1 && locationIndex == -1){
-            description = getString(args, 0, args.length);
-        }else if (dateIndex < locationIndex){
+            description = getString(args, 0, args.length - 1);
+        }else if (dateIndex < locationIndex || locationIndex == -1 && dateIndex != -1){
             description = getString(args, 0 , dateIndex - 1 );
         }else{
             description = getString(args, 0 , locationIndex - 1 );
@@ -285,7 +285,7 @@ public class Parser {
         }else if (dateIndex < locationIndex){
             return getString(args, dateIndex + 1 , locationIndex - 1 );
         }else{
-            return getString(args, dateIndex + 1, args.length);
+            return getString(args, dateIndex + 1, args.length - 1);
         }
     }
     
@@ -295,7 +295,7 @@ public class Parser {
         }else if (locationIndex < dateIndex){
             return getString(args, locationIndex + 1 , dateIndex - 1 );
         }else{
-            return getString(args, locationIndex + 1, args.length);
+            return getString(args, locationIndex + 1, args.length - 1);
         }
     }
     
