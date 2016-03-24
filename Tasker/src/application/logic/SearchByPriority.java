@@ -25,7 +25,7 @@ public class SearchByPriority implements Command {
 
 	@Override
 	public Feedback execute(Storage storage, ArrayList<Task> tasks) {
-		taskList = storage.searchByPriority(priority);
+		taskList = storage.searchTaskByPriority(priority);
 		return checkIfListEmpty(storage);
 	}
 
@@ -33,7 +33,7 @@ public class SearchByPriority implements Command {
 		if (taskList != null) {
 		    return new Feedback(MESSAGE_SEARCH_RESULTS,taskList);
         } else {
-            return new Feedback("Search Not Found", storage.getAllTasks());
+            return new Feedback("Search Not Found", storage.getFileList());
         }
 	}
 	/*

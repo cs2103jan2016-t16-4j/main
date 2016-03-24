@@ -1,6 +1,7 @@
 package application.logic;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import application.storage.Storage;
 import application.storage.Task;
@@ -14,7 +15,7 @@ import application.storage.Task;
 public class SearchByDate implements Command {
     private static final String MESSAGE_SEARCH_RESULTS = "Here are the results of your search!";
     
-	private String date;
+	private Calendar date;
 	private String feedback = "";
 
 	private ArrayList<Task> taskList;
@@ -26,7 +27,7 @@ public class SearchByDate implements Command {
 	@Override
 	public Feedback execute(Storage storage, ArrayList<Task> tasks) {
 		// TODO Auto-generated method stub
-		taskList = storage.searchByDate(date, true);
+		taskList = storage.searchTaskByDate(date);
 		return checkIfListEmpty(storage);
 	}
 
@@ -34,7 +35,7 @@ public class SearchByDate implements Command {
 		if (taskList != null) {
 			return new Feedback(MESSAGE_SEARCH_RESULTS,taskList);
 		} else {
-			return new Feedback("Search Not Found", storage.getAllTasks());
+			return new Feedback("Search Not Found", storage.getFileList());
 		}
 	}
 /*

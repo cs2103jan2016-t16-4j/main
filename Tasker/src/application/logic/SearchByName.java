@@ -27,7 +27,7 @@ public class SearchByName implements Command {
 	@Override
 	public Feedback execute(Storage storage, ArrayList<Task> tasks) {
 		// TODO Auto-generated method stub
-		taskList = storage.searchByTask(taskName);
+		taskList = storage.searchTaskByName(taskName);
 		return checkIfListEmpty(storage);
 	}
 	
@@ -35,7 +35,7 @@ public class SearchByName implements Command {
 		if (taskList != null) {
 		    return new Feedback(MESSAGE_SEARCH_RESULTS,taskList);
         } else {
-            return new Feedback("Search Not Found", storage.getAllTasks());
+            return new Feedback("Search Not Found", storage.getFileList());
         }
 	}
 /*
