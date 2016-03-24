@@ -15,13 +15,16 @@ public class TaskManager {
 		Task newTask = new Task();
 		newTask.setTaskDescription(taskDescription);
 		newTask.setStartDate(startDate);
+		newTask.setStartTime(startDate);
 		newTask.setEndDate(endDate);
+		newTask.setEndTime(endDate);
 		newTask.setLocation(location);
 		newTask.setRemindDate(remindDate);
+		newTask.setRemindTime(remindDate);
 		newTask.setPriority(priority);
 		newTask.setTaskIndex(taskIndex);
 		fileList.add(newTask);
-		System.out.println("Added : "+newTask.toString());
+//		System.out.println("Added : "+newTask.toString());
 		return fileList;
 	}
 	
@@ -87,7 +90,7 @@ public class TaskManager {
 		ArrayList<Task> searchList = new ArrayList<Task>();
 		for (int i = 0; i < fileList.size(); i++) {
 			Task obj = fileList.get(i);
-			if (obj.getTaskDescription().toLowerCase()
+			if (obj.getPriority().toLowerCase()
 					.contains(searchPriority.toLowerCase())) {
 				searchList.add(obj);
 //				System.out.println("Found a entry..");			
