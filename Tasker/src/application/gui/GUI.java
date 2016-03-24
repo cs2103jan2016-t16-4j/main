@@ -93,8 +93,9 @@ public class GUI extends Application {
 	}
 
 	private void show(Stage primaryStage) {
-		Scene scene = new Scene(root, 800, 800);
+		Scene scene = new Scene(root, 1400, 900);
 		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
 		primaryStage.show();
 	}
 

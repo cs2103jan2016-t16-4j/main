@@ -28,10 +28,23 @@ public class Cell {
 		taskLocationLabel = new Label(location);
 
 		// Set the padding of the individual tasks details
-		taskNumberLabel.setPadding(new Insets(10, 50, 50, 50));
-		taskDescriptionLabel.setPadding(new Insets(10, 50, 50, 50));
-		taskDurationLabel.setPadding(new Insets(10, 50, 50, 50));
-		taskLocationLabel.setPadding(new Insets(10, 50, 50, 50));
+		taskNumberLabel.setPadding(new Insets(30, 30, 30, 30));
+		taskDescriptionLabel.setPadding(new Insets(30, 30, 30, 30));
+		taskDurationLabel.setPadding(new Insets(30, 30, 30, 30));
+		taskLocationLabel.setPadding(new Insets(30, 30, 30, 30));
+		
+		// Set the size of the individual tasks details
+		taskNumberLabel.setPrefSize(20, 100);
+		taskDescriptionLabel.setPrefSize(500, 100);
+		taskDurationLabel.setPrefSize(500, 100);
+		taskLocationLabel.setPrefSize(200, 100);
+		
+		// Set the word wrap of the individual tasks details
+		taskNumberLabel.setWrapText(true);
+		taskDescriptionLabel.setWrapText(true);
+		taskDurationLabel.setWrapText(true);
+		taskLocationLabel.setWrapText(true);
+
 
 		// Set the properties of the individual tasks details
 		taskNumberLabel.styleProperty().set("-fx-border-color: black;");
