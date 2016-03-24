@@ -36,7 +36,7 @@ public class Cell {
 		// Set the size of the individual tasks details
 		taskNumberLabel.setPrefSize(20, 100);
 		taskDescriptionLabel.setPrefSize(500, 100);
-		taskDurationLabel.setPrefSize(500, 100);
+		taskDurationLabel.setPrefSize(350, 100);
 		taskLocationLabel.setPrefSize(200, 100);
 		
 		// Set the word wrap of the individual tasks details
