@@ -115,9 +115,9 @@ public class StorageTest {
 		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
 		storageController.addTaskInList("Finish CS2103", noDate, noDate, "School", noDate, "high");
 		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
-		Calendar searchDate = Calendar.getInstance();
-		searchDate.set(2035, Calendar.JUNE, 30);
 		ArrayList<Task> searchList = storageController.searchTaskByPriority("low");
+		assert searchList.get(0) == storageController.databaseManager.getFileList().get(1);
+		assert searchList.get(1) == storageController.databaseManager.getFileList().get(3);		
 		for (int i = 0; i<searchList.size(); i++) {
 			System.out.println("Found : "+searchList.get(i).toString());
 		}
