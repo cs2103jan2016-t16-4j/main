@@ -159,7 +159,7 @@ public class StorageTest {
 		}
 	}
 	@Test
-	public void updateTask() throws IOException {
+	public void updateTask() throws IOException, CloneNotSupportedException {
 		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
 		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
 		storageController.addTaskInList("Finish CS2103", noDate, noDate, "School", noDate, "high");

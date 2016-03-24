@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.ArrayList;
 
-public class Storage {
+public class Storage implements Cloneable {
 
 	private DatabaseManager databaseManager;
 	private FileManager fileManager;
@@ -104,7 +104,7 @@ public class Storage {
 	
 	public ArrayList<Task> updateTask(int index, String taskDescription, Calendar startDate,
 			Calendar endDate, String location, Calendar remindDate,
-			String priority) throws IOException {
+			String priority) throws IOException, CloneNotSupportedException {
 		ArrayList<Task> list = new ArrayList<Task>();
 		
 		// add original/old task 
@@ -112,10 +112,8 @@ public class Storage {
 		for (int i = 0; i<databaseManager.getFileList().size(); i++) {
 			if (databaseManager.getFileList().get(i).getTaskIndex()==index) {
 				taskindex = i;
-				Task newTask1 = new Task();
-				newTask1 = databaseManager.getFileList().get(i);
+				Task newTask1 = (Task) databaseManager.getFileList().get(i).clone();
 				list.add(newTask1);
-				System.out.println("[Before] Old : "+list.get(0).toString());
 				break;
 			}
 		}
@@ -125,13 +123,12 @@ public class Storage {
 				databaseManager.getFileList(), taskDescription, startDate,
 				endDate, location, remindDate, priority, index));
 		
-		
-		System.out.println("[Before] Old : "+list.get(0).toString());
 		list.add(databaseManager.getFileList().get(taskindex));
-		System.out.println("[After] New : "+list.get(1).toString());
 		
 		saveFile();
 		return list;
 	}
-
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

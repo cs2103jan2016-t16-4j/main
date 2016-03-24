@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 //package application.storage;
 
-public class Task {
+public class Task implements Cloneable {
 
 	private String taskDescription;
 	private Calendar startDate;
@@ -152,5 +152,9 @@ public class Task {
 		
 		return message;	
 	}
+	
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 	
 }
