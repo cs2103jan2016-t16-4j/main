@@ -103,21 +103,23 @@ public class GUIHandler {
 	}
 
 	private void getHints(String oldValue, String newValue, Label helpLabel) {
-		String oldLetter = EMPTY_STRING;
 		String newLetter = EMPTY_STRING;
+		String oldWord = EMPTY_STRING;
+		String newWord = EMPTY_STRING;
 
 		if (!oldValue.isEmpty() && oldValue != null) {
-			oldLetter = getFirstLetter(oldValue);
+			oldWord = getFirstWord(oldValue);
 		}
 		if (!newValue.isEmpty() && newValue != null) {
+			newWord = getFirstWord(newValue);
 			newLetter = getFirstLetter(newValue);
 		}
 
-		if (newLetter == null) {
+		if (newWord == null) {
 			return;
 		}
 
-		if (newLetter.equals(oldLetter)) {
+		if (newWord.equals(oldWord)) {
 			return;
 		} else {
 			switch (newLetter.toLowerCase()) {
@@ -128,24 +130,34 @@ public class GUIHandler {
 				helpLabel.setText(HELP_HINT_MESSAGE);
 				break;
 			case "d":
-				helpLabel.setText(DELETE_HINT_MESSAGE);
-				// DONE_HINT_MESSAGE
+				if (!newValue.isEmpty() && newValue.length() > 1) {
+					if (getSecondLetter(newValue).equalsIgnoreCase("do")) {
+						helpLabel.setText(DONE_HINT_MESSAGE);
+					}
+				} else {
+					helpLabel.setText(DELETE_HINT_MESSAGE);
+				}
 				break;
 			case "u":
-				helpLabel.setText(UPDATE_HINT_MESSAGE);
-				// UNDO_HINT_MESSAGE
+				if (!newValue.isEmpty() && newValue.length() > 1) {
+					if (getSecondLetter(newValue).equalsIgnoreCase("un")) {
+						helpLabel.setText(UNDO_HINT_MESSAGE);
+					}
+				} else {
+					helpLabel.setText(UPDATE_HINT_MESSAGE);
+				}
 				break;
 			case "e":
 				helpLabel.setText(EXIT_HINT_MESSAGE);
 				break;
 			case "s":
-				// if (!newValue.isEmpty() && newValue.length() > 1) {
-				// if (getSecondLetter(newValue).equalsIgnoreCase("st")) {
-				// helpLabel.setText("storage");
-				// }
-				// } else {
-				helpLabel.setText(SEARCH_HINT_MESSAGE);
-				// }
+				if (!newValue.isEmpty() && newValue.length() > 1) {
+					if (getSecondLetter(newValue).equalsIgnoreCase("st")) {
+						helpLabel.setText(STORAGE_HINT_MESSAGE);
+					}
+				} else {
+					helpLabel.setText(SEARCH_HINT_MESSAGE);
+				}
 				break;
 			default:
 				helpLabel.setText(ADD_HINT_MESSAGE);
@@ -157,6 +169,12 @@ public class GUIHandler {
 	private String getFirstLetter(String input) {
 		String firstLetter = input.substring(0, 1);
 		return firstLetter;
+	}
+
+	private String getFirstWord(String input) {
+		String[] inputArgs = input.trim().split("\\s+");
+		String firstWord = inputArgs[0];
+		return firstWord;
 	}
 
 	private String getSecondLetter(String input) {
