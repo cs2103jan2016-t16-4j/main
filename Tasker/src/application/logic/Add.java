@@ -29,23 +29,26 @@ public class Add implements UndoableCommand{
     Calendar remindDate;
     String priority = EMPTY;
     
-    Add(String description, Calendar startDateTime, Calendar endDateTime, String location) throws NoDescriptionException{
+    Add(String description, Calendar startDateTime, Calendar endDateTime, String location, Calendar remindDate) throws NoDescriptionException{
         this.description = description;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.location = location;
-        this.remindDate = this.endDateTime;
-        this.remindDate.add(Calendar.DAY_OF_MONTH, -2);
+        this.remindDate = remindDate;
     }
     
    
     public Feedback execute(Storage storage, ArrayList<Task> tasks){
         try{
             this.storage = storage;
+            System.out.println(startDateTime);
+            System.out.println(endDateTime);
             addedTask = storage.addTaskInList(description, startDateTime
                     ,endDateTime, location, remindDate, priority);
             String feedbackMessage = String.format(MESSAGE_ADD_FEEDBACK, addedTask.toString());
-            Feedback feedback = new Feedback(feedbackMessage, storage.getFileList()); 
+            Feedback feedback = new Feedback(feedbackMessage, storage.getFileList());
+            System.out.println(addedTask.getStartDate());
+            System.out.println(addedTask.getEndDate());
             return feedback;
         } catch(IOException e) {
             return new Feedback(MESSAGE_ADD_ERROR, storage.getFileList());

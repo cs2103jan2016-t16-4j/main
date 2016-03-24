@@ -64,6 +64,8 @@ public class Update implements Command{
             return new Feedback(feedbackMessage, storage.getFileList());
         } catch (IOException e){
             return new Feedback(MESSAGE_UPDATE_ERROR, storage.getFileList());
+        } catch (CloneNotSupportedException e){
+            return new Feedback(MESSAGE_UPDATE_ERROR, storage.getFileList());
         }
     }
     
@@ -77,6 +79,8 @@ public class Update implements Command{
                     + updatedTask.toString() + "\n" + "To: " + origTask.toString());
             return new Feedback(feedbackMessage, storage.getFileList());
         }catch(IOException e){
+            return new Feedback(MESSAGE_UNDO_FAILURE, storage.getFileList());
+        }catch (CloneNotSupportedException e){
             return new Feedback(MESSAGE_UNDO_FAILURE, storage.getFileList());
         }
     }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -131,7 +130,8 @@ public class Parser {
             new NoDescriptionException();
         }
         Calendar[] dates = parseDates(segments[DATE_POS]);
-        Command command = new Add (segments[DESC_POS], dates[0], dates[1], segments[LOC_POS]);
+        Calendar remindDate = convertToCalendar(createEmptyDate());
+        Command command = new Add (segments[DESC_POS], dates[0], dates[1], segments[LOC_POS], remindDate);
         return command;
     }
     
@@ -205,6 +205,8 @@ public class Parser {
         List<Date> tempDates2 = dateParser.parse(dateString);
         Calendar startDate = getStartDate(tempDates1, tempDates2);
         Calendar endDate = getEndDate(tempDates1, tempDates2);
+        System.out.println(startDate);
+        System.out.println(endDate);
         Calendar[] dates = {startDate, endDate};
         return dates;        
     }
@@ -218,6 +220,7 @@ public class Parser {
         }else{
             date = fixDate(tempDates1.get(0), tempDates2.get(0));
         }
+        System.out.println(date);
         return convertToCalendar(date);
     }
     
@@ -230,6 +233,7 @@ public class Parser {
         }else{
             date = fixDate(tempDates1.get(1), tempDates2.get(1));
         }
+        System.out.println(date);
         return convertToCalendar(date);
     }
 
@@ -245,13 +249,14 @@ public class Parser {
     
     private LocalDateTime createEmptyDate() {
         LocalDateTime date = new LocalDateTime();
-        date = date.withYear(-1);
+        date = date.withYear(1);
+        date = date.withMillisOfDay(1);
         return date;
     }
     
     private Calendar convertToCalendar(LocalDateTime date){
         Date temp = date.toDate();
-        Calendar cal = new GregorianCalendar();
+        Calendar cal = Calendar.getInstance();
         cal.setTime(temp);
         return cal;
     }

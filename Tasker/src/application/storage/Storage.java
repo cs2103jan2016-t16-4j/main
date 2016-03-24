@@ -19,7 +19,7 @@ public class Storage implements Cloneable {
 	public Task addTaskInList(String taskDescription, Calendar startDate,
 			Calendar endDate, String location, Calendar remindDate,
 			String priority) throws IOException {
-
+	    
 		databaseManager.updateFileList(taskManager.add(databaseManager.getFileList(), taskDescription,
 				startDate, endDate, location, remindDate, priority,
 				databaseManager.updateTaskIndex()));

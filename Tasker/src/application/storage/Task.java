@@ -48,7 +48,9 @@ public class Task implements Cloneable {
 	}
 	
 	public void setStartTime(Calendar startTime) {
-		this.startDate.set(Calendar.HOUR_OF_DAY, startTime.get(Calendar.HOUR_OF_DAY));
+	    System.out.println(startTime);
+	    System.out.println(startTime.get(Calendar.HOUR_OF_DAY));
+	    this.startDate.set(Calendar.HOUR_OF_DAY, startTime.get(Calendar.HOUR_OF_DAY));
 		this.startDate.set(Calendar.MINUTE, startTime.get(Calendar.MINUTE));
 	}
 
