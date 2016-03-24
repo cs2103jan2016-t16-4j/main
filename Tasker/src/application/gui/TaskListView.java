@@ -1,5 +1,6 @@
 package application.gui;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import application.storage.Task;
@@ -19,6 +20,8 @@ import javafx.scene.layout.Pane;
 public class TaskListView {
 	private ObservableList<HBox> items = FXCollections.observableArrayList();
 	private ListView<HBox> listView = new ListView<HBox>(items);
+	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd-MM-yyyy");
+	private static final SimpleDateFormat FORMAT_TIME = new SimpleDateFormat("h:mm a");
 
 	public void createTaskListView(Pane parent) {
 		BorderPane pane = new BorderPane();
@@ -41,11 +44,14 @@ public class TaskListView {
 			String taskDescription = tasks.get(i).getTaskDescription();
 			String taskDuration = "";
 			if (tasks.get(i).getStartDate().equals(tasks.get(i).getEndDate())) {
-				taskDuration = tasks.get(i).getStartDate() + " " + tasks.get(i).getStartTime() + " to "
-						+ tasks.get(i).getEndTime();
+				taskDuration = FORMAT_DATE.format(tasks.get(i).getStartDate().getTime()) + " "
+						+ FORMAT_TIME.format(tasks.get(i).getStartTime().getTime()) + " to "
+						+ FORMAT_TIME.format(tasks.get(i).getEndTime().getTime());
 			} else {
-				taskDuration = tasks.get(i).getStartDate() + " " + tasks.get(i).getStartTime() + " to "
-						+ tasks.get(i).getEndDate() + " " + tasks.get(i).getEndTime();
+				taskDuration = FORMAT_DATE.format(tasks.get(i).getStartDate().getTime()) + " "
+						+ FORMAT_TIME.format(tasks.get(i).getStartTime().getTime()) + " to "
+						+ FORMAT_DATE.format(tasks.get(i).getEndDate().getTime()) + " "
+						+ FORMAT_TIME.format(tasks.get(i).getEndTime().getTime());
 			}
 			String taskLocation = "@ " + tasks.get(i).getLocation();
 			Cell cell = new Cell(taskNumber, taskDescription, taskDuration, taskLocation);
