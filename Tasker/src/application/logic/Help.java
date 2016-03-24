@@ -1,4 +1,4 @@
-package application.logic;
+package application.parser;
 
 import application.storage.Storage;
 
@@ -14,7 +14,7 @@ public class Help implements Command {
          private static final String COMMAND_UNDO="undo:\n --Undoes the last input\n";
          private static final String COMMAND_STORAGE="storage:\n --Changes the storage location\n";
           private static final String COMMAND_HELP="help:\n--Shows help screen for commands.\n";
-	public String execute(Storage storage) {
+	public Feedback execute(Storage storage) {
           
           String msg="";
           msg+=COMMAND_ADD;
@@ -25,7 +25,8 @@ public class Help implements Command {
           msg+=COMMAND_UNDO;
           msg+=COMMAND_STORAGE;
           msg+=COMMAND_HELP;
-          return msg;
+         
+          return new Feedback(msg, null);
 	}
 
 }

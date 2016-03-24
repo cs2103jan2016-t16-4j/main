@@ -31,7 +31,7 @@ public class Update implements Command{
     Task updatedTask;
     Storage storage;
     
-    int taskPosition = -1;
+    public int taskPosition = -1;
     String description = EMPTY;
     Calendar startDateTime;
     Calendar endDateTime;
@@ -52,7 +52,9 @@ public class Update implements Command{
     public Feedback execute(Storage storage, ArrayList<Task> tasks){
         try{
             this.storage = storage;
+            
             int idTaskToDelete = tasks.get(taskPosition).getTaskIndex();
+            System.out.println("Im inside Update");
             ArrayList<Task> returnedTasks = storage.updateTask(idTaskToDelete, description, 
                     startDateTime, endDateTime
                     ,location

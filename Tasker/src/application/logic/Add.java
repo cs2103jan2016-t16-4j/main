@@ -41,14 +41,10 @@ public class Add implements UndoableCommand{
     public Feedback execute(Storage storage, ArrayList<Task> tasks){
         try{
             this.storage = storage;
-            System.out.println(startDateTime);
-            System.out.println(endDateTime);
             addedTask = storage.addTaskInList(description, startDateTime
                     ,endDateTime, location, remindDate, priority);
             String feedbackMessage = String.format(MESSAGE_ADD_FEEDBACK, addedTask.toString());
             Feedback feedback = new Feedback(feedbackMessage, storage.getFileList());
-            System.out.println(addedTask.getStartDate());
-            System.out.println(addedTask.getEndDate());
             return feedback;
         } catch(IOException e) {
             return new Feedback(MESSAGE_ADD_ERROR, storage.getFileList());
