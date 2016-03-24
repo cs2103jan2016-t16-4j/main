@@ -85,9 +85,16 @@ public class TaskManager {
 	
 	public ArrayList<Task> searchPriority(ArrayList<Task> fileList, String searchPriority) {
 		ArrayList<Task> searchList = new ArrayList<Task>();
-		
+		for (int i = 0; i < fileList.size(); i++) {
+			Task obj = fileList.get(i);
+			if (obj.getTaskDescription().toLowerCase()
+					.contains(searchPriority.toLowerCase())) {
+				searchList.add(obj);
+//				System.out.println("Found a entry..");			
+				}
+			}
 		return searchList;
-	}
+	}	
 	
 	public ArrayList<Task> sortDate(ArrayList<Task> fileList) {
 		Collections.sort(fileList, (o1, o2) -> o1.getEndTime().compareTo(o2.getEndTime()));
