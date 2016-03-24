@@ -2,6 +2,7 @@ package application.logic;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 
 import application.storage.Storage;
 import application.storage.Task;
@@ -21,7 +22,7 @@ public class Search implements Command {
 	String[] arguments;
 	String description = EMPTY;
 	String priority = EMPTY;
-	String date = EMPTY;
+	Calendar date;
 
 	Search(String[] arguments) {
 		this.arguments = arguments;

@@ -40,7 +40,7 @@ public class GUI extends Application {
 	private VBox root = new VBox();
 
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage primaryStage) throws ExceptionHandler{
 		Logic logic = new Logic();
 		GUIHandler guiH = new GUIHandler(logic);
 		TaskListView taskList = new TaskListView();
@@ -56,6 +56,7 @@ public class GUI extends Application {
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.severe("Failed to load GUI");
+			throw new ExceptionHandler("Failed to load GUI");
 		}
 	}
 
