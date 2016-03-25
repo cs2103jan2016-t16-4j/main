@@ -49,6 +49,17 @@ public class TaskManager {
 		return lists;
 	}
 	
+	public ArrayList<ArrayList<Task>> unclose(ArrayList<Task> closedList, ArrayList<Task> fileList){
+		ArrayList<ArrayList<Task>> lists = new ArrayList<ArrayList<Task>>();
+		
+		fileList.add(closedList.get(closedList.size()-1));
+		closedList.remove(closedList.size()-1);
+		
+		lists.add(closedList);
+		lists.add(fileList);
+		return lists;
+	}	
+	
 	public ArrayList<Task> delete(ArrayList<Task> fileList, int taskIndex) {
 		for (int i = 0; i < fileList.size(); i++) {
 			if (fileList.get(i).getTaskIndex() == taskIndex) {
