@@ -5,14 +5,14 @@ import java.util.ArrayList;
 public class DatabaseManager {
 	private int taskIndex = 0;
 	private ArrayList<Task> closedList = new ArrayList<Task>();
-	private ArrayList<Task> fileList = new ArrayList<Task>();
+	private ArrayList<Task> openList = new ArrayList<Task>();
 	
 	public ArrayList<Task> getCloseList() {
 		return closedList;
 	}
 	
-	public ArrayList<Task> getFileList() {
-		return fileList;
+	public ArrayList<Task> getOpenList() {
+		return openList;
 	}
 	
 	public int getTaskIndex() {
@@ -27,8 +27,8 @@ public class DatabaseManager {
 		this.closedList = closedList;
 	}
 	
-	public void updateFileList(ArrayList<Task> fileList) {
-		this.fileList = fileList;
+	public void updateOpenList(ArrayList<Task> openList) {
+		this.openList = openList;
 	}
 
 	public int updateTaskIndex() {
