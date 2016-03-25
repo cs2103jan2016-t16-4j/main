@@ -50,11 +50,9 @@ public class ParserTester {
                 System.out.println("IM HEREE");
                 
                 ArrayList<Task> tasks = storage.getFileList();
-                int numb = tasks.size()  - 1;
-                Command cmd = parser.interpretCommand("update 2 hello");
-                System.out.println(cmd.task);
-                
-                //Feedback fb = cmd.execute(storage, tasks);
+                int numb = tasks.size();
+                Command cmd = parser.interpretCommand("update 2 tennis");
+                Feedback fb = cmd.execute(storage, tasks);
                 System.out.println(fb.getMessage());
                 /*
                 Command cmd2 = parser.interpretCommand("delete -1");

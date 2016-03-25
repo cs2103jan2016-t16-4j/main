@@ -90,6 +90,7 @@ public class GUIHandler {
 
 						} else {
 							Feedback feedback = guiH.executeCommands(text);
+							System.out.println(feedback.getMessage());
 							taskList.updateList(feedback.getTasks());
 							feedbackLabel.setText(feedback.getMessage());
 						}

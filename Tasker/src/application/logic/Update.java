@@ -31,19 +31,19 @@ public class Update implements Command{
     Task updatedTask;
     Storage storage;
     
-    public int taskPosition = -1;
-    String description = EMPTY;
-    Calendar startDateTime;
-    Calendar endDateTime;
-    String location = EMPTY;
-    Calendar remindDate;
-    String priority = EMPTY;
+    private int taskPosition = -1;
+    private String description = EMPTY;
+    private Calendar startDateTime;
+    private Calendar endDateTime;
+    private String location = EMPTY;
+    private Calendar remindDate;
+    private String priority = EMPTY;
     
     Update(int taskPosition, String description, Calendar start, Calendar end, String location, Calendar remindDate){
         this.taskPosition = taskPosition - ARRAY_INDEXING_OFFSET;
         this.description = description;
         this.startDateTime = start;
-        this.startDateTime = end;
+        this.endDateTime = end;
         this.location = location;
         this.remindDate = remindDate;
     }
@@ -54,7 +54,6 @@ public class Update implements Command{
             this.storage = storage;
             
             int idTaskToDelete = tasks.get(taskPosition).getTaskIndex();
-            System.out.println("Im inside Update");
             ArrayList<Task> returnedTasks = storage.updateTask(idTaskToDelete, description, 
                     startDateTime, endDateTime
                     ,location
