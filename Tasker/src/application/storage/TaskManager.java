@@ -8,7 +8,7 @@ import java.util.Comparator;
 public class TaskManager {
     private static final int EMPTY = 1;
     
-	public ArrayList<Task> add(ArrayList<Task> fileList,
+	public ArrayList<Task> add(ArrayList<Task> openList,
 			String taskDescription, Calendar startDate, Calendar endDate,
 			String location, Calendar remindDate, String priority, int taskIndex) {
 
@@ -23,57 +23,57 @@ public class TaskManager {
 		newTask.setRemindTime(remindDate);
 		newTask.setPriority(priority);
 		newTask.setTaskIndex(taskIndex);
-		fileList.add(newTask);
+		openList.add(newTask);
 //		System.out.println("Added : "+newTask.toString());
-		return fileList;
+		return openList;
 	}
 	
-	public ArrayList<ArrayList<Task>> close(ArrayList<Task> closedList, ArrayList<Task> fileList, int taskIndex) {
+	public ArrayList<ArrayList<Task>> close(ArrayList<Task> closedList, ArrayList<Task> openList, int taskIndex) {
 		ArrayList<ArrayList<Task>> lists = new ArrayList<ArrayList<Task>>();
 		boolean isSuccessClose = false;
 	
 		int index = -1;
-		for (int i = 0; i < fileList.size(); i++) {				
-			if (fileList.get(i).getTaskIndex() == taskIndex) {
+		for (int i = 0; i < openList.size(); i++) {				
+			if (openList.get(i).getTaskIndex() == taskIndex) {
 				index = i;
 				isSuccessClose = true;
 				break;
 				}
 		}
 		if (isSuccessClose) {
-			closedList.add(fileList.get(index));
-			fileList.remove(index);
+			closedList.add(openList.get(index));
+			openList.remove(index);
 		}
 		lists.add(closedList);
-		lists.add(fileList);
+		lists.add(openList);
 		return lists;
 	}
 	
-	public ArrayList<ArrayList<Task>> unclose(ArrayList<Task> closedList, ArrayList<Task> fileList){
+	public ArrayList<ArrayList<Task>> unclose(ArrayList<Task> closedList, ArrayList<Task> openList){
 		ArrayList<ArrayList<Task>> lists = new ArrayList<ArrayList<Task>>();
 		
-		fileList.add(closedList.get(closedList.size()-1));
+		openList.add(closedList.get(closedList.size()-1));
 		closedList.remove(closedList.size()-1);
 		
 		lists.add(closedList);
-		lists.add(fileList);
+		lists.add(openList);
 		return lists;
 	}	
 	
-	public ArrayList<Task> delete(ArrayList<Task> fileList, int taskIndex) {
-		for (int i = 0; i < fileList.size(); i++) {
-			if (fileList.get(i).getTaskIndex() == taskIndex) {
-				fileList.remove(i);
+	public ArrayList<Task> delete(ArrayList<Task> openList, int taskIndex) {
+		for (int i = 0; i < openList.size(); i++) {
+			if (openList.get(i).getTaskIndex() == taskIndex) {
+				openList.remove(i);
 				break;
 			}
 		}
-		return fileList;
+		return openList;
 	}
 	
-	public ArrayList<Task> searchName(ArrayList<Task> fileList, String searchTask) {
+	public ArrayList<Task> searchName(ArrayList<Task> openList, String searchTask) {
 		ArrayList<Task> searchList = new ArrayList<Task>();
-		for (int i = 0; i < fileList.size(); i++) {
-			Task obj = fileList.get(i);
+		for (int i = 0; i < openList.size(); i++) {
+			Task obj = openList.get(i);
 			if (obj.getTaskDescription().toLowerCase()
 					.contains(searchTask.toLowerCase())) {
 				searchList.add(obj);
@@ -84,10 +84,10 @@ public class TaskManager {
 		return searchList;
 	}
 	
-	public ArrayList<Task> searchDate(ArrayList<Task> fileList, Calendar searchDate) {
+	public ArrayList<Task> searchDate(ArrayList<Task> openList, Calendar searchDate) {
 		ArrayList<Task> searchList = new ArrayList<Task>();
-		for (int i = 0; i<fileList.size(); i++) {
-			Task obj = fileList.get(i);
+		for (int i = 0; i<openList.size(); i++) {
+			Task obj = openList.get(i);
 			if (obj.getEndTime().get(Calendar.YEAR)!=EMPTY) {
 				if (obj.getEndDate().compareTo(searchDate)<=0){
 					searchList.add(obj);
@@ -97,10 +97,10 @@ public class TaskManager {
 		return searchList;
 	}
 	
-	public ArrayList<Task> searchPriority(ArrayList<Task> fileList, String searchPriority) {
+	public ArrayList<Task> searchPriority(ArrayList<Task> openList, String searchPriority) {
 		ArrayList<Task> searchList = new ArrayList<Task>();
-		for (int i = 0; i < fileList.size(); i++) {
-			Task obj = fileList.get(i);
+		for (int i = 0; i < openList.size(); i++) {
+			Task obj = openList.get(i);
 			if (obj.getPriority().toLowerCase()
 					.contains(searchPriority.toLowerCase())) {
 				searchList.add(obj);
@@ -110,29 +110,29 @@ public class TaskManager {
 		return searchList;
 	}	
 	
-	public ArrayList<Task> sortDate(ArrayList<Task> fileList) {
-		Collections.sort(fileList, (o1, o2) -> o1.getEndTime().compareTo(o2.getEndTime()));
-		return fileList;
+	public ArrayList<Task> sortDate(ArrayList<Task> openList) {
+		Collections.sort(openList, (o1, o2) -> o1.getEndTime().compareTo(o2.getEndTime()));
+		return openList;
 	}
 	
-	public ArrayList<Task> sortName(ArrayList<Task> fileList) {
-		Collections.sort(fileList, (o1, o2) -> o1.getTaskDescription().compareTo(o2.getTaskDescription()));
-		return fileList;
+	public ArrayList<Task> sortName(ArrayList<Task> openList) {
+		Collections.sort(openList, (o1, o2) -> o1.getTaskDescription().compareTo(o2.getTaskDescription()));
+		return openList;
 	}
 	
-	public ArrayList<Task> sortPriority(ArrayList<Task> fileList) {
-		Collections.sort(fileList, new ComparatorPriority());
-		return fileList;
+	public ArrayList<Task> sortPriority(ArrayList<Task> openList) {
+		Collections.sort(openList, new ComparatorPriority());
+		return openList;
 	}
 	
-	public ArrayList<Task> update(ArrayList<Task> fileList,
+	public ArrayList<Task> update(ArrayList<Task> openList,
 			String taskDescription, Calendar startDate, Calendar endDate,
 			String location, Calendar remindDate, String priority, int taskIndex) {
 		int index = 0;	
 		
 		// find task
-		for (int i = 0; i < fileList.size(); i++) {
-			if (fileList.get(i).getTaskIndex() == taskIndex) {
+		for (int i = 0; i < openList.size(); i++) {
+			if (openList.get(i).getTaskIndex() == taskIndex) {
 				index = i;
 				break;
 			}
@@ -140,35 +140,35 @@ public class TaskManager {
 		
 		// update task
 		if (!taskDescription.equalsIgnoreCase("")) {
-			fileList.get(index).setTaskDescription(taskDescription);
+			openList.get(index).setTaskDescription(taskDescription);
 		}
 		if (startDate.get(Calendar.YEAR)!=EMPTY) {
-			fileList.get(index).setStartDate(startDate);
+			openList.get(index).setStartDate(startDate);
 		}
 		if (startDate.get(Calendar.MILLISECOND)!=EMPTY && startDate.get(Calendar.HOUR_OF_DAY)!=0 && startDate.get(Calendar.MINUTE)!=0 && startDate.get(Calendar.SECOND)!=0) {
-			fileList.get(index).setStartTime(startDate);
+			openList.get(index).setStartTime(startDate);
 		}
 		if (endDate.get(Calendar.YEAR)!=EMPTY) {
-			fileList.get(index).setEndDate(endDate);
+			openList.get(index).setEndDate(endDate);
 		}
 		if (endDate.get(Calendar.MILLISECOND)!=EMPTY && endDate.get(Calendar.HOUR_OF_DAY)!=0 && endDate.get(Calendar.MINUTE)!=0 && endDate.get(Calendar.SECOND)!=0) {
-			fileList.get(index).setEndTime(endDate);
+			openList.get(index).setEndTime(endDate);
 		}
 		if (!location.equalsIgnoreCase("")) {
-			fileList.get(index).setLocation(location);
+			openList.get(index).setLocation(location);
 		}
 		if (remindDate.get(Calendar.YEAR)!=EMPTY) {
-			fileList.get(index).setRemindDate(remindDate);
+			openList.get(index).setRemindDate(remindDate);
 		}
 		if (remindDate.get(Calendar.MILLISECOND)!=EMPTY && remindDate.get(Calendar.HOUR_OF_DAY)!=0 && remindDate.get(Calendar.MINUTE)!=0 && remindDate.get(Calendar.SECOND)!=0) {
-			fileList.get(index).setRemindDate(remindDate);
+			openList.get(index).setRemindDate(remindDate);
 		}
 		if (!priority.equalsIgnoreCase("")) {
-			fileList.get(index).setPriority(priority);
+			openList.get(index).setPriority(priority);
 		}
 		
 		// return updated list
-		return fileList;
+		return openList;
 
 	}
 }
