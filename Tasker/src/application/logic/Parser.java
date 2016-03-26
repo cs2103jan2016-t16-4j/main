@@ -145,8 +145,11 @@ public class Parser {
     
     private Command initializeDelete(String[] args){
         args = (String[]) ArrayUtils.remove(args, 0);
-        Command command = new Delete (args);
-        return command;
+        try{
+            return getAppropDeleteCommand(args);
+        }catch(NumberFormatException e){
+            return getCommandDeleteByName(args);
+        }
     }
     
     private Command initializeUpdate(String[] args){
@@ -199,6 +202,26 @@ public class Parser {
             /*throw new Error(MESSAGE_NULL_ERROR);*/
         }
     }
+
+
+    private Command getAppropDeleteCommand(String[] args) {
+        if (args.length == 1){
+            int index = Integer.parseInt(args[0]);
+            Command command = new DeleteByNum(index);
+            return command;
+        }else{
+            return getCommandDeleteByName(args);
+        }
+    }
+    
+    private Command getCommandDeleteByName(String[] args) {
+        String taskToDelete = getString(args, 0, args.length - 1);
+        Command command = new DeleteByName(taskToDelete);
+        return command;
+    }
+
+    
+    
     
     private Calendar[] parseDates(String dateString){
         List<Date> tempDates1 = dateParser.parse(dateString);

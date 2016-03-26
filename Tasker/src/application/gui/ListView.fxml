@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="750.0" prefWidth="1107.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ListView layoutY="144.0" prefHeight="607.0" prefWidth="1109.0" />
+      <Rectangle arcWidth="5.0" fill="#00acc1" height="147.0" smooth="false" stroke="#fcf8f800" strokeType="INSIDE" strokeWidth="0.0" style="-fx-border-color: transparent;" width="1109.0">
+         <effect>
+            <DropShadow color="#000000bc" height="30.0" offsetY="5.0" radius="12.25" />
+         </effect>
+      </Rectangle>
+      <Label alignment="TOP_LEFT" layoutX="20.0" layoutY="82.0" prefHeight="52.0" prefWidth="1066.0" text="Label" textFill="WHITE">
+         <padding>
+            <Insets left="12.0" />
+         </padding>
+      </Label>
+      <TextField layoutX="20.0" layoutY="14.0" prefHeight="59.0" prefWidth="1066.0" promptText="What would you like us to do for you?" style="-fx-background-color: white; -fx-background-radius: 0;">
+         <font>
+            <Font size="22.0" />
+         </font>
+         <effect>
+            <DropShadow color="#00000094" offsetY="2.0" />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </TextField>
+   </children>
+   <effect>
+      <DropShadow />
+   </effect>
+</AnchorPane>

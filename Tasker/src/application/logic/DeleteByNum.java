@@ -27,11 +27,11 @@ public class DeleteByNum implements UndoableCommand {
             int idOfTaskToDelete = tasks.get(numToDelete).getTaskIndex();
             deletedTask = storage.deleteTask(idOfTaskToDelete);
             String feedbackMessage = String.format(MESSAGE_DELETE_FEEDBACK,deletedTask.toString());
-            return new Feedback(feedbackMessage, storage.getFileList());
+            return new Feedback(feedbackMessage, storage.getOpenList());
         } catch (IOException e) {
-            return new Feedback(MESSAGE_DELETE_FAILURE, storage.getFileList());
+            return new Feedback(MESSAGE_DELETE_FAILURE, storage.getOpenList());
         } catch (IndexOutOfBoundsException e) {
-            return new Feedback(MESSAGE_INDEX_PROBLEM, storage.getFileList());
+            return new Feedback(MESSAGE_INDEX_PROBLEM, storage.getOpenList());
         }
     }
     
@@ -41,9 +41,9 @@ public class DeleteByNum implements UndoableCommand {
             deletedTask.getEndDate(),  deletedTask.getLocation(),  deletedTask.getRemindDate(),
             deletedTask.getPriority());
             String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK,deletedTask.toString());
-            return new Feedback(feedbackMessage, storage.getFileList());
+            return new Feedback(feedbackMessage, storage.getOpenList());
         }catch(IOException e){
-            return new Feedback(MESSAGE_UNDO_FAILURE, storage.getFileList());
+            return new Feedback(MESSAGE_UNDO_FAILURE, storage.getOpenList());
         }
     }
     

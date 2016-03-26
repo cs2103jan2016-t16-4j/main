@@ -29,7 +29,7 @@ public class DeleteByName implements UndoableCommand {
             Feedback feedback = takeAction(taskList, storage);
             return feedback;
         }catch(IOException e){
-            return new Feedback(MESSAGE_DELETE_ERROR, storage.getFileList()); 
+            return new Feedback(MESSAGE_DELETE_ERROR, storage.getOpenList()); 
         }
     }
     
@@ -39,7 +39,7 @@ public class DeleteByName implements UndoableCommand {
         if (taskList.size() ==  1){
             deletedTask = storage.deleteTask(taskList.get(FIRST_INDEX).getTaskIndex());
             String feedbackMessage = String.format(FEEDBACK_DELETE, deletedTask.toString());
-            return new Feedback(feedbackMessage, storage.getFileList());
+            return new Feedback(feedbackMessage, storage.getOpenList());
         } else {
             return new Feedback(MESSAGE_WHICH_DELETE, taskList);
         }
@@ -52,13 +52,13 @@ public class DeleteByName implements UndoableCommand {
                 deletedTask.getEndDate(),  deletedTask.getLocation(),  deletedTask.getRemindDate(),
                 deletedTask.getPriority());
                 String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK,deletedTask.toString());
-                return new Feedback(feedbackMessage, storage.getFileList());
+                return new Feedback(feedbackMessage, storage.getOpenList());
             }else{
                 new NothingToUndoException();
-                return new Feedback("", storage.getFileList());
+                return new Feedback("", storage.getOpenList());
             }
         }catch(IOException e){
-            return new Feedback(MESSAGE_UNDO_FAILURE, storage.getFileList());
+            return new Feedback(MESSAGE_UNDO_FAILURE, storage.getOpenList());
         }
     }
 

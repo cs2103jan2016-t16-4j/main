@@ -62,11 +62,11 @@ public class Update implements Command{
             updatedTask = returnedTasks.get(1);
             String feedbackMessage = String.format(MESSAGE_UPDATE_FEEDBACK, "\n" + "From: " 
                     + origTask.toString() + "\n" + "To: " + updatedTask.toString());
-            return new Feedback(feedbackMessage, storage.getFileList());
+            return new Feedback(feedbackMessage, storage.getOpenList());
         } catch (IOException e){
-            return new Feedback(MESSAGE_UPDATE_ERROR, storage.getFileList());
+            return new Feedback(MESSAGE_UPDATE_ERROR, storage.getOpenList());
         } catch (CloneNotSupportedException e){
-            return new Feedback(MESSAGE_UPDATE_ERROR, storage.getFileList());
+            return new Feedback(MESSAGE_UPDATE_ERROR, storage.getOpenList());
         }
     }
     
@@ -78,11 +78,11 @@ public class Update implements Command{
                     updatedTask.getPriority());
             String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK, "\n" + "From: " 
                     + updatedTask.toString() + "\n" + "To: " + origTask.toString());
-            return new Feedback(feedbackMessage, storage.getFileList());
+            return new Feedback(feedbackMessage, storage.getOpenList());
         }catch(IOException e){
-            return new Feedback(MESSAGE_UNDO_FAILURE, storage.getFileList());
+            return new Feedback(MESSAGE_UNDO_FAILURE, storage.getOpenList());
         }catch (CloneNotSupportedException e){
-            return new Feedback(MESSAGE_UNDO_FAILURE, storage.getFileList());
+            return new Feedback(MESSAGE_UNDO_FAILURE, storage.getOpenList());
         }
     }
     

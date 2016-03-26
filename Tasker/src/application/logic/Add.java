@@ -44,10 +44,10 @@ public class Add implements UndoableCommand{
             addedTask = storage.addTaskInList(description, startDateTime
                     ,endDateTime, location, remindDate, priority);
             String feedbackMessage = String.format(MESSAGE_ADD_FEEDBACK, addedTask.toString());
-            Feedback feedback = new Feedback(feedbackMessage, storage.getFileList());
+            Feedback feedback = new Feedback(feedbackMessage, storage.getOpenList());
             return feedback;
         } catch(IOException e) {
-            return new Feedback(MESSAGE_ADD_ERROR, storage.getFileList());
+            return new Feedback(MESSAGE_ADD_ERROR, storage.getOpenList());
         }
     }
     
@@ -55,9 +55,9 @@ public class Add implements UndoableCommand{
         try {
             storage.deleteTask(addedTask.getTaskIndex());
             String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK,addedTask.toString());
-            return new Feedback(feedbackMessage, storage.getFileList());
+            return new Feedback(feedbackMessage, storage.getOpenList());
         }catch(IOException e){
-            return new Feedback(MESSAGE_UNDO_FAILURE, storage.getFileList());
+            return new Feedback(MESSAGE_UNDO_FAILURE, storage.getOpenList());
         }
     }
     

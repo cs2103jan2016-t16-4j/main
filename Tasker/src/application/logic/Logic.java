@@ -104,7 +104,7 @@ public class Logic {
 
 	public ArrayList<Task> loadDataFile() throws IOException {
 		storage.initialise();
-		return storage.getFileList();
+		return storage.getOpenList();
 	}
 
 	// if false means user first time starting program
