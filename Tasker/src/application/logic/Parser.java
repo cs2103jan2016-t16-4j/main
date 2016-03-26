@@ -152,6 +152,7 @@ public class Parser {
         }
     }
     
+    
     private Command initializeUpdate(String[] args){
         args = (String[]) ArrayUtils.remove(args, 0);
         int taskToUpdate = Integer.parseInt(args[0]);
@@ -167,8 +168,11 @@ public class Parser {
     
     private Command initializeDone(String[] args){
         args = (String[]) ArrayUtils.remove(args, 0);
-        Command command = new Done ( args);
-        return command;
+        try{
+            return getAppropDoneCommand(args);
+        }catch(NumberFormatException e){
+            return getCommandDoneByName(args);
+        }
     }
     /*
     
@@ -181,14 +185,14 @@ public class Parser {
         Command command = new Help ();
         return command;
     }
-    */ 
     
-    // Requests the logic to call for new storage location from the GUI then sends the data to Storage
-//    private Command initializeStorageLocation(){
-//    	String args = logic.promptNewStorage();
-//        Command command = new ChangeStorageLocation (args);
-//        return command;
-//    }
+    Requests the logic to call for new storage location from the GUI then sends the data to Storage
+    private Command initializeStorageLocation(){
+    	String args = logic.promptNewStorage();
+        Command command = new ChangeStorageLocation (args);
+        return command;
+    }
+    */ 
     
 
     private Command initializeExit(){
@@ -196,12 +200,6 @@ public class Parser {
         return command;
     }
        
-    private void checkForError(String userCommand) /*throws Error */ {
-        if (userCommand == null) {
-            logger.warning("null user commands");
-            /*throw new Error(MESSAGE_NULL_ERROR);*/
-        }
-    }
 
 
     private Command getAppropDeleteCommand(String[] args) {
@@ -220,6 +218,22 @@ public class Parser {
         return command;
     }
 
+
+    private Command getAppropDoneCommand(String[] args) {
+        if (args.length == 1){
+            int index = Integer.parseInt(args[0]);
+            Command command = new DoneByNum(index);
+            return command;
+        }else{
+            return getCommandDoneByName(args);
+        }
+    }
+    
+    private Command getCommandDoneByName(String[] args) {
+        String taskToDelete = getString(args, 0, args.length - 1);
+        Command command = new DoneByName(taskToDelete);
+        return command;
+    }
     
     
     
@@ -344,4 +358,13 @@ public class Parser {
         return dateIndex;
     }
     
+
+    
+    private void checkForError(String userCommand) /*throws Error */ {
+        if (userCommand == null) {
+            logger.warning("null user commands");
+            throw new Error(MESSAGE_NULL_ERROR);
+        }
+    }
+
 }

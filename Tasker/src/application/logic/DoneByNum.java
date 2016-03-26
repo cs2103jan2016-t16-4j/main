@@ -5,48 +5,44 @@ import application.storage.Task;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DoneByNum implements Command {
-    private static final String MESSAGE_DONE_FAILURE = "We encountered a problem while closing this task.";
-    Logger logger =null;
-   
+    private static final String MESSAGE_CLOSE_FAILURE = "We encountered a problem while closing this task.";
+    private static final String MESSAGE_CLOSE_FEEDBACK = "Closed Task: %1$s";
+    private static final String MESSAGE_INDEX_PROBLEM = "Please enter a valid number.";
+
+    Logger logger = null;
+
+    Task closedTask;
     int numToClose;
-    
+    Storage storage;
+
     DoneByNum(int numToClose) {
-        this.numToClose = numToClose;
-        logger=Logger.getLogger("Logfile");  
-        FileHandler fileHandler; 
+        this.numToClose = numToClose - 1;
+        logger = Logger.getLogger("Logfile");
         try {
-            fileHandler = new FileHandler("LogFile.log");
-            fileHandler.setLevel(Level.INFO); 
             logger.info("initial DoneByNum");
-        } catch (IOException ex) {
-            Logger.getLogger(DoneByNum.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SecurityException ex) {
             Logger.getLogger(DoneByNum.class.getName()).log(Level.SEVERE, null, ex);
         }
-      
+
     }
-    
-    public Feedback execute(Storage storage, ArrayList<Task> tasks){
-        assert storage!=null;
+
+    public Feedback execute(Storage storage, ArrayList<Task> tasks) {
+        assert storage != null;
+        this.storage = storage;
         try {
-            boolean isSuccess = storage.closeTaskInList(numToClose);
-            if (isSuccess){
-                logger.info("Closed successfully");
-                return "Closed successfully"; //NEED TO CHANGE THIS SO THAT I SHOW DETAILS WHILE DELETING
-            }else {
-                logger.info("MESSAGE_DONE_FAILURE");
-                return MESSAGE_DONE_FAILURE;
-            }
-        } catch (Exception e) {
-            logger.info(e.getMessage());
-            return MESSAGE_DONE_FAILURE;
+            int idOfTaskToClose = tasks.get(numToClose).getTaskIndex();
+            closedTask = storage.closeTask(idOfTaskToClose);
+            String feedbackMessage = String.format(MESSAGE_CLOSE_FEEDBACK,closedTask.toString());
+            return new Feedback(feedbackMessage, storage.getOpenList());
+        } catch (IOException e) {
+            return new Feedback(MESSAGE_CLOSE_FAILURE, storage.getOpenList());
+        } catch (IndexOutOfBoundsException e) {
+            return new Feedback(MESSAGE_INDEX_PROBLEM, storage.getOpenList());
         }
     }
-    
 
 }
