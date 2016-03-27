@@ -1,10 +1,21 @@
 package application.gui;
 
+import java.awt.AWTException;
+import java.awt.MenuItem;
+import java.awt.PopupMenu;
+import java.awt.SystemTray;
+import java.awt.Toolkit;
+import java.awt.TrayIcon;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
 
 import application.logic.Logic;
+import application.logger.LoggerFormat;
 import application.logic.Feedback;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -14,6 +25,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * 
@@ -23,8 +35,13 @@ import javafx.stage.Stage;
 
 public class GUIHandler {
 	Logic logic;
+	private TrayIcon trayIcon;
 
 	String text = "";
+	private String logoURL = "files/robot.jpg";
+	private static String LOGGER_NAME = "logfile";
+	private static Logger logger = Logger.getLogger(LOGGER_NAME);
+
 	private static final String ADD_HINT_MESSAGE = "To add: [task description] from [start] to [end] at [location]";
 	private static final String HELP_HINT_MESSAGE = "To get help: help";
 	private static final String DELETE_HINT_MESSAGE = "To delete: delete [task description/number]";
@@ -192,6 +209,103 @@ public class GUIHandler {
 		} else {
 			guiH.startDirectoryPrompt("");
 		}
+	}
+
+	// Create Tray Icon
+	public void createTrayIcon(Stage primaryStage) {
+		if (SystemTray.isSupported()) {
+			SystemTray tray = SystemTray.getSystemTray();
+			setToTray(primaryStage);
+
+			ActionListener showListener = showApplication(primaryStage);
+			ActionListener closeListener = closeTray();
+
+			PopupMenu popup = popupMenuConfiguration(closeListener, showListener);
+
+			trayIconConfiguration(showListener, popup);
+
+			try {
+				tray.add(trayIcon);
+			} catch (AWTException e) {
+				System.err.println(e);
+			}
+
+		}
+	}
+
+	// Configuration for Tray Icon
+	private void trayIconConfiguration(ActionListener showListener, PopupMenu popup) {
+		java.awt.Image image = Toolkit.getDefaultToolkit().getImage(logoURL);
+		trayIcon = new TrayIcon(image, "Tasker", popup);
+		trayIcon.setImageAutoSize(false);
+		trayIcon.addActionListener(showListener);
+	}
+
+	// Show Application Menu
+	private ActionListener showApplication(Stage primaryStage) {
+		ActionListener showListener = new ActionListener() {
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						logger.info("Clicked show on system tray icon");
+						primaryStage.show();
+					}
+				});
+			}
+		};
+		return showListener;
+	}
+
+	// Close Menu
+	private ActionListener closeTray() {
+		ActionListener closeListener = new ActionListener() {
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				logger.info("Clicked close on system tray icon");
+				System.exit(0);
+			}
+		};
+		return closeListener;
+	}
+
+	// Minimize to tray
+	private void setToTray(Stage primaryStage) {
+		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent t) {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						if (SystemTray.isSupported()) {
+							primaryStage.hide();
+							showProgramIsMinimizedMsg();
+						} else {
+							System.exit(0);
+						}
+					}
+				});
+			}
+		});
+	}
+
+	// create a popup menu for right clicking system tray icon
+	private PopupMenu popupMenuConfiguration(final ActionListener closeListener, ActionListener showListener) {
+		PopupMenu popup = new PopupMenu();
+
+		MenuItem showItem = new MenuItem("Show");
+		showItem.addActionListener(showListener);
+		popup.add(showItem);
+
+		MenuItem closeItem = new MenuItem("Exit");
+		closeItem.addActionListener(closeListener);
+		popup.add(closeItem);
+		return popup;
+	}
+
+	// Message when minimized
+	public void showProgramIsMinimizedMsg() {
 	}
 
 }

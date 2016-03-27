@@ -1,10 +1,14 @@
 package application.gui;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
+import application.logger.LoggerFormat;
 import application.logic.Logic;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -40,25 +44,29 @@ public class GUI extends Application {
 	private VBox root = new VBox();
 
 	@Override
-	public void start(Stage primaryStage) throws ExceptionHandler {
+	public void start(Stage primaryStage) throws ExceptionHandler, IOException {
 		Logic logic = new Logic();
+		initializeLogger();
 		GUIHandler guiH = new GUIHandler(logic);
 		TaskListView taskList = new TaskListView();
 		DirectoryChooser dirChooser = new DirectoryChooser();
 		configureDirectoryChooser(dirChooser);
 		try {
 			logger.info("Initialising GUI");
+			Platform.setImplicitExit(false);
 			customiseGUIMenuBar(primaryStage);
 			createStartStage(taskList);
 			guiH.textFieldSetUp(txtField, taskList, guiH, helpLabel, feedbackLabel, primaryStage, dirChooser);
 			guiH.firstLaunchDirectoryPrompt(primaryStage, dirChooser, guiH, taskList);
 			show(primaryStage);
+			guiH.createTrayIcon(primaryStage);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.severe("Failed to load GUI");
 			throw new ExceptionHandler("Failed to load GUI");
 		}
 	}
+
 
 	// First screen that users see
 	private void createStartStage(TaskListView taskList) {
@@ -113,5 +121,13 @@ public class GUI extends Application {
 		dirChooser.setTitle("Open Resource Folder");
 		dirChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
 	}
+	
+    private static void initializeLogger() throws IOException {
+        FileHandler fileHandler = new FileHandler("logfile.txt", true);
+        LoggerFormat formatter = new LoggerFormat();
+	    fileHandler.setFormatter(formatter);
+	    logger.setUseParentHandlers(false);
+	    logger.addHandler(fileHandler);
+    }
 
 }
