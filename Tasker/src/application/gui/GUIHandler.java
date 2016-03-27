@@ -306,6 +306,7 @@ public class GUIHandler {
 
 	// Message when minimized
 	public void showProgramIsMinimizedMsg() {
+		trayIcon.displayMessage("Tasker", "Tasker is still running in the background.", TrayIcon.MessageType.INFO);
 	}
 
 }
