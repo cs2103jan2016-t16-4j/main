@@ -1,9 +1,10 @@
 package application.logic;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-
 import application.storage.Storage;
 import application.storage.Task;
 
@@ -18,6 +19,7 @@ public class Search implements Command {
 
 	public static final int NOT_FOUND = -1;
 	public static final String EMPTY = "";
+	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd-MM-yyyy");
 
 	String[] arguments;
 	String description = EMPTY;
@@ -36,15 +38,29 @@ public class Search implements Command {
 		if (Arrays.asList(arguments).toString().toLowerCase().contains("priority")) {
 			searchObj = new SearchByPriority(arguments);
 		} else if (Arrays.asList(arguments).toString().toLowerCase().contains("by")) {
-			searchObj = new SearchByDate(arguments);
+			Calendar cal = parseToDate(arguments);
+			searchObj = new SearchByDate(cal);
+		} else if (Arrays.asList(arguments).toString().toLowerCase().contains("on")) {
+			Calendar cal = parseToDate(arguments);
+			searchObj = new SearchOnDate(cal);
 		} else {
 			searchObj = new SearchByName(arguments);
 		}
 	}
 
+	private Calendar parseToDate(String[] arguments) {
+		Calendar cal = Calendar.getInstance();
+		try {
+			cal.setTime(FORMAT_DATE.parse(arguments[1]));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return cal;
+	}
+
 	@Override
 	public Feedback execute(Storage storage, ArrayList<Task> tasks) {
-		Feedback feedback = searchObj.execute(storage,tasks );
+		Feedback feedback = searchObj.execute(storage, tasks);
 		return feedback;
 	}
 

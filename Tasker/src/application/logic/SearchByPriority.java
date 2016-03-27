@@ -33,7 +33,7 @@ public class SearchByPriority implements Command {
 		if (taskList != null) {
 		    return new Feedback(MESSAGE_SEARCH_RESULTS,taskList);
         } else {
-            return new Feedback("Search Not Found", storage.getFileList());
+            return new Feedback("Search Not Found", storage.getOpenList());
         }
 	}
 	/*
