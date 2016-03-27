@@ -1,6 +1,9 @@
 package application.logic;
 
+import java.util.ArrayList;
+
 import application.storage.Storage;
+import application.storage.Task;
 
 /**
  * 
@@ -22,11 +25,11 @@ public class ChangeStorageLocation implements Command {
 
 	// storage and click on a new folder after prompt
 	private void setNewStorageLocation(String arguments) {
-
+		
 	}
 
 	@Override
-	public String execute(Storage storage) {
+	public Feedback execute(Storage storage, ArrayList<Task> tasksOnScreen) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -38,30 +38,12 @@ public class GUIHandler {
 
 	public GUIHandler(Logic logic) {
 		this.logic = logic;
-		// launchGUI();
 	}
-
-	// private void launchGUI() {
-	// new Thread() {
-	// @Override
-	// public void run() {
-	// javafx.application.Application.launch(GUI.class);
-	// }
-	// }.start();
-	// }
 
 	public Feedback executeCommands(String cmd) {
 		Feedback feedBack = logic.executeCommand(cmd);
 		return feedBack;
 	}
-
-	// public boolean checkIfFileExists() throws IOException {
-	// return logic.checkIfFileExists();
-	// }
-	//
-	// public ArrayList<Task> loadDataFile() throws IOException {
-	// return logic.loadDataFile();
-	// }
 
 	public void startDirectoryPrompt(String file) {
 		try {
@@ -73,7 +55,8 @@ public class GUIHandler {
 	}
 
 	public void textFieldSetUp(TextField txtField, TaskListView taskList, GUIHandler guiH, Label helpLabel,
-			Label feedbackLabel) {
+			Label feedbackLabel, Stage primaryStage, DirectoryChooser dirChooser) {
+		txtField.setPromptText("What would you like us to do for you?");
 		txtField.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -87,7 +70,7 @@ public class GUIHandler {
 					try {
 						text = txtField.getText();
 						if (text.equalsIgnoreCase("storage")) {
-
+							changeDirectoryPrompt(primaryStage, dirChooser, guiH);
 						} else {
 							Feedback feedback = guiH.executeCommands(text);
 							System.out.println(feedback.getMessage());
@@ -198,6 +181,16 @@ public class GUIHandler {
 			}
 		} else {
 			taskList.updateList(logic.loadDataFile());
+		}
+	}
+
+	// Change directory
+	public void changeDirectoryPrompt(Stage primaryStage, DirectoryChooser dirChooser, GUIHandler guiH) {
+		final File selectedDirectory = dirChooser.showDialog(primaryStage);
+		if (selectedDirectory != null) {
+			guiH.startDirectoryPrompt(selectedDirectory.getPath().toString() + "\\");
+		} else {
+			guiH.startDirectoryPrompt("");
 		}
 	}
 

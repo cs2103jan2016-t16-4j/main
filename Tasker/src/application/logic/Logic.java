@@ -131,15 +131,6 @@ public class Logic {
 
 	}
 	
-	private static void launchGUI() {
-		new Thread() {
-			@Override
-			public void run() {
-				javafx.application.Application.launch(GUI.class);
-			}
-		}.start();
-	}
-	
 	public String promptNewStorage(){
 		return null;
 	}
