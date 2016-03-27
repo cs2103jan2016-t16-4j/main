@@ -1,6 +1,5 @@
 package application.logic;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -10,7 +9,6 @@ import java.util.logging.Logger;
 import org.apache.commons.lang.ArrayUtils;
 import org.joda.time.LocalDateTime;
 import org.ocpsoft.prettytime.nlp.PrettyTimeParser;
-
 
 /**
  * This is the class which takes in a userInput and interprets it. If user input

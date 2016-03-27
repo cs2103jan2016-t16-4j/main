@@ -40,7 +40,7 @@ public class GUI extends Application {
 	private VBox root = new VBox();
 
 	@Override
-	public void start(Stage primaryStage) throws ExceptionHandler{
+	public void start(Stage primaryStage) throws ExceptionHandler {
 		Logic logic = new Logic();
 		GUIHandler guiH = new GUIHandler(logic);
 		TaskListView taskList = new TaskListView();
@@ -50,7 +50,7 @@ public class GUI extends Application {
 			logger.info("Initialising GUI");
 			customiseGUIMenuBar(primaryStage);
 			createStartStage(taskList);
-			guiH.textFieldSetUp(txtField, taskList, guiH, helpLabel, feedbackLabel);
+			guiH.textFieldSetUp(txtField, taskList, guiH, helpLabel, feedbackLabel, primaryStage, dirChooser);
 			guiH.firstLaunchDirectoryPrompt(primaryStage, dirChooser, guiH, taskList);
 			show(primaryStage);
 		} catch (Exception e) {
@@ -113,16 +113,5 @@ public class GUI extends Application {
 		dirChooser.setTitle("Open Resource Folder");
 		dirChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
 	}
-
-	// Change directory
-	// public String changeDirectoryPrompt(Stage primaryStage, DirectoryChooser
-	// dirChooser, GUIHandler guiH) {
-	// final File selectedDirectory = dirChooser.showDialog(primaryStage);
-	// if (selectedDirectory != null) {
-	// guiH.startDirectoryPrompt(selectedDirectory.getPath().toString() + "\\");
-	// } else {
-	// guiH.startDirectoryPrompt("");
-	// }
-	// }
 
 }
