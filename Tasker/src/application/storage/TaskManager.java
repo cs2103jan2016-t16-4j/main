@@ -1,5 +1,6 @@
 package application.storage;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -7,7 +8,8 @@ import java.util.Comparator;
 
 public class TaskManager {
     private static final int EMPTY = 1;
-    
+//	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd-MM-yyyy");
+	
 	public ArrayList<Task> add(ArrayList<Task> openList,
 			String taskDescription, Calendar startDate, Calendar endDate,
 			String location, Calendar remindDate, String priority, int taskIndex) {
@@ -101,18 +103,23 @@ public class TaskManager {
 		ArrayList<Task> searchList = new ArrayList<Task>();
 		for (int i = 0; i < openList.size(); i++) {
 			Task obj = openList.get(i);
+//			System.out.println("Start date : "+FORMAT_DATE.format((obj.getStartDate().getTime())));
+//			System.out.println("End date : "+FORMAT_DATE.format((obj.getEndDate().getTime())));
+//			System.out.println("Search date : "+FORMAT_DATE.format((searchDate.getTime())));
 			if (obj.getStartDate().get(Calendar.YEAR) != EMPTY) {
 				if (obj.getStartDate().get(Calendar.YEAR) == searchDate.get(Calendar.YEAR)
 						&& obj.getStartDate().get(Calendar.MONTH) == searchDate.get(Calendar.MONTH)
 						&& obj.getStartDate().get(Calendar.DATE) == searchDate.get(Calendar.DATE)) {
 					searchList.add(obj);
+					continue;
 				}
 
-			} else if (obj.getEndDate().get(Calendar.YEAR) != EMPTY) {
+			} if (obj.getEndDate().get(Calendar.YEAR) != EMPTY) {
 				if (obj.getEndDate().get(Calendar.YEAR) == searchDate.get(Calendar.YEAR)
 						&& obj.getEndDate().get(Calendar.MONTH) == searchDate.get(Calendar.MONTH)
 						&& obj.getEndDate().get(Calendar.DATE) == searchDate.get(Calendar.DATE)) {
 					searchList.add(obj);
+					continue;
 				}
 			}
 		}
