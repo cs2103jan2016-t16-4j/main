@@ -145,13 +145,14 @@ public class TaskManager {
 		if (startDate.get(Calendar.YEAR)!=EMPTY) {
 			openList.get(index).setStartDate(startDate);
 		}
-		if (startDate.get(Calendar.MILLISECOND)!=EMPTY && startDate.get(Calendar.HOUR_OF_DAY)!=0 && startDate.get(Calendar.MINUTE)!=0 && startDate.get(Calendar.SECOND)!=0) {
+		if (!(startDate.get(Calendar.MILLISECOND)==EMPTY && startDate.get(Calendar.HOUR_OF_DAY)==0 && startDate.get(Calendar.MINUTE)==0 && startDate.get(Calendar.SECOND)==0)) {
+			System.out.println("Index : "+taskIndex);
 			openList.get(index).setStartTime(startDate);
 		}
 		if (endDate.get(Calendar.YEAR)!=EMPTY) {
 			openList.get(index).setEndDate(endDate);
 		}
-		if (endDate.get(Calendar.MILLISECOND)!=EMPTY && endDate.get(Calendar.HOUR_OF_DAY)!=0 && endDate.get(Calendar.MINUTE)!=0 && endDate.get(Calendar.SECOND)!=0) {
+		if (!(endDate.get(Calendar.MILLISECOND)==EMPTY && endDate.get(Calendar.HOUR_OF_DAY)==0 && endDate.get(Calendar.MINUTE)==0 && endDate.get(Calendar.SECOND)==0)) {
 			openList.get(index).setEndTime(endDate);
 		}
 		if (!location.equalsIgnoreCase("")) {
@@ -160,7 +161,7 @@ public class TaskManager {
 		if (remindDate.get(Calendar.YEAR)!=EMPTY) {
 			openList.get(index).setRemindDate(remindDate);
 		}
-		if (remindDate.get(Calendar.MILLISECOND)!=EMPTY && remindDate.get(Calendar.HOUR_OF_DAY)!=0 && remindDate.get(Calendar.MINUTE)!=0 && remindDate.get(Calendar.SECOND)!=0) {
+		if (!(remindDate.get(Calendar.MILLISECOND)==EMPTY && remindDate.get(Calendar.HOUR_OF_DAY)==0 && remindDate.get(Calendar.MINUTE)==0 && remindDate.get(Calendar.SECOND)==0)) {
 			openList.get(index).setRemindDate(remindDate);
 		}
 		if (!priority.equalsIgnoreCase("")) {

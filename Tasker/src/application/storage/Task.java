@@ -48,10 +48,12 @@ public class Task implements Cloneable {
 	}
 	
 	public void setStartTime(Calendar startTime) {
-	    System.out.println(startTime);
-	    System.out.println(startTime.get(Calendar.HOUR_OF_DAY));
+		System.out.println("Hour is now : "+startTime.get(Calendar.HOUR_OF_DAY));
+		System.out.println("Minute is now : "+startTime.get(Calendar.MINUTE));
 	    this.startDate.set(Calendar.HOUR_OF_DAY, startTime.get(Calendar.HOUR_OF_DAY));
 		this.startDate.set(Calendar.MINUTE, startTime.get(Calendar.MINUTE));
+//		System.out.println("Hour is now : "+this.startDate.get(Calendar.HOUR_OF_DAY));
+//		System.out.println("Minute is now : "+this.startDate.get(Calendar.MINUTE));
 	}
 
 	public void setEndDate(Calendar endDate) {
@@ -129,19 +131,20 @@ public class Task implements Cloneable {
 		message += this.taskDescription;
 		if (startDate.get(Calendar.YEAR)!=EMPTY) {
 			message += ", from " + FORMAT_DATE.format(startDate.getTime());
-			if (startDate.get(Calendar.MILLISECOND)!=EMPTY && startDate.get(Calendar.HOUR_OF_DAY)!=0 && startDate.get(Calendar.MINUTE)!=0 && startDate.get(Calendar.SECOND)!=0){
+			if (!((startDate.get(Calendar.MILLISECOND)==EMPTY) && (startDate.get(Calendar.HOUR_OF_DAY)==0) && (startDate.get(Calendar.MINUTE)==0) && (startDate.get(Calendar.SECOND)==0))){
+				System.out.println("IM HEREEEE");
 				message += " " + FORMAT_TIME.format(startDate.getTime());
 			}
 		}
 		
 		if (startDate.get(Calendar.YEAR)!=EMPTY && endDate.get(Calendar.YEAR)!=EMPTY) {
 			message += " to " + FORMAT_DATE.format(endDate.getTime());
-			if (endDate.get(Calendar.MILLISECOND)!=EMPTY && endDate.get(Calendar.HOUR_OF_DAY)!=0 && endDate.get(Calendar.MINUTE)!=0 && endDate.get(Calendar.SECOND)!=0){
+			if (!(endDate.get(Calendar.MILLISECOND)==EMPTY && endDate.get(Calendar.HOUR_OF_DAY)==0 && endDate.get(Calendar.MINUTE)==0 && endDate.get(Calendar.SECOND)==0)){
 				message += " " + FORMAT_TIME.format(endDate.getTime());
 			}
 		} else if (startDate.get(Calendar.YEAR)==EMPTY && endDate.get(Calendar.YEAR)!=EMPTY) {
 			message += ", by " + FORMAT_DATE.format(endDate.getTime());
-			if (startDate.get(Calendar.MILLISECOND)!=EMPTY && startDate.get(Calendar.HOUR_OF_DAY)!=0 && startDate.get(Calendar.MINUTE)!=0 && startDate.get(Calendar.SECOND)!=0){
+			if (!(startDate.get(Calendar.MILLISECOND)==EMPTY && startDate.get(Calendar.HOUR_OF_DAY)==0 && startDate.get(Calendar.MINUTE)==0 && startDate.get(Calendar.SECOND)==0)){
 				message += " " + FORMAT_TIME.format(endDate.getTime());
 			}
 		}
