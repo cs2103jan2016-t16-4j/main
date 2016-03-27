@@ -27,7 +27,7 @@ public class GUI extends Application {
 	// Constants
 	private static String LOGGER_NAME = "logfile";
 	private String title = "Tasker";
-	private String logoURL = "application/gui/files/robot.jpg";
+	private String logoURL = "files/robot.jpg";
 
 	private static Logger logger = Logger.getLogger(LOGGER_NAME);
 
@@ -86,7 +86,7 @@ public class GUI extends Application {
 	}
 
 	private void setProgramLogo(Stage primaryStage) {
-		primaryStage.getIcons().add(new Image(logoURL));
+		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(logoURL)));
 	}
 
 	public static void setStartUp(GUI guiParameter) {
