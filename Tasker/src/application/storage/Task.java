@@ -132,7 +132,6 @@ public class Task implements Cloneable {
 		if (startDate.get(Calendar.YEAR)!=EMPTY) {
 			message += ", from " + FORMAT_DATE.format(startDate.getTime());
 			if (!((startDate.get(Calendar.MILLISECOND)==EMPTY) && (startDate.get(Calendar.HOUR_OF_DAY)==0) && (startDate.get(Calendar.MINUTE)==0) && (startDate.get(Calendar.SECOND)==0))){
-				System.out.println("IM HEREEEE");
 				message += " " + FORMAT_TIME.format(startDate.getTime());
 			}
 		}

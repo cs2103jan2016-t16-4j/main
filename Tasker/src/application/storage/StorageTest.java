@@ -190,7 +190,7 @@ public class StorageTest {
 		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
 	}
 
-	@Test
+//	@Test
 	public void updateTaskWithTime() throws IOException, CloneNotSupportedException {
 		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
 		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
@@ -203,6 +203,20 @@ public class StorageTest {
 		System.out.println(list.size());
 		System.out.println("Old : "+list.get(0).toString());
 		System.out.println("New : "+list.get(1).toString());
+	}
+	
+	@Test
+	public void searchOnDate() throws IOException {
+		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
+		storageController.addTaskInList("Finish CS2103", noDate, noDate, "School", noDate, "high");
+		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		Calendar searchDate = Calendar.getInstance();
+		searchDate.set(2020, Calendar.JUNE, 30);
+		ArrayList<Task> searchList = storageController.searchTaskOnDate(searchDate);
+		for (int i = 0; i<searchList.size(); i++) {
+			System.out.println("Found : "+searchList.get(i).toString());
+		}
 	}
 	
 	@After
