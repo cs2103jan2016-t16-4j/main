@@ -84,12 +84,25 @@ public class TaskManager {
 		return searchList;
 	}
 	
-	public ArrayList<Task> searchDate(ArrayList<Task> openList, Calendar searchDate) {
+	public ArrayList<Task> searchDateBy(ArrayList<Task> openList, Calendar searchDate) {
 		ArrayList<Task> searchList = new ArrayList<Task>();
 		for (int i = 0; i<openList.size(); i++) {
 			Task obj = openList.get(i);
 			if (obj.getEndTime().get(Calendar.YEAR)!=EMPTY) {
 				if (obj.getEndDate().compareTo(searchDate)<=0){
+					searchList.add(obj);
+				}
+			}
+		}
+		return searchList;
+	}
+	
+	public ArrayList<Task> searchDateOn(ArrayList<Task> openList, Calendar searchDate) {
+		ArrayList<Task> searchList = new ArrayList<Task>();
+		for (int i = 0; i<openList.size(); i++) {
+			Task obj = openList.get(i);
+			if (obj.getEndTime().get(Calendar.YEAR)!=EMPTY) {
+				if (obj.getEndDate().compareTo(searchDate)==0){
 					searchList.add(obj);
 				}
 			}

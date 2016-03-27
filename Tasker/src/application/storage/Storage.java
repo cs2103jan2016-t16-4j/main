@@ -80,7 +80,11 @@ public class Storage implements Cloneable {
 	}
 	
 	public ArrayList<Task> searchTaskByDate(Calendar date) {
-		return taskManager.searchDate(databaseManager.getOpenList(), date);
+		return taskManager.searchDateBy(databaseManager.getOpenList(), date);
+	}
+	
+	public ArrayList<Task> searchTaskOnDate(Calendar date) {
+		return taskManager.searchDateOn(databaseManager.getOpenList(), date);
 	}
 	
 	public ArrayList<Task> searchTaskByName(String taskName) {
