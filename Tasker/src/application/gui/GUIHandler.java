@@ -74,6 +74,9 @@ public class GUIHandler {
 	public void textFieldSetUp(TextField txtField, TaskListView taskList, GUIHandler guiH, Label helpLabel,
 			Label feedbackLabel, Stage primaryStage, DirectoryChooser dirChooser) {
 		txtField.setPromptText("What would you like us to do for you?");
+		txtField.getStyleClass().add("txtField");
+		txtField.setMaxWidth(1066);
+		txtField.setPrefSize(1066, 59);
 		txtField.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {

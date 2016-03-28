@@ -9,10 +9,12 @@ import application.logger.LoggerFormat;
 import application.logic.Logic;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
@@ -39,6 +41,9 @@ public class GUI extends Application {
 	private TextField txtField = new TextField();
 	private Label helpLabel = new Label();
 	private Label feedbackLabel = new Label();
+	private BorderPane textFieldHolder = new BorderPane();
+	private BorderPane helpLabelHolder = new BorderPane();
+	private BorderPane feedbackLabelHolder = new BorderPane();
 
 	// Alignment
 	private VBox root = new VBox();
@@ -67,7 +72,6 @@ public class GUI extends Application {
 		}
 	}
 
-
 	// First screen that users see
 	private void createStartStage(TaskListView taskList) {
 		addTextFieldToRoot();
@@ -75,9 +79,14 @@ public class GUI extends Application {
 	}
 
 	public void addTextFieldToRoot() {
-		root.getChildren().add(feedbackLabel);
-		root.getChildren().add(txtField);
-		root.getChildren().add(helpLabel);
+		feedbackLabelHolder.setLeft(feedbackLabel);
+		feedbackLabelHolder.setPadding(new Insets(0, 0, 0, 50));
+		root.getChildren().add(feedbackLabelHolder);
+		textFieldHolder.setCenter(txtField);
+		root.getChildren().add(textFieldHolder);
+		helpLabelHolder.setLeft(helpLabel);
+		helpLabelHolder.setPadding(new Insets(0, 0, 0, 50));
+		root.getChildren().add(helpLabelHolder);
 	}
 
 	public void addTaskListToRoot(TaskListView taskList) {
@@ -103,6 +112,7 @@ public class GUI extends Application {
 
 	private void show(Stage primaryStage) {
 		Scene scene = new Scene(root, 1150, 700);
+		scene.getStylesheets().add("application/gui/files/stylesheet.css");
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		primaryStage.show();
@@ -121,13 +131,13 @@ public class GUI extends Application {
 		dirChooser.setTitle("Open Resource Folder");
 		dirChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
 	}
-	
-    private static void initializeLogger() throws IOException {
-        FileHandler fileHandler = new FileHandler("logfile.txt", true);
-        LoggerFormat formatter = new LoggerFormat();
-	    fileHandler.setFormatter(formatter);
-	    logger.setUseParentHandlers(false);
-	    logger.addHandler(fileHandler);
-    }
+
+	private static void initializeLogger() throws IOException {
+		FileHandler fileHandler = new FileHandler("logfile.txt", true);
+		LoggerFormat formatter = new LoggerFormat();
+		fileHandler.setFormatter(formatter);
+		logger.setUseParentHandlers(false);
+		logger.addHandler(fileHandler);
+	}
 
 }
