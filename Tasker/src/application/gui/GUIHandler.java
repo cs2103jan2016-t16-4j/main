@@ -37,11 +37,16 @@ public class GUIHandler {
 	Logic logic;
 	private TrayIcon trayIcon;
 
-	String text = "";
-	private String logoURL = "files/robot.jpg";
+	private static final String LOGO_URL = "files/robot.jpg";
+	private static final String APPLICATION_NAME = "Tasker";
 	private static String LOGGER_NAME = "logfile";
 	private static Logger logger = Logger.getLogger(LOGGER_NAME);
 
+	private static final String EMPTY_STRING = "";
+	private static final String SPACE = "\\s+";
+	private static final String BACKSLASH = "\\";
+
+	// Messages
 	private static final String ADD_HINT_MESSAGE = "To add: [task description] from [start] to [end] at [location]";
 	private static final String HELP_HINT_MESSAGE = "To get help: help";
 	private static final String DELETE_HINT_MESSAGE = "To delete: delete [task description/number]";
@@ -51,7 +56,14 @@ public class GUIHandler {
 	private static final String UNDO_HINT_MESSAGE = "To undo: undo";
 	private static final String STORAGE_HINT_MESSAGE = "To change storage: storage";
 	private static final String DONE_HINT_MESSAGE = "To mark task as complete: done [task number]";
-	private static final String EMPTY_STRING = "";
+	private static final String TEXT_FIELD_PROMPT = "What would you like us to do for you?";
+	private static final String SYSTEM_TRAY_HINT = "Tasker is still running in the background.";
+
+	private static final String SHOW_MENU_TEXT = "Show";
+	private static final String EXIT_MENU_TEXT = "Exit";
+	private static final String TXTFIELD_CSS = "txtField";
+
+	String text = EMPTY_STRING;
 
 	public GUIHandler(Logic logic) {
 		this.logic = logic;
@@ -66,15 +78,14 @@ public class GUIHandler {
 		try {
 			logic.startDirectoryPrompt(file);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	public void textFieldSetUp(TextField txtField, TaskListView taskList, GUIHandler guiH, Label helpLabel,
 			Label feedbackLabel, Stage primaryStage, DirectoryChooser dirChooser) {
-		txtField.setPromptText("What would you like us to do for you?");
-		txtField.getStyleClass().add("txtField");
+		txtField.setPromptText(TEXT_FIELD_PROMPT);
+		txtField.getStyleClass().add(TXTFIELD_CSS);
 		txtField.setMaxWidth(1066);
 		txtField.setPrefSize(1066, 59);
 		txtField.textProperty().addListener(new ChangeListener<String>() {
@@ -90,7 +101,7 @@ public class GUIHandler {
 					try {
 						text = txtField.getText();
 						if (text.equalsIgnoreCase("storage")) {
-							changeDirectoryPrompt(primaryStage, dirChooser, guiH);
+							directoryPrompt(primaryStage, dirChooser, guiH);
 						} else {
 							Feedback feedback = guiH.executeCommands(text);
 							System.out.println(feedback.getMessage());
@@ -176,7 +187,7 @@ public class GUIHandler {
 	}
 
 	private String getFirstWord(String input) {
-		String[] inputArgs = input.trim().split("\\s+");
+		String[] inputArgs = input.trim().split(SPACE);
 		String firstWord = inputArgs[0];
 		return firstWord;
 	}
@@ -193,24 +204,19 @@ public class GUIHandler {
 	public void firstLaunchDirectoryPrompt(Stage primaryStage, DirectoryChooser dirChooser, GUIHandler guiH,
 			TaskListView taskList) throws IOException {
 		if (!logic.checkIfFileExists()) {
-			final File selectedDirectory = dirChooser.showDialog(primaryStage);
-			if (selectedDirectory != null) {
-				logic.startDirectoryPrompt(selectedDirectory.getPath().toString() + "\\");
-			} else {
-				logic.startDirectoryPrompt("");
-			}
+			directoryPrompt(primaryStage, dirChooser, guiH);
 		} else {
 			taskList.updateList(logic.loadDataFile());
 		}
 	}
 
 	// Change directory
-	public void changeDirectoryPrompt(Stage primaryStage, DirectoryChooser dirChooser, GUIHandler guiH) {
+	public void directoryPrompt(Stage primaryStage, DirectoryChooser dirChooser, GUIHandler guiH) {
 		final File selectedDirectory = dirChooser.showDialog(primaryStage);
 		if (selectedDirectory != null) {
-			guiH.startDirectoryPrompt(selectedDirectory.getPath().toString() + "\\");
+			guiH.startDirectoryPrompt(selectedDirectory.getPath().toString() + BACKSLASH);
 		} else {
-			guiH.startDirectoryPrompt("");
+			guiH.startDirectoryPrompt(EMPTY_STRING);
 		}
 	}
 
@@ -238,8 +244,8 @@ public class GUIHandler {
 
 	// Configuration for Tray Icon
 	private void trayIconConfiguration(ActionListener showListener, PopupMenu popup) {
-		java.awt.Image image = Toolkit.getDefaultToolkit().getImage(logoURL);
-		trayIcon = new TrayIcon(image, "Tasker", popup);
+		java.awt.Image image = Toolkit.getDefaultToolkit().getImage(LOGO_URL);
+		trayIcon = new TrayIcon(image, APPLICATION_NAME, popup);
 		trayIcon.setImageAutoSize(false);
 		trayIcon.addActionListener(showListener);
 	}
@@ -297,11 +303,11 @@ public class GUIHandler {
 	private PopupMenu popupMenuConfiguration(final ActionListener closeListener, ActionListener showListener) {
 		PopupMenu popup = new PopupMenu();
 
-		MenuItem showItem = new MenuItem("Show");
+		MenuItem showItem = new MenuItem(SHOW_MENU_TEXT);
 		showItem.addActionListener(showListener);
 		popup.add(showItem);
 
-		MenuItem closeItem = new MenuItem("Exit");
+		MenuItem closeItem = new MenuItem(EXIT_MENU_TEXT);
 		closeItem.addActionListener(closeListener);
 		popup.add(closeItem);
 		return popup;
@@ -309,7 +315,7 @@ public class GUIHandler {
 
 	// Message when minimized
 	public void showProgramIsMinimizedMsg() {
-		trayIcon.displayMessage("Tasker", "Tasker is still running in the background.", TrayIcon.MessageType.INFO);
+		trayIcon.displayMessage(APPLICATION_NAME, SYSTEM_TRAY_HINT, TrayIcon.MessageType.INFO);
 	}
 
 }

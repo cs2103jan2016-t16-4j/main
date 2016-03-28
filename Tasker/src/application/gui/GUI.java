@@ -32,8 +32,11 @@ public class GUI extends Application {
 
 	// Constants
 	private static String LOGGER_NAME = "logfile";
-	private String title = "Tasker";
-	private String logoURL = "files/robot.jpg";
+	private static final String TITLE = "Tasker";
+	private static final String LOGO_URL = "files/robot.jpg";
+	private static final String CSS_URL = "application/gui/files/stylesheet.css";
+	private static final String DIRECTORY_CHOOSER_TITLE = "Pick Where To Store Tasks";
+	private static final String CURRENT_DIRECTORY = "user.dir";
 
 	private static Logger logger = Logger.getLogger(LOGGER_NAME);
 
@@ -99,11 +102,11 @@ public class GUI extends Application {
 	}
 
 	private void setProgramName(Stage primaryStage) {
-		primaryStage.setTitle(title);
+		primaryStage.setTitle(TITLE);
 	}
 
 	private void setProgramLogo(Stage primaryStage) {
-		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(logoURL)));
+		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream(LOGO_URL)));
 	}
 
 	public static void setStartUp(GUI guiParameter) {
@@ -112,7 +115,7 @@ public class GUI extends Application {
 
 	private void show(Stage primaryStage) {
 		Scene scene = new Scene(root, 1150, 700);
-		scene.getStylesheets().add("application/gui/files/stylesheet.css");
+		scene.getStylesheets().add(CSS_URL);
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		primaryStage.show();
@@ -128,8 +131,8 @@ public class GUI extends Application {
 
 	// Configuration for directory chooser
 	private void configureDirectoryChooser(final DirectoryChooser dirChooser) {
-		dirChooser.setTitle("Open Resource Folder");
-		dirChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
+		dirChooser.setTitle(DIRECTORY_CHOOSER_TITLE);
+		dirChooser.setInitialDirectory(new File(System.getProperty(CURRENT_DIRECTORY)));
 	}
 
 	private static void initializeLogger() throws IOException {
