@@ -135,16 +135,18 @@ public class FileManager {
 	}
 	
 	public boolean setDirectory(String path) throws IOException {
-		clear(FILE_DIRECTORY_NAME);
+
 		
 		PrintWriter fw = new PrintWriter(FILE_DIRECTORY_NAME);
 		if (path.equalsIgnoreCase("")) {
-			closedFilePath = FILE_CLOSED_NAME;
-			dataFilePath = FILE_DATA_NAME;
+//			closedFilePath = FILE_CLOSED_NAME;
+//			dataFilePath = FILE_DATA_NAME;
 			fw.close();
 			return false;
 		}
 		else {
+			clear(FILE_DIRECTORY_NAME);
+			
 			// get current path
 			Path oldClosedFilePath = Paths.get(closedFilePath);
 			Path oldDataFilePath = Paths.get(dataFilePath);
