@@ -29,7 +29,7 @@ public class LoggerFormat extends Formatter {
 		String date = DF.format(new Date(log.getMillis()));
 		String className = log.getSourceClassName();
 		String methodName = log.getSourceMethodName();
-		String level = String.format("%-6s", log.getLevel().toString());
+		String level = String.format("%-7s", log.getLevel().toString());
 		String message = formatMessage(log);
 		String logMessage = date + SEPARATOR + level + SEPARATOR + className + SEPARATOR + methodName + SEPARATOR
 				+ message + NEXT_LINE;

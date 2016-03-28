@@ -12,10 +12,10 @@ import application.storage.Task;
  */
 
 public class SearchByPriority implements Command {
-    private static final String MESSAGE_SEARCH_RESULTS = "Here are the results of your search!";
+	private static final String MESSAGE_SEARCH_RESULTS = "Here are the results of your search!";
+	private static final String MESSAGE_SEARCH_NOT_FOUND = "Search Not Found";
 
-    private String priority;
-	private String feedback = "";
+	private String priority;
 
 	private ArrayList<Task> taskList;
 
@@ -31,19 +31,9 @@ public class SearchByPriority implements Command {
 
 	private Feedback checkIfListEmpty(Storage storage) {
 		if (taskList != null) {
-		    return new Feedback(MESSAGE_SEARCH_RESULTS,taskList);
-        } else {
-            return new Feedback("Search Not Found", storage.getOpenList());
-        }
-	}
-	/*
-	private String readArrayList(ArrayList<Task> tasks) {
-		int i = 0;
-		for (Task item : tasks) {
-			i++;
-			feedback = feedback + i + ") " + item.getTaskDescription() + "\n";
+			return new Feedback(MESSAGE_SEARCH_RESULTS, taskList);
+		} else {
+			return new Feedback(MESSAGE_SEARCH_NOT_FOUND, storage.getOpenList());
 		}
-		return feedback.trim();
 	}
-*/
 }

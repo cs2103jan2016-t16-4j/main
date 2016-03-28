@@ -14,9 +14,9 @@ import application.storage.Task;
 
 public class SearchOnDate implements Command {
 	private static final String MESSAGE_SEARCH_RESULTS = "Here are the results of your search!";
+	private static final String MESSAGE_SEARCH_NOT_FOUND = "Search Not Found";
 
 	private Calendar date;
-	private String feedback = "";
 
 	private ArrayList<Task> taskList;
 
@@ -35,7 +35,7 @@ public class SearchOnDate implements Command {
 		if (taskList != null) {
 			return new Feedback(MESSAGE_SEARCH_RESULTS, taskList);
 		} else {
-			return new Feedback("Search Not Found", storage.getOpenList());
+			return new Feedback(MESSAGE_SEARCH_NOT_FOUND, storage.getOpenList());
 		}
 	}
 }

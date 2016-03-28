@@ -12,11 +12,13 @@ import application.storage.Task;
  */
 
 public class SearchByName implements Command {
-	
-    private static final String MESSAGE_SEARCH_RESULTS = "Here are the results of your search!";
 
-    private String taskName;
-	private String feedback = "";
+	private static final String MESSAGE_SEARCH_RESULTS = "Here are the results of your search!";
+	private static final String MESSAGE_SEARCH_NOT_FOUND = "Search Not Found";
+	private static final String EMPTY_STRING = "";
+	private static final String SPACE = " ";
+
+	private String taskName;
 
 	private ArrayList<Task> taskList;
 
@@ -30,28 +32,19 @@ public class SearchByName implements Command {
 		taskList = storage.searchTaskByName(taskName);
 		return checkIfListEmpty(storage);
 	}
-	
+
 	private Feedback checkIfListEmpty(Storage storage) {
 		if (taskList != null) {
-		    return new Feedback(MESSAGE_SEARCH_RESULTS,taskList);
-        } else {
-            return new Feedback("Search Not Found", storage.getOpenList());
-        }
-	}
-/*
-	private String readArrayList(ArrayList<Task> tasks) {
-		int i = 0;
-		for (Task item : tasks) {
-			i++;
-			feedback = feedback + i + ") " + item.getTaskDescription() + "\n";
+			return new Feedback(MESSAGE_SEARCH_RESULTS, taskList);
+		} else {
+			return new Feedback(MESSAGE_SEARCH_NOT_FOUND, storage.getOpenList());
 		}
-		return feedback.trim();
 	}
-*/
+
 	private String getString(String[] args, int start, int end) {
-		String string = "";
+		String string = EMPTY_STRING;
 		for (int i = start; i <= end; i++) {
-			string = string + args[i] + " ";
+			string = string + args[i] + SPACE;
 		}
 		return string.trim();
 	}
