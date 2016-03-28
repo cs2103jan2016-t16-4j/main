@@ -9,11 +9,9 @@ import java.awt.TrayIcon;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 import application.logic.Logic;
-import application.logger.LoggerFormat;
 import application.logic.Feedback;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -260,6 +258,7 @@ public class GUIHandler {
 					public void run() {
 						logger.info("Clicked show on system tray icon");
 						primaryStage.show();
+						primaryStage.setIconified(false);
 					}
 				});
 			}
