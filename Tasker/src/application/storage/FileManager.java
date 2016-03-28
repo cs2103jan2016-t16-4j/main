@@ -135,18 +135,15 @@ public class FileManager {
 	}
 	
 	public boolean setDirectory(String path) throws IOException {
-
 		
-		PrintWriter fw = new PrintWriter(FILE_DIRECTORY_NAME);
 		if (path.equalsIgnoreCase("")) {
-//			closedFilePath = FILE_CLOSED_NAME;
-//			dataFilePath = FILE_DATA_NAME;
-			fw.close();
+			System.out.println("Directory choosen : EMPTY");
 			return false;
 		}
 		else {
 			clear(FILE_DIRECTORY_NAME);
 			
+			PrintWriter fw = new PrintWriter(FILE_DIRECTORY_NAME);
 			// get current path
 			Path oldClosedFilePath = Paths.get(closedFilePath);
 			Path oldDataFilePath = Paths.get(dataFilePath);
@@ -155,7 +152,7 @@ public class FileManager {
 			closedFilePath = path + FILE_CLOSED_NAME;
 			dataFilePath = path + FILE_DATA_NAME;
 			fw.println(path);
-			
+
 			// migration of data files
 			Path newClosedFilePath = Paths.get(closedFilePath);
 			if (oldClosedFilePath.toFile().exists()) {
