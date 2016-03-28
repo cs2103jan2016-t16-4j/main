@@ -9,6 +9,7 @@ import java.awt.TrayIcon;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import application.logic.Logic;
@@ -62,6 +63,8 @@ public class GUIHandler {
 	private static final String TXTFIELD_CSS = "txtField";
 
 	String text = EMPTY_STRING;
+	private static ArrayList<String> commands = new ArrayList<String>();
+	private static int pointer = 0;
 
 	public GUIHandler(Logic logic) {
 		this.logic = logic;
@@ -98,6 +101,7 @@ public class GUIHandler {
 				if (ke.getCode().equals(KeyCode.ENTER)) {
 					try {
 						text = txtField.getText();
+						commands.add(text);
 						if (text.equalsIgnoreCase("storage")) {
 							directoryPrompt(primaryStage, dirChooser, guiH);
 						} else {
@@ -109,6 +113,33 @@ public class GUIHandler {
 						txtField.clear();
 					} catch (Exception e) {
 						e.printStackTrace();
+					}
+				}
+				if (ke.getCode().equals(KeyCode.UP)) {
+					// if used commands list is not empty
+					if (!commands.isEmpty()) {
+						if (!commands.contains(txtField.getText())) {
+							pointer = commands.size();
+						} else {
+							pointer = commands.indexOf(txtField.getText());
+						}
+						// if pointer is not at the front end
+						if (pointer != 0) {
+							txtField.setText(commands.get(pointer - 1));
+						}
+					}
+				}
+				if (ke.getCode().equals(KeyCode.DOWN)) {
+					if (!commands.isEmpty()) {
+						if (!commands.contains(txtField.getText())) {
+							pointer = commands.size();
+						} else {
+							pointer = commands.indexOf(txtField.getText());
+						}
+						// if pointer is not at the end
+						if (pointer != commands.size() - 1) {
+							txtField.setText(commands.get(pointer + 1));
+						}
 					}
 				}
 			}
