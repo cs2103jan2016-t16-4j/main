@@ -36,7 +36,7 @@ public class Storage implements Cloneable {
 		return databaseManager.getCloseList().get((databaseManager.getCloseList().size())-1);
 	}
 	
-	public Task uncloseTask() throws IOException {
+	public Task uncloseTask(int index) throws IOException {
 		ArrayList<ArrayList<Task>> lists = taskManager.unclose(databaseManager.getCloseList(), databaseManager.getOpenList());
 		databaseManager.updateClosedList(lists.get(0));
 		databaseManager.updateOpenList(lists.get(1));
