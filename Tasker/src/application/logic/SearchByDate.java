@@ -26,7 +26,6 @@ public class SearchByDate implements Command {
 
 	@Override
 	public Feedback execute(Storage storage, ArrayList<Task> tasks) {
-		System.out.println(date);
 		taskList = storage.searchTaskByDate(date);
 		return checkIfListEmpty(storage);
 	}
