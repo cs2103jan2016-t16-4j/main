@@ -31,7 +31,7 @@ public class SearchOnDate implements Command {
 	}
 
 	private Feedback checkIfListEmpty(Storage storage) {
-		if (taskList != null) {
+		if (taskList.size() != 0) {
 			return new Feedback(MESSAGE_SEARCH_RESULTS, taskList);
 		} else {
 			return new Feedback(MESSAGE_SEARCH_NOT_FOUND, storage.getOpenList());

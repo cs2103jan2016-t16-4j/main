@@ -25,7 +25,8 @@ public class Parser {
 	private static final String MESSAGE_NULL_ERROR = "command cannot be null";
 	private static final String KEYWORD_ADD = "add";
 	private static final String KEYWORD_SEARCH = "search";
-	private static final String KEYWORD_DELETE = "delete";
+	private static final String KEYWORD_HOME = "home";
+    private static final String KEYWORD_DELETE = "delete";
 	private static final String KEYWORD_UPDATE = "update";
 	private static final String KEYWORD_DONE = "done";
 	private static final String KEYWORD_UNDO = "undo";
@@ -77,6 +78,11 @@ public class Parser {
 			command = initializeSearch(args);
 			break;
 
+		case KEYWORD_HOME:
+		    command = processHomeInput(args);
+		    break;
+            
+			
 		case KEYWORD_DELETE:
 			logger.info("Making delete command object");
 			command = initializeDelete(args);
@@ -115,26 +121,48 @@ public class Parser {
 
 	}
 
+    private Command processHomeInput(String[] args) throws NoDescriptionException {
+        Command command;
+        if (args.length == 1){
+            logger.info("Making home command object");
+            command = initializeHome();
+        } else{
+            logger.info("Making add command object");
+            command = initializeAdd(args, !WITH_KEYWORD);
+        }
+        return command;
+    }
+
 	private Command initializeAdd(String[] args, boolean isWithKeyWord) throws NoDescriptionException {
-		if (isWithKeyWord) {
-			args = (String[]) ArrayUtils.remove(args, 0);
-		}
+		args = removeKeyWordIfReq(args, isWithKeyWord);
 		int dateStartIndex = getDateStartIndex(args);
 		int locationStartIndex = Arrays.asList(args).lastIndexOf("at");
 		String[] segments = getSegments(dateStartIndex, locationStartIndex, args);
 		if (segments[DESC_POS].equals(EMPTY)) {
 			throw new NoDescriptionException();
 		}
-		Calendar[] dates = parseDates(segments[DATE_POS]);
+		Calendar[] dates = parseDates(segments);
 		Calendar remindDate = convertToCalendar(createEmptyDate());
 		Command command = new Add(segments[DESC_POS], dates[0], dates[1], segments[LOC_POS], remindDate);
 		return command;
 	}
 
+    private String[] removeKeyWordIfReq(String[] args, boolean isWithKeyWord) {
+        if (isWithKeyWord) {
+			return (String[]) ArrayUtils.remove(args, 0);
+		}
+        return args;
+    }
+
 	private Command initializeSearch(String[] args) {
 		args = (String[]) ArrayUtils.remove(args, 0);
 		Command command = getAppropSearchCommand(args);
+		System.out.println("Search initialised");
 		return command;
+	}
+	
+	private Command initializeHome(){
+	    return new Home();
 	}
 
 	private Command initializeDelete(String[] args) {
@@ -153,7 +181,7 @@ public class Parser {
 		int dateStartIndex = getDateStartIndex(args);
 		int locationStartIndex = Arrays.asList(args).lastIndexOf("at");
 		String[] segments = getSegments(dateStartIndex, locationStartIndex, args);
-		Calendar[] dates = parseDates(segments[DATE_POS]);
+		Calendar[] dates = parseDates(segments);
 		Calendar remindDate = convertToCalendar(createEmptyDate());
 		Command command = new Update(taskToUpdate, segments[DESC_POS], dates[0], dates[1], segments[LOC_POS],
 				remindDate);
@@ -213,7 +241,7 @@ public class Parser {
     }
     
     private Command getSearchByName(String[] args){
-        String taskName = getString(args, 0, args.length);
+        String taskName = getString(args, 0, args.length - 1);
         Command cmd = new SearchByName(taskName);
         return cmd;
     }
@@ -232,7 +260,7 @@ public class Parser {
     }
 
     private Calendar getDateForSearch(String[] args) throws NotDateException {
-        String dateString = getString(args, 0, args.length);
+        String dateString = getString(args, 0, args.length - 1);
         List<Date> dates1 = dateParser.parse(dateString);
         List<Date> dates2 = dateParser.parse(dateString);
         if (dates1.size() == 0){
@@ -287,9 +315,11 @@ public class Parser {
 		return command;
 	}
 
-	private Calendar[] parseDates(String dateString) {
+	private Calendar[] parseDates(String[] segments) {
+	    String dateString = segments[DATE_POS];
 		List<Date> tempDates1 = dateParser.parse(dateString);
 		List<Date> tempDates2 = dateParser.parse(dateString);
+		changeSegmentsIfNeeded(segments, tempDates1.size());
 		Calendar startDate = getStartDate(tempDates1, tempDates2);
 		Calendar endDate = getEndDate(tempDates1, tempDates2);
 		System.out.println(startDate);
@@ -298,6 +328,12 @@ public class Parser {
 		return dates;
 	}
 
+	private void changeSegmentsIfNeeded(String[] segments, int size){
+	    if (size == 0){
+	        segments[DESC_POS] = segments[DESC_POS].trim() + " " + segments[DATE_POS]; 
+	    }
+	}
+	
 	private Calendar getStartDate(List<Date> tempDates1, List<Date> tempDates2) {
 		LocalDateTime date;
 		if (tempDates1.size() == 0) {
@@ -330,6 +366,7 @@ public class Parser {
 		} else {
 			LocalDateTime date = new LocalDateTime(date1);
 			date = date.withMillisOfDay(1);
+			System.out.println(date);
 			return date;
 		}
 	}
@@ -378,9 +415,9 @@ public class Parser {
 		if (dateIndex == -1) {
 			return EMPTY;
 		} else if (dateIndex < locationIndex) {
-			return getString(args, dateIndex + 1, locationIndex - 1);
+			return getString(args, dateIndex, locationIndex - 1);
 		} else {
-			return getString(args, dateIndex + 1, args.length - 1);
+			return getString(args, dateIndex, args.length - 1);
 		}
 	}
 
