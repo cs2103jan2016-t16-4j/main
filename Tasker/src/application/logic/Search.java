@@ -19,7 +19,7 @@ public class Search implements Command {
 
 	public static final int NOT_FOUND = -1;
 	public static final String EMPTY = "";
-	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd-MM-yyyy");
+	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 
 	String[] arguments;
 	String description = EMPTY;
@@ -51,7 +51,7 @@ public class Search implements Command {
 	private Calendar parseToDate(String[] arguments) {
 		Calendar cal = Calendar.getInstance();
 		try {
-			cal.setTime(FORMAT_DATE.parse(arguments[1]));
+			cal.setTime(FORMAT_DATE.parse(arguments[1] + " 23:59:59"));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
