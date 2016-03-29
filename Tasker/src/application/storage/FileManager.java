@@ -23,7 +23,7 @@ public class FileManager {
 	private String closedFilePath = "";
 	private String dataFilePath = "";	
 
-	private void clear(String path) throws FileNotFoundException {
+	public void clear(String path) throws FileNotFoundException {
 		File f = new File(path);
 		if (f.exists()) {
 			PrintWriter fw = new PrintWriter(path);
