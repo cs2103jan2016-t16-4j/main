@@ -13,7 +13,7 @@ import org.joda.time.DateTime;
 import application.storage.Storage;
 import application.storage.Task;
 
-public class Update implements Command{
+public class Update implements UndoableCommand{
     public static final int NOT_FOUND = -1;
     public static final int INDEX_TASK_POSITION = 0;
     public static final int ARRAY_INDEXING_OFFSET = 1;

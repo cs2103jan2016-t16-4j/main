@@ -10,21 +10,23 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="750.0" prefWidth="1107.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ListView layoutY="144.0" prefHeight="607.0" prefWidth="1109.0" />
-      <Rectangle arcWidth="5.0" fill="#00acc1" height="147.0" smooth="false" stroke="#fcf8f800" strokeType="INSIDE" strokeWidth="0.0" style="-fx-border-color: transparent;" width="1109.0">
+      <ListView fx:id="display_list" layoutY="169.0" prefHeight="582.0" prefWidth="1109.0" />
+      <Rectangle arcWidth="5.0" fill="#00acc1" height="172.0" smooth="false" stroke="#fcf8f800" strokeType="INSIDE" strokeWidth="0.0" style="-fx-border-color: transparent;" width="1109.0">
          <effect>
             <DropShadow color="#000000bc" height="30.0" offsetY="5.0" radius="12.25" />
          </effect>
       </Rectangle>
-      <Label alignment="TOP_LEFT" layoutX="20.0" layoutY="82.0" prefHeight="52.0" prefWidth="1066.0" text="Label" textFill="WHITE">
+      <Label fx:id="feedback" alignment="TOP_LEFT" layoutX="135.0" layoutY="107.0" prefHeight="52.0" prefWidth="953.0" text="Feedback Bar" textFill="WHITE">
          <padding>
             <Insets left="12.0" />
          </padding>
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
       </Label>
-      <TextField layoutX="20.0" layoutY="14.0" prefHeight="59.0" prefWidth="1066.0" promptText="What would you like us to do for you?" style="-fx-background-color: white; -fx-background-radius: 0;">
+      <TextField fx:id="input_bar" layoutX="20.0" layoutY="14.0" prefHeight="59.0" prefWidth="1066.0" promptText="What would you like us to do for you?" style="-fx-background-color: white; -fx-background-radius: 0;">
          <font>
             <Font size="22.0" />
          </font>
@@ -35,6 +37,30 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
+      <Label fx:id="help" alignment="TOP_LEFT" layoutX="85.0" layoutY="81.0" prefHeight="29.0" prefWidth="1003.0" text="Help Bar" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <padding>
+            <Insets left="12.0" />
+         </padding>
+      </Label>
+      <Label alignment="TOP_LEFT" layoutX="20.0" layoutY="107.0" prefHeight="52.0" prefWidth="122.0" text="Feedback :" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <padding>
+            <Insets left="12.0" />
+         </padding>
+      </Label>
+      <Label alignment="TOP_LEFT" layoutX="20.0" layoutY="81.0" prefHeight="52.0" prefWidth="122.0" text="Help :" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <padding>
+            <Insets left="12.0" />
+         </padding>
+      </Label>
    </children>
    <effect>
       <DropShadow />
