@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Storage implements Cloneable {
 
 	private DatabaseManager databaseManager;
-	private FileManager fileManager;
+	public FileManager fileManager;
 	private TaskManager taskManager;
 
 	public Storage() {
@@ -74,6 +74,7 @@ public class Storage implements Cloneable {
 	}
 	
 	private void saveFile() throws IOException {
+		fileManager.clear(fileManager.getClosedFilePath());
 		fileManager.saveTaskIndex(databaseManager.getTaskIndex());
 		fileManager.saveFile(databaseManager.getCloseList(), fileManager.getClosedFilePath());
 		fileManager.saveFile(databaseManager.getOpenList(), fileManager.getDataFilePath());
