@@ -20,7 +20,7 @@ public class DoneByNum implements Command {
     Storage storage;
 
     DoneByNum(int numToClose) {
-        this.numToClose = numToClose - 1;
+        this.numToClose = numToClose;
         logger = Logger.getLogger("Logfile");
         try {
             logger.info("initial DoneByNum");

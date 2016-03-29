@@ -22,8 +22,8 @@ public class SearchByName implements Command {
 
 	private ArrayList<Task> taskList;
 
-	SearchByName(String[] args) {
-		taskName = getString(args, 0, args.length - 1);
+	SearchByName(String taskName) {
+		this.taskName = taskName;
 	}
 
 	@Override
@@ -40,13 +40,4 @@ public class SearchByName implements Command {
 			return new Feedback(MESSAGE_SEARCH_NOT_FOUND, storage.getOpenList());
 		}
 	}
-
-	private String getString(String[] args, int start, int end) {
-		String string = EMPTY_STRING;
-		for (int i = start; i <= end; i++) {
-			string = string + args[i] + SPACE;
-		}
-		return string.trim();
-	}
-
 }

@@ -1,6 +1,5 @@
 package application.logic;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -134,7 +133,7 @@ public class Parser {
 
 	private Command initializeSearch(String[] args) {
 		args = (String[]) ArrayUtils.remove(args, 0);
-		Command command = new Search(args);
+		Command command = getAppropSearchCommand(args);
 		return command;
 	}
 
@@ -193,6 +192,69 @@ public class Parser {
 		return command;
 	}
 
+	private Command getAppropSearchCommand(String[] args){
+	    try{
+	        return getSearchCommand(args);
+	    }catch(NotDateException e){
+	        return getSearchByName(args);
+	    }
+	    
+	}
+
+    private Command getSearchCommand(String[] args) throws NotDateException {
+        String[] argsForDate = (String[]) ArrayUtils.remove(args, 0);
+        if (args[0].equalsIgnoreCase("by")){
+	        return getSearchByDateCommand(argsForDate);
+	    }else if (args[0].equalsIgnoreCase("on")){
+	        return getSearchOnDateCommand(argsForDate);
+        }else{
+            return getSearchByName(args);
+        }
+    }
+    
+    private Command getSearchByName(String[] args){
+        String taskName = getString(args, 0, args.length);
+        Command cmd = new SearchByName(taskName);
+        return cmd;
+    }
+    
+    private Command getSearchOnDateCommand(String[] args) throws NotDateException{
+        Calendar date = getDateForSearch(args);
+        Command cmd = new SearchOnDate(date);
+        return cmd;
+    }
+
+    
+    private Command getSearchByDateCommand(String[] args) throws NotDateException{
+        Calendar date = getDateForSearch(args);
+        Command cmd = new SearchByDate(date);
+        return cmd;
+    }
+
+    private Calendar getDateForSearch(String[] args) throws NotDateException {
+        String dateString = getString(args, 0, args.length);
+        List<Date> dates1 = dateParser.parse(dateString);
+        List<Date> dates2 = dateParser.parse(dateString);
+        if (dates1.size() == 0){
+            throw new NotDateException();
+        }
+        LocalDateTime date = fixDateForSearch(dates1.get(0), dates2.get(0));
+        return convertToCalendar(date);
+    }
+	
+    private LocalDateTime fixDateForSearch(Date date1, Date date2) {
+        if (date1.equals(date2)) {
+            return new LocalDateTime(date1);
+        } else {
+            LocalDateTime date = new LocalDateTime(date1);
+            date = date.withHourOfDay(23);
+            date = date.withMinuteOfHour(59);
+            date = date.withSecondOfMinute(59);
+            return date;
+        }
+    }
+
+    
 	private Command getAppropDeleteCommand(String[] args) {
 		if (args.length == 1) {
 			int index = Integer.parseInt(args[0]) - ARRAY_INDEXING_OFFSET;
