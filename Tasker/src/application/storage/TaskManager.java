@@ -51,11 +51,22 @@ public class TaskManager {
 		return lists;
 	}
 	
-	public ArrayList<ArrayList<Task>> unclose(ArrayList<Task> closedList, ArrayList<Task> openList){
+	public ArrayList<ArrayList<Task>> unclose(ArrayList<Task> closedList, ArrayList<Task> openList, int taskIndex){
 		ArrayList<ArrayList<Task>> lists = new ArrayList<ArrayList<Task>>();
+		boolean isSuccessUnclose = false;		
 		
-		openList.add(closedList.get(closedList.size()-1));
-		closedList.remove(closedList.size()-1);
+		int index = -1;
+		for (int i = 0; i < closedList.size(); i++) {				
+			if (closedList.get(i).getTaskIndex() == taskIndex) {
+				index = i;
+				isSuccessUnclose = true;
+				break;
+				}
+		}
+		if (isSuccessUnclose) {
+			openList.add(closedList.get(closedList.size()-1));
+			closedList.remove(closedList.size()-1);
+		}		
 		
 		lists.add(closedList);
 		lists.add(openList);
