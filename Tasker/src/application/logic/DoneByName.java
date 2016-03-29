@@ -13,6 +13,7 @@ public class DoneByName implements Command {
     private static final String MESSAGE_WHICH_CLOSE = "Which task would you like to close?";
     private static final String MESSAGE_CLOSE_ERROR = "We encountered some "
             + "problem while closing this task. We apologise for the inconvenience.";
+    private static final String MESSAGE_NOTHING_TO_CLOSE = "There is no task with that description.";
 
     Logger logger = null;
 
@@ -48,7 +49,9 @@ public class DoneByName implements Command {
         assert (storage != null);
         assert (taskList.size() > 0);
         this.storage = storage;
-        if (taskList.size() == 1) {
+        if(taskList.size()== 0){
+            return new Feedback(MESSAGE_NOTHING_TO_CLOSE, storage.getOpenList());
+        } else if (taskList.size() == 1) {
             closedTask = storage.closeTask(taskList.get(FIRST_INDEX).getTaskIndex());
             String feedbackMessage = String.format(FEEDBACK_CLOSE, closedTask.toString());
             return new Feedback(feedbackMessage, storage.getOpenList());

@@ -39,9 +39,11 @@ public class Parser {
 	private static final int DESC_POS = 0;
 	private static final int DATE_POS = 1;
 	private static final int LOC_POS = 2;
-
+	private static final int ARRAY_INDEXING_OFFSET = 1;
+	
 	private static final boolean WITH_KEYWORD = true; // For add function. Since
 														// we accept no keyword.
+    
 
 	private static Logger logger = Logger.getLogger(LOGGER_NAME);
 
@@ -122,7 +124,7 @@ public class Parser {
 		int locationStartIndex = Arrays.asList(args).lastIndexOf("at");
 		String[] segments = getSegments(dateStartIndex, locationStartIndex, args);
 		if (segments[DESC_POS].equals(EMPTY)) {
-			new NoDescriptionException();
+			throw new NoDescriptionException();
 		}
 		Calendar[] dates = parseDates(segments[DATE_POS]);
 		Calendar remindDate = convertToCalendar(createEmptyDate());
@@ -193,7 +195,7 @@ public class Parser {
 
 	private Command getAppropDeleteCommand(String[] args) {
 		if (args.length == 1) {
-			int index = Integer.parseInt(args[0]);
+			int index = Integer.parseInt(args[0]) - ARRAY_INDEXING_OFFSET;
 			Command command = new DeleteByNum(index);
 			return command;
 		} else {
@@ -209,7 +211,7 @@ public class Parser {
 
 	private Command getAppropDoneCommand(String[] args) {
 		if (args.length == 1) {
-			int index = Integer.parseInt(args[0]);
+			int index = Integer.parseInt(args[0]) - ARRAY_INDEXING_OFFSET;
 			Command command = new DoneByNum(index);
 			return command;
 		} else {
@@ -291,9 +293,9 @@ public class Parser {
 		String location = getLocationString(dateIndex, locationIndex, args);
 		String[] segments = new String[ARGUMENT_NUMBER];
 		System.out.println(description);
-		segments[DESC_POS] = description;
+		segments[DESC_POS] = description.trim();
 		segments[DATE_POS] = date;
-		segments[LOC_POS] = location;
+		segments[LOC_POS] = location.trim();
 		return segments;
 	}
 
