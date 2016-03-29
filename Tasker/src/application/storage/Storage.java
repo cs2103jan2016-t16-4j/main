@@ -135,8 +135,8 @@ public class Storage implements Cloneable {
 		databaseManager.updateOpenList(taskManager.update(
 				databaseManager.getOpenList(), taskDescription, startDate,
 				endDate, location, remindDate, priority, index));
-		
-		list.add(databaseManager.getOpenList().get(taskindex));
+		Task newTask2 = (Task) databaseManager.getOpenList().get(taskindex).clone();
+		list.add(newTask2);
 		
 		saveFile();
 		return list;
