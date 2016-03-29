@@ -16,8 +16,8 @@ public class StorageTest {
 	static final String FILE_CLOSED_NAME = "TaskerDataHistory.txt";
 	static final String FILE_DATA_NAME = "TaskerData.txt";
 	static final String FILE_DIRECTORY_NAME = "TaskerDirectory.txt";
-	static final String CUSTOM_DIRECTORY1 = "D:/Eclipse/eclipse/workspace/";
-	static final String CUSTOM_DIRECTORY2 = "D:/Eclipse/eclipse/";
+	static final String CUSTOM_DIRECTORY1 = "E:/Eclipse/workspace/";
+	static final String CUSTOM_DIRECTORY2 = "E:/Eclipse/workspace/CS2103_Tasker/";
 	static Calendar cal1 = Calendar.getInstance();
 	static Calendar cal2 = Calendar.getInstance();
 	static Calendar time1 = Calendar.getInstance();
@@ -57,9 +57,20 @@ public class StorageTest {
 	
 //	@Test
 	public void setDirectory() throws IOException {
+		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
 		System.out.println("Closed File Path is : "+storageController.fileManager.getClosedFilePath());
 		System.out.println("Data File Path is : "+storageController.fileManager.getDataFilePath());
 		storageController.setDirectory(CUSTOM_DIRECTORY1);
+		System.out.println("Closed File Path is : "+storageController.fileManager.getClosedFilePath());
+		System.out.println("Data File Path is : "+storageController.fileManager.getDataFilePath());
+		storageController.setDirectory("");
+		System.out.println("Closed File Path is : "+storageController.fileManager.getClosedFilePath());
+		System.out.println("Data File Path is : "+storageController.fileManager.getDataFilePath());
+		storageController.setDirectory(CUSTOM_DIRECTORY2);
+		System.out.println("Closed File Path is : "+storageController.fileManager.getClosedFilePath());
+		System.out.println("Data File Path is : "+storageController.fileManager.getDataFilePath());
+		storageController.setDirectory("");
 		System.out.println("Closed File Path is : "+storageController.fileManager.getClosedFilePath());
 		System.out.println("Data File Path is : "+storageController.fileManager.getDataFilePath());
 	}
@@ -97,14 +108,16 @@ public class StorageTest {
 		}
 	}
 	
-//	@Test
-	public void searchDate() throws IOException {
+	@Test
+	public void searchByDate() throws IOException {
 		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
 		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
 		storageController.addTaskInList("Finish CS2103", noDate, noDate, "School", noDate, "high");
 		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
 		Calendar searchDate = Calendar.getInstance();
-		searchDate.set(2035, Calendar.JUNE, 30);
+//		cal1.set(2020, Calendar.JUNE, 30);
+//		cal2.set(2030, Calendar.DECEMBER, 25);
+		searchDate.set(2020, Calendar.JUNE, 30);
 		ArrayList<Task> searchList = storageController.searchTaskByDate(searchDate);
 		for (int i = 0; i<searchList.size(); i++) {
 			System.out.println("Found : "+searchList.get(i).toString());
@@ -205,15 +218,17 @@ public class StorageTest {
 		System.out.println("New : "+list.get(1).toString());
 	}
 	
-	@Test
+//	@Test
 	public void searchOnDate() throws IOException {
 		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
 		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
 		storageController.addTaskInList("Finish CS2103", noDate, noDate, "School", noDate, "high");
 		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
 		Calendar searchDate = Calendar.getInstance();
-		searchDate.set(2020, Calendar.JUNE, 30);
-		ArrayList<Task> searchList = storageController.searchTaskOnDate(searchDate);
+		searchDate.set(2030, Calendar.DECEMBER, 25);
+//		cal1.set(2020, Calendar.JUNE, 30);
+//		cal2.set(2030, Calendar.DECEMBER, 25);
+		ArrayList<Task> searchList = storageController.searchTaskOnDate(cal1);
 		for (int i = 0; i<searchList.size(); i++) {
 			System.out.println("Found : "+searchList.get(i).toString());
 		}

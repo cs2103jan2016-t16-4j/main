@@ -126,6 +126,10 @@ public class Storage implements Cloneable {
 			if (databaseManager.getOpenList().get(i).getTaskIndex()==index) {
 				taskindex = i;
 				Task newTask1 = (Task) databaseManager.getOpenList().get(i).clone();
+				Calendar newStartDate1 = (Calendar) databaseManager.getOpenList().get(i).getStartDate().clone();
+				Calendar newEndDate1 = (Calendar) databaseManager.getOpenList().get(i).getEndDate().clone();
+				Calendar newRemindDate1 = (Calendar) databaseManager.getOpenList().get(i).getRemindDate().clone();
+				newTask1 = new Task(newTask1.getTaskDescription(), newStartDate1, newEndDate1, newTask1.getLocation(), newRemindDate1, newTask1.getPriority(), newTask1.getTaskIndex());
 				list.add(newTask1);
 				break;
 			}
@@ -136,6 +140,10 @@ public class Storage implements Cloneable {
 				databaseManager.getOpenList(), taskDescription, startDate,
 				endDate, location, remindDate, priority, index));
 		Task newTask2 = (Task) databaseManager.getOpenList().get(taskindex).clone();
+		Calendar newStartDate2 = (Calendar) databaseManager.getOpenList().get(taskindex).getStartDate().clone();
+		Calendar newEndDate2 = (Calendar) databaseManager.getOpenList().get(taskindex).getEndDate().clone();
+		Calendar newRemindDate2 = (Calendar) databaseManager.getOpenList().get(taskindex).getRemindDate().clone();
+		newTask2 = new Task(newTask2.getTaskDescription(), newStartDate2, newEndDate2, newTask2.getLocation(), newRemindDate2, newTask2.getPriority(), newTask2.getTaskIndex());
 		list.add(newTask2);
 		
 		saveFile();

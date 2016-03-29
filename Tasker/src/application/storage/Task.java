@@ -48,12 +48,14 @@ public class Task implements Cloneable {
 	}
 	
 	public void setStartTime(Calendar startTime) {
-		System.out.println("Hour is now : "+startTime.get(Calendar.HOUR_OF_DAY));
-		System.out.println("Minute is now : "+startTime.get(Calendar.MINUTE));
+//		System.out.println("Hour is now : "+startTime.get(Calendar.HOUR_OF_DAY));
+//		System.out.println("Minute is now : "+startTime.get(Calendar.MINUTE));
+//		System.out.println("Second is now : "+startTime.get(Calendar.SECOND));
+//		System.out.println("Millisecond is now : "+startTime.get(Calendar.MILLISECOND));
 	    this.startDate.set(Calendar.HOUR_OF_DAY, startTime.get(Calendar.HOUR_OF_DAY));
 		this.startDate.set(Calendar.MINUTE, startTime.get(Calendar.MINUTE));
-//		System.out.println("Hour is now : "+this.startDate.get(Calendar.HOUR_OF_DAY));
-//		System.out.println("Minute is now : "+this.startDate.get(Calendar.MINUTE));
+	    this.startDate.set(Calendar.SECOND, startTime.get(Calendar.SECOND));
+		this.startDate.set(Calendar.MILLISECOND, startTime.get(Calendar.MILLISECOND));
 	}
 
 	public void setEndDate(Calendar endDate) {
@@ -63,6 +65,8 @@ public class Task implements Cloneable {
 	public void setEndTime(Calendar endTime) {
 		this.endDate.set(Calendar.HOUR_OF_DAY, endTime.get(Calendar.HOUR_OF_DAY));
 		this.endDate.set(Calendar.MINUTE, endTime.get(Calendar.MINUTE));
+		this.endDate.set(Calendar.SECOND, endTime.get(Calendar.SECOND));
+		this.endDate.set(Calendar.MILLISECOND, endTime.get(Calendar.MILLISECOND));
 	}
 
 	public void setLocation(String location) {
@@ -76,6 +80,8 @@ public class Task implements Cloneable {
 	public void setRemindTime(Calendar remindTime) {
 		this.remindDate.set(Calendar.HOUR_OF_DAY, remindTime.get(Calendar.HOUR_OF_DAY));
 		this.remindDate.set(Calendar.MINUTE, remindTime.get(Calendar.MINUTE));
+		this.remindDate.set(Calendar.SECOND, remindTime.get(Calendar.SECOND));
+		this.remindDate.set(Calendar.MILLISECOND, remindTime.get(Calendar.MILLISECOND));
 	}
 
 	public void setPriority(String priority) {
