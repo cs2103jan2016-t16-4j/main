@@ -72,7 +72,7 @@ public class Logic {
 	            logger.info("executing above parsed command");
                 Feedback feedback = cmd.execute(storage, tasksOnScreen);
                 logger.info("displaying feedback");
-                addCommandToHistoryIfUndoable(cmd);
+                history.add(cmd);
                 tasksOnScreen = feedback.getTasks();
                 feedback.display(ui);
                 //storage.saveFile();
@@ -84,11 +84,6 @@ public class Logic {
 	    }
 	}
 
-    private void addCommandToHistoryIfUndoable(Command cmd) {
-        if(cmd instanceof UndoableCommand){
-            history.add(cmd);
-        }
-    }
 	
 	private ArrayList<Task> setEnvironment() throws IOException{
 	    logger.info("Checking if file exists");
@@ -121,9 +116,12 @@ public class Logic {
 			feedback = cmd.execute(storage, tasksOnScreen);
 			logger.info("displaying feedback");
 			feedback.display(ui);
-			tasksOnScreen = feedback.getTasks();
+			history.add(cmd);
+            tasksOnScreen = feedback.getTasks();
 			logger.info("saving tasks to file.");
 			//storage.saveFile();
+		} catch(NoDescriptionException e){
+            ui.showError(MESSAGE_NO_DESCRIPTION);
 		} catch (Exception e) {
 			ui.showError(MESSAGE_ERROR);
 		}

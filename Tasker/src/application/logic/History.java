@@ -4,14 +4,14 @@ import java.util.Stack;
 
 public class History {
 
-    private Stack<Command> executedCommands;
-    private Stack<Command> undoneCommands;
+    private Stack<UndoableCommand> executedCommands;
+    private Stack<UndoableCommand> undoneCommands;
 
     private static History instance;
     
     private History(){
-        this.executedCommands = new Stack<Command>();
-        this.executedCommands = new Stack<Command>();
+        this.executedCommands = new Stack<UndoableCommand>();
+        this.undoneCommands = new Stack<UndoableCommand>();
     }
     
     public static History getInstance(){
@@ -21,9 +21,25 @@ public class History {
         return instance;
     }
     
+    
+    
     public void add(Command cmd){
-        executedCommands.push(cmd);
+        if(cmd instanceof UndoableCommand){
+            UndoableCommand cmd_undoable = (UndoableCommand) cmd;
+            executedCommands.add(cmd_undoable);
+        }
     }
+    
+    public Feedback undo(){
+        try{
+            UndoableCommand cmd = executedCommands.pop();
+            Feedback feedback = cmd.undo();
+            return feedback;
+        } catch (NothingToUndoException e){
+            return undo();
+        }
+    }
+    
     
     
 }

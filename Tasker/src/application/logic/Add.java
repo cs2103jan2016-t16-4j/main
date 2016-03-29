@@ -17,7 +17,7 @@ public class Add implements UndoableCommand{
             "We encountered an error while adding the task. Sorry for the inconvenience.";    
     
     private static final String MESSAGE_UNDO_FAILURE = "We encountered a problem while undoing.";
-    private static final String MESSAGE_UNDO_FEEDBACK = "Removed: %1$s";
+    private static final String MESSAGE_UNDO_FEEDBACK = "Unadded: %1$s";
     
     Task addedTask;
     Storage storage;

@@ -23,7 +23,7 @@ public class Update implements Command{
     private static final String MESSAGE_UPDATE_FEEDBACK = 
             "Updated Task: %1$s";    
     private static final String MESSAGE_UNDO_FEEDBACK = 
-            "Updated Task: %1$s";  
+            "Reverted: %1$s";  
     private static final String MESSAGE_UNDO_FAILURE = "We encountered an error while undoing.";
             
     

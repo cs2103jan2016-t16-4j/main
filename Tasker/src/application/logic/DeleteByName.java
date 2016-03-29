@@ -48,17 +48,16 @@ public class DeleteByName implements UndoableCommand {
         }
     }
     
-    public Feedback undo(){
+    public Feedback undo() throws NothingToUndoException {
         try {
             if (deletedTask != null){
                 storage.addTaskInList(deletedTask.getTaskDescription(), deletedTask.getStartDate(),
-                deletedTask.getEndDate(),  deletedTask.getLocation(),  deletedTask.getRemindDate(),
-                deletedTask.getPriority());
+                        deletedTask.getEndDate(),  deletedTask.getLocation(),  deletedTask.getRemindDate(),
+                        deletedTask.getPriority());
                 String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK,deletedTask.toString());
                 return new Feedback(feedbackMessage, storage.getOpenList());
             }else{
-                new NothingToUndoException();
-                return new Feedback("", storage.getOpenList());
+                throw new NothingToUndoException();
             }
         }catch(IOException e){
             return new Feedback(MESSAGE_UNDO_FAILURE, storage.getOpenList());

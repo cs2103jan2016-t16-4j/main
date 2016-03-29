@@ -7,14 +7,17 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class DoneByName implements Command {
+public class DoneByName implements UndoableCommand {
     private static final int FIRST_INDEX = 0;
     private static final String FEEDBACK_CLOSE = "Closed Task: %1$s";
     private static final String MESSAGE_WHICH_CLOSE = "Which task would you like to close?";
     private static final String MESSAGE_CLOSE_ERROR = "We encountered some "
             + "problem while closing this task. We apologise for the inconvenience.";
     private static final String MESSAGE_NOTHING_TO_CLOSE = "There is no task with that description.";
-
+    private static final String MESSAGE_UNDO_FAILURE = "We encountered a problem while undoing.";
+    private static final String MESSAGE_UNDO_FEEDBACK = "Unclosed: %1$s";
+    
+    
     Logger logger = null;
 
     String taskToClose;
@@ -59,6 +62,21 @@ public class DoneByName implements Command {
             return new Feedback(MESSAGE_WHICH_CLOSE, taskList);
         }
     }
+    
+    public Feedback undo() throws NothingToUndoException{
+        try {
+            if (closedTask != null){
+                storage.uncloseTask();
+                String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK,closedTask.toString());
+                return new Feedback(feedbackMessage, storage.getOpenList());
+            }else{
+                throw new NothingToUndoException();
+            }
+        }catch(IOException e){
+            return new Feedback(MESSAGE_UNDO_FAILURE, storage.getOpenList());
+        }
+    }
+
 }
 
 /*

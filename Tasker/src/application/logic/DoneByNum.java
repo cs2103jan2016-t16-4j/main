@@ -8,11 +8,15 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class DoneByNum implements Command {
+public class DoneByNum implements UndoableCommand {
     private static final String MESSAGE_CLOSE_FAILURE = "We encountered a problem while closing this task.";
     private static final String MESSAGE_CLOSE_FEEDBACK = "Closed Task: %1$s";
     private static final String MESSAGE_INDEX_PROBLEM = "Please enter a valid number.";
-
+    private static final String MESSAGE_UNDO_FAILURE = "We encountered a problem while undoing.";
+    private static final String MESSAGE_UNDO_FEEDBACK = "Unclosed: %1$s";
+   
+    
+    
     Logger logger = null;
 
     Task closedTask;
@@ -45,4 +49,16 @@ public class DoneByNum implements Command {
         }
     }
 
+    public Feedback undo() throws NothingToUndoException{
+        try {
+            storage.uncloseTask();
+            String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK,closedTask.toString());
+            return new Feedback(feedbackMessage, storage.getOpenList());
+        }catch(IOException e){
+            return new Feedback(MESSAGE_UNDO_FAILURE, storage.getOpenList());
+        }
+    }
+
+    
+    
 }

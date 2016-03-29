@@ -97,9 +97,11 @@ public class Parser {
 			logger.info("Making done command object");
 			command = initializeDone(args);
 			break;
-		/*
-		 * case KEYWORD_UNDO : command = initializeUndo(); break;
-		 * 
+		
+		case KEYWORD_UNDO : 
+		    command = initializeUndo(); 
+		    break;
+		/* 
 		 * case KEYWORD_HELP : command = initializeHelp(); break;
 		 */
 //		case KEYWORD_STORAGE:
@@ -138,11 +140,11 @@ public class Parser {
 		int dateStartIndex = getDateStartIndex(args);
 		int locationStartIndex = Arrays.asList(args).lastIndexOf("at");
 		String[] segments = getSegments(dateStartIndex, locationStartIndex, args);
-		if (segments[DESC_POS].equals(EMPTY)) {
-			throw new NoDescriptionException();
-		}
 		Calendar[] dates = parseDates(segments);
-		Calendar remindDate = convertToCalendar(createEmptyDate());
+		if (segments[DESC_POS].equals(EMPTY)) {
+            throw new NoDescriptionException();
+        }
+        Calendar remindDate = convertToCalendar(createEmptyDate());
 		Command command = new Add(segments[DESC_POS], dates[0], dates[1], segments[LOC_POS], remindDate);
 		return command;
 	}
@@ -197,12 +199,12 @@ public class Parser {
 		}
 	}
 
-	/*
-	 * 
-	 * private Command initializeUndo(){ Command command = new Undo (); return
-	 * command; }
-	 * 
-	 * private Command initializeHelp(){ Command command = new Help (); return
+	private Command initializeUndo(){ 
+	    Command command = new Undo (); 
+	    return command; 
+	}
+	
+	/* private Command initializeHelp(){ Command command = new Help (); return
 	 * command; }
 	 */
 	
@@ -330,7 +332,8 @@ public class Parser {
 
 	private void changeSegmentsIfNeeded(String[] segments, int size){
 	    if (size == 0){
-	        segments[DESC_POS] = segments[DESC_POS].trim() + " " + segments[DATE_POS]; 
+	        segments[DESC_POS] = segments[DESC_POS].trim() + " " + segments[DATE_POS];
+	        segments[DESC_POS] = segments[DESC_POS].trim();
 	    }
 	}
 	
