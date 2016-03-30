@@ -6,10 +6,11 @@ import java.util.ArrayList;
 import application.storage.Task;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.util.Callback;
 
 /**
  * 
@@ -18,15 +19,15 @@ import javafx.scene.layout.Pane;
  */
 
 public class TaskListView {
-	private ObservableList<HBox> items = FXCollections.observableArrayList();
-	private ListView<HBox> listView = new ListView<HBox>(items);
-	
+	private ObservableList<Task> items = FXCollections.observableArrayList();
+	private ListView<Task> listView = new ListView<Task>(items);
+
 	// Constants
 	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd-MM-yyyy");
 	private static final SimpleDateFormat FORMAT_TIME = new SimpleDateFormat("h:mm a");
 	private static final SimpleDateFormat FORMAT_YEAR = new SimpleDateFormat("yyyy");
 	private static final String EMPTY_STRING = "";
-	private static final String LOCATION_AT = "@ ";
+	private static final String LOCATION_AT = "At ";
 	private static final String SPACE = " ";
 	private static final String EMPTY_DATE = "0001";
 	private static final String DATE_TO_DATE = " to ";
@@ -38,48 +39,65 @@ public class TaskListView {
 
 	public void createTaskListView(Pane parent) {
 		BorderPane pane = new BorderPane();
-		addDataToListView();
-		pane.setCenter(listView);
+		addDataToListView(pane);
 
 		parent.getChildren().add(pane);
 	}
 
-	private void addDataToListView() {
-		ObservableList<HBox> items = FXCollections.observableArrayList();
-		listView.setItems(items);
+	private void addDataToListView(BorderPane pane) {
 		listView.setPrefSize(2500, 2500);
+		listView.setCellFactory(new Callback<ListView<Task>, ListCell<Task>>() {
+			public ListCell<Task> call(ListView<Task> param) {
+				ListCell<Task> cell = new ListCell<Task>() {
+					@Override
+					public void updateItem(Task item, boolean empty) {
+						super.updateItem(item, empty);
+						if (item != null) {
+							int taskNumber = this.getIndex() + TASK_NUM_OFFSET;
+							String taskDescription = item.getTaskDescription();
+							String taskDuration = setDurationDetails(item);
+							String taskLocation = setLocationDetails(item);
+							Cell cells = new Cell(taskNumber, taskDescription, taskDuration, taskLocation);
+
+							setGraphic(cells.getHBox());
+						}
+						else{
+							setGraphic(null);
+						}
+					}
+				};
+
+				return cell;
+			}
+		});
+		pane.setCenter(listView);
 	}
 
 	public void updateList(ArrayList<Task> tasks) {
-		
-	    items.clear();
+
+		items.clear();
+
 		for (int i = 0; i < tasks.size(); i++) {
-			int taskNumber = i + TASK_NUM_OFFSET;
-			String taskDescription = tasks.get(i).getTaskDescription();
-			String taskDuration = setDurationDetails(tasks, i);
-			String taskLocation = setLocationDetails(tasks, i);
-			ListItem cell = new ListItem(taskNumber, taskDescription, taskDuration, taskLocation);
-			items.add(cell);
+			items.add(tasks.get(i));
 		}
+
 		listView.setItems(items);
 	}
 
-	private String setDurationDetails(ArrayList<Task> tasks, int i) {
+	private String setDurationDetails(Task item) {
 		String taskDuration = EMPTY_STRING;
 
-		if (!FORMAT_YEAR.format(tasks.get(i).getStartDate().getTime()).equals(EMPTY_DATE)) {
-			if (FORMAT_DATE.format(tasks.get(i).getStartDate().getTime())
-					.equals(FORMAT_DATE.format(tasks.get(i).getEndDate().getTime()))) {
-				taskDuration = String.format(DURATION_SAME_DATE_INFO,
-						FORMAT_DATE.format(tasks.get(i).getStartDate().getTime()),
-						FORMAT_TIME.format(tasks.get(i).getStartTime().getTime()),
-						FORMAT_TIME.format(tasks.get(i).getEndTime().getTime()));
+		if (!FORMAT_YEAR.format(item.getStartDate().getTime()).equals(EMPTY_DATE)) {
+			if (FORMAT_DATE.format(item.getStartDate().getTime())
+					.equals(FORMAT_DATE.format(item.getEndDate().getTime()))) {
+				taskDuration = String.format(DURATION_SAME_DATE_INFO, FORMAT_DATE.format(item.getStartDate().getTime()),
+						FORMAT_TIME.format(item.getStartTime().getTime()),
+						FORMAT_TIME.format(item.getEndTime().getTime()));
 			} else {
-				taskDuration = String.format(DURATION_DIFF_DATE_INFO,
-						FORMAT_DATE.format(tasks.get(i).getStartDate().getTime()),
-						FORMAT_TIME.format(tasks.get(i).getStartTime().getTime()),
-						FORMAT_DATE.format(tasks.get(i).getEndDate().getTime()),
-						FORMAT_TIME.format(tasks.get(i).getEndTime().getTime()));
+				taskDuration = String.format(DURATION_DIFF_DATE_INFO, FORMAT_DATE.format(item.getStartDate().getTime()),
+						FORMAT_TIME.format(item.getStartTime().getTime()),
+						FORMAT_DATE.format(item.getEndDate().getTime()),
+						FORMAT_TIME.format(item.getEndTime().getTime()));
 			}
 		} else {
 			taskDuration = EMPTY_STRING;
@@ -87,11 +105,11 @@ public class TaskListView {
 		return taskDuration;
 	}
 
-	private String setLocationDetails(ArrayList<Task> tasks, int i) {
+	private String setLocationDetails(Task item) {
 		String taskLocation = EMPTY_STRING;
-		;
-		if (!tasks.get(i).getLocation().equals(EMPTY_STRING)) {
-			taskLocation = String.format(LOCATION_INFO, tasks.get(i).getLocation());
+
+		if (!item.getLocation().equals(EMPTY_STRING)) {
+			taskLocation = String.format(LOCATION_INFO, item.getLocation());
 		} else {
 			taskLocation = EMPTY_STRING;
 		}
