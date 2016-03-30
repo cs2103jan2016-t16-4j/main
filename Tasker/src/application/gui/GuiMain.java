@@ -10,14 +10,17 @@ import application.logger.LoggerFormat;
 import application.logic.Logic;
 import application.storage.Task;
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 public class GuiMain extends Application {
+    private static final String WINDOW_TITLE = "Tasker"; 
     private static final String EMPTY_STRING = "";
     private static final String SPACE = "\\s+";
     private static final String BACKSLASH = "\\";
-
+    private static final String CSS_URL = "application/gui/files/stylesheet.css";
+    
     private static final String DIRECTORY_CHOOSER_TITLE = "Pick Where To Store Tasks";
     private static final String CURRENT_DIRECTORY = "user.dir";
     private static final String LOGGER_NAME = "logfile";
@@ -36,7 +39,15 @@ public class GuiMain extends Application {
     public void start(Stage primaryStage) throws Exception {
         setEnvironment();
         initializeSaveDirectory(primaryStage);
-        
+        OpeningPage page = new OpeningPage(taskList, logic);
+        Scene scene = new Scene(page);
+        File f = new File("src/application/gui/application.css");
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
+        scene.getStylesheets().add(CSS_URL);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle(WINDOW_TITLE);
+        primaryStage.show();
     }
 
 
@@ -47,13 +58,13 @@ public class GuiMain extends Application {
     }
 
     private void initializeSaveDirectory(Stage primaryStage) throws IOException{
-        if (logic.checkIfFileExists()){
+        if (!logic.checkIfFileExists()){
             DirectoryChooser dirChooser = new DirectoryChooser();
             configureDirectoryChooser(dirChooser);
             directoryPrompt(primaryStage, dirChooser);
-            logic.loadDataFile();
+            taskList = logic.loadDataFile();
         }else{
-            logic.loadDataFile();
+            taskList = logic.loadDataFile();
         }   
     }
     

@@ -13,12 +13,14 @@
 <fx:root prefHeight="750.0" prefWidth="1107.0" type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ListView fx:id="displayList" layoutX="24.0" layoutY="169.0" prefHeight="582.0" prefWidth="1060.0" />
+      <Rectangle arcHeight="5.0" fill="WHITE" height="582.0" layoutY="168.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="25.0" />
+      <Rectangle fill="WHITE" height="582.0" layoutX="1083.0" layoutY="168.0" stroke="TRANSPARENT" strokeType="INSIDE" width="25.0" />
       <Rectangle arcWidth="5.0" fill="#00acc1" height="172.0" smooth="false" stroke="#fcf8f800" strokeType="INSIDE" strokeWidth="0.0" style="-fx-border-color: transparent;" width="1109.0">
          <effect>
             <DropShadow color="#000000bc" height="30.0" offsetY="5.0" radius="12.25" />
          </effect>
       </Rectangle>
-      <Label fx:id="feedback" alignment="TOP_LEFT" layoutX="135.0" layoutY="107.0" prefHeight="52.0" prefWidth="953.0" text="Feedback Bar" textFill="WHITE">
+      <Label fx:id="feedbackLabel" alignment="TOP_LEFT" layoutX="135.0" layoutY="107.0" prefHeight="52.0" prefWidth="953.0" text="Feedback Bar" textFill="WHITE">
          <padding>
             <Insets left="12.0" />
          </padding>
@@ -37,7 +39,7 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <Label fx:id="help" alignment="TOP_LEFT" layoutX="85.0" layoutY="81.0" prefHeight="29.0" prefWidth="1003.0" text="Help Bar" textFill="WHITE">
+      <Label fx:id="helpLabel" alignment="TOP_LEFT" layoutX="85.0" layoutY="81.0" prefHeight="29.0" prefWidth="1003.0" text="Help Bar" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
