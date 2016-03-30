@@ -28,6 +28,7 @@ public class TaskListView {
 	private static final SimpleDateFormat FORMAT_YEAR = new SimpleDateFormat("yyyy");
 	private static final String EMPTY_STRING = "";
 	private static final String LOCATION_AT = "At ";
+	private static final String BY = "By ";
 	private static final String SPACE = " ";
 	private static final String EMPTY_DATE = "0001";
 	private static final String DATE_TO_DATE = " to ";
@@ -36,6 +37,7 @@ public class TaskListView {
 	private static String LOCATION_INFO = LOCATION_AT + "%1$s";
 	private static String DURATION_SAME_DATE_INFO = "%1$s" + SPACE + "%2$s" + DATE_TO_DATE + "%3$s";
 	private static String DURATION_DIFF_DATE_INFO = "%1$s" + SPACE + "%2$s" + DATE_TO_DATE + "%3$s" + SPACE + "%4$s";
+	private static String DURATION_END_DATE_INFO = BY + "%1$s" + SPACE + "%2$s";
 
 	public void createTaskListView(Pane parent) {
 		BorderPane pane = new BorderPane();
@@ -60,8 +62,7 @@ public class TaskListView {
 							Cell cells = new Cell(taskNumber, taskDescription, taskDuration, taskLocation);
 
 							setGraphic(cells.getHBox());
-						}
-						else{
+						} else {
 							setGraphic(null);
 						}
 					}
@@ -100,7 +101,12 @@ public class TaskListView {
 						FORMAT_TIME.format(item.getEndTime().getTime()));
 			}
 		} else {
-			taskDuration = EMPTY_STRING;
+			if (!FORMAT_YEAR.format(item.getEndDate().getTime()).equals(EMPTY_DATE)) {
+				taskDuration = String.format(DURATION_END_DATE_INFO, FORMAT_DATE.format(item.getEndDate().getTime()),
+						FORMAT_TIME.format(item.getEndTime().getTime()));
+			} else {
+				taskDuration = EMPTY_STRING;
+			}
 		}
 		return taskDuration;
 	}
