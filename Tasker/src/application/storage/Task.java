@@ -151,10 +151,6 @@ public class Task implements Cloneable {
 
 	}
 	
-	public String durationToString() {
-		return ((dateToString(startDate)+ " "+timeToString(startDate)+ " "+dateToString(endDate)+ " "+timeToString(endDate)).trim());
-	}
-	
 	public String toString() {
 		String message = "\"";
 		message += this.taskDescription;
