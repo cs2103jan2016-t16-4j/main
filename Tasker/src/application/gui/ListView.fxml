@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="750.0" prefWidth="1107.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefHeight="750.0" prefWidth="1107.0" type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ListView fx:id="display_list" layoutY="169.0" prefHeight="582.0" prefWidth="1109.0" />
+      <ListView fx:id="displayList" layoutX="24.0" layoutY="169.0" prefHeight="582.0" prefWidth="1060.0" />
       <Rectangle arcWidth="5.0" fill="#00acc1" height="172.0" smooth="false" stroke="#fcf8f800" strokeType="INSIDE" strokeWidth="0.0" style="-fx-border-color: transparent;" width="1109.0">
          <effect>
             <DropShadow color="#000000bc" height="30.0" offsetY="5.0" radius="12.25" />
@@ -26,7 +26,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="input_bar" layoutX="20.0" layoutY="14.0" prefHeight="59.0" prefWidth="1066.0" promptText="What would you like us to do for you?" style="-fx-background-color: white; -fx-background-radius: 0;">
+      <TextField fx:id="textInputArea" layoutX="20.0" layoutY="14.0" prefHeight="59.0" prefWidth="1066.0" promptText="What would you like us to do for you?" style="-fx-background-color: white; -fx-background-radius: 0;">
          <font>
             <Font size="22.0" />
          </font>
@@ -65,4 +65,4 @@
    <effect>
       <DropShadow />
    </effect>
-</AnchorPane>
+</fx:root>

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import application.logic.Logic;
+import application.logic.NoDescriptionException;
 import application.logic.Feedback;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -70,7 +71,7 @@ public class GUIHandler {
 		this.logic = logic;
 	}
 
-	public Feedback executeCommands(String cmd) {
+	public Feedback executeCommands(String cmd) throws NoDescriptionException {
 		Feedback feedBack = logic.executeCommand(cmd);
 		return feedBack;
 	}

@@ -31,7 +31,7 @@ public class Logic {
 
 	private Parser parser = new Parser();
 	private Storage storage = new Storage();
-	private Ui ui = new Cli();
+	private Ui ui;
 	private static Logger logger = Logger.getLogger(LOGGER_NAME);
 	//private GUI guiHandler = new GUI();
 	private History history = History.getInstance();
@@ -97,6 +97,11 @@ public class Logic {
 		loadDataFile();
 	}
 
+	public void setDirectory(String file) throws IOException {
+        storage.setDirectory(file);
+    }
+
+	
 	public ArrayList<Task> loadDataFile() throws IOException {
 		storage.initialise();
 		return storage.getOpenList();
@@ -107,26 +112,32 @@ public class Logic {
 		return storage.directoryExists();
 	}
 
+	public Feedback executeCommand(String command)throws NoDescriptionException {
+        Feedback feedback;
+        Command cmd = parser.interpretCommand(command);
+        logger.info("executing above parsed command");
+        feedback = cmd.execute(storage, tasksOnScreen);
+        logger.info("adding command to history");
+        history.add(cmd);
+        logger.info("saving tasks to file.");
+        //storage.saveFile();
+        return feedback;
+    }
+    
+	
+	
 	// for UI
-	public Feedback executeCommand(String command) {
-		Feedback feedback = null;
-		try {
-			Command cmd = parser.interpretCommand(command);
-			logger.info("executing above parsed command");
-			feedback = cmd.execute(storage, tasksOnScreen);
-			logger.info("displaying feedback");
-			feedback.display(ui);
-			history.add(cmd);
-            tasksOnScreen = feedback.getTasks();
-			logger.info("saving tasks to file.");
-			//storage.saveFile();
-		} catch(NoDescriptionException e){
-            ui.showError(MESSAGE_NO_DESCRIPTION);
-		} catch (Exception e) {
-			ui.showError(MESSAGE_ERROR);
-		}
+	
+	public Feedback executeCommand(String command,  ArrayList<Task> tasksOnScreen)throws NoDescriptionException {
+		Feedback feedback;
+		Command cmd = parser.interpretCommand(command);
+		logger.info("executing above parsed command");
+		feedback = cmd.execute(storage, tasksOnScreen);
+		logger.info("adding command to history");
+		history.add(cmd);
+		logger.info("saving tasks to file.");
+		//storage.saveFile();
 		return feedback;
-
 	}
 	
 	public String promptNewStorage(){

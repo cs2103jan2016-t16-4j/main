@@ -59,6 +59,7 @@ public class GUI extends Application {
 		TaskListView taskList = new TaskListView();
 		DirectoryChooser dirChooser = new DirectoryChooser();
 		configureDirectoryChooser(dirChooser);
+		
 		try {
 			logger.info("Initialising GUI");
 			Platform.setImplicitExit(false);
@@ -115,6 +116,9 @@ public class GUI extends Application {
 
 	private void show(Stage primaryStage) {
 		Scene scene = new Scene(root, 1150, 700);
+		File f = new File("src/application/gui/application.css");
+		scene.getStylesheets().clear();
+		scene.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
 		scene.getStylesheets().add(CSS_URL);
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);

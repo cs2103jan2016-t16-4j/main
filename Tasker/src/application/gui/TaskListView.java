@@ -20,7 +20,7 @@ import javafx.scene.layout.Pane;
 public class TaskListView {
 	private ObservableList<HBox> items = FXCollections.observableArrayList();
 	private ListView<HBox> listView = new ListView<HBox>(items);
-
+	
 	// Constants
 	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd-MM-yyyy");
 	private static final SimpleDateFormat FORMAT_TIME = new SimpleDateFormat("h:mm a");
@@ -51,14 +51,15 @@ public class TaskListView {
 	}
 
 	public void updateList(ArrayList<Task> tasks) {
-		items.clear();
+		
+	    items.clear();
 		for (int i = 0; i < tasks.size(); i++) {
 			int taskNumber = i + TASK_NUM_OFFSET;
 			String taskDescription = tasks.get(i).getTaskDescription();
 			String taskDuration = setDurationDetails(tasks, i);
 			String taskLocation = setLocationDetails(tasks, i);
-			Cell cell = new Cell(taskNumber, taskDescription, taskDuration, taskLocation);
-			items.add(cell.getHBox());
+			ListItem cell = new ListItem(taskNumber, taskDescription, taskDuration, taskLocation);
+			items.add(cell);
 		}
 		listView.setItems(items);
 	}

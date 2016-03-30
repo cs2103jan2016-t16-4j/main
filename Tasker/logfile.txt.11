@@ -1,0 +1,34 @@
+ ----------------------  Start Wed Mar 30 00:09:21 SGT 2016 ---------------------- 
+30.03.2016 12:09:21 - INFO    - application.gui.GUI - start - Initialising GUI
+30.03.2016 12:09:35 - INFO    - application.logic.Parser - interpretCommand - Checking for error in user command: add hello
+30.03.2016 12:09:35 - INFO    - application.logic.Parser - interpretCommand - Splitting command into array of its words
+30.03.2016 12:09:35 - INFO    - application.logic.Parser - interpretCommand - Getting command key word
+30.03.2016 12:09:35 - INFO    - application.logic.Parser - interpretCommand - Converting to command object: add
+30.03.2016 12:09:35 - INFO    - application.logic.Parser - convertToCommand - Making add command object
+30.03.2016 12:09:35 - INFO    - application.logic.Parser - convertToCommand - Returning command object
+30.03.2016 12:09:35 - INFO    - application.logic.Parser - interpretCommand - Returning command object
+30.03.2016 12:09:35 - INFO    - application.logic.Logic - executeCommand - executing above parsed command
+30.03.2016 12:09:35 - INFO    - application.logic.Logic - executeCommand - displaying feedback
+30.03.2016 12:09:35 - INFO    - application.logic.Feedback - display - feedback object using ui to display itself to user
+30.03.2016 12:09:35 - INFO    - application.logic.Logic - executeCommand - saving tasks to file.
+30.03.2016 12:09:47 - INFO    - application.logic.Parser - interpretCommand - Checking for error in user command: update 1 from 5 pm to 6 pm tomorrow
+30.03.2016 12:09:47 - INFO    - application.logic.Parser - interpretCommand - Splitting command into array of its words
+30.03.2016 12:09:47 - INFO    - application.logic.Parser - interpretCommand - Getting command key word
+30.03.2016 12:09:47 - INFO    - application.logic.Parser - interpretCommand - Converting to command object: update
+30.03.2016 12:09:47 - INFO    - application.logic.Parser - convertToCommand - Making update command object
+30.03.2016 12:09:50 - INFO    - application.logic.Parser - convertToCommand - Returning command object
+30.03.2016 12:09:50 - INFO    - application.logic.Parser - interpretCommand - Returning command object
+30.03.2016 12:09:50 - INFO    - application.logic.Logic - executeCommand - executing above parsed command
+30.03.2016 12:09:50 - INFO    - application.logic.Logic - executeCommand - displaying feedback
+30.03.2016 12:09:50 - INFO    - application.logic.Feedback - display - feedback object using ui to display itself to user
+30.03.2016 12:09:50 - INFO    - application.logic.Logic - executeCommand - saving tasks to file.
+30.03.2016 12:09:54 - INFO    - application.logic.Parser - interpretCommand - Checking for error in user command: undo
+30.03.2016 12:09:54 - INFO    - application.logic.Parser - interpretCommand - Splitting command into array of its words
+30.03.2016 12:09:54 - INFO    - application.logic.Parser - interpretCommand - Getting command key word
+30.03.2016 12:09:54 - INFO    - application.logic.Parser - interpretCommand - Converting to command object: undo
+30.03.2016 12:09:54 - INFO    - application.logic.Parser - convertToCommand - Returning command object
+30.03.2016 12:09:54 - INFO    - application.logic.Parser - interpretCommand - Returning command object
+30.03.2016 12:09:54 - INFO    - application.logic.Logic - executeCommand - executing above parsed command
+30.03.2016 12:09:54 - INFO    - application.logic.Logic - executeCommand - displaying feedback
+30.03.2016 12:09:54 - INFO    - application.logic.Feedback - display - feedback object using ui to display itself to user
+30.03.2016 12:09:54 - INFO    - application.logic.Logic - executeCommand - saving tasks to file.

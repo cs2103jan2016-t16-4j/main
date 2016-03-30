@@ -67,6 +67,7 @@ public class Task implements Cloneable {
 		this.endDate.set(Calendar.MINUTE, endTime.get(Calendar.MINUTE));
 		this.endDate.set(Calendar.SECOND, endTime.get(Calendar.SECOND));
 		this.endDate.set(Calendar.MILLISECOND, endTime.get(Calendar.MILLISECOND));
+		System.out.println("\n Test: " + endDate.get(Calendar.SECOND) + endDate.get(Calendar.MILLISECOND));
 	}
 
 	public void setLocation(String location) {

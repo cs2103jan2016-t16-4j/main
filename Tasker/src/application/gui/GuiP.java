@@ -1,6 +1,11 @@
 package application.gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -21,14 +26,19 @@ public class GuiP extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle(WINDOW_TITLE);
-        HBox item = (HBox) FXMLLoader.load(GuiP.class.getResource("ListItem.fxml"));
-        modifyListItem(item);
+        ListItem item = new ListItem(1, "HI" , "28 MAR" , "AT YALE-NUS");
+        //modifyListItem(item);
         System.out.println("HEE");
         //hbox.setLabels(1, "Hello", "", "");
-        AnchorPane page = (AnchorPane) FXMLLoader.load(GuiP.class.getResource("ListView.fxml"));
-        ListView<HBox> list = new ListView<HBox>();
+        OpeningPage page = new OpeningPage();
+        //List<HBox> list = new ArrayList();
+        //list.add(item);
+        //ObservableList obsList = FXCollections.observableArrayList(list);
+        //ListView<String> list2 = (ListView<String>) page.lookup("#displayList");
+        //list2.setItems(obsList);
         //list.getItems().add(item);
-        page.getChildren().add(list);
+        //page.getChildren().add(list);
+        //page.getChildren().add(item);
         Scene scene = new Scene(page);
         primaryStage.setScene(scene);
         primaryStage.setTitle(WINDOW_TITLE);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
@@ -7,26 +8,29 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.gui.ListItem">
+<fx:root style="-fx-border-width: 0;" type="HBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="listNumber" alignment="CENTER" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #A5D6A7; -fx-text-fill: white;" text="1" />
-      <Label fx:id="taskName" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="400.0" text="HELLO" textFill="#757474">
+      <Label fx:id="listNumber" alignment="CENTER" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #A5D6A7; -fx-text-fill: white;" text="1" textFill="WHITE" />
+      <Label fx:id="taskName" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="400.0" style="-fx-background-color: white;" text="HELLO" textFill="#757474">
          <HBox.margin>
             <Insets />
          </HBox.margin>
          <padding>
             <Insets left="5.0" right="5.0" />
          </padding></Label>
-      <Label fx:id="date" alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="300.0" textFill="#868282">
+      <Label fx:id="date" alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: white;" textFill="#868282">
          <padding>
             <Insets left="5.0" right="5.0" />
          </padding>
          <HBox.margin>
             <Insets />
          </HBox.margin></Label>
-      <Label fx:id="location" prefHeight="50.0" prefWidth="300.0" textFill="#868282">
+      <Label fx:id="taskLocation" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: white;" textFill="#868282">
          <padding>
             <Insets left="5.0" right="5.0" />
          </padding></Label>
    </children>
-</HBox>
+   <effect>
+      <DropShadow color="#00000091" offsetY="2.0" />
+   </effect>
+</fx:root>
