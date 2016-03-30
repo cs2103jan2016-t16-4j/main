@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,6 +15,18 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class FileManager {
 	
@@ -63,9 +76,10 @@ public class FileManager {
 		in = new BufferedReader(new FileReader(filePath));
 		// skip first line first
 		readText = in.readLine();
-		Gson gson = new GsonBuilder().create();
+//		Gson gson = new GsonBuilder().create();
+		Gson gsonB = new GsonBuilder().registerTypeAdapter(Task.class, new TaskSerializer()).create();
 		while ((readText = in.readLine()) != null) {
-			Task task = gson.fromJson(readText, Task.class);
+			Task task = gsonB.fromJson(readText, Task.class);	
 			list.add(task);
 		}
 		in.close();
@@ -103,9 +117,10 @@ public class FileManager {
 	
 	private void saveAllTasks(ArrayList<Task> list, String filePath) throws IOException {		
 			PrintWriter fwz = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
-			Gson gson = new Gson();
-			for (int i = 0; i<list.size(); i++){			
-				String json = gson.toJson(list.get(i));
+//			Gson gson = new Gson();
+			Gson gsonB = new GsonBuilder().registerTypeAdapter(Task.class, new TaskSerializer()).create();
+			for (int i = 0; i<list.size(); i++){		
+				String json = gsonB.toJson(list.get(i));
 //				System.out.println(json);
 				fwz.println(json);
 
@@ -172,3 +187,6 @@ public class FileManager {
 	}
 
 }
+
+
+ 

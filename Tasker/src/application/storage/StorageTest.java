@@ -234,7 +234,7 @@ public class StorageTest {
 		}
 	}
 	
-	@Test
+//	@Test
 	public void testString() {
 		Task task = new Task();
 		Calendar date = Calendar.getInstance();
@@ -242,8 +242,8 @@ public class StorageTest {
 		task.setStartDate(noDate);
 		task.setEndDate(date);
 		task.setRemindDate(noDate);
-		task.setStartTime(noTime);
-		task.setEndTime(noTime);
+		task.setStartTime(time1);
+		task.setEndTime(time1);
 		task.setRemindTime(noTime);
 		System.out.println("Start Date : "+task.dateToString(task.getStartDate()));
 		System.out.println("End Date : "+task.dateToString(task.getEndDate()));
@@ -254,7 +254,17 @@ public class StorageTest {
 		System.out.println("Duration : "+task.durationToString());
 	}
 	
-	@After
+	@Test 
+	public void checkCloseList() throws IOException {
+		ArrayList<Task> list = storageController.getCloseList();
+		for (int i = 0; i<list.size(); i++) {
+			System.out.println(list.get(i).toString());
+		}
+	}
+	
+	
+	
+//	@After
 	public void after() {
 		File a = new File(FILE_DIRECTORY_NAME);
 		File b = new File(FILE_CLOSED_NAME);
