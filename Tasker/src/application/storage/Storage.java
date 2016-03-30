@@ -62,6 +62,7 @@ public class Storage implements Cloneable {
 	}
 	
 	public ArrayList<Task> getOpenList() {
+		databaseManager.updateOpenList(taskManager.sortDate(databaseManager.getOpenList()));
 		return databaseManager.getOpenList();
 	}
 	
