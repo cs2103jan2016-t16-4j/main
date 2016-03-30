@@ -66,7 +66,7 @@ public class DoneByName implements UndoableCommand {
     public Feedback undo() throws NothingToUndoException{
         try {
             if (closedTask != null){
-                storage.uncloseTask();
+                storage.uncloseTask(closedTask.getTaskIndex());
                 String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK,closedTask.toString());
                 return new Feedback(feedbackMessage, storage.getOpenList());
             }else{
