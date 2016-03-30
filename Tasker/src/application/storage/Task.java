@@ -151,27 +151,58 @@ public class Task implements Cloneable {
 
 	}
 	
-	public String toString() {
-		String message = "\"";
-		message += this.taskDescription;
-		if (startDate.get(Calendar.YEAR)!=EMPTY) {
-			message += ", from " + FORMAT_DATE.format(startDate.getTime());
-			if (!((startDate.get(Calendar.MILLISECOND)==EMPTY) && (startDate.get(Calendar.HOUR_OF_DAY)==0) && (startDate.get(Calendar.MINUTE)==0) && (startDate.get(Calendar.SECOND)==0))){
-				message += " " + FORMAT_TIME.format(startDate.getTime());
+	public String durationToString() {
+		String message = "";
+		String startingDate = dateToString(startDate);
+		String startingTime = timeToString(startDate);
+		String endingDate = dateToString(endDate);
+		String endingTime = timeToString(endDate);
+		
+		if (!startingDate.equals("")) {
+			message += "from " + startingDate;
+			if (!startingTime.equals("")) {
+				message += " " + startingTime;
 			}
 		}
 		
-		if (startDate.get(Calendar.YEAR)!=EMPTY && endDate.get(Calendar.YEAR)!=EMPTY) {
-			message += " to " + FORMAT_DATE.format(endDate.getTime());
-			if (!(endDate.get(Calendar.MILLISECOND)==EMPTY && endDate.get(Calendar.HOUR_OF_DAY)==0 && endDate.get(Calendar.MINUTE)==0 && endDate.get(Calendar.SECOND)==0)){
-				message += " " + FORMAT_TIME.format(endDate.getTime());
+		if ( (!startingDate.equals("")) && (!endingDate.equals("")) ) {
+			message += " to " + endingDate;
+			if (!endingTime.equals("")) {
+				message += " " + endingTime;
 			}
-		} else if (startDate.get(Calendar.YEAR)==EMPTY && endDate.get(Calendar.YEAR)!=EMPTY) {
-			message += ", by " + FORMAT_DATE.format(endDate.getTime());
-			if (!(startDate.get(Calendar.MILLISECOND)==EMPTY && startDate.get(Calendar.HOUR_OF_DAY)==0 && startDate.get(Calendar.MINUTE)==0 && startDate.get(Calendar.SECOND)==0)){
-				message += " " + FORMAT_TIME.format(endDate.getTime());
+		} else if (startingDate.equals("") && (!endingDate.equals(""))) {
+			message += "by " + endingDate;
+			if (!endingTime.equals("")) {
+				message += " " + endingTime;
 			}
 		}
+		return message;
+//		return ((dateToString(startDate)+ " "+timeToString(startDate)+ " "+dateToString(endDate)+ " "+timeToString(endDate)).trim());
+		
+	}
+	
+	public String toString() {
+		String message = "\"";
+		message += this.taskDescription;
+		message += " " + durationToString();
+//		if (startDate.get(Calendar.YEAR)!=EMPTY) {
+//			message += ", from " + FORMAT_DATE.format(startDate.getTime());
+//			if (!((startDate.get(Calendar.MILLISECOND)==EMPTY) && (startDate.get(Calendar.HOUR_OF_DAY)==0) && (startDate.get(Calendar.MINUTE)==0) && (startDate.get(Calendar.SECOND)==0))){
+//				message += " " + FORMAT_TIME.format(startDate.getTime());
+//			}
+//		}
+//		
+//		if (startDate.get(Calendar.YEAR)!=EMPTY && endDate.get(Calendar.YEAR)!=EMPTY) {
+//			message += " to " + FORMAT_DATE.format(endDate.getTime());
+//			if (!(endDate.get(Calendar.MILLISECOND)==EMPTY && endDate.get(Calendar.HOUR_OF_DAY)==0 && endDate.get(Calendar.MINUTE)==0 && endDate.get(Calendar.SECOND)==0)){
+//				message += " " + FORMAT_TIME.format(endDate.getTime());
+//			}
+//		} else if (startDate.get(Calendar.YEAR)==EMPTY && endDate.get(Calendar.YEAR)!=EMPTY) {
+//			message += ", by " + FORMAT_DATE.format(endDate.getTime());
+//			if (!(startDate.get(Calendar.MILLISECOND)==EMPTY && startDate.get(Calendar.HOUR_OF_DAY)==0 && startDate.get(Calendar.MINUTE)==0 && startDate.get(Calendar.SECOND)==0)){
+//				message += " " + FORMAT_TIME.format(endDate.getTime());
+//			}
+//		}
 		
 		if (!location.equalsIgnoreCase("")) {
 			message += ", at " + location;
