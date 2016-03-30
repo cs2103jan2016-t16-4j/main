@@ -66,6 +66,11 @@ public class Storage implements Cloneable {
 		return databaseManager.getOpenList();
 	}
 	
+	public ArrayList<Task> getCloseList() {
+		databaseManager.updateOpenList(taskManager.sortDate(databaseManager.getCloseList()));
+		return databaseManager.getCloseList();
+	}
+	
 	public boolean initialise() throws IOException {
 		fileManager.loadDirectoryFile();
 		databaseManager.updateClosedList(fileManager.loadFile(fileManager.getClosedFilePath()));
