@@ -41,9 +41,8 @@ public class GuiMain extends Application {
         initializeSaveDirectory(primaryStage);
         OpeningPage page = new OpeningPage(taskList, logic);
         Scene scene = new Scene(page);
-        File f = new File("src/application/gui/application.css");
         scene.getStylesheets().clear();
-        scene.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
+        scene.getStylesheets().add("application/gui/application.css");
         scene.getStylesheets().add(CSS_URL);
         primaryStage.setScene(scene);
         primaryStage.setTitle(WINDOW_TITLE);

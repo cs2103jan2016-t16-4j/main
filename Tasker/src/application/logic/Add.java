@@ -45,6 +45,7 @@ public class Add implements UndoableCommand{
                     ,endDateTime, location, remindDate, priority);
             String feedbackMessage = String.format(MESSAGE_ADD_FEEDBACK, addedTask.toString());
             Feedback feedback = new Feedback(feedbackMessage, storage.getOpenList());
+            System.out.println(feedbackMessage);
             return feedback;
         } catch(IOException e) {
             return new Feedback(MESSAGE_ADD_ERROR, storage.getOpenList());

@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import application.logic.Feedback;
 import application.logic.Logic;
 import application.storage.Task;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -24,15 +26,20 @@ public class OpeningPage extends AnchorPane {
     private static final String SPACE = " ";
     private static final String EMPTY_STRING = "";
     private static final String LOCATION_PREFIX = "AT";
+    private static final String BY = "By ";
     private static final String MESSAGE_HELP_INTRO = "Start typing and we'll help you out!";
     private static final String MESSAGE_FEEDBACK_INTRO = "We'll give you feedback on your commands here.";
-    private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd-MM-yyyy");
-    private static final SimpleDateFormat FORMAT_TIME = new SimpleDateFormat("h:mm a");
-    private static final SimpleDateFormat FORMAT_YEAR = new SimpleDateFormat("yyyy");
-    private static final String EMPTY_DATE = "0001";
-    private static final String DATE_TO_DATE = " to ";
-    private static final String DURATION_SAME_DATE_INFO = "%1$s" + SPACE + "%2$s" + DATE_TO_DATE + "%3$s";
-    private static final String DURATION_DIFF_DATE_INFO = "%1$s" + SPACE + "%2$s" + DATE_TO_DATE + "%3$s" + SPACE + "%4$s";
+   
+    //Messages
+    private static final String ADD_HINT_MESSAGE = "To add: [task description] from [start] to [end] at [location]";
+    private static final String HELP_HINT_MESSAGE = "To get help: help";
+    private static final String DELETE_HINT_MESSAGE = "To delete: delete [task description/number]";
+    private static final String SEARCH_HINT_MESSAGE = "To search: search [task decription/priority [level]/[task description] by [date]]";
+    private static final String EXIT_HINT_MESSAGE = "To exit: exit";
+    private static final String UPDATE_HINT_MESSAGE = "To update: update [task number] [new task desc]";
+    private static final String UNDO_HINT_MESSAGE = "To undo: undo";
+    private static final String STORAGE_HINT_MESSAGE = "To change storage: storage";
+    private static final String DONE_HINT_MESSAGE = "To mark task as complete: done [task number]";
     
     private static final String MESSAGE_ERROR = "There was some problem processing your request. "
             + "Please check your input format.";
@@ -102,7 +109,7 @@ public class OpeningPage extends AnchorPane {
     private ListItem getListItem(int i, Task task) {
         String description = task.getTaskDescription();
         String location = getLocationString(task);
-        String date = getCorrectDateString(task);
+        String date = task.durationToString();
         ListItem item = new ListItem(i, description, date, location);
         return item;
     }
@@ -116,28 +123,8 @@ public class OpeningPage extends AnchorPane {
         }
     }
     
-    private String getCorrectDateString(Task task) {
-        String taskDuration = EMPTY_STRING;
-        if (!FORMAT_YEAR.format(task.getStartDate().getTime()).equals(EMPTY_DATE)) {
-            if (FORMAT_DATE.format(task.getStartDate().getTime())
-                    .equals(FORMAT_DATE.format(task.getEndDate().getTime()))) {
-                taskDuration = String.format(DURATION_SAME_DATE_INFO,
-                        FORMAT_DATE.format(task.getStartDate().getTime()),
-                        FORMAT_TIME.format(task.getStartTime().getTime()),
-                        FORMAT_TIME.format(task.getEndTime().getTime()));
-            } else {
-                taskDuration = String.format(DURATION_DIFF_DATE_INFO,
-                        FORMAT_DATE.format(task.getStartDate().getTime()),
-                        FORMAT_TIME.format(task.getStartTime().getTime()),
-                        FORMAT_DATE.format(task.getEndDate().getTime()),
-                        FORMAT_TIME.format(task.getEndTime().getTime()));
-            }
-        } else {
-            taskDuration = EMPTY_STRING;
-        }
-        return taskDuration;
-    }
-
+    
+    
     public void initializeInputArea(){
         textInputArea.setOnKeyPressed(new EventHandler<KeyEvent>() {
     
@@ -185,7 +172,95 @@ public class OpeningPage extends AnchorPane {
                 }
             }
         });
+        textInputArea.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                getHints(oldValue, newValue, helpLabel);
+            }
+        });
+        
     }
+
+    private void getHints(String oldValue, String newValue, Label helpLabel) {
+        String newLetter = EMPTY_STRING;
+        String oldWord = EMPTY_STRING;
+        String newWord = EMPTY_STRING;
+
+        if (!oldValue.isEmpty() && oldValue != null) {
+            oldWord = getFirstWord(oldValue);
+        }
+        if (!newValue.isEmpty() && newValue != null) {
+            newWord = getFirstWord(newValue);
+            newLetter = getFirstLetter(newValue);
+        }
+
+        if (newWord == null) {
+            return;
+        }
+
+        if (newWord.equals(oldWord)) {
+            return;
+        } else {
+            switch (newLetter.toLowerCase()) {
+            case "a":
+                helpLabel.setText(ADD_HINT_MESSAGE);
+                break;
+            case "h":
+                helpLabel.setText(HELP_HINT_MESSAGE);
+                break;
+            case "d":
+                if (!newValue.isEmpty() && newValue.length() > 1) {
+                    if (getSecondLetter(newValue).equalsIgnoreCase("do")) {
+                        helpLabel.setText(DONE_HINT_MESSAGE);
+                    }
+                } else {
+                    helpLabel.setText(DELETE_HINT_MESSAGE);
+                }
+                break;
+            case "u":
+                if (!newValue.isEmpty() && newValue.length() > 1) {
+                    if (getSecondLetter(newValue).equalsIgnoreCase("un")) {
+                        helpLabel.setText(UNDO_HINT_MESSAGE);
+                    }
+                } else {
+                    helpLabel.setText(UPDATE_HINT_MESSAGE);
+                }
+                break;
+            case "e":
+                helpLabel.setText(EXIT_HINT_MESSAGE);
+                break;
+            case "s":
+                if (!newValue.isEmpty() && newValue.length() > 1) {
+                    if (getSecondLetter(newValue).equalsIgnoreCase("st")) {
+                        helpLabel.setText(STORAGE_HINT_MESSAGE);
+                    }
+                } else {
+                    helpLabel.setText(SEARCH_HINT_MESSAGE);
+                }
+                break;
+            default:
+                helpLabel.setText(ADD_HINT_MESSAGE);
+                break;
+            }
+        }
+    }
+
+    private String getFirstLetter(String input) {
+        String firstLetter = input.substring(0, 1);
+        return firstLetter;
+    }
+
+    private String getFirstWord(String input) {
+        String[] inputArgs = input.trim().split(SPACE);
+        String firstWord = inputArgs[0];
+        return firstWord;
+    }
+
+    private String getSecondLetter(String input) {
+        String secondLetter = input.substring(0, 2);
+        return secondLetter;
+    }
+
 }
 
     
