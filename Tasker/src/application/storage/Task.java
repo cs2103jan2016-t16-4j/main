@@ -14,8 +14,10 @@ public class Task implements Cloneable {
 	private String priority;
 	private int taskIndex;	// to be considered
 	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd-MM-yyyy");
+	private static final SimpleDateFormat FORMAT_DATE1 = new SimpleDateFormat("d MMM yyyy");
 	private static final SimpleDateFormat FORMAT_TIME = new SimpleDateFormat("h:mm a");
     private static final int EMPTY = 1;
+    private static final String EMPTY_STRING = "";
     
 	public Task() {
 		taskDescription = "";
@@ -67,7 +69,6 @@ public class Task implements Cloneable {
 		this.endDate.set(Calendar.MINUTE, endTime.get(Calendar.MINUTE));
 		this.endDate.set(Calendar.SECOND, endTime.get(Calendar.SECOND));
 		this.endDate.set(Calendar.MILLISECOND, endTime.get(Calendar.MILLISECOND));
-		System.out.println("\n Test: " + endDate.get(Calendar.SECOND) + endDate.get(Calendar.MILLISECOND));
 	}
 
 	public void setLocation(String location) {
@@ -133,6 +134,23 @@ public class Task implements Cloneable {
 		return priority;
 	}
 	
+	public String dateToString(Calendar date) {
+		if (date.get(Calendar.YEAR)!=EMPTY) {
+			return FORMAT_DATE1.format(date.getTime());
+		} else {
+			return EMPTY_STRING;
+		}
+	}
+	
+	public String timeToString(Calendar date) {
+		if (!((date.get(Calendar.MILLISECOND)==EMPTY) && (date.get(Calendar.HOUR_OF_DAY)==0) && (date.get(Calendar.MINUTE)==0) && (date.get(Calendar.SECOND)==0))) {
+			return FORMAT_TIME.format(date.getTime());
+		} else {
+			return EMPTY_STRING;
+		}
+
+	}
+	
 	public String toString() {
 		String message = "\"";
 		message += this.taskDescription;
@@ -165,6 +183,11 @@ public class Task implements Cloneable {
 	}
 	
     protected Object clone() throws CloneNotSupportedException {
+//    	Task newTask = (Task) super.clone();
+//    	newTask.startDate = (Calendar) startDate.clone();
+//    	newTask.endDate = (Calendar) endDate.clone();
+//    	newTask.remindDate = (Calendar) remindDate.clone();
+//    	return newTask;
         return super.clone();
     }
 	
