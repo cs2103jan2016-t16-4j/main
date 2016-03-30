@@ -34,6 +34,9 @@ public class OpeningPage extends AnchorPane {
     private static final String DURATION_SAME_DATE_INFO = "%1$s" + SPACE + "%2$s" + DATE_TO_DATE + "%3$s";
     private static final String DURATION_DIFF_DATE_INFO = "%1$s" + SPACE + "%2$s" + DATE_TO_DATE + "%3$s" + SPACE + "%4$s";
     
+    private static final String MESSAGE_ERROR = "There was some problem processing your request. "
+            + "Please check your input format.";
+   
     
     String text = EMPTY_STRING;
     private static ArrayList<String> commands = new ArrayList<String>();
@@ -150,7 +153,7 @@ public class OpeningPage extends AnchorPane {
                         feedbackLabel.setText(feedback.getMessage());
                         textInputArea.clear();
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        feedbackLabel.setText(MESSAGE_ERROR);
                     }
                 }
                 if (ke.getCode().equals(KeyCode.UP)) {
