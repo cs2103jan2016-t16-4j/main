@@ -2,7 +2,9 @@ package application.gui;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 
 /**
  * 
@@ -71,6 +73,12 @@ public class Cell {
 
 		// Add the details to the box for a full task
 		taskBox.getChildren().addAll(taskNumberLabel, taskDescriptionLabel, taskDurationLabel, taskLocationLabel);
+		DropShadow dropShadow = new DropShadow();
+		dropShadow.setRadius(5.0);
+		dropShadow.setOffsetX(3.0);
+		dropShadow.setOffsetY(3.0);
+		dropShadow.setColor(Color.color(0.4, 0.5, 0.5));
+		taskBox.setEffect(dropShadow);
 		taskBox.styleProperty().set(BLACK_BORDER_FX);
 	}
 
