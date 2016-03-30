@@ -108,7 +108,7 @@ public class StorageTest {
 		}
 	}
 	
-	@Test
+//	@Test
 	public void searchByDate() throws IOException {
 		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
 		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
@@ -232,6 +232,26 @@ public class StorageTest {
 		for (int i = 0; i<searchList.size(); i++) {
 			System.out.println("Found : "+searchList.get(i).toString());
 		}
+	}
+	
+	@Test
+	public void testString() {
+		Task task = new Task();
+		Calendar date = Calendar.getInstance();
+		date.set(2030, Calendar.DECEMBER, 25);
+		task.setStartDate(noDate);
+		task.setEndDate(date);
+		task.setRemindDate(noDate);
+		task.setStartTime(noTime);
+		task.setEndTime(noTime);
+		task.setRemindTime(noTime);
+		System.out.println("Start Date : "+task.dateToString(task.getStartDate()));
+		System.out.println("End Date : "+task.dateToString(task.getEndDate()));
+		System.out.println("Remind Date : "+task.dateToString(task.getRemindDate()));
+		System.out.println("Start time : "+task.timeToString(task.getStartDate()));
+		System.out.println("End time : "+task.timeToString(task.getEndDate()));
+		System.out.println("Remind time : "+task.timeToString(task.getRemindDate()));
+		System.out.println("Duration : "+task.durationToString());
 	}
 	
 	@After
