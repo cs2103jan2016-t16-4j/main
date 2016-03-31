@@ -72,17 +72,19 @@ public class FileManager {
 		BufferedReader in;
 		ArrayList<Task> list = new ArrayList<Task>();
 		if (f.exists()) {
-		String readText;
-		in = new BufferedReader(new FileReader(filePath));
-		// skip first line first
-		readText = in.readLine();
-//		Gson gson = new GsonBuilder().create();
-		Gson gsonB = new GsonBuilder().registerTypeAdapter(Task.class, new TaskSerializer()).create();
-		while ((readText = in.readLine()) != null) {
-			Task task = gsonB.fromJson(readText, Task.class);	
-			list.add(task);
-		}
-		in.close();
+			String readText;
+			in = new BufferedReader(new FileReader(filePath));
+			// skip first line first for data file
+			if (filePath.equalsIgnoreCase(dataFilePath)) {
+				readText = in.readLine();
+			}
+			// Gson gson = new GsonBuilder().create();
+			Gson gsonB = new GsonBuilder().registerTypeAdapter(Task.class, new TaskSerializer()).create();
+			while ((readText = in.readLine()) != null) {
+				Task task = gsonB.fromJson(readText, Task.class);
+				list.add(task);
+			}
+			in.close();
 		}
 		return list;
 	}
