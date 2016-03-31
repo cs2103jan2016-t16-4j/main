@@ -84,14 +84,21 @@ public class TaskManager {
 	}
 	
 	public ArrayList<Task> searchName(ArrayList<Task> openList, String searchTask) {
+		String[] splitArray = searchTask.split("\\s+");
 		ArrayList<Task> searchList = new ArrayList<Task>();
 		for (int i = 0; i < openList.size(); i++) {
 			Task obj = openList.get(i);
-			if (obj.getTaskDescription().toLowerCase()
-					.contains(searchTask.toLowerCase())) {
-				searchList.add(obj);
-//				System.out.println("Found a entry..");
+			for (int k = 0; k<splitArray.length; k++) {
+				if (obj.getTaskDescription().toLowerCase().contains(splitArray[k].toLowerCase())) {
+					searchList.add(obj);
+					break;
+				}
 			}
+//				if (obj.getTaskDescription().toLowerCase()
+//						.contains(searchTask.toLowerCase())) {
+//					searchList.add(obj);
+////					System.out.println("Found a entry..");
+//			}
 		}
 
 		return searchList;
