@@ -159,9 +159,18 @@ public class Task implements Cloneable {
 		String endingTime = timeToString(endDate);
 		
 		if (!startingDate.equals("")) {
-			message += "from " + startingDate;
+			message += startingDate;
 			if (!startingTime.equals("")) {
 				message += " " + startingTime;
+			}
+			if (startingDate.equalsIgnoreCase(endingDate)) {
+				if (startingTime.equals("")) {
+					message += endingTime;
+				}
+				else if (!endingTime.equals("") && !startingTime.equals("")) {
+					message += " to " + endingTime;
+				}
+				return message;
 			}
 		}
 		
