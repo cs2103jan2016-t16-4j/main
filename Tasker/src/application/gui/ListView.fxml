@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<fx:root prefHeight="750.0" prefWidth="1107.0" type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1107.0" type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ListView fx:id="displayList" layoutX="24.0" layoutY="169.0" prefHeight="582.0" prefWidth="1060.0" />
       <Rectangle arcHeight="5.0" fill="WHITE" height="582.0" layoutY="168.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="25.0" />
