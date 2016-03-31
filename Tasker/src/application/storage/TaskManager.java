@@ -199,6 +199,8 @@ public class TaskManager {
 		if (endDate.get(Calendar.YEAR)!=EMPTY) {
 			openList.get(index).setEndDate(endDate);
 			openList.get(index).setStartDate(startDate);
+			openList.get(index).setEndTime(endDate);
+			openList.get(index).setStartTime(startDate);
 		}
 		if (!(endDate.get(Calendar.MILLISECOND)==EMPTY && endDate.get(Calendar.HOUR_OF_DAY)==0 && endDate.get(Calendar.MINUTE)==0 && endDate.get(Calendar.SECOND)==0)) {
 			openList.get(index).setEndTime(endDate);
