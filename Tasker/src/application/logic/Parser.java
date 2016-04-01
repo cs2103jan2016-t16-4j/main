@@ -26,7 +26,7 @@ public class Parser {
 	private static final String KEYWORD_ADD = "add";
 	private static final String KEYWORD_SEARCH = "search";
 	private static final String KEYWORD_HOME = "home";
-    private static final String KEYWORD_DELETE = "delete";
+	private static final String KEYWORD_DELETE = "delete";
 	private static final String KEYWORD_UPDATE = "update";
 	private static final String KEYWORD_DONE = "done";
 	private static final String KEYWORD_UNDO = "undo";
@@ -40,10 +40,9 @@ public class Parser {
 	private static final int DATE_POS = 1;
 	private static final int LOC_POS = 2;
 	private static final int ARRAY_INDEXING_OFFSET = 1;
-	
+
 	private static final boolean WITH_KEYWORD = true; // For add function. Since
 														// we accept no keyword.
-    
 
 	private static Logger logger = Logger.getLogger(LOGGER_NAME);
 
@@ -79,10 +78,9 @@ public class Parser {
 			break;
 
 		case KEYWORD_HOME:
-		    command = processHomeInput(args);
-		    break;
-            
-			
+			command = processHomeInput(args);
+			break;
+
 		case KEYWORD_DELETE:
 			logger.info("Making delete command object");
 			command = initializeDelete(args);
@@ -97,16 +95,16 @@ public class Parser {
 			logger.info("Making done command object");
 			command = initializeDone(args);
 			break;
-		
-		case KEYWORD_UNDO : 
-		    command = initializeUndo(); 
-		    break;
-		/* 
+
+		case KEYWORD_UNDO:
+			command = initializeUndo();
+			break;
+		/*
 		 * case KEYWORD_HELP : command = initializeHelp(); break;
 		 */
-//		case KEYWORD_STORAGE:
-//			command = initializeStorageLocation();
-//			break;
+		case KEYWORD_STORAGE:
+			command = initializeStorageLocation(args);
+			break;
 
 		case KEYWORD_EXIT:
 			logger.info("Making exit command object");
@@ -123,17 +121,17 @@ public class Parser {
 
 	}
 
-    private Command processHomeInput(String[] args) throws NoDescriptionException {
-        Command command;
-        if (args.length == 1){
-            logger.info("Making home command object");
-            command = initializeHome();
-        } else{
-            logger.info("Making add command object");
-            command = initializeAdd(args, !WITH_KEYWORD);
-        }
-        return command;
-    }
+	private Command processHomeInput(String[] args) throws NoDescriptionException {
+		Command command;
+		if (args.length == 1) {
+			logger.info("Making home command object");
+			command = initializeHome();
+		} else {
+			logger.info("Making add command object");
+			command = initializeAdd(args, !WITH_KEYWORD);
+		}
+		return command;
+	}
 
 	private Command initializeAdd(String[] args, boolean isWithKeyWord) throws NoDescriptionException {
 		args = removeKeyWordIfReq(args, isWithKeyWord);
@@ -142,19 +140,19 @@ public class Parser {
 		String[] segments = getSegments(dateStartIndex, locationStartIndex, args);
 		Calendar[] dates = parseDates(segments);
 		if (segments[DESC_POS].equals(EMPTY)) {
-            throw new NoDescriptionException();
-        }
-        Calendar remindDate = convertToCalendar(createEmptyDate());
+			throw new NoDescriptionException();
+		}
+		Calendar remindDate = convertToCalendar(createEmptyDate());
 		Command command = new Add(segments[DESC_POS], dates[0], dates[1], segments[LOC_POS], remindDate);
 		return command;
 	}
 
-    private String[] removeKeyWordIfReq(String[] args, boolean isWithKeyWord) {
-        if (isWithKeyWord) {
+	private String[] removeKeyWordIfReq(String[] args, boolean isWithKeyWord) {
+		if (isWithKeyWord) {
 			return (String[]) ArrayUtils.remove(args, 0);
 		}
-        return args;
-    }
+		return args;
+	}
 
 	private Command initializeSearch(String[] args) {
 		args = (String[]) ArrayUtils.remove(args, 0);
@@ -162,9 +160,9 @@ public class Parser {
 		System.out.println("Search initialised");
 		return command;
 	}
-	
-	private Command initializeHome(){
-	    return new Home();
+
+	private Command initializeHome() {
+		return new Home();
 	}
 
 	private Command initializeDelete(String[] args) {
@@ -199,92 +197,94 @@ public class Parser {
 		}
 	}
 
-	private Command initializeUndo(){ 
-	    Command command = new Undo (); 
-	    return command; 
+	private Command initializeUndo() {
+		Command command = new Undo();
+		return command;
 	}
-	
-	/* private Command initializeHelp(){ Command command = new Help (); return
+
+	/*
+	 * private Command initializeHelp(){ Command command = new Help (); return
 	 * command; }
 	 */
-	
-	
+
 	// Requests the logic to call for new storage location from the GUI then
 	// sends the data to Storage
-//	private Command initializeStorageLocation() {
-//		String args = logic.promptNewStorage();
-//		Command command = new ChangeStorageLocation(args);
-//		return command;
-//	}
+	private Command initializeStorageLocation(String[] args) {
+		Command command = null;
+		if (args.length == 2) {
+			command = new ChangeStorageLocation(args[1]);
+		} else {
+			command = new ChangeStorageLocation("");
+		}
+		return command;
+	}
 
 	private Command initializeExit() {
 		Command command = new Exit();
 		return command;
 	}
 
-	private Command getAppropSearchCommand(String[] args){
-	    try{
-	        return getSearchCommand(args);
-	    }catch(NotDateException e){
-	        return getSearchByName(args);
-	    }
-	    
+	private Command getAppropSearchCommand(String[] args) {
+		try {
+			return getSearchCommand(args);
+		} catch (NotDateException e) {
+			return getSearchByName(args);
+		}
+
 	}
 
-    private Command getSearchCommand(String[] args) throws NotDateException {
-        String[] argsForDate = (String[]) ArrayUtils.remove(args, 0);
-        if (args[0].equalsIgnoreCase("by")){
-	        return getSearchByDateCommand(argsForDate);
-	    }else if (args[0].equalsIgnoreCase("on")){
-	        return getSearchOnDateCommand(argsForDate);
-        }else{
-            return getSearchByName(args);
-        }
-    }
-    
-    private Command getSearchByName(String[] args){
-        String taskName = getString(args, 0, args.length - 1);
-        Command cmd = new SearchByName(taskName);
-        return cmd;
-    }
-    
-    private Command getSearchOnDateCommand(String[] args) throws NotDateException{
-        Calendar date = getDateForSearch(args);
-        Command cmd = new SearchOnDate(date);
-        return cmd;
-    }
+	private Command getSearchCommand(String[] args) throws NotDateException {
+		String[] argsForDate = (String[]) ArrayUtils.remove(args, 0);
+		if (args[0].equalsIgnoreCase("by")) {
+			return getSearchByDateCommand(argsForDate);
+		} else if (args[0].equalsIgnoreCase("on")) {
+			return getSearchOnDateCommand(argsForDate);
+		} else {
+			return getSearchByName(args);
+		}
+	}
 
-    
-    private Command getSearchByDateCommand(String[] args) throws NotDateException{
-        Calendar date = getDateForSearch(args);
-        Command cmd = new SearchByDate(date);
-        return cmd;
-    }
+	private Command getSearchByName(String[] args) {
+		String taskName = getString(args, 0, args.length - 1);
+		Command cmd = new SearchByName(taskName);
+		return cmd;
+	}
 
-    private Calendar getDateForSearch(String[] args) throws NotDateException {
-        String dateString = getString(args, 0, args.length - 1);
-        List<Date> dates1 = dateParser.parse(dateString);
-        List<Date> dates2 = dateParser.parse(dateString);
-        if (dates1.size() == 0){
-            throw new NotDateException();
-        }
-        LocalDateTime date = fixDateForSearch(dates1.get(0), dates2.get(0));
-        return convertToCalendar(date);
-    }
-	
-    private LocalDateTime fixDateForSearch(Date date1, Date date2) {
-        if (date1.equals(date2)) {
-            return new LocalDateTime(date1);
-        } else {
-            LocalDateTime date = new LocalDateTime(date1);
-            date = date.withHourOfDay(23);
-            date = date.withMinuteOfHour(59);
-            date = date.withSecondOfMinute(59);
-            return date;
-        }
-    }
+	private Command getSearchOnDateCommand(String[] args) throws NotDateException {
+		Calendar date = getDateForSearch(args);
+		Command cmd = new SearchOnDate(date);
+		return cmd;
+	}
 
-    
+	private Command getSearchByDateCommand(String[] args) throws NotDateException {
+		Calendar date = getDateForSearch(args);
+		Command cmd = new SearchByDate(date);
+		return cmd;
+	}
+
+	private Calendar getDateForSearch(String[] args) throws NotDateException {
+		String dateString = getString(args, 0, args.length - 1);
+		List<Date> dates1 = dateParser.parse(dateString);
+		List<Date> dates2 = dateParser.parse(dateString);
+		if (dates1.size() == 0) {
+			throw new NotDateException();
+		}
+		LocalDateTime date = fixDateForSearch(dates1.get(0), dates2.get(0));
+		return convertToCalendar(date);
+	}
+
+	private LocalDateTime fixDateForSearch(Date date1, Date date2) {
+		if (date1.equals(date2)) {
+			return new LocalDateTime(date1);
+		} else {
+			LocalDateTime date = new LocalDateTime(date1);
+			date = date.withHourOfDay(23);
+			date = date.withMinuteOfHour(59);
+			date = date.withSecondOfMinute(59);
+			return date;
+		}
+	}
+
 	private Command getAppropDeleteCommand(String[] args) {
 		if (args.length == 1) {
 			int index = Integer.parseInt(args[0]) - ARRAY_INDEXING_OFFSET;
@@ -302,9 +302,7 @@ public class Parser {
 	}
 
 	private Command getAppropDoneCommand(String[] args) {
-		if (args.length == 0){
-		    return new ShowDoneTasks();
-		}else if (args.length == 1) {
+		if (args.length == 1) {
 			int index = Integer.parseInt(args[0]) - ARRAY_INDEXING_OFFSET;
 			Command command = new DoneByNum(index);
 			return command;
@@ -320,7 +318,7 @@ public class Parser {
 	}
 
 	private Calendar[] parseDates(String[] segments) {
-	    String dateString = segments[DATE_POS];
+		String dateString = segments[DATE_POS];
 		List<Date> tempDates1 = dateParser.parse(dateString);
 		List<Date> tempDates2 = dateParser.parse(dateString);
 		changeSegmentsIfNeeded(segments, tempDates1.size());
@@ -332,13 +330,13 @@ public class Parser {
 		return dates;
 	}
 
-	private void changeSegmentsIfNeeded(String[] segments, int size){
-	    if (size == 0){
-	        segments[DESC_POS] = segments[DESC_POS].trim() + " " + segments[DATE_POS];
-	        segments[DESC_POS] = segments[DESC_POS].trim();
-	    }
+	private void changeSegmentsIfNeeded(String[] segments, int size) {
+		if (size == 0) {
+			segments[DESC_POS] = segments[DESC_POS].trim() + " " + segments[DATE_POS];
+			segments[DESC_POS] = segments[DESC_POS].trim();
+		}
 	}
-	
+
 	private Calendar getStartDate(List<Date> tempDates1, List<Date> tempDates2) {
 		LocalDateTime date;
 		if (tempDates1.size() == 0) {
