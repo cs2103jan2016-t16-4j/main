@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class DatabaseManager {
 	private int taskIndex = 0;
-	private ArrayList<Task> closedList = new ArrayList<Task>();
+	private ArrayList<Task> closeList = new ArrayList<Task>();
 	private ArrayList<Task> openList = new ArrayList<Task>();
 	
 	public ArrayList<Task> getCloseList() {
-		return closedList;
+		return closeList;
 	}
 	
 	public ArrayList<Task> getOpenList() {
@@ -23,8 +23,8 @@ public class DatabaseManager {
 		taskIndex = i;
 	}
 	
-	public void updateClosedList(ArrayList<Task> closedList) {
-		this.closedList = closedList;
+	public void updateCloseList(ArrayList<Task> closeList) {
+		this.closeList = closeList;
 	}
 	
 	public void updateOpenList(ArrayList<Task> openList) {

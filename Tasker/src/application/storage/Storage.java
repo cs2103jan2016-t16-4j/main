@@ -6,8 +6,10 @@ import java.util.ArrayList;
 
 public class Storage implements Cloneable {
 
+	private static final int UPDATED_CLOSE_LIST = 0;
+	private static final int UPDATED_DATE_LIST = 1;
 	private DatabaseManager databaseManager;
-	public FileManager fileManager;
+	private FileManager fileManager;
 	private TaskManager taskManager;
 
 	public Storage() {
@@ -30,16 +32,16 @@ public class Storage implements Cloneable {
 	
 	public Task closeTask(int index) throws IOException {
 		ArrayList<ArrayList<Task>> lists = taskManager.close(databaseManager.getCloseList(), databaseManager.getOpenList(), index);
-		databaseManager.updateClosedList(lists.get(0));
-		databaseManager.updateOpenList(lists.get(1));
+		databaseManager.updateCloseList(lists.get(UPDATED_CLOSE_LIST));
+		databaseManager.updateOpenList(lists.get(UPDATED_DATE_LIST));
 		saveFile();
 		return databaseManager.getCloseList().get((databaseManager.getCloseList().size())-1);
 	}
 	
 	public Task uncloseTask(int index) throws IOException {
 		ArrayList<ArrayList<Task>> lists = taskManager.unclose(databaseManager.getCloseList(), databaseManager.getOpenList(), index);
-		databaseManager.updateClosedList(lists.get(0));
-		databaseManager.updateOpenList(lists.get(1));
+		databaseManager.updateCloseList(lists.get(UPDATED_CLOSE_LIST));
+		databaseManager.updateOpenList(lists.get(UPDATED_DATE_LIST));
 		saveFile();
 		return databaseManager.getOpenList().get((databaseManager.getOpenList().size())-1);
 	}	
@@ -67,13 +69,13 @@ public class Storage implements Cloneable {
 	}
 	
 	public ArrayList<Task> getCloseList() {
-		databaseManager.updateClosedList(taskManager.sortDate(databaseManager.getCloseList()));
+		databaseManager.updateCloseList(taskManager.sortDate(databaseManager.getCloseList()));
 		return databaseManager.getCloseList();
 	}
 	
 	public boolean initialise() throws IOException {
 		fileManager.loadDirectoryFile();
-		databaseManager.updateClosedList(fileManager.loadFile(fileManager.getClosedFilePath()));
+		databaseManager.updateCloseList(fileManager.loadFile(fileManager.getClosedFilePath()));
 		databaseManager.updateOpenList(fileManager.loadFile(fileManager.getDataFilePath()));
 		databaseManager.setTaskIndex(fileManager.loadTaskIndex());
 		return true;
@@ -127,16 +129,12 @@ public class Storage implements Cloneable {
 		ArrayList<Task> list = new ArrayList<Task>();
 		
 		// add original/old task 
-		int taskindex = -1;
+		int taskIndex = -1;
 		for (int i = 0; i<databaseManager.getOpenList().size(); i++) {
 			if (databaseManager.getOpenList().get(i).getTaskIndex()==index) {
-				taskindex = i;
-				Task newTask1 = (Task) databaseManager.getOpenList().get(i).clone();
-				Calendar newStartDate1 = (Calendar) databaseManager.getOpenList().get(i).getStartDate().clone();
-				Calendar newEndDate1 = (Calendar) databaseManager.getOpenList().get(i).getEndDate().clone();
-				Calendar newRemindDate1 = (Calendar) databaseManager.getOpenList().get(i).getRemindDate().clone();
-				newTask1 = new Task(newTask1.getTaskDescription(), newStartDate1, newEndDate1, newTask1.getLocation(), newRemindDate1, newTask1.getPriority(), newTask1.getTaskIndex());
-				list.add(newTask1);
+				taskIndex = i;
+				Task originalTask = (Task) databaseManager.getOpenList().get(i).clone();
+				list.add(originalTask);
 				break;
 			}
 		}
@@ -145,12 +143,8 @@ public class Storage implements Cloneable {
 		databaseManager.updateOpenList(taskManager.update(
 				databaseManager.getOpenList(), taskDescription, startDate,
 				endDate, location, remindDate, priority, index));
-		Task newTask2 = (Task) databaseManager.getOpenList().get(taskindex).clone();
-		Calendar newStartDate2 = (Calendar) databaseManager.getOpenList().get(taskindex).getStartDate().clone();
-		Calendar newEndDate2 = (Calendar) databaseManager.getOpenList().get(taskindex).getEndDate().clone();
-		Calendar newRemindDate2 = (Calendar) databaseManager.getOpenList().get(taskindex).getRemindDate().clone();
-		newTask2 = new Task(newTask2.getTaskDescription(), newStartDate2, newEndDate2, newTask2.getLocation(), newRemindDate2, newTask2.getPriority(), newTask2.getTaskIndex());
-		list.add(newTask2);
+		Task updatedTask = (Task) databaseManager.getOpenList().get(taskIndex).clone();
+		list.add(updatedTask);
 		
 		saveFile();
 		return list;

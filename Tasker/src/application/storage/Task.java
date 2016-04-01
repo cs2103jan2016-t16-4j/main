@@ -2,8 +2,6 @@ package application.storage;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-//package application.storage;
-
 public class Task implements Cloneable {
 
 	private String taskDescription;
@@ -12,9 +10,8 @@ public class Task implements Cloneable {
 	private String location;
 	private Calendar remindDate;
 	private String priority;
-	private int taskIndex;	// to be considered
-	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd-MM-yyyy");
-	private static final SimpleDateFormat FORMAT_DATE1 = new SimpleDateFormat("d MMM yyyy");
+	private int taskIndex;
+	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("d MMM yyyy");
 	private static final SimpleDateFormat FORMAT_TIME = new SimpleDateFormat("h:mm a");
     private static final int EMPTY = 1;
     private static final String EMPTY_STRING = "";
@@ -50,10 +47,6 @@ public class Task implements Cloneable {
 	}
 	
 	public void setStartTime(Calendar startTime) {
-//		System.out.println("Hour is now : "+startTime.get(Calendar.HOUR_OF_DAY));
-//		System.out.println("Minute is now : "+startTime.get(Calendar.MINUTE));
-//		System.out.println("Second is now : "+startTime.get(Calendar.SECOND));
-//		System.out.println("Millisecond is now : "+startTime.get(Calendar.MILLISECOND));
 	    this.startDate.set(Calendar.HOUR_OF_DAY, startTime.get(Calendar.HOUR_OF_DAY));
 		this.startDate.set(Calendar.MINUTE, startTime.get(Calendar.MINUTE));
 	    this.startDate.set(Calendar.SECOND, startTime.get(Calendar.SECOND));
@@ -136,7 +129,7 @@ public class Task implements Cloneable {
 	
 	public String dateToString(Calendar date) {
 		if (date.get(Calendar.YEAR)!=EMPTY) {
-			return FORMAT_DATE1.format(date.getTime());
+			return FORMAT_DATE.format(date.getTime());
 		} else {
 			return EMPTY_STRING;
 		}
@@ -157,12 +150,12 @@ public class Task implements Cloneable {
 		String startingTime = timeToString(startDate);
 		String endingDate = dateToString(endDate);
 		String endingTime = timeToString(endDate);
-		
+		// display start date, if exist
 		if (!startingDate.equals("")) {
 			message += startingDate;
 			if (!startingTime.equals("")) {
 				message += " " + startingTime;
-			}
+			} // if start date and end date is same, display 1 date + both time only
 			if (startingDate.equalsIgnoreCase(endingDate)) {
 				if (startingTime.equals("")) {
 					message += endingTime;
@@ -173,45 +166,25 @@ public class Task implements Cloneable {
 				return message;
 			}
 		}
-		
+		// display start date and end date, if both exist
 		if ( (!startingDate.equals("")) && (!endingDate.equals("")) ) {
 			message += " to " + endingDate;
 			if (!endingTime.equals("")) {
 				message += " " + endingTime;
-			}
+			} // display end date, if exist
 		} else if (startingDate.equals("") && (!endingDate.equals(""))) {
 			message += "by " + endingDate;
 			if (!endingTime.equals("")) {
 				message += " " + endingTime;
 			}
 		}
-		return message;
-//		return ((dateToString(startDate)+ " "+timeToString(startDate)+ " "+dateToString(endDate)+ " "+timeToString(endDate)).trim());
-		
+		return message;		
 	}
 	
 	public String toString() {
 		String message = "\"";
 		message += this.taskDescription;
 		message += " " + durationToString();
-//		if (startDate.get(Calendar.YEAR)!=EMPTY) {
-//			message += ", from " + FORMAT_DATE.format(startDate.getTime());
-//			if (!((startDate.get(Calendar.MILLISECOND)==EMPTY) && (startDate.get(Calendar.HOUR_OF_DAY)==0) && (startDate.get(Calendar.MINUTE)==0) && (startDate.get(Calendar.SECOND)==0))){
-//				message += " " + FORMAT_TIME.format(startDate.getTime());
-//			}
-//		}
-//		
-//		if (startDate.get(Calendar.YEAR)!=EMPTY && endDate.get(Calendar.YEAR)!=EMPTY) {
-//			message += " to " + FORMAT_DATE.format(endDate.getTime());
-//			if (!(endDate.get(Calendar.MILLISECOND)==EMPTY && endDate.get(Calendar.HOUR_OF_DAY)==0 && endDate.get(Calendar.MINUTE)==0 && endDate.get(Calendar.SECOND)==0)){
-//				message += " " + FORMAT_TIME.format(endDate.getTime());
-//			}
-//		} else if (startDate.get(Calendar.YEAR)==EMPTY && endDate.get(Calendar.YEAR)!=EMPTY) {
-//			message += ", by " + FORMAT_DATE.format(endDate.getTime());
-//			if (!(startDate.get(Calendar.MILLISECOND)==EMPTY && startDate.get(Calendar.HOUR_OF_DAY)==0 && startDate.get(Calendar.MINUTE)==0 && startDate.get(Calendar.SECOND)==0)){
-//				message += " " + FORMAT_TIME.format(endDate.getTime());
-//			}
-//		}
 		
 		if (!location.equalsIgnoreCase("")) {
 			message += ", at " + location;
@@ -223,12 +196,12 @@ public class Task implements Cloneable {
 	}
 	
     protected Object clone() throws CloneNotSupportedException {
-//    	Task newTask = (Task) super.clone();
-//    	newTask.startDate = (Calendar) startDate.clone();
-//    	newTask.endDate = (Calendar) endDate.clone();
-//    	newTask.remindDate = (Calendar) remindDate.clone();
-//    	return newTask;
-        return super.clone();
+    	Task newTask = (Task) super.clone();
+    	newTask.startDate = (Calendar) startDate.clone();
+    	newTask.endDate = (Calendar) endDate.clone();
+    	newTask.remindDate = (Calendar) remindDate.clone();
+    	return newTask;
+//        return super.clone();
     }
 	
 }

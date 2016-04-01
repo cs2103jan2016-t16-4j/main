@@ -2,7 +2,6 @@ package application.storage;
 
 import java.lang.reflect.Type;
 import java.util.Calendar;
-
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -41,7 +40,6 @@ public class TaskSerializer implements JsonSerializer<Task>, JsonDeserializer<Ta
        object.addProperty("taskIndex", src.getTaskIndex());
        
        return object;
-//		return new JsonPrimitive(src.getTimeInMillis());
 	}
 
 	@Override

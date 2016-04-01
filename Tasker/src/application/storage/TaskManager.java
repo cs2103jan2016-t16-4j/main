@@ -1,5 +1,5 @@
 package application.storage;
-import java.io.IOException;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -94,13 +94,7 @@ public class TaskManager {
 					break;
 				}
 			}
-//				if (obj.getTaskDescription().toLowerCase()
-//						.contains(searchTask.toLowerCase())) {
-//					searchList.add(obj);
-////					System.out.println("Found a entry..");
-//			}
 		}
-
 		return searchList;
 	}
 	
@@ -121,9 +115,6 @@ public class TaskManager {
 		ArrayList<Task> searchList = new ArrayList<Task>();
 		for (int i = 0; i < openList.size(); i++) {
 			Task obj = openList.get(i);
-//			System.out.println("Start date : "+FORMAT_DATE.format((obj.getStartDate().getTime())));
-//			System.out.println("End date : "+FORMAT_DATE.format((obj.getEndDate().getTime())));
-//			System.out.println("Search date : "+FORMAT_DATE.format((searchDate.getTime())));
 			if (obj.getStartDate().get(Calendar.YEAR) != EMPTY) {
 				if (obj.getStartDate().get(Calendar.YEAR) == searchDate.get(Calendar.YEAR)
 						&& obj.getStartDate().get(Calendar.MONTH) == searchDate.get(Calendar.MONTH)
@@ -221,7 +212,6 @@ public class TaskManager {
 		
 		// return updated list
 		return openList;
-
 	}
 }
 
