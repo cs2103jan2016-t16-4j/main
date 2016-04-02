@@ -139,10 +139,6 @@ public class Logic {
 		//storage.saveFile();
 		return feedback;
 	}
-	
-	public String promptNewStorage(){
-		return null;
-	}
 
 
 }

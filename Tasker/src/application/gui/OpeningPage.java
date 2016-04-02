@@ -1,5 +1,6 @@
 package application.gui;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,14 +22,17 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 
 public class OpeningPage extends AnchorPane {
 	private static final String SPACE = " ";
 	private static final String EMPTY_STRING = "";
 	private static final String LOCATION_PREFIX = "AT";
 	private static final String BY = "By ";
-	private static final String MESSAGE_HELP_INTRO = "Start typing and we'll help you out!";
-	private static final String MESSAGE_FEEDBACK_INTRO = "We'll give you feedback on your commands here.";
+	private static final String BACKSLASH = "\\";
+	private static final String DIRECTORY_CHOOSER_TITLE = "Pick Where To Store Tasks";
+	private static final String CURRENT_DIRECTORY = "user.dir";
 
 	// Messages
 	private static final String ADD_HINT_MESSAGE = "To add: [task description] from [start] to [end] at [location]";
@@ -40,6 +44,9 @@ public class OpeningPage extends AnchorPane {
 	private static final String UNDO_HINT_MESSAGE = "To undo: undo";
 	private static final String STORAGE_HINT_MESSAGE = "To change storage: storage";
 	private static final String DONE_HINT_MESSAGE = "To mark task as complete: done [task number]";
+	private static final String MESSAGE_STORAGE_URL_NOT_FOUND = "Storage Location Invalid: Opening Directory Chooser";
+	private static final String MESSAGE_HELP_INTRO = "Start typing and we'll help you out!";
+	private static final String MESSAGE_FEEDBACK_INTRO = "We'll give you feedback on your commands here.";
 
 	private static final String MESSAGE_ERROR = "There was some problem processing your request. "
 			+ "Please check your input format.";
@@ -131,6 +138,12 @@ public class OpeningPage extends AnchorPane {
 						tasksOnScreen = feedback.getTasks();
 						updateListView(tasksOnScreen);
 						feedbackLabel.setText(feedback.getMessage());
+						if (feedback.getMessage().equals(MESSAGE_STORAGE_URL_NOT_FOUND)) {
+							DirectoryChooser dirChooser = new DirectoryChooser();
+							configureDirectoryChooser(dirChooser);
+							Stage stage = new Stage();
+							directoryPrompt(stage, dirChooser);
+						}
 						textInputArea.clear();
 					} catch (Exception e) {
 						feedbackLabel.setText(MESSAGE_ERROR);
@@ -172,6 +185,22 @@ public class OpeningPage extends AnchorPane {
 			}
 		});
 
+	}
+
+	public void directoryPrompt(Stage primaryStage, DirectoryChooser dirChooser) throws IOException {
+		final File selectedDirectory = dirChooser.showDialog(primaryStage);
+		if (selectedDirectory != null) {
+			logic.setDirectory(selectedDirectory.getPath().toString() + BACKSLASH);
+			feedbackLabel.setText("Directory Changed: " + selectedDirectory.getPath().toString() + BACKSLASH);
+		} else {
+			logic.setDirectory(EMPTY_STRING);
+			feedbackLabel.setText("Directory Not Changed!");
+		}
+	}
+
+	private void configureDirectoryChooser(final DirectoryChooser dirChooser) {
+		dirChooser.setTitle(DIRECTORY_CHOOSER_TITLE);
+		dirChooser.setInitialDirectory(new File(System.getProperty(CURRENT_DIRECTORY)));
 	}
 
 	private void getHints(String oldValue, String newValue, Label helpLabel) {
@@ -254,19 +283,20 @@ public class OpeningPage extends AnchorPane {
 				break;
 			case "s":
 				if (!newValue.isEmpty() && newValue.length() > 1) {
-					if (getSecondLetter(newValue).equalsIgnoreCase("st")) {
-						helpLabel.setText(STORAGE_HINT_MESSAGE);
-						if (!newValue.isEmpty() && newValue.length() >= 7) {
-							if (!newWord.equalsIgnoreCase("storage")) {
+					if (getSecondLetter(newValue).equalsIgnoreCase("se")) {
+						helpLabel.setText(SEARCH_HINT_MESSAGE);
+						if (!newValue.isEmpty() && newValue.length() >= 6) {
+							if (!newWord.equalsIgnoreCase("search")) {
 								helpLabel.setText(ADD_HINT_MESSAGE);
 							}
 						}
 					}
 				} else {
-					helpLabel.setText(SEARCH_HINT_MESSAGE);
+					helpLabel.setText(STORAGE_HINT_MESSAGE);
+
 				}
-				if (!newValue.isEmpty() && newValue.length() >= 6) {
-					if (!newWord.equalsIgnoreCase("search")) {
+				if (!newValue.isEmpty() && newValue.length() >= 7) {
+					if (!newWord.equalsIgnoreCase("storage")) {
 						helpLabel.setText(ADD_HINT_MESSAGE);
 					}
 				}
@@ -291,11 +321,6 @@ public class OpeningPage extends AnchorPane {
 
 	private String getSecondLetter(String input) {
 		String secondLetter = input.substring(0, 2);
-		return secondLetter;
-	}
-
-	private String getThirdLetter(String input) {
-		String secondLetter = input.substring(0, 3);
 		return secondLetter;
 	}
 
