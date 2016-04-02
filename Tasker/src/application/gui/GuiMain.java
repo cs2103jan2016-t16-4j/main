@@ -11,6 +11,7 @@ import application.logic.Logic;
 import application.storage.Task;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
@@ -20,6 +21,7 @@ public class GuiMain extends Application {
 	private static final String SPACE = "\\s+";
 	private static final String BACKSLASH = "\\";
 	private static final String CSS_URL = "application/gui/files/stylesheet.css";
+	private static final String LOGO_URL = "robot.jpg";
 
 	private static final String DIRECTORY_CHOOSER_TITLE = "Pick Where To Store Tasks";
 	private static final String CURRENT_DIRECTORY = "user.dir";
@@ -44,8 +46,22 @@ public class GuiMain extends Application {
 		scene.getStylesheets().add("application/gui/application.css");
 		scene.getStylesheets().add(CSS_URL);
 		primaryStage.setScene(scene);
-		primaryStage.setTitle(WINDOW_TITLE);
+		customiseGUIMenuBar(primaryStage);
 		primaryStage.show();
+	}
+
+	private void customiseGUIMenuBar(Stage primaryStage) {
+		setProgramName(primaryStage);
+		setProgramLogo(primaryStage);
+	}
+
+	private void setProgramName(Stage primaryStage) {
+		primaryStage.setTitle(WINDOW_TITLE);
+	}
+
+	private void setProgramLogo(Stage primaryStage) {
+
+		primaryStage.getIcons().add(new Image(ResourceLoader.load(LOGO_URL)));
 	}
 
 	private void setEnvironment() {
