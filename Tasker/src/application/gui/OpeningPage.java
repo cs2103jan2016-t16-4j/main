@@ -16,6 +16,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -24,6 +25,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class OpeningPage extends AnchorPane {
 	private static final String SPACE = " ";
@@ -33,6 +35,7 @@ public class OpeningPage extends AnchorPane {
 	private static final String BACKSLASH = "\\";
 	private static final String DIRECTORY_CHOOSER_TITLE = "Pick Where To Store Tasks";
 	private static final String CURRENT_DIRECTORY = "user.dir";
+	private static final int TASK_NUM_OFFSET = 1;
 
 	// Messages
 	private static final String ADD_HINT_MESSAGE = "To add: [task description] from [start] to [end] at [location]";
@@ -64,7 +67,7 @@ public class OpeningPage extends AnchorPane {
 	@FXML
 	private TextField textInputArea;
 	@FXML
-	private ListView<HBox> displayList;
+	private ListView<Task> displayList;
 
 	public OpeningPage(ArrayList<Task> taskList, Logic logic) {
 		tasksOnScreen = taskList;
@@ -89,31 +92,45 @@ public class OpeningPage extends AnchorPane {
 	private void initialize() {
 		helpLabel.setText(MESSAGE_HELP_INTRO);
 		feedbackLabel.setText(MESSAGE_FEEDBACK_INTRO);
+		displayList.setPrefSize(1070, 580);
+		this.displayList.setCellFactory(new Callback<ListView<Task>, ListCell<Task>>() {
+			public ListCell<Task> call(ListView<Task> param) {
+				ListCell<Task> cell = new ListCell<Task>() {
+					@Override
+					public void updateItem(Task item, boolean empty) {
+						super.updateItem(item, empty);
+						if (item != null) {
+							int taskNumber = this.getIndex() + TASK_NUM_OFFSET;
+							String taskDescription = item.getTaskDescription();
+							String taskDuration = item.durationToString();
+							String taskLocation = getLocationString(item);
+
+							ListItem listViewItem = new ListItem(taskNumber, taskDescription, taskDuration,
+									taskLocation);
+							setGraphic(listViewItem);
+						} else {
+							setGraphic(null);
+						}
+					}
+				};
+
+				return cell;
+			}
+		});
 		updateListView(tasksOnScreen);
 	}
 
 	private void updateListView(ArrayList<Task> taskList) {
-		ObservableList<HBox> list = makeDisplayList(taskList);
+		ObservableList<Task> list = makeDisplayList(taskList);
 		this.displayList.setItems(list);
 	}
 
-	private ObservableList<HBox> makeDisplayList(ArrayList<Task> taskList) {
-		ObservableList<HBox> displayList = FXCollections.observableArrayList();
-		int i = 1;
+	private ObservableList<Task> makeDisplayList(ArrayList<Task> taskList) {
+		ObservableList<Task> displayList = FXCollections.observableArrayList();
 		for (Task task : taskList) {
-			ListItem item = getListItem(i, task);
-			displayList.add(item);
-			i++;
+			displayList.add(task);
 		}
 		return displayList;
-	}
-
-	private ListItem getListItem(int i, Task task) {
-		String description = task.getTaskDescription();
-		String location = getLocationString(task);
-		String date = task.durationToString();
-		ListItem item = new ListItem(i, description, date, location);
-		return item;
 	}
 
 	private String getLocationString(Task task) {
