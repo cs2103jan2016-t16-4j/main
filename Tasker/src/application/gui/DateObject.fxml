@@ -5,13 +5,16 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.HBox?>
 
-<fx:root fx:id="dateObject" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="149.0" prefWidth="600.0" type="HBox" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="dateObject" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="199.0" prefWidth="1053.0" type="HBox" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="dateLabel" alignment="TOP_LEFT" rotate="-90.0" text="13 May 2016" textAlignment="CENTER">
+      <Label fx:id="dateLabel" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="99.0" rotate="-90.0" text="13 May 2016" textAlignment="CENTER">
          <HBox.margin>
-            <Insets top="60.0" />
+            <Insets top="80.0" />
          </HBox.margin>
       </Label>
-      <ListView fx:id="listViewItem" prefHeight="149.0" prefWidth="528.0" />
+      <ListView fx:id="listViewItem" orientation="HORIZONTAL" prefHeight="184.0" prefWidth="971.0">
+         <HBox.margin>
+            <Insets />
+         </HBox.margin></ListView>
    </children>
 </fx:root>

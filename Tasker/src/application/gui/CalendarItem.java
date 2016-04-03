@@ -15,7 +15,7 @@ public class CalendarItem extends AnchorPane {
 	@FXML
 	private Label date;
 	@FXML
-	private Label location;
+	private Label locationLabel;
 
 	public CalendarItem(String name, String date, String location) {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CalendarItem.fxml"));
@@ -40,9 +40,9 @@ public class CalendarItem extends AnchorPane {
 
 	private void setLocation(String location) {
 		if (!location.equals(EMPTY)) {
-			this.location.setText(location);
+			this.locationLabel.setText(location);
 		}else{
-			this.location.setText(EMPTY);
+			this.locationLabel.setText(EMPTY);
 		}
 	}
 

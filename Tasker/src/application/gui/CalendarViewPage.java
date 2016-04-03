@@ -39,6 +39,7 @@ public class CalendarViewPage extends AnchorPane {
 	private static final String CURRENT_DIRECTORY = "user.dir";
 	private static final int TASK_NUM_OFFSET = 1;
 	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd MMM yyyy");
+	private static final SimpleDateFormat FORMAT_YEAR = new SimpleDateFormat("yyyy");
 
 	// Messages
 	private static final String ADD_HINT_MESSAGE = "To add: [task description] from [start] to [end] at [location]";
@@ -68,7 +69,7 @@ public class CalendarViewPage extends AnchorPane {
 	@FXML
 	private TextField textInputArea;
 	@FXML
-	private ListView<Task> displayList;
+	private ListView<ArrayList<Task>> displayList;
 
 	public CalendarViewPage(ArrayList<Task> taskList, Logic logic) {
 		tasksOnScreen = taskList;
@@ -94,16 +95,15 @@ public class CalendarViewPage extends AnchorPane {
 		helpLabel.setText(MESSAGE_HELP_INTRO);
 		feedbackLabel.setText(MESSAGE_FEEDBACK_INTRO);
 		displayList.setPrefSize(1070, 580);
-		this.displayList.setCellFactory(new Callback<ListView<Task>, ListCell<Task>>() {
-			public ListCell<Task> call(ListView<Task> param) {
-				ListCell<Task> cell = new ListCell<Task>() {
+		this.displayList.setCellFactory(new Callback<ListView<ArrayList<Task>>, ListCell<ArrayList<Task>>>() {
+			public ListCell<ArrayList<Task>> call(ListView<ArrayList<Task>> param) {
+				ListCell<ArrayList<Task>> cell = new ListCell<ArrayList<Task>>() {
 					@Override
-					public void updateItem(Task item, boolean empty) {
+					public void updateItem(ArrayList<Task> item, boolean empty) {
 						super.updateItem(item, empty);
 						if (item != null) {
-
-							DateObject listViewItem = new DateObject(FORMAT_DATE.format(item.getEndDate().getTime()),
-									item.getTaskDescription(), getLocationString(item));
+							DateObject listViewItem = new DateObject(
+									FORMAT_DATE.format(item.get(0).getEndDate().getTime()), item);
 							setGraphic(listViewItem.getHbox());
 						} else {
 							setGraphic(null);
@@ -126,14 +126,35 @@ public class CalendarViewPage extends AnchorPane {
 		}
 	}
 
+	private ArrayList<ArrayList<Task>> getDateArray(ArrayList<Task> taskList) {
+		ArrayList<ArrayList<Task>> dateArray = new ArrayList<ArrayList<Task>>();
+		ArrayList<Task> temporaryList = new ArrayList<Task>();
+		String tempoDate = FORMAT_DATE.format(taskList.get(0).getEndDate().getTime());
+		for (int i = 0; i < taskList.size(); i++) {
+			if (tempoDate.equals(FORMAT_DATE.format(taskList.get(i).getEndDate().getTime()))
+					|| FORMAT_YEAR.format(taskList.get(i).getEndDate().getTime()).equals("0001")) {
+				temporaryList.add(taskList.get(i));
+			} else {
+				dateArray.add(temporaryList);
+				temporaryList = new ArrayList<Task>();
+				temporaryList.add(taskList.get(i));
+				tempoDate = FORMAT_DATE.format(taskList.get(i).getEndDate().getTime());
+				System.out.println(tempoDate);
+			}
+		}
+		return dateArray;
+	}
+
 	private void updateListView(ArrayList<Task> taskList) {
-		ObservableList<Task> list = makeDisplayList(taskList);
+		ArrayList<ArrayList<Task>> dateArray = new ArrayList<ArrayList<Task>>();
+		dateArray = getDateArray(taskList);
+		ObservableList<ArrayList<Task>> list = makeDisplayList(dateArray);
 		this.displayList.setItems(list);
 	}
 
-	private ObservableList<Task> makeDisplayList(ArrayList<Task> taskList) {
-		ObservableList<Task> displayList = FXCollections.observableArrayList();
-		for (Task task : taskList) {
+	private ObservableList<ArrayList<Task>> makeDisplayList(ArrayList<ArrayList<Task>> taskList) {
+		ObservableList<ArrayList<Task>> displayList = FXCollections.observableArrayList();
+		for (ArrayList<Task> task : taskList) {
 			displayList.add(task);
 		}
 		return displayList;
