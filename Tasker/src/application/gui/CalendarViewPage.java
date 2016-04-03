@@ -2,8 +2,8 @@ package application.gui;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import javafx.scene.control.SelectionMode;
 
 import application.logic.Feedback;
 import application.logic.Logic;
@@ -26,7 +26,10 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-public class OpeningPage extends AnchorPane {
+public class CalendarViewPage extends AnchorPane {
+	private ArrayList<Task> tasksOnScreen;
+	private Logic logic;
+
 	private static final String SPACE = " ";
 	private static final String EMPTY_STRING = "";
 	private static final String LOCATION_PREFIX = "AT";
@@ -35,6 +38,7 @@ public class OpeningPage extends AnchorPane {
 	private static final String DIRECTORY_CHOOSER_TITLE = "Pick Where To Store Tasks";
 	private static final String CURRENT_DIRECTORY = "user.dir";
 	private static final int TASK_NUM_OFFSET = 1;
+	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd MMM yyyy");
 
 	// Messages
 	private static final String ADD_HINT_MESSAGE = "To add: [task description] from [start] to [end] at [location]";
@@ -57,8 +61,6 @@ public class OpeningPage extends AnchorPane {
 	private static ArrayList<String> commands = new ArrayList<String>();
 	private static int pointer = 0;
 
-	private ArrayList<Task> tasksOnScreen;
-	private Logic logic;
 	@FXML
 	public Label feedbackLabel;
 	@FXML
@@ -68,7 +70,7 @@ public class OpeningPage extends AnchorPane {
 	@FXML
 	private ListView<Task> displayList;
 
-	public OpeningPage(ArrayList<Task> taskList, Logic logic) {
+	public CalendarViewPage(ArrayList<Task> taskList, Logic logic) {
 		tasksOnScreen = taskList;
 		this.logic = logic;
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ListView.fxml"));
@@ -99,14 +101,10 @@ public class OpeningPage extends AnchorPane {
 					public void updateItem(Task item, boolean empty) {
 						super.updateItem(item, empty);
 						if (item != null) {
-							int taskNumber = this.getIndex() + TASK_NUM_OFFSET;
-							String taskDescription = item.getTaskDescription();
-							String taskDuration = item.durationToString();
-							String taskLocation = getLocationString(item);
 
-							ListItem listViewItem = new ListItem(taskNumber, taskDescription, taskDuration,
-									taskLocation);
-							setGraphic(listViewItem);
+							DateObject listViewItem = new DateObject(FORMAT_DATE.format(item.getEndDate().getTime()),
+									item.getTaskDescription(), getLocationString(item));
+							setGraphic(listViewItem.getHbox());
 						} else {
 							setGraphic(null);
 						}
@@ -119,11 +117,18 @@ public class OpeningPage extends AnchorPane {
 		updateListView(tasksOnScreen);
 	}
 
+	private String getLocationString(Task task) {
+		String location = task.getLocation();
+		if (location.trim().equals(EMPTY_STRING)) {
+			return EMPTY_STRING;
+		} else {
+			return (LOCATION_PREFIX + SPACE + location);
+		}
+	}
+
 	private void updateListView(ArrayList<Task> taskList) {
 		ObservableList<Task> list = makeDisplayList(taskList);
 		this.displayList.setItems(list);
-//		if(){
-//		displayList.scrollTo(taskList.get(0));}
 	}
 
 	private ObservableList<Task> makeDisplayList(ArrayList<Task> taskList) {
@@ -132,15 +137,7 @@ public class OpeningPage extends AnchorPane {
 			displayList.add(task);
 		}
 		return displayList;
-	}
 
-	private String getLocationString(Task task) {
-		String location = task.getLocation();
-		if (location.trim().equals(EMPTY_STRING)) {
-			return EMPTY_STRING;
-		} else {
-			return (LOCATION_PREFIX + SPACE + location);
-		}
 	}
 
 	public void initializeInputArea() {
@@ -341,5 +338,4 @@ public class OpeningPage extends AnchorPane {
 		String secondLetter = input.substring(0, 2);
 		return secondLetter;
 	}
-
 }

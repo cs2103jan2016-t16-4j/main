@@ -57,9 +57,11 @@ public class GuiMain extends Application {
 		try {
 			setEnvironment();
 			initializeSaveDirectory(primaryStage);
-			OpeningPage page = new OpeningPage(taskList, logic);
+			// OpeningPage page = new OpeningPage(taskList, logic);
+			CalendarViewPage cVPage = new CalendarViewPage(taskList, logic);
 			Platform.setImplicitExit(false);
-			Scene scene = new Scene(page);
+			// Scene scene = new Scene(page);
+			Scene scene = new Scene(cVPage);
 			scene.getStylesheets().clear();
 			scene.getStylesheets().add("application/gui/application.css");
 			scene.getStylesheets().add(CSS_URL);
