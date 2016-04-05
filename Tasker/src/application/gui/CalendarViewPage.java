@@ -180,8 +180,10 @@ public class CalendarViewPage extends AnchorPane {
 		ArrayList<ArrayList<Task>> dateArray = new ArrayList<ArrayList<Task>>();
 		dateArray = getDateArray(taskList);
 		ObservableList<ArrayList<Task>> calList = makeCalendarList(dateArray);
+		this.calendarList.getItems().clear();
 		this.calendarList.setItems(calList);
 		ObservableList<Task> list = makeDisplayList(taskList);
+		this.displayList.getItems().clear();
 		this.displayList.setItems(list);
 	}
 
