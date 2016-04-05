@@ -11,11 +11,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class HelpMessage extends Application {
-	//Storage storage;
-	//Feedback help = Help.execute(storage) ;
-	//String helpMessage = help.getMessage();
+	Storage storage;
+	Feedback help = Help.execute(storage);
+	String helpMessage = help.getMessage();
 	String windowTitle = "Help";
-	String helpMessage = "";
+
+	// String helpMessage = "Help message";
+
 	@Override
 	public void start(Stage stage) {
 		Text text = new Text(10, 40, helpMessage);
