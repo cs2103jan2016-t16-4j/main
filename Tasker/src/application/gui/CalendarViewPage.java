@@ -22,6 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -69,7 +70,11 @@ public class CalendarViewPage extends AnchorPane {
 	@FXML
 	private TextField textInputArea;
 	@FXML
-	private ListView<ArrayList<Task>> displayList;
+	private StackPane stackPane;
+	@FXML
+	private ListView<Task> displayList;
+	@FXML
+	private ListView<ArrayList<Task>> calendarList;
 
 	public CalendarViewPage(ArrayList<Task> taskList, Logic logic) {
 		tasksOnScreen = taskList;
@@ -94,8 +99,8 @@ public class CalendarViewPage extends AnchorPane {
 	private void initialize() {
 		helpLabel.setText(MESSAGE_HELP_INTRO);
 		feedbackLabel.setText(MESSAGE_FEEDBACK_INTRO);
-		displayList.setPrefSize(1070, 580);
-		this.displayList.setCellFactory(new Callback<ListView<ArrayList<Task>>, ListCell<ArrayList<Task>>>() {
+		calendarList.setPrefSize(1070, 580);
+		this.calendarList.setCellFactory(new Callback<ListView<ArrayList<Task>>, ListCell<ArrayList<Task>>>() {
 			public ListCell<ArrayList<Task>> call(ListView<ArrayList<Task>> param) {
 				ListCell<ArrayList<Task>> cell = new ListCell<ArrayList<Task>>() {
 					@Override
@@ -114,7 +119,32 @@ public class CalendarViewPage extends AnchorPane {
 				return cell;
 			}
 		});
-		updateListView(tasksOnScreen);
+		displayList.setPrefSize(1070, 580);
+		this.displayList.setCellFactory(new Callback<ListView<Task>, ListCell<Task>>() {
+			public ListCell<Task> call(ListView<Task> param) {
+				ListCell<Task> cell = new ListCell<Task>() {
+					@Override
+					public void updateItem(Task item, boolean empty) {
+						super.updateItem(item, empty);
+						if (item != null) {
+							int taskNumber = this.getIndex() + TASK_NUM_OFFSET;
+							String taskDescription = item.getTaskDescription();
+							String taskDuration = item.durationToString();
+							String taskLocation = getLocationString(item);
+
+							ListItem listViewItem = new ListItem(taskNumber, taskDescription, taskDuration,
+									taskLocation);
+							setGraphic(listViewItem);
+						} else {
+							setGraphic(null);
+						}
+					}
+				};
+
+				return cell;
+			}
+		});
+		updateViews(tasksOnScreen);
 	}
 
 	private String getLocationString(Task task) {
@@ -142,23 +172,34 @@ public class CalendarViewPage extends AnchorPane {
 				System.out.println(tempoDate);
 			}
 		}
+		dateArray.add(temporaryList);
 		return dateArray;
 	}
 
-	private void updateListView(ArrayList<Task> taskList) {
+	private void updateViews(ArrayList<Task> taskList) {
 		ArrayList<ArrayList<Task>> dateArray = new ArrayList<ArrayList<Task>>();
 		dateArray = getDateArray(taskList);
-		ObservableList<ArrayList<Task>> list = makeDisplayList(dateArray);
+		ObservableList<ArrayList<Task>> calList = makeCalendarList(dateArray);
+		this.calendarList.setItems(calList);
+		ObservableList<Task> list = makeDisplayList(taskList);
 		this.displayList.setItems(list);
 	}
 
-	private ObservableList<ArrayList<Task>> makeDisplayList(ArrayList<ArrayList<Task>> taskList) {
-		ObservableList<ArrayList<Task>> displayList = FXCollections.observableArrayList();
+	private ObservableList<ArrayList<Task>> makeCalendarList(ArrayList<ArrayList<Task>> taskList) {
+		ObservableList<ArrayList<Task>> calendarList = FXCollections.observableArrayList();
 		for (ArrayList<Task> task : taskList) {
+			calendarList.add(task);
+		}
+		return calendarList;
+
+	}
+
+	private ObservableList<Task> makeDisplayList(ArrayList<Task> taskList) {
+		ObservableList<Task> displayList = FXCollections.observableArrayList();
+		for (Task task : taskList) {
 			displayList.add(task);
 		}
 		return displayList;
-
 	}
 
 	public void initializeInputArea() {
@@ -169,16 +210,20 @@ public class CalendarViewPage extends AnchorPane {
 					try {
 						text = textInputArea.getText();
 						commands.add(text);
-						Feedback feedback = logic.executeCommand(text, tasksOnScreen);
-						System.out.println(feedback.getMessage());
-						tasksOnScreen = feedback.getTasks();
-						updateListView(tasksOnScreen);
-						feedbackLabel.setText(feedback.getMessage());
-						if (feedback.getMessage().equals(MESSAGE_STORAGE_URL_NOT_FOUND)) {
-							DirectoryChooser dirChooser = new DirectoryChooser();
-							configureDirectoryChooser(dirChooser);
-							Stage stage = new Stage();
-							directoryPrompt(stage, dirChooser);
+						if (!text.equalsIgnoreCase("view")) {
+							Feedback feedback = logic.executeCommand(text, tasksOnScreen);
+							System.out.println(feedback.getMessage());
+							tasksOnScreen = feedback.getTasks();
+							updateViews(tasksOnScreen);
+							feedbackLabel.setText(feedback.getMessage());
+							if (feedback.getMessage().equals(MESSAGE_STORAGE_URL_NOT_FOUND)) {
+								DirectoryChooser dirChooser = new DirectoryChooser();
+								configureDirectoryChooser(dirChooser);
+								Stage stage = new Stage();
+								directoryPrompt(stage, dirChooser);
+							}
+						} else {
+							switchViews();
 						}
 						textInputArea.clear();
 					} catch (Exception e) {
@@ -211,6 +256,14 @@ public class CalendarViewPage extends AnchorPane {
 							textInputArea.setText(commands.get(pointer + 1));
 						}
 					}
+				}
+			}
+
+			private void switchViews() {
+				if (stackPane.getChildren().get(0).equals(displayList)) {
+					displayList.toFront();
+				} else {
+					calendarList.toFront();
 				}
 			}
 		});
