@@ -74,6 +74,7 @@ public class CalendarViewPage extends AnchorPane {
 	String text = EMPTY_STRING;
 	private static ArrayList<String> commands = new ArrayList<String>();
 	private static int pointer = 0;
+	private Task taskToFocus;
 
 	@FXML
 	public Label feedbackLabel;
@@ -113,7 +114,8 @@ public class CalendarViewPage extends AnchorPane {
 		feedbackLabel.setText(MESSAGE_FEEDBACK_INTRO);
 		initialiseCalendarList();
 		initialiseDisplayList();
-		updateViews(tasksOnScreen);
+		taskToFocus = null;
+		updateViews(tasksOnScreen, taskToFocus);
 	}
 
 	private void initialiseDisplayList() {
@@ -204,7 +206,7 @@ public class CalendarViewPage extends AnchorPane {
 		return dateArray;
 	}
 
-	private void updateViews(ArrayList<Task> taskList) {
+	private void updateViews(ArrayList<Task> taskList, Task taskToFocus) {
 		// Timer timer = new Timer();
 		// timer.schedule(new TimerTask() {
 		// public void run() {
@@ -224,18 +226,21 @@ public class CalendarViewPage extends AnchorPane {
 		// }
 		// }, 0, 60 * 250);
 		updateCalendarList(taskList);
-		updateDisplayList(taskList);
+		updateDisplayList(taskList, taskToFocus);
 	}
 
 	private void notifyUser() {
 		Notifications.create().title("Task Reminder").text("END").showInformation();
 	}
 
-	private void updateDisplayList(ArrayList<Task> taskList) {
+	private void updateDisplayList(ArrayList<Task> taskList, Task taskToFocus) {
 		this.displayList.getItems().clear();
 		if (taskList.size() != 0) {
 			ObservableList<Task> list = makeDisplayList(taskList);
 			this.displayList.setItems(list);
+			if (taskToFocus != null) {
+				this.displayList.scrollTo(taskToFocus);
+			}
 		}
 	}
 
@@ -278,7 +283,8 @@ public class CalendarViewPage extends AnchorPane {
 							Feedback feedback = logic.executeCommand(text, tasksOnScreen);
 							System.out.println(feedback.getMessage());
 							tasksOnScreen = feedback.getTasks();
-							updateViews(tasksOnScreen);
+							Task taskToFocus = feedback.getIndexToScroll();
+							updateViews(tasksOnScreen, taskToFocus);
 							feedbackLabel.setText(feedback.getMessage());
 							promptStorage(feedback);
 						} else {
