@@ -58,8 +58,7 @@ public class GuiMain extends Application {
 		try {
 			setEnvironment();
 			initializeSaveDirectory(primaryStage);
-			//CalendarViewPage page = new CalendarViewPage(taskList, logic);
-			OpeningPage page = new OpeningPage(taskList, logic);
+			CalendarViewPage page = new CalendarViewPage(taskList, logic);
 			Platform.setImplicitExit(false);
 			Scene scene = new Scene(page);
 			scene.getStylesheets().clear();
@@ -77,7 +76,7 @@ public class GuiMain extends Application {
 
 	private void customiseGUIMenuBar(Stage primaryStage) {
 		setProgramName(primaryStage);
-		//setProgramLogo(primaryStage);
+		setProgramLogo(primaryStage);
 	}
 
 	private void setProgramName(Stage primaryStage) {

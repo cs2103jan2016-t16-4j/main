@@ -129,9 +129,9 @@ public class CalendarViewPage extends AnchorPane {
 							String taskDescription = item.getTaskDescription();
 							String taskDuration = item.durationToString();
 							String taskLocation = getLocationString(item);
-
+							String taskPriority = item.getPriority();
 							ListItem listViewItem = new ListItem(taskNumber, taskDescription, taskDuration,
-									taskLocation);
+									taskLocation,taskPriority);
 							setGraphic(listViewItem);
 						} else {
 							setGraphic(null);
