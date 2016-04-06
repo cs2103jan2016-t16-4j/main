@@ -2,7 +2,9 @@
 package application.gui;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import application.storage.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -29,7 +31,8 @@ public class CalendarItem extends AnchorPane {
 	@FXML
 	private Label indexLabel;
 
-	public CalendarItem(String name, String date, String location, String priority, int overdueCheck, int index) {
+	public CalendarItem(String name, String date, String location, String priority, int overdueCheck,
+			int index) {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CalendarItem.fxml"));
 		try {
 			fxmlLoader.setRoot(this);
