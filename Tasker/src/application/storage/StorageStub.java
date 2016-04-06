@@ -1,6 +1,5 @@
 package application.storage;
 
-
 public class StorageStub {
 
 	public void addTaskInList() {

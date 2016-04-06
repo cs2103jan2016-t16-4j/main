@@ -66,7 +66,10 @@ public class FileManager {
 			if (filePath.equalsIgnoreCase(dataFilePath)) {
 				readText = in.readLine();
 			}
-			Gson gson = new GsonBuilder().registerTypeAdapter(Task.class, new TaskSerializer()).create();
+			Gson gson = new GsonBuilder().registerTypeAdapter(Task.class, new TaskSerializer())
+					.registerTypeAdapter(EventTask.class, new TaskSerializer())
+					.registerTypeAdapter(DeadlineTask.class, new TaskSerializer())
+					.registerTypeAdapter(FloatingTask.class, new TaskSerializer()).create();
 			while ((readText = in.readLine()) != null) {
 				Task task = gson.fromJson(readText, Task.class);
 				list.add(task);
@@ -106,7 +109,10 @@ public class FileManager {
 
 	private void saveAllTasks(ArrayList<Task> list, String filePath) throws IOException {
 		PrintWriter fwz = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
-		Gson gson = new GsonBuilder().registerTypeAdapter(Task.class, new TaskSerializer()).create();
+		Gson gson = new GsonBuilder().registerTypeAdapter(Task.class, new TaskSerializer())
+				.registerTypeAdapter(EventTask.class, new TaskSerializer())
+				.registerTypeAdapter(DeadlineTask.class, new TaskSerializer())
+				.registerTypeAdapter(FloatingTask.class, new TaskSerializer()).create();
 		for (int i = 0; i < list.size(); i++) {
 			String json = gson.toJson(list.get(i));
 			fwz.println(json);
