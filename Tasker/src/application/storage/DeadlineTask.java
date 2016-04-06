@@ -37,6 +37,14 @@ public class DeadlineTask extends Task implements Cloneable {
 		this.endDate.set(Calendar.MILLISECOND, endTime.get(Calendar.MILLISECOND));
 	}
 	
+	public Calendar getStartDate() {
+		return null;
+	}
+	
+	public Calendar getStartTime() {
+		return null;
+	}
+	
 	public Calendar getEndDate() {
 		return endDate;
 	}
@@ -45,7 +53,7 @@ public class DeadlineTask extends Task implements Cloneable {
 		return endDate;
 	}
 	
-	public String deadlineToString() {
+	public String durationToString() {
 		String message = "";
 		String endingDate = dateToString(endDate);
 		String endingTime = timeToString(endDate);
@@ -61,7 +69,7 @@ public class DeadlineTask extends Task implements Cloneable {
 	public String toString() {
 		String message = "\"";
 		message += getTaskDescription();
-		message += " " + deadlineToString();
+		message += " " + durationToString();
 		
 		if (!getLocation().equalsIgnoreCase("")) {
 			message += ", at " + getLocation();
@@ -78,4 +86,7 @@ public class DeadlineTask extends Task implements Cloneable {
     	newTask.remindDate = (Calendar) remindDate.clone();
     	return newTask;
     }
+
+
+
 }

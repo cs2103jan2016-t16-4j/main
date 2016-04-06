@@ -231,7 +231,8 @@ public class Parser {
 	 * private Command initializeHelp(){ Command command = new Help (); return
 	 * command; }
 	 */
-
+        
+        // @@author A0125417L
 	// Requests the logic to call for new storage location from the GUI then
 	// sends the data to Storage
 	private Command initializeStorageLocation(String[] args) {
@@ -249,6 +250,7 @@ public class Parser {
 		return command;
 	}
 
+        // @@author A0125417L
 	private Command getAppropSearchCommand(String[] args) {
 		try {
 			return getSearchCommand(args);
@@ -258,6 +260,7 @@ public class Parser {
 
 	}
 
+        // @@author A0125417L
 	private Command getSearchCommand(String[] args) throws NotDateException {
 		String[] argsForDate = (String[]) ArrayUtils.remove(args, 0);
 		if (args[0].equalsIgnoreCase("by")) {
@@ -268,6 +271,7 @@ public class Parser {
 			return getSearchByName(args);
 		}
 	}
+        // @@author A0125417L
 
 	private Command getSearchByName(String[] args) {
 		String taskName = getString(args, 0, args.length - 1);

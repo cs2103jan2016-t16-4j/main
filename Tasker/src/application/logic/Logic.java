@@ -13,12 +13,6 @@ import application.logger.LoggerFormat;
 import application.storage.Storage;
 import application.storage.Task;
 
-/**
- * 
- * @author Pratyush
- *
- */
-
 //@@author A0132632R
 
 
@@ -100,6 +94,8 @@ public class Logic {
 		loadDataFile();
 	}
 */
+
+// @@author A0125417L
 	public void setDirectory(String file) throws IOException {
         storageConnector.setDirectory(file);
     }
@@ -114,6 +110,8 @@ public class Logic {
 	public boolean checkIfFileExists() throws IOException {
 		return storageConnector.directoryExists();
 	}
+
+// @@author A0125417L
 /*
 	public Feedback executeCommand(String command)throws NoDescriptionException {
         Feedback feedback;
@@ -128,7 +126,7 @@ public class Logic {
     }
     
 	*/
-	
+// @@author A0125417L	
 	// for UI
 	
 	public Feedback executeCommand(String command,  ArrayList<Task> tasksOnScreen)throws NoDescriptionException {
@@ -145,3 +143,4 @@ public class Logic {
 
 
 }
+// @@author A0125417L

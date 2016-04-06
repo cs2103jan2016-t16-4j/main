@@ -20,6 +20,26 @@ public class FloatingTask extends Task implements Cloneable  {
 		setPriority(priority);
 		setTaskIndex(taskIndex);
 	}
+		
+	public Calendar getStartDate() {
+		return null;
+	}
+
+	public Calendar getEndDate() {
+		return null;
+	}
+	
+	public Calendar getStartTime() {
+		return null;
+	}
+
+	public Calendar getEndTime() {
+		return null;
+	}
+	
+	public String durationToString() {
+		return "";
+	}
 	
 	public String toString() {
 		String message = "\"";
@@ -39,4 +59,5 @@ public class FloatingTask extends Task implements Cloneable  {
     	newTask.remindDate = (Calendar) remindDate.clone();
     	return newTask;
     }
+
 }

@@ -3,7 +3,7 @@ package application.storage;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class Task implements Cloneable {
+public abstract class Task implements Cloneable {
 
 	private String taskDescription;
 	private String location;
@@ -99,13 +99,15 @@ public class Task implements Cloneable {
 			return EMPTY_STRING;
 		}
 
-	}	
-	
-	public String durationToString(){
-	    return "";
 	}
 	
-    protected Object clone() throws CloneNotSupportedException {
+	public abstract Calendar getStartDate();
+	
+	public abstract Calendar getEndDate();
+	
+	public abstract String durationToString();
+    
+	protected Object clone() throws CloneNotSupportedException {
     	Task newTask = (Task) super.clone();
     	newTask.remindDate = (Calendar) remindDate.clone();
     	return newTask;

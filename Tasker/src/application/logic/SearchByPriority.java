@@ -1,15 +1,10 @@
+// @@author A0125417L
 package application.logic;
 
 import java.util.ArrayList;
 
 import application.storage.Storage;
 import application.storage.Task;
-
-/**
- * 
- * @author Shawn
- *
- */
 
 public class SearchByPriority implements Command {
 	private static final String MESSAGE_SEARCH_RESULTS = "Here are the results of your search!";
@@ -37,3 +32,4 @@ public class SearchByPriority implements Command {
 		}
 	}
 }
+// @@author A0125417L

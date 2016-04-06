@@ -1,3 +1,4 @@
+// @@author A0125417L
 package application.logic;
 
 import static org.junit.Assert.assertEquals;
@@ -89,3 +90,4 @@ public class LogicJUnit {
 	}
 
 }
+// @@author A0125417L
