@@ -1,3 +1,4 @@
+//@@author A0132632R
 package application.gui;
 
 import java.io.File;
@@ -87,7 +88,7 @@ public class OpeningPage extends AnchorPane {
 			throw new RuntimeException(exception);
 		}
 	}
-
+	//@@author A0125417L
 	private void initialize() {
 		helpLabel.setText(MESSAGE_HELP_INTRO);
 		feedbackLabel.setText(MESSAGE_FEEDBACK_INTRO);
@@ -118,7 +119,9 @@ public class OpeningPage extends AnchorPane {
 		});
 		updateListView(tasksOnScreen);
 	}
+	//@@author A0132632R
 
+	
 	private void updateListView(ArrayList<Task> taskList) {
 		ObservableList<Task> list = makeDisplayList(taskList);
 		this.displayList.setItems(list);
@@ -142,7 +145,7 @@ public class OpeningPage extends AnchorPane {
 			return (LOCATION_PREFIX + SPACE + location);
 		}
 	}
-
+	//@@author A0125417L
 	public void initializeInputArea() {
 		textInputArea.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
@@ -325,7 +328,7 @@ public class OpeningPage extends AnchorPane {
 			}
 		}
 	}
-
+	//@@author A0132632R
 	private String getFirstLetter(String input) {
 		String firstLetter = input.substring(0, 1);
 		return firstLetter;
