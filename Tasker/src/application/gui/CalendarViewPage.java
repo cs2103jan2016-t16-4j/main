@@ -163,10 +163,8 @@ public class CalendarViewPage extends AnchorPane {
 					public void updateItem(ArrayList<Task> item, boolean empty) {
 						super.updateItem(item, empty);
 						if (item != null) {
-							int index = this.getIndex() + 1;
 							DateObject listViewItem = new DateObject(
-									FORMAT_DATE.format(item.get(0).getEndDate().getTime()), item, index);
-							index = index + item.size();
+									FORMAT_DATE.format(item.get(0).getEndDate().getTime()), item, tasksOnScreen);
 							setGraphic(listViewItem.getHbox());
 						} else {
 							setGraphic(null);

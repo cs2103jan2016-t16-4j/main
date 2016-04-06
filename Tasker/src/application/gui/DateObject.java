@@ -18,6 +18,7 @@ import javafx.util.Callback;
 
 public class DateObject extends HBox {
 	public static final String EMPTY = "";
+	public static final int offset = 1;
 
 	@FXML
 	public Label dateLabel;
@@ -26,7 +27,7 @@ public class DateObject extends HBox {
 	@FXML
 	public HBox dateObject;
 
-	public DateObject(String date, ArrayList<Task> taskList, int index) {
+	public DateObject(String date, ArrayList<Task> taskList, ArrayList<Task> wholeList) {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DateObject.fxml"));
 		try {
 			fxmlLoader.setRoot(this);
@@ -41,7 +42,6 @@ public class DateObject extends HBox {
 						public void updateItem(Task item, boolean empty) {
 							super.updateItem(item, empty);
 							if (item != null) {
-								int currentIndex = index + this.getIndex();
 								Calendar cal = Calendar.getInstance();
 								int overdueCheck = 0;
 								if (item.getEndDate() != null) {
@@ -49,7 +49,7 @@ public class DateObject extends HBox {
 								}
 								CalendarItem calItem = new CalendarItem(item.getTaskDescription(),
 										item.durationToString(), item.getLocation(), item.getPriority(), overdueCheck,
-										currentIndex);
+										wholeList.indexOf(item) + offset);
 								setGraphic(calItem);
 							} else {
 								setGraphic(null);
