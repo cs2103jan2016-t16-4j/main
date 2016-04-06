@@ -131,7 +131,7 @@ public class CalendarViewPage extends AnchorPane {
 							String taskLocation = getLocationString(item);
 							String taskPriority = item.getPriority();
 							ListItem listViewItem = new ListItem(taskNumber, taskDescription, taskDuration,
-									taskLocation,taskPriority);
+									taskLocation, taskPriority);
 							setGraphic(listViewItem);
 						} else {
 							setGraphic(null);
@@ -177,9 +177,16 @@ public class CalendarViewPage extends AnchorPane {
 	}
 
 	private ArrayList<ArrayList<Task>> getDateArray(ArrayList<Task> taskList) {
+		String tempoDate = null;
 		ArrayList<ArrayList<Task>> dateArray = new ArrayList<ArrayList<Task>>();
 		ArrayList<Task> temporaryList = new ArrayList<Task>();
-		String tempoDate = FORMAT_DATE.format(taskList.get(0).getEndDate().getTime());
+		for (int i = 0; i < taskList.size(); i++) {
+			if (taskList.get(i).getEndDate() != null) {
+				tempoDate = FORMAT_DATE.format(taskList.get(i).getEndDate().getTime());
+			} else {
+				tempoDate = null;
+			}
+		}
 		for (int i = 0; i < taskList.size(); i++) {
 			if (taskList.get(i).getEndDate() != null) {
 				if (tempoDate.equals(FORMAT_DATE.format(taskList.get(i).getEndDate().getTime()))
@@ -193,7 +200,9 @@ public class CalendarViewPage extends AnchorPane {
 				}
 			}
 		}
-		dateArray.add(temporaryList);
+		if (temporaryList.size() != 0) {
+			dateArray.add(temporaryList);
+		}
 		return dateArray;
 	}
 
