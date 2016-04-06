@@ -104,6 +104,10 @@ public class Storage implements Cloneable {
 		return taskManager.searchPriority(databaseManager.getOpenList(), priority);
 	}
 	
+/*	public ArrayList<Task> searchTaskByCategoryType(String categoryType) {
+		return taskManager.searchCategoryType(databaseManager.getOpenList(), categoryType);
+	} 
+*/	
 	public void setDirectory(String path) throws IOException {
 		fileManager.setDirectory(path);
 	}
