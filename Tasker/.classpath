@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="E:/Important_Stuff/Courses/Software_Engineering/Project/Project/Tasker/prettytime-nlp-4.0.1.Final.jar"/>
 	<classpathentry kind="lib" path="E:/Important_Stuff/Courses/Software_Engineering/Project/Project/Tasker/joda-time-2.9.2/joda-time-2.9.2.jar"/>
 	<classpathentry kind="lib" path="E:/Important_Stuff/Courses/Software_Engineering/Project/Project/Tasker/gson-2.2.4.jar"/>
+	<classpathentry kind="lib" path="E:/Important_Stuff/Courses/Software_Engineering/Project/Project/Tasker/controlsfx-8.40.10.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

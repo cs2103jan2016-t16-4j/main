@@ -37,7 +37,8 @@ public class Parser {
 	private static final String KEYWORD_DONE = "done";
 	private static final String KEYWORD_UNDO = "undo";
 	private static final String KEYWORD_HELP = "help";
-	private static final String KEYWORD_STORAGE = "storage";
+	private static final String KEYWORD_LIST_DISPLAY = "list";
+    private static final String KEYWORD_STORAGE = "storage";
 	private static final String KEYWORD_EXIT = "exit";
 	private static final String EMPTY = "";
 
@@ -102,6 +103,11 @@ public class Parser {
 			command = processHomeInput(args);
 			break;
 
+		case KEYWORD_LIST_DISPLAY:
+            command = processListInput(args);
+            break;
+
+			
 		case KEYWORD_DELETE:
 			logger.info("Making delete command object");
 			command = initializeDelete(args);
@@ -154,6 +160,18 @@ public class Parser {
 		return command;
 	}
 
+	private Command processListInput(String[] args) throws NoDescriptionException {
+        Command command;
+        if (args.length == 1) {
+            logger.info("Making list command object");
+            command = initializeListDisplay();
+        } else {
+            logger.info("Making add command object");
+            command = initializeAdd(args, !WITH_KEYWORD);
+        }
+        return command;
+    }
+
 	private Command initializeAdd(String[] args, boolean isWithKeyWord) throws NoDescriptionException {
 		args = removeKeyWordIfReq(args, isWithKeyWord);
 		int dateStartIndex = getDateStartIndex(args);
@@ -188,7 +206,11 @@ public class Parser {
 	private Command initializeHome() {
 		return new Home();
 	}
-
+    
+	private Command initializeListDisplay() {
+        return new ListDisplay();
+    }
+	
 	private Command initializeDelete(String[] args) {
 		args = (String[]) ArrayUtils.remove(args, 0);
 		try {

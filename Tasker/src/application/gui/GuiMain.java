@@ -85,7 +85,7 @@ public class GuiMain extends Application {
 
 	private void setProgramLogo(Stage primaryStage) {
 
-		primaryStage.getIcons().add(new Image(ResourceLoader.load(LOGO_URL)));
+		//primaryStage.getIcons().add(new Image(ResourceLoader.load(LOGO_URL)));
 	}
 
 	private void setEnvironment() {
