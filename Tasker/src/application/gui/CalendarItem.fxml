@@ -28,8 +28,8 @@
          <font>
             <Font size="22.0" />
          </font></Label>
-		<Label fx:id="date" layoutX="14.0" layoutY="62.0" />
-		<Label fx:id="locationLabel" layoutX="14.0" layoutY="107.0" />
+		<Label fx:id="date" layoutX="14.0" layoutY="62.0" prefHeight="27.0" prefWidth="244.0" textFill="#757474" />
+		<Label fx:id="locationLabel" layoutX="14.0" layoutY="107.0" prefHeight="27.0" prefWidth="244.0" textFill="#757474" />
       <Label fx:id="indexLabel" alignment="CENTER" layoutX="112.0" layoutY="149.0" prefHeight="27.0" prefWidth="53.0" text="1" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />

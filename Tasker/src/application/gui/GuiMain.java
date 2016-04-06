@@ -76,7 +76,7 @@ public class GuiMain extends Application {
 
 	private void customiseGUIMenuBar(Stage primaryStage) {
 		setProgramName(primaryStage);
-		setProgramLogo(primaryStage);
+		//setProgramLogo(primaryStage);
 	}
 
 	private void setProgramName(Stage primaryStage) {

@@ -241,6 +241,9 @@ public class CalendarViewPage extends AnchorPane {
 	private void notifyUser(Task taskToFocus) {
 		String title = null;
 		String text = null;
+		if (taskToFocus == null){
+		    return;
+		}
 		if (taskToFocus.getEndDate() == null) {
 			title = "Reminder";
 			text = "No End Date Set";
@@ -319,7 +322,8 @@ public class CalendarViewPage extends AnchorPane {
 						}
 						textInputArea.clear();
 					} catch (Exception e) {
-						feedbackLabel.setText(MESSAGE_ERROR);
+					    e.printStackTrace(System.out);
+					    feedbackLabel.setText(MESSAGE_ERROR);
 					}
 				}
 				if (ke.getCode().equals(KeyCode.UP)) {

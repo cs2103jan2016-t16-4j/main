@@ -19,7 +19,7 @@
 	<children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
-      		<ListView fx:id="listViewItem" layoutX="50.0" orientation="HORIZONTAL" prefHeight="199.0" prefWidth="1012.0" />
+      		<ListView fx:id="listViewItem" layoutX="50.0" orientation="HORIZONTAL" prefHeight="199.0" prefWidth="1012.0" style="-fx-background: white;" />
             <Label fx:id="dateLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-69.0" layoutY="82.0" prefHeight="35.0" prefWidth="190.0" rotate="-90.0" text="Label" textAlignment="CENTER" textFill="#757474">
                <font>
                   <Font size="24.0" />
