@@ -1,6 +1,9 @@
 package application.logic;
 
+import java.util.ArrayList;
+
 import application.storage.Storage;
+import application.storage.Task;
 
 public class Help implements Command {
 	 private static final String COMMAND_ADD="add:\n--Adds new tasks (keyword add is not required)\n--Adds"
@@ -27,6 +30,11 @@ public class Help implements Command {
           msg+=COMMAND_HELP;
          
           return new Feedback(msg, null);
+	}
+	@Override
+	public Feedback execute(Storage storage, ArrayList<Task> tasksOnScreen) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
