@@ -47,7 +47,7 @@ public class Storage implements Cloneable {
 	}	
 	
 	public Task deleteTask(int index) throws IOException {
-		Task deletedTask = new Task();
+		Task deletedTask = null;
 		for (int i = 0; i<databaseManager.getOpenList().size(); i++) {
 			if (databaseManager.getOpenList().get(i).getTaskIndex()==index) {
 				deletedTask = databaseManager.getOpenList().get(i);

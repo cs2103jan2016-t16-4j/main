@@ -70,7 +70,7 @@ public class TaskSerializer implements JsonSerializer<Task>, JsonDeserializer<Ta
 	
 	@Override
 	public Task deserialize(JsonElement json, Type typeOfT,  JsonDeserializationContext context) throws JsonParseException {
-		Task task = new Task();
+
 		JsonObject object = json.getAsJsonObject();
 		String className = object.get(TASKTYPE).getAsString();
 		String taskDescript = object.get("taskDescription").getAsString();
@@ -84,13 +84,13 @@ public class TaskSerializer implements JsonSerializer<Task>, JsonDeserializer<Ta
 	    	FloatingTask floatingTask = new FloatingTask(taskDescript, location, remindDate, priority, taskIndex);			
 	        return floatingTask;	
 	    }
-	    if (className.equalsIgnoreCase(DeadlineTask.class.getSimpleName())) {
+	    else if (className.equalsIgnoreCase(DeadlineTask.class.getSimpleName())) {
 			Calendar endDate = context.deserialize(object.get("endDate"), Calendar.class);
 			endDate.set(Calendar.MILLISECOND, object.get("end-Date-milliseconds").getAsInt());
 			DeadlineTask deadlineTask = new DeadlineTask(taskDescript, endDate, location, remindDate, priority, taskIndex);			
 	        return deadlineTask;
 	    }
-	    if (className.equalsIgnoreCase(EventTask.class.getSimpleName())) {
+	    else {
 			Calendar startDate = context.deserialize(object.get("startDate"), Calendar.class);
 			startDate.set(Calendar.MILLISECOND, object.get("start-Date-milliseconds").getAsInt());		
 			Calendar endDate = context.deserialize(object.get("endDate"), Calendar.class);
@@ -98,7 +98,6 @@ public class TaskSerializer implements JsonSerializer<Task>, JsonDeserializer<Ta
 			EventTask eventTask = new EventTask(taskDescript, startDate, endDate, location, remindDate, priority, taskIndex);			
 	        return eventTask;
 	    }		
-        return task;
 	}
 
 }
