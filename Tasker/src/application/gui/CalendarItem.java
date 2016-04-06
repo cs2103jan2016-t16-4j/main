@@ -26,14 +26,16 @@ public class CalendarItem extends AnchorPane {
 	private Label locationLabel;
 	@FXML
 	private Rectangle rectangle;
+	@FXML
+	private Label indexLabel;
 
-	public CalendarItem(String name, String date, String location, String priority, int overdueCheck) {
+	public CalendarItem(String name, String date, String location, String priority, int overdueCheck, int index) {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CalendarItem.fxml"));
 		try {
 			fxmlLoader.setRoot(this);
 			fxmlLoader.setController(this);
 			fxmlLoader.load();
-			this.setLabels(name, date, location, priority, overdueCheck);
+			this.setLabels(name, date, location, priority, overdueCheck, index);
 
 		} catch (IOException exception) {
 			System.out.println("Could not load");
@@ -42,9 +44,10 @@ public class CalendarItem extends AnchorPane {
 
 	}
 
-	private void setLabels(String name, String date, String location, String priority, int overdueCheck) {
+	private void setLabels(String name, String date, String location, String priority, int overdueCheck, int index) {
 		this.taskName.setText(name.toUpperCase());
 		this.date.setText(date.toUpperCase());
+		this.indexLabel.setText(EMPTY + index);
 		setLocation(location.trim().toUpperCase());
 		setPriorityColor(priority);
 		overdueCheck(overdueCheck);
