@@ -2,6 +2,7 @@
 package application.logic;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import application.storage.Storage;
@@ -11,6 +12,7 @@ public class ChangeStorageLocation implements Command {
 	private static final String EMPTY_STRING = "";
 	private static final String MESSAGE_STORAGE_URL_NOT_FOUND = "Storage Location Invalid: Opening Directory Chooser";
 	private static final String MESSAGE_STORAGE_URL_FOUND = "Storage changed: ";
+	private static final String BACKSLASH = "\\";
 	String arguments;
 
 	ChangeStorageLocation(String arguments) {
@@ -30,8 +32,16 @@ public class ChangeStorageLocation implements Command {
 	@Override
 	public Feedback execute(StorageConnector storageConnector, ArrayList<Task> tasksOnScreen) {
 		if (arguments != EMPTY_STRING) {
+			arguments = arguments.replaceAll("/", "\\\\");
 			if (new File(arguments).isDirectory()) {
-				Feedback feedback = new Feedback(MESSAGE_STORAGE_URL_FOUND, tasksOnScreen, null);
+				try {
+					storageConnector.setDirectory(arguments + BACKSLASH);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Feedback feedback = new Feedback(MESSAGE_STORAGE_URL_FOUND + arguments + BACKSLASH, tasksOnScreen,
+						null);
 				feedback.setCalFlag();
 				return feedback;
 			}
