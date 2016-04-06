@@ -174,6 +174,19 @@ public class TaskManager {
 		return searchList;
 	}	
 	
+/*	public ArrayList<Task> searchCategoryType(ArrayList<Task> openList, String categoryType) {
+		ArrayList<Task> searchList = new ArrayList<Task>();
+		for (int i = 0; i < openList.size(); i++) {
+			Task obj = openList.get(i);
+			if (obj.getCategoryType().toLowerCase()
+					.contains(categoryType.toLowerCase())) {
+				searchList.add(obj);
+//				System.out.println("Found a entry..");			
+				}
+			}
+		return searchList;
+	} */
+	
 	public ArrayList<Task> sortDate(ArrayList<Task> openList) {
 		Collections.sort(openList, new ComparatorDate());
 		return openList;
