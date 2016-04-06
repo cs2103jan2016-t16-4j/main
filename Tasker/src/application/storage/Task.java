@@ -101,7 +101,9 @@ public class Task implements Cloneable {
 
 	}	
 	
-	
+	public String durationToString(){
+	    return "";
+	}
 	
     protected Object clone() throws CloneNotSupportedException {
     	Task newTask = (Task) super.clone();

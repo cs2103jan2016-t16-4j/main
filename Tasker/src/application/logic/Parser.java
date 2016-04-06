@@ -410,11 +410,12 @@ public class Parser {
 	private Calendar[] fixDatesForAdd(Calendar[] dates){
 	    Calendar startDate = dates[0];
 	    Calendar endDate = dates[1];
-        if (startDate != null){
-            if (startDate.equals(createEmptyDate())){
+	    if (startDate != null){
+	        if (startDate.equals(convertToCalendar(createEmptyDate()))){
                startDate = (Calendar) endDate.clone();
-               startDate.add(Calendar.HOUR, -2); 
-            } else if (endDate.equals(createEmptyDate())){
+               startDate.add(Calendar.HOUR, +2); 
+               
+            } else if (endDate.equals(convertToCalendar(createEmptyDate()))){
                 endDate = (Calendar) startDate.clone();
                 endDate.add(Calendar.HOUR, -2); 
             }
