@@ -57,7 +57,7 @@ public class GuiMain extends Application {
 		try {
 			setEnvironment();
 			initializeSaveDirectory(primaryStage);
-			// OpeningPage page = new OpeningPage(taskList, logic);
+			// OpeningPage cVPage = new OpeningPage(taskList, logic);
 			CalendarViewPage cVPage = new CalendarViewPage(taskList, logic);
 			Platform.setImplicitExit(false);
 			// Scene scene = new Scene(page);

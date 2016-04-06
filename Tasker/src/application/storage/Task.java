@@ -101,6 +101,8 @@ public class Task implements Cloneable {
 
 	}	
 	
+	
+	
     protected Object clone() throws CloneNotSupportedException {
     	Task newTask = (Task) super.clone();
     	newTask.remindDate = (Calendar) remindDate.clone();
