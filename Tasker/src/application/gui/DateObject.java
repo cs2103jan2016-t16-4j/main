@@ -43,9 +43,9 @@ public class DateObject extends HBox {
 						public void updateItem(Task item, boolean empty) {
 							super.updateItem(item, empty);
 							if (item != null) {
-
 								CalendarItem calItem = new CalendarItem(item.getTaskDescription(),
-										FORMAT_DATE.format(item.getEndDate().getTime()), item.getLocation());
+										FORMAT_DATE.format(item.getEndDate().getTime()), item.getLocation(),
+										item.getPriority());
 								setGraphic(calItem);
 							} else {
 								setGraphic(null);
@@ -67,8 +67,6 @@ public class DateObject extends HBox {
 	private void updateListView(ArrayList<Task> taskList) {
 		ObservableList<Task> list = makeDisplayList(taskList);
 		this.listViewItem.setItems(list);
-		// if(){
-		// displayList.scrollTo(taskList.get(0));}
 	}
 
 	private ObservableList<Task> makeDisplayList(ArrayList<Task> taskList) {

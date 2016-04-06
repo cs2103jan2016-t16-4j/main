@@ -7,12 +7,6 @@ import java.util.ArrayList;
 import application.storage.Storage;
 import application.storage.Task;
 
-/**
- * 
- * @author Shawn
- *
- */
-
 public class ChangeStorageLocation implements Command {
 	private static final String EMPTY_STRING = "";
 	private static final String MESSAGE_STORAGE_URL_NOT_FOUND = "Storage Location Invalid: Opening Directory Chooser";

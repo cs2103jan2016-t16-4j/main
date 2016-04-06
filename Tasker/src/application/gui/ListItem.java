@@ -2,12 +2,8 @@
 package application.gui;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
@@ -27,13 +23,13 @@ public class ListItem extends HBox {
 	@FXML
 	private Label taskLocation;
 
-	public ListItem(int taskNumber, String name, String date, String location) {
+	public ListItem(int taskNumber, String name, String date, String location, String taskPriority) {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ListItem.fxml"));
 		try {
 			fxmlLoader.setRoot(this);
 			fxmlLoader.setController(this);
 			fxmlLoader.load();
-			this.setLabels(taskNumber, name, date, location);
+			this.setLabels(taskNumber, name, date, location, taskPriority);
 		} catch (IOException exception) {
 			System.out.println("Could not load");
 			throw new RuntimeException(exception);
@@ -41,21 +37,28 @@ public class ListItem extends HBox {
 
 	}
 
-	private void setLabels(int taskNumber, String name, String date, String location) {
+	private void setLabels(int taskNumber, String name, String date, String location, String taskPriority) {
 		listNumber.setText("" + taskNumber);
-		setBackground(taskNumber);
+		setBackground(taskPriority);
 		taskName.setText(name.toUpperCase());
 		this.date.setText(date.toUpperCase());
 		setLocation(location.trim().toUpperCase());
 	}
 
-	private void setBackground(int taskNumber) {
-		if (taskNumber % 3 == 1) {
+	private void setBackground(String priority) {
+		switch (priority) {
+		case "high":
 			listNumber.setStyle(String.format(BACKGROUND_STYLE, RED));
-		} else if (taskNumber % 3 == 2) {
+			break;
+		case "medium":
 			listNumber.setStyle(String.format(BACKGROUND_STYLE, BLUE));
-		} else {
+			break;
+		case "low":
 			listNumber.setStyle(String.format(BACKGROUND_STYLE, GREEN));
+			break;
+		default:
+			listNumber.setStyle(String.format(BACKGROUND_STYLE, GREEN));
+			break;
 		}
 
 	}
