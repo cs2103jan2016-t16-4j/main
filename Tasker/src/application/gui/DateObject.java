@@ -17,8 +17,6 @@ import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
 public class DateObject extends HBox {
-
-	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd MMM yyyy");
 	public static final String EMPTY = "";
 
 	@FXML
@@ -44,8 +42,7 @@ public class DateObject extends HBox {
 							super.updateItem(item, empty);
 							if (item != null) {
 								CalendarItem calItem = new CalendarItem(item.getTaskDescription(),
-										FORMAT_DATE.format(item.getEndDate().getTime()), item.getLocation(),
-										item.getPriority());
+										item.durationToString(), item.getLocation(), item.getPriority());
 								setGraphic(calItem);
 							} else {
 								setGraphic(null);

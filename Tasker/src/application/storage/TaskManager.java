@@ -206,21 +206,25 @@ public class TaskManager {
 		if (openList.get(index) instanceof FloatingTask) {
 			// convert : floating task to event task
 			if (startDate!=null && endDate!=null) {
+				if (startDate.get(Calendar.YEAR)!=EMPTY && endDate.get(Calendar.YEAR)!=EMPTY)
 				openList.set(index, updateToEventTask(openList.get(index), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
 			}
-			// convert : floating task to deadline task
-			else if (startDate==null && endDate!=null) {
+			// convert : floating task to deadline task	
+			if (startDate==null && endDate!=null) {
 				openList.set(index, updateToDeadlineTask(openList.get(index), taskDescription, endDate, location, remindDate, priority, taskIndex));
 			}
 			// no conversion
 			else {
 				openList.set(index, updateToFloatingTask(openList.get(index), taskDescription, location, remindDate, priority, taskIndex));
 			}
+			
+
 		}
 		
 		else if (openList.get(index) instanceof DeadlineTask) {
 			// convert : deadline task to event task
 			if (startDate!=null && endDate!=null) {
+				if (startDate.get(Calendar.YEAR)!=EMPTY && endDate.get(Calendar.YEAR)!=EMPTY)
 				openList.set(index, updateToEventTask(openList.get(index), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
 			}
 			// convert : deadline task to floating task

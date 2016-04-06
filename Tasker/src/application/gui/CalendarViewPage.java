@@ -53,6 +53,10 @@ public class CalendarViewPage extends AnchorPane {
 	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd MMM yyyy");
 	private static final SimpleDateFormat FORMAT_YEAR = new SimpleDateFormat("yyyy");
 	private static final SimpleDateFormat FORMAT_COMPARE_DATE = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+	private static final String LIST_FLAG = "list";
+	private static final String CAL_FLAG = "cal";
+	private static final String HELP_FLAG = "help";
+	private static final String STORAGE_FLAG = "storage";
 
 	// Messages
 	private static final String ADD_HINT_MESSAGE = "To add: [task description] from [start] to [end] at [location]";
@@ -74,6 +78,8 @@ public class CalendarViewPage extends AnchorPane {
 	String text = EMPTY_STRING;
 	private static ArrayList<String> commands = new ArrayList<String>();
 	private static int pointer = 0;
+	private Task taskToFocus;
+	private String checkFlag;
 
 	@FXML
 	public Label feedbackLabel;
@@ -113,7 +119,8 @@ public class CalendarViewPage extends AnchorPane {
 		feedbackLabel.setText(MESSAGE_FEEDBACK_INTRO);
 		initialiseCalendarList();
 		initialiseDisplayList();
-		updateViews(tasksOnScreen);
+		taskToFocus = null;
+		updateViews(tasksOnScreen, taskToFocus);
 	}
 
 	private void initialiseDisplayList() {
@@ -204,7 +211,7 @@ public class CalendarViewPage extends AnchorPane {
 		return dateArray;
 	}
 
-	private void updateViews(ArrayList<Task> taskList) {
+	private void updateViews(ArrayList<Task> taskList, Task taskToFocus) {
 		// Timer timer = new Timer();
 		// timer.schedule(new TimerTask() {
 		// public void run() {
@@ -224,18 +231,21 @@ public class CalendarViewPage extends AnchorPane {
 		// }
 		// }, 0, 60 * 250);
 		updateCalendarList(taskList);
-		updateDisplayList(taskList);
+		updateDisplayList(taskList, taskToFocus);
 	}
 
 	private void notifyUser() {
 		Notifications.create().title("Task Reminder").text("END").showInformation();
 	}
 
-	private void updateDisplayList(ArrayList<Task> taskList) {
+	private void updateDisplayList(ArrayList<Task> taskList, Task taskToFocus) {
 		this.displayList.getItems().clear();
 		if (taskList.size() != 0) {
 			ObservableList<Task> list = makeDisplayList(taskList);
 			this.displayList.setItems(list);
+			if (taskToFocus != null) {
+				this.displayList.scrollTo(taskToFocus);
+			}
 		}
 	}
 
@@ -278,9 +288,11 @@ public class CalendarViewPage extends AnchorPane {
 							Feedback feedback = logic.executeCommand(text, tasksOnScreen);
 							System.out.println(feedback.getMessage());
 							tasksOnScreen = feedback.getTasks();
-							updateViews(tasksOnScreen);
+							taskToFocus = feedback.getIndexToScroll();
+							updateViews(tasksOnScreen, taskToFocus);
+							checkFlag = feedback.getFlag();
 							feedbackLabel.setText(feedback.getMessage());
-							promptStorage(feedback);
+							doFlagCommand(checkFlag, feedback);
 						} else {
 							notifyUser();
 							switchViews();
@@ -326,6 +338,23 @@ public class CalendarViewPage extends AnchorPane {
 			}
 		});
 
+	}
+
+	private void doFlagCommand(String checkFlag, Feedback feedback) throws IOException {
+		switch (checkFlag) {
+		case STORAGE_FLAG:
+			promptStorage(feedback);
+			break;
+		case CAL_FLAG:
+			calendarList.toFront();
+			break;
+		case HELP_FLAG:
+
+			break;
+		case LIST_FLAG:
+			displayList.toFront();
+			break;
+		}
 	}
 
 	private void promptStorage(Feedback feedback) throws IOException {
