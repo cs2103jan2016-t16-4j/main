@@ -2,7 +2,9 @@
 package application.gui;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import application.storage.Task;
 import javafx.collections.FXCollections;
@@ -17,6 +19,7 @@ import javafx.util.Callback;
 
 public class DateObject extends HBox {
 	public static final String EMPTY = "";
+	private static final SimpleDateFormat FORMAT_COMPARE_DATE = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
 	@FXML
 	public Label dateLabel;
@@ -40,8 +43,13 @@ public class DateObject extends HBox {
 						public void updateItem(Task item, boolean empty) {
 							super.updateItem(item, empty);
 							if (item != null) {
+								Calendar cal = Calendar.getInstance();
+								int overdueCheck = 0;
+								if (item.getEndDate() != null) {
+									overdueCheck = item.getEndDate().getTime().compareTo(cal.getTime());
+								}
 								CalendarItem calItem = new CalendarItem(item.getTaskDescription(),
-										item.durationToString(), item.getLocation(), item.getPriority());
+										item.durationToString(), item.getLocation(), item.getPriority(), overdueCheck);
 								setGraphic(calItem);
 							} else {
 								setGraphic(null);

@@ -133,8 +133,7 @@ public class CalendarViewPage extends AnchorPane {
 							Calendar cal = Calendar.getInstance();
 							int overdueCheck = 0;
 							if (item.getEndDate() != null) {
-								overdueCheck = FORMAT_COMPARE_DATE.format(item.getEndDate().getTime())
-										.compareTo(FORMAT_COMPARE_DATE.format(cal.getTime()));
+								overdueCheck = item.getEndDate().getTime().compareTo(cal.getTime());
 							}
 							int taskNumber = this.getIndex() + TASK_NUM_OFFSET;
 							String taskDescription = item.getTaskDescription();
