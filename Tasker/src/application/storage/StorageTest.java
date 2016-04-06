@@ -1,4 +1,5 @@
 package application.storage;
+
 import static org.junit.Assert.*;
 
 import java.io.File;
@@ -20,6 +21,7 @@ public class StorageTest {
 	static final String CUSTOM_DIRECTORY2 = "E:/Eclipse/workspace/CS2103_Tasker/";
 	static Calendar cal1 = Calendar.getInstance();
 	static Calendar cal2 = Calendar.getInstance();
+	static Calendar cal3 = Calendar.getInstance();
 	static Calendar time1 = Calendar.getInstance();
 	static Calendar noDate = Calendar.getInstance();
 	static Calendar noTime = Calendar.getInstance();
@@ -33,6 +35,7 @@ public class StorageTest {
 		storageController.initialise();
 		cal1.set(2020, Calendar.JUNE, 30);
 		cal2.set(2030, Calendar.DECEMBER, 25);
+		cal3.set(2040, Calendar.APRIL, 1);
 		noDate.set(Calendar.YEAR, EMPTY);
 		noTime.set(Calendar.MILLISECOND, EMPTY);
 		noTime.set(Calendar.HOUR_OF_DAY, 0);
@@ -77,16 +80,20 @@ public class StorageTest {
 
 //	@Test
 	public void addTask() throws IOException {
-		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
-		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
-		storageController.addTaskInList("Finish CS2103", noDate, noDate, "School", noDate, "high");
+		storageController.addTaskInList("Go to hell", null, null, "Doom", noDate, "high");
+		assertEquals("FloatingTask",storageController.getOpenList().get(0).getClass().getSimpleName());
+		storageController.addTaskInList("Do homework", null, cal1, "Home", cal2, "low");
+		assertEquals("DeadlineTask",storageController.getOpenList().get(1).getClass().getSimpleName());
 		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		assertEquals("EventTask",storageController.getOpenList().get(2).getClass().getSimpleName());
+		storageController.addTaskInList("Finish CS2103", null, null, "School", noDate, "high");
+		assertEquals("FloatingTask",storageController.getOpenList().get(3).getClass().getSimpleName());
 	}
 	
 //	@Test
 	public void closeTask() throws IOException {
-		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
-		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
+		storageController.addTaskInList("Go to hell", cal1, cal2, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", null, cal1, "Home", cal2, "low");
 		storageController.closeTask(1);
 	}
 	
@@ -98,10 +105,10 @@ public class StorageTest {
 	
 //	@Test
 	public void searchName() throws IOException {
-//		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
-//		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
-//		storageController.addTaskInList("Finish CS2103", noDate, noDate, "School", noDate, "high");
-//		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		storageController.addTaskInList("Go to hell", null, null, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", null, cal1, "Home", cal2, "low");
+		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		storageController.addTaskInList("Finish CS2103", null, null, "School", noDate, "high");
 		ArrayList<Task> searchList = storageController.searchTaskByName("home");
 		for (int i = 0; i<searchList.size(); i++) {
 			System.out.println("Found : "+searchList.get(i).toString());
@@ -110,10 +117,10 @@ public class StorageTest {
 	
 //	@Test
 	public void searchByDate() throws IOException {
-		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
-		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
-		storageController.addTaskInList("Finish CS2103", noDate, noDate, "School", noDate, "high");
+		storageController.addTaskInList("Go to hell", null, null, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", null, cal1, "Home", cal2, "low");
 		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		storageController.addTaskInList("Finish CS2103", null, null, "School", noDate, "high");
 		Calendar searchDate = Calendar.getInstance();
 //		cal1.set(2020, Calendar.JUNE, 30);
 //		cal2.set(2030, Calendar.DECEMBER, 25);
@@ -126,10 +133,10 @@ public class StorageTest {
 	
 //	@Test
 	public void searchPriority() throws IOException {
-		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
-		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
-		storageController.addTaskInList("Finish CS2103", noDate, noDate, "School", noDate, "high");
+		storageController.addTaskInList("Go to hell", null, null, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", null, cal1, "Home", cal2, "low");
 		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		storageController.addTaskInList("Finish CS2103", null, null, "School", noDate, "high");
 		ArrayList<Task> searchList = storageController.searchTaskByPriority("low");
 		assertTrue(searchList.get(0) == storageController.databaseManager.getOpenList().get(1));
 		assertTrue(searchList.get(1) == storageController.databaseManager.getOpenList().get(3));		
@@ -140,10 +147,10 @@ public class StorageTest {
 	
 //	@Test
 	public void sortName() throws IOException {
-		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
-		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
-		storageController.addTaskInList("Finish CS2103", noDate, noDate, "School", noDate, "high");
+		storageController.addTaskInList("Go to hell", null, null, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", null, cal1, "Home", cal2, "low");
 		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		storageController.addTaskInList("Finish CS2103", null, null, "School", noDate, "high");
 		ArrayList<Task> searchList = storageController.sortByName();
 		for (int i = 0; i<searchList.size(); i++) {
 			System.out.println(i+") " +searchList.get(i).toString());
@@ -152,10 +159,10 @@ public class StorageTest {
 	
 //	@Test
 	public void sortDate() throws IOException {
-//		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
-//		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
-//		storageController.addTaskInList("Finish CS2103", noDate, noDate, "School", noDate, "high");
-//		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		storageController.addTaskInList("Go to hell", null, null, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", null, cal1, "Home", cal2, "low");
+		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		storageController.addTaskInList("Finish CS2103", null, null, "School", noDate, "high");
 		ArrayList<Task> searchList = storageController.sortByDate();
 		for (int i = 0; i<searchList.size(); i++) {
 			System.out.println(i+") " +searchList.get(i).toString());
@@ -176,10 +183,10 @@ public class StorageTest {
 	
 //	@Test
 	public void updateTask() throws IOException, CloneNotSupportedException {
-		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
-		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
-		storageController.addTaskInList("Finish CS2103", noDate, noDate, "School", noDate, "high");
+		storageController.addTaskInList("Go to hell", null, null, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", null, cal1, "Home", cal2, "low");
 		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		storageController.addTaskInList("Finish CS2103", null, null, "School", noDate, "high");
 		Calendar newDate = Calendar.getInstance();
 		newDate.set(2035, Calendar.JUNE, 30);
 		ArrayList<Task> list = new ArrayList<Task>();
@@ -205,10 +212,10 @@ public class StorageTest {
 
 //	@Test
 	public void updateTaskWithTime() throws IOException, CloneNotSupportedException {
-		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
-		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
-		storageController.addTaskInList("Finish CS2103", time1, noDate, "School", noDate, "high");
+		storageController.addTaskInList("Go to hell", null, null, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", null, cal1, "Home", cal2, "low");
 		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		storageController.addTaskInList("Finish CS2103", null, null, "School", noDate, "high");
 		Calendar newDate = Calendar.getInstance();
 		newDate.set(2035, Calendar.JUNE, 30);
 		ArrayList<Task> list = new ArrayList<Task>();
@@ -220,10 +227,10 @@ public class StorageTest {
 	
 //	@Test
 	public void searchOnDate() throws IOException {
-		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
-		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
-		storageController.addTaskInList("Finish CS2103", noDate, noDate, "School", noDate, "high");
+		storageController.addTaskInList("Go to hell", null, null, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", null, cal1, "Home", cal2, "low");
 		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		storageController.addTaskInList("Finish CS2103", null, null, "School", noDate, "high");
 		Calendar searchDate = Calendar.getInstance();
 		searchDate.set(2030, Calendar.DECEMBER, 25);
 //		cal1.set(2020, Calendar.JUNE, 30);
@@ -254,7 +261,7 @@ public class StorageTest {
 		System.out.println("Duration : "+task.durationToString());
 	}
 	
-	@Test 
+//	@Test 
 	public void checkCloseList() throws IOException {
 		ArrayList<Task> list = storageController.getCloseList();
 		for (int i = 0; i<list.size(); i++) {
@@ -262,7 +269,140 @@ public class StorageTest {
 		}
 	}
 	
+//	@Test	// event task ---> deadline task
+	public void updateTaskType1() throws IOException, CloneNotSupportedException {
+		storageController.addTaskInList("Go to hell", null, null, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", null, cal1, "Home", cal2, "low");
+		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		storageController.addTaskInList("Finish CS2103", null, null, "School", noDate, "high");
+		Calendar newDate = Calendar.getInstance();
+		newDate.set(2035, Calendar.JUNE, 30);
+		ArrayList<Task> list = new ArrayList<Task>();
+		list = storageController.updateTask(3, "", null, cal1, "School", noDate, "high");
+		System.out.println(list.size());
+		System.out.println("Old : "+list.get(0).toString());
+		System.out.println("New : "+list.get(1).toString());
+	}
 	
+//	@Test	// event task ---> floating task
+	public void updateTaskType2() throws IOException, CloneNotSupportedException {
+		storageController.addTaskInList("Go to hell", null, null, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", null, cal1, "Home", cal2, "low");
+		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		storageController.addTaskInList("Finish CS2103", null, null, "School", noDate, "high");
+		Calendar newDate = Calendar.getInstance();
+		newDate.set(2035, Calendar.JUNE, 30);
+		ArrayList<Task> list = new ArrayList<Task>();
+		list = storageController.updateTask(3, "Fucking CS2103", null, null, "School", noDate, "high");
+		System.out.println(list.size());
+		System.out.println("Old : "+list.get(0).toString());
+		System.out.println("New : "+list.get(1).toString());
+	}
+	
+//	@Test	// event task ---> event task
+	public void updateTaskType3() throws IOException, CloneNotSupportedException {
+		storageController.addTaskInList("Go to hell", null, null, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", null, cal1, "Home", cal2, "low");
+		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		storageController.addTaskInList("Finish CS2103", null, null, "School", noDate, "high");
+		Calendar newDate = Calendar.getInstance();
+		newDate.set(2035, Calendar.JUNE, 30);
+		ArrayList<Task> list = new ArrayList<Task>();
+		list = storageController.updateTask(3, "", cal2, cal3, "School", noDate, "high");
+		System.out.println(list.size());
+		System.out.println("Old : "+list.get(0).toString());
+		System.out.println("New : "+list.get(1).toString());
+	}
+	
+//	@Test // floating task ---> event task
+	public void updateTaskType4() throws IOException, CloneNotSupportedException {
+		storageController.addTaskInList("Go to hell", null, null, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", null, cal1, "Home", cal2, "low");
+		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		storageController.addTaskInList("Finish CS2103", null, null, "School", noDate, "high");
+		Calendar newDate = Calendar.getInstance();
+		newDate.set(2035, Calendar.JUNE, 30);
+		ArrayList<Task> list = new ArrayList<Task>();
+		list = storageController.updateTask(1, "", cal1, cal2, "Hell", noDate, "high");
+		System.out.println(list.size());
+		System.out.println("Old : "+list.get(0).toString());
+		System.out.println("New : "+list.get(1).toString());
+	}
+	
+//	@Test // floating task ---> deadline task
+	public void updateTaskType5() throws IOException, CloneNotSupportedException {
+		storageController.addTaskInList("Go to hell", null, null, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", null, cal1, "Home", cal2, "low");
+		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		storageController.addTaskInList("Finish CS2103", null, null, "School", noDate, "high");
+		Calendar newDate = Calendar.getInstance();
+		newDate.set(2035, Calendar.JUNE, 30);
+		ArrayList<Task> list = new ArrayList<Task>();
+		list = storageController.updateTask(1, "", null, cal2, "Heaven", noDate, "high");
+		System.out.println(list.size());
+		System.out.println("Old : "+list.get(0).toString());
+		System.out.println("New : "+list.get(1).toString());
+	}
+	
+//	@Test // floating task ---> floating task
+	public void updateTaskType6() throws IOException, CloneNotSupportedException {
+		storageController.addTaskInList("Go to hell", null, null, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", null, cal1, "Home", cal2, "low");
+		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		storageController.addTaskInList("Finish CS2103", null, null, "School", noDate, "high");
+		Calendar newDate = Calendar.getInstance();
+		newDate.set(2035, Calendar.JUNE, 30);
+		ArrayList<Task> list = new ArrayList<Task>();
+		list = storageController.updateTask(1, "", null, null, "LT33", noDate, "high");
+		System.out.println(list.size());
+		System.out.println("Old : "+list.get(0).toString());
+		System.out.println("New : "+list.get(1).toString());
+	}
+	
+//	@Test // deadline task ---> event task	
+	public void updateTaskType7() throws IOException, CloneNotSupportedException {
+		storageController.addTaskInList("Go to hell", null, null, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", null, cal1, "Home", cal2, "low");
+		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		storageController.addTaskInList("Finish CS2103", null, null, "School", noDate, "high");
+		Calendar newDate = Calendar.getInstance();
+		newDate.set(2035, Calendar.JUNE, 30);
+		ArrayList<Task> list = new ArrayList<Task>();
+		list = storageController.updateTask(2, "", cal1, cal2, "Hell", noDate, "high");
+		System.out.println(list.size());
+		System.out.println("Old : "+list.get(0).toString());
+		System.out.println("New : "+list.get(1).toString());
+	}
+	
+//	@Test // deadline task --> floating task
+	public void updateTaskType8() throws IOException, CloneNotSupportedException {
+		storageController.addTaskInList("Go to hell", null, null, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", null, cal1, "Home", cal2, "low");
+		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		storageController.addTaskInList("Finish CS2103", null, null, "School", noDate, "high");
+		Calendar newDate = Calendar.getInstance();
+		newDate.set(2035, Calendar.JUNE, 30);
+		ArrayList<Task> list = new ArrayList<Task>();
+		list = storageController.updateTask(2, "", null, null, "Hell", noDate, "high");
+		System.out.println(list.size());
+		System.out.println("Old : "+list.get(0).toString());
+		System.out.println("New : "+list.get(1).toString());
+	}
+	
+//	@Test // deadline task ---> deadline task
+	public void updateTaskType9() throws IOException, CloneNotSupportedException {
+		storageController.addTaskInList("Go to hell", null, null, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", null, cal1, "Home", cal2, "low");
+		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		storageController.addTaskInList("Finish CS2103", null, null, "School", noDate, "high");
+		Calendar newDate = Calendar.getInstance();
+		newDate.set(2035, Calendar.JUNE, 30);
+		ArrayList<Task> list = new ArrayList<Task>();
+		list = storageController.updateTask(2, "", null, cal3, "Hell", noDate, "high");
+		System.out.println(list.size());
+		System.out.println("Old : "+list.get(0).toString());
+		System.out.println("New : "+list.get(1).toString());
+	}
 	
 //	@After
 	public void after() {

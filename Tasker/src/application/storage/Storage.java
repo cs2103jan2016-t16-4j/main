@@ -104,6 +104,10 @@ public class Storage implements Cloneable {
 		return taskManager.searchPriority(databaseManager.getOpenList(), priority);
 	}
 	
+/*	public ArrayList<Task> searchTaskByCategoryType(String categoryType) {
+		return taskManager.searchCategoryType(databaseManager.getOpenList(), categoryType);
+	} 
+*/	
 	public void setDirectory(String path) throws IOException {
 		fileManager.setDirectory(path);
 	}
@@ -133,8 +137,7 @@ public class Storage implements Cloneable {
 		for (int i = 0; i<databaseManager.getOpenList().size(); i++) {
 			if (databaseManager.getOpenList().get(i).getTaskIndex()==index) {
 				taskIndex = i;
-				Task originalTask = (Task) databaseManager.getOpenList().get(i).clone();
-				list.add(originalTask);
+				list.add(cloneObject(databaseManager.getOpenList().get(i)));
 				break;
 			}
 		}
@@ -143,12 +146,23 @@ public class Storage implements Cloneable {
 		databaseManager.updateOpenList(taskManager.update(
 				databaseManager.getOpenList(), taskDescription, startDate,
 				endDate, location, remindDate, priority, index));
-		Task updatedTask = (Task) databaseManager.getOpenList().get(taskIndex).clone();
-		list.add(updatedTask);
+		list.add(cloneObject(databaseManager.getOpenList().get(taskIndex)));
 		
 		saveFile();
 		return list;
 	}
+	
+	private Task cloneObject (Task obj) throws CloneNotSupportedException {
+		if (obj instanceof FloatingTask) {
+			return (FloatingTask) obj.clone();
+		}
+		else if (obj instanceof DeadlineTask) {
+			return (DeadlineTask) obj.clone();
+		} else {
+			return (EventTask) obj.clone();
+		}
+	}
+	
     protected Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
