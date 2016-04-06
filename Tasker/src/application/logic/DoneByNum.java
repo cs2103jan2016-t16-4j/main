@@ -56,12 +56,18 @@ public class DoneByNum implements UndoableCommand {
         try {
             storageConnector.uncloseTask(closedTask.getTaskIndex());
             String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK,closedTask.toString());
-            return getFeedbackCal(feedbackMessage, storageConnector.getOpenList(), closedTask);
+            return getFeedbackList(feedbackMessage, storageConnector.getOpenList(), closedTask);
         }catch(IOException e){
             return getFeedbackCal(MESSAGE_UNDO_FAILURE, storageConnector.getOpenList(), null);
         }
     }
 
+    private Feedback getFeedbackList(String message, ArrayList<Task> tasks, Task task){
+        Feedback fb = new Feedback(message, tasks, task);
+        fb.setListFlag();
+        return fb;
+    }
+    
     private Feedback getFeedbackCal(String message, ArrayList<Task> tasks, Task task){
         Feedback fb = new Feedback(message, tasks, task);
         fb.setCalFlag();

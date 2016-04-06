@@ -230,6 +230,7 @@ public class Parser {
         priorityIndex = fixPriorityIndex(priorityIndex, args);
         String[] segments = getSegments(dateStartIndex, locationStartIndex, priorityIndex, args);
 		Calendar[] dates = parseDates(segments);
+		dates = fixDatesForUpdate(dates);
 		Calendar remindDate = convertToCalendar(createEmptyDate());
 		Command command = new Update(taskToUpdate, segments[DESC_POS], dates[0], dates[1], segments[LOC_POS],
 				remindDate, segments[PRI_POS]);
@@ -450,6 +451,18 @@ public class Parser {
         Calendar[] fixedDates = {startDate, endDate};
         return fixedDates;
 	}
+	
+	private Calendar[] fixDatesForUpdate(Calendar[] dates){
+        Calendar startDate = dates[0];
+        Calendar endDate = dates[1];
+        if (endDate == null && startDate == null){
+            endDate = convertToCalendar(createEmptyDate());
+            startDate = convertToCalendar(createEmptyDate());
+        }
+        Calendar[] fixedDates = {startDate, endDate};
+        return fixedDates;
+    }
+    
 	
 	private LocalDateTime fixDate(Date date1, Date date2) {
 		if (date1.equals(date2)) {

@@ -46,7 +46,7 @@ public class Add implements UndoableCommand{
             addedTask = storageConnector.addTaskInList(description, startDateTime
                     ,endDateTime, location, remindDate, priority);
             String feedbackMessage = String.format(MESSAGE_ADD_FEEDBACK, addedTask.toString());
-            return getFeedbackCal(feedbackMessage, storageConnector.getOpenList(), addedTask);
+            return getFeedbackList(feedbackMessage, storageConnector.getOpenList(), addedTask);
         } catch(IOException e) {
             return getFeedbackCal(MESSAGE_ADD_ERROR, storageConnector.getOpenList(), null);
         }
@@ -67,6 +67,13 @@ public class Add implements UndoableCommand{
         fb.setCalFlag();
         return fb;
     }
+    
+    private Feedback getFeedbackList(String message, ArrayList<Task> tasks, Task task){
+        Feedback fb = new Feedback(message, tasks, task);
+        fb.setListFlag();
+        return fb;
+    }
+    
     
     /*
     private String makeFeedback(){

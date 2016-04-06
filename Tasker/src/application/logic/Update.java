@@ -65,7 +65,7 @@ public class Update implements UndoableCommand{
             //System.out.println("Orig:" + origTask.getStartDate());
             //System.out.println("Updated:" + updatedTask.getStartDate());
             
-            return getFeedbackCal(feedbackMessage, storageConnector.getOpenList(), updatedTask);
+            return getFeedbackList(feedbackMessage, storageConnector.getOpenList(), updatedTask);
         } catch (IOException e){
             return getFeedbackCal(MESSAGE_UPDATE_ERROR, storageConnector.getOpenList(), null);
         } catch (CloneNotSupportedException e){
@@ -82,7 +82,7 @@ public class Update implements UndoableCommand{
             origTask.getPriority());
             String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK,"From: " 
                     + deletedTask.toString() + "\n" + "To: " + revertedTask.toString());
-            return getFeedbackCal(feedbackMessage, storageConnector.getOpenList(), origTask);
+            return getFeedbackList(feedbackMessage, storageConnector.getOpenList(), revertedTask);
         }catch(IOException e){
             return getFeedbackCal(MESSAGE_UNDO_FAILURE, storageConnector.getOpenList(), null);
         }
@@ -93,4 +93,12 @@ public class Update implements UndoableCommand{
         fb.setCalFlag();
         return fb;
     }
+    
+    private Feedback getFeedbackList(String message, ArrayList<Task> tasks, Task task){
+        Feedback fb = new Feedback(message, tasks, task);
+        fb.setListFlag();
+        return fb;
+    }
+    
+    
 }

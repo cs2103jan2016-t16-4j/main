@@ -32,13 +32,9 @@ public class DeleteByNum implements UndoableCommand {
             feedback.setCalFlag();
             return feedback;
         } catch (IOException e) {
-            Feedback feedback = new Feedback(MESSAGE_DELETE_FAILURE, storageConnector.getOpenList(), null);
-            feedback.setCalFlag();
-            return feedback;
+            return getFeedbackCal(MESSAGE_DELETE_FAILURE, storageConnector.getOpenList(), null);
         } catch (IndexOutOfBoundsException e) {
-            Feedback feedback = new Feedback(MESSAGE_INDEX_PROBLEM, storageConnector.getOpenList(), null);
-            feedback.setCalFlag();
-            return feedback;
+            return getFeedbackCal(MESSAGE_INDEX_PROBLEM, storageConnector.getOpenList(), null);
         }
     }
     
@@ -48,15 +44,23 @@ public class DeleteByNum implements UndoableCommand {
             deletedTask.getEndDate(),  deletedTask.getLocation(),  deletedTask.getRemindDate(),
             deletedTask.getPriority());
             String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK,deletedTask.toString());
-            Feedback feedback = new Feedback(feedbackMessage, storageConnector.getOpenList(), deletedTask);
-            feedback.setCalFlag();
-            return feedback;
+            return getFeedbackList(feedbackMessage, storageConnector.getOpenList(), deletedTask);
         }catch(IOException e){
-            Feedback feedback = new Feedback(MESSAGE_UNDO_FAILURE, storageConnector.getOpenList(), null);
-            feedback.setCalFlag();
-            return feedback;
+            return getFeedbackCal(MESSAGE_UNDO_FAILURE, storageConnector.getOpenList(), null);
         }
     }
     
-
+    private Feedback getFeedbackCal(String message, ArrayList<Task> tasks, Task task){
+        Feedback fb = new Feedback(message, tasks, task);
+        fb.setCalFlag();
+        return fb;
+    }
+    
+    
+    private Feedback getFeedbackList(String message, ArrayList<Task> tasks, Task task){
+        Feedback fb = new Feedback(message, tasks, task);
+        fb.setListFlag();
+        return fb;
+    }
+   
 }
