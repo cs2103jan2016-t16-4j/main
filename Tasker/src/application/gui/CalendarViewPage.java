@@ -40,12 +40,10 @@ import javafx.util.Callback;
 public class CalendarViewPage extends AnchorPane {
 	private ArrayList<Task> tasksOnScreen;
 	private Logic logic;
-	private LocalDateTime timeNow;
 
 	private static final String SPACE = " ";
 	private static final String EMPTY_STRING = "";
 	private static final String LOCATION_PREFIX = "AT";
-	private static final String EMPTY_DATE = "0001";
 	private static final String BACKSLASH = "\\";
 	private static final String DIRECTORY_CHOOSER_TITLE = "Pick Where To Store Tasks";
 	private static final String CURRENT_DIRECTORY = "user.dir";
@@ -132,13 +130,19 @@ public class CalendarViewPage extends AnchorPane {
 					public void updateItem(Task item, boolean empty) {
 						super.updateItem(item, empty);
 						if (item != null) {
+							Calendar cal = Calendar.getInstance();
+							int overdueCheck = 0;
+							if (item.getEndDate() != null) {
+								overdueCheck = FORMAT_COMPARE_DATE.format(item.getEndDate().getTime())
+										.compareTo(FORMAT_COMPARE_DATE.format(cal.getTime()));
+							}
 							int taskNumber = this.getIndex() + TASK_NUM_OFFSET;
 							String taskDescription = item.getTaskDescription();
 							String taskDuration = item.durationToString();
 							String taskLocation = getLocationString(item);
 							String taskPriority = item.getPriority();
 							ListItem listViewItem = new ListItem(taskNumber, taskDescription, taskDuration,
-									taskLocation, taskPriority);
+									taskLocation, taskPriority, overdueCheck);
 							setGraphic(listViewItem);
 						} else {
 							setGraphic(null);
@@ -234,8 +238,24 @@ public class CalendarViewPage extends AnchorPane {
 		updateDisplayList(taskList, taskToFocus);
 	}
 
-	private void notifyUser() {
-		Notifications.create().title("Task Reminder").text("END").showInformation();
+	private void notifyUser(Task taskToFocus) {
+		String title = null;
+		String text = null;
+		if (taskToFocus.getEndDate() == null) {
+			title = "Reminder";
+			text = "No End Date Set";
+		}
+		if (taskToFocus.getStartDate() == null) {
+			title = "Reminder";
+			text = "No Start Date Set";
+		}
+		if (taskToFocus.getStartDate() == null && taskToFocus.getEndDate() == null) {
+			title = "Reminder";
+			text = "No Dates Set";
+		}
+		if (title != null && text != null) {
+			Notifications.create().title(title).text(text).showInformation();
+		}
 	}
 
 	private void updateDisplayList(ArrayList<Task> taskList, Task taskToFocus) {
@@ -289,12 +309,12 @@ public class CalendarViewPage extends AnchorPane {
 							System.out.println(feedback.getMessage());
 							tasksOnScreen = feedback.getTasks();
 							taskToFocus = feedback.getIndexToScroll();
+							notifyUser(taskToFocus);
 							updateViews(tasksOnScreen, taskToFocus);
 							checkFlag = feedback.getFlag();
 							feedbackLabel.setText(feedback.getMessage());
 							doFlagCommand(checkFlag, feedback);
 						} else {
-							notifyUser();
 							switchViews();
 						}
 						textInputArea.clear();
