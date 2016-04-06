@@ -34,14 +34,17 @@ public class ChangeStorageLocation implements Command {
 	}
 
 	@Override
-	public Feedback execute(StorageConnector storage, ArrayList<Task> tasksOnScreen) {
+	public Feedback execute(StorageConnector storageConnector, ArrayList<Task> tasksOnScreen) {
 		if (arguments != EMPTY_STRING) {
 			if (new File(arguments).isDirectory()) {
-				return new Feedback(MESSAGE_STORAGE_URL_FOUND, tasksOnScreen);
+				Feedback feedback = new Feedback(MESSAGE_STORAGE_URL_FOUND, tasksOnScreen, null);
+				feedback.setCalFlag();
+				return feedback;
 			}
 		}
-		return new Feedback(MESSAGE_STORAGE_URL_NOT_FOUND, tasksOnScreen);
-
+		Feedback feedback = new Feedback(MESSAGE_STORAGE_URL_NOT_FOUND, tasksOnScreen, null);
+		feedback.setStorageFlag();
+		return feedback;
 	}
 }
 // @@author A0125417L

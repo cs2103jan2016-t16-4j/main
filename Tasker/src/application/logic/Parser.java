@@ -54,6 +54,7 @@ public class Parser {
     private static final String PRIORITY_LOW = "low";
     private static final String[] PRIORITY_LEVELS = {PRIORITY_HIGH,PRIORITY_MEDIUM,PRIORITY_LOW};
     
+    public static final int DEFAULT_EVENT_DURATION = 2;
     private static final int ARGUMENT_NUMBER = 4;
 	private static final int DESC_POS = 0;
 	private static final int DATE_POS = 1;
@@ -417,11 +418,11 @@ public class Parser {
 	    if (startDate != null){
 	        if (startDate.equals(convertToCalendar(createEmptyDate()))){
                startDate = (Calendar) endDate.clone();
-               startDate.add(Calendar.HOUR, +2); 
+               startDate.add(Calendar.HOUR, - DEFAULT_EVENT_DURATION); 
                
             } else if (endDate.equals(convertToCalendar(createEmptyDate()))){
                 endDate = (Calendar) startDate.clone();
-                endDate.add(Calendar.HOUR, -2); 
+                endDate.add(Calendar.HOUR, + DEFAULT_EVENT_DURATION); 
             }
         }
         Calendar[] fixedDates = {startDate, endDate};

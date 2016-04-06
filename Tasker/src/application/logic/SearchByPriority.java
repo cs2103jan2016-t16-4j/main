@@ -26,10 +26,18 @@ public class SearchByPriority implements Command {
 
 	private Feedback checkIfListEmpty(StorageConnector storageConnector) {
 		if (taskList != null) {
-			return new Feedback(MESSAGE_SEARCH_RESULTS, taskList);
+			return getFeedbackList(MESSAGE_SEARCH_RESULTS, taskList, null);
 		} else {
-			return new Feedback(MESSAGE_SEARCH_NOT_FOUND, storageConnector.getOpenList());
+			Feedback fb = new Feedback(MESSAGE_SEARCH_NOT_FOUND, storageConnector.getOpenList(), null);
+			fb.setCalFlag();
+			return fb;
 		}
 	}
+	private Feedback getFeedbackList(String message, ArrayList<Task> tasks, Task task){
+        Feedback fb = new Feedback(message, tasks, task);
+        fb.setListFlag();
+        return fb;
+    }
+	
 }
 // @@author A0125417L

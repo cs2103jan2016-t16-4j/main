@@ -12,8 +12,12 @@ public class Home implements Command{
     
     @Override
     public Feedback execute(StorageConnector storageConnector, ArrayList<Task> tasksOnScreen) {
-        return new Feedback(MESSAGE_BACK_HOME, storageConnector.getOpenList());
+        return getFeedbackCal(MESSAGE_BACK_HOME, storageConnector.getOpenList(), null);
     }
 
-    
+    private Feedback getFeedbackCal(String message, ArrayList<Task> tasks, Task task){
+        Feedback fb = new Feedback(message, tasks, task);
+        fb.setCalFlag();
+        return fb;
+    }
 }

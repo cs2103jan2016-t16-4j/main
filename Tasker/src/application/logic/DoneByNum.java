@@ -41,11 +41,11 @@ public class DoneByNum implements UndoableCommand {
             int idOfTaskToClose = tasks.get(numToClose).getTaskIndex();
             closedTask = storageConnector.closeTask(idOfTaskToClose);
             String feedbackMessage = String.format(MESSAGE_CLOSE_FEEDBACK,closedTask.toString());
-            return new Feedback(feedbackMessage, storageConnector.getOpenList());
+            return getFeedbackCal(feedbackMessage, storageConnector.getOpenList(), null);
         } catch (IOException e) {
-            return new Feedback(MESSAGE_CLOSE_FAILURE, storageConnector.getOpenList());
+            return getFeedbackCal(MESSAGE_CLOSE_FAILURE, storageConnector.getOpenList(), null);
         } catch (IndexOutOfBoundsException e) {
-            return new Feedback(MESSAGE_INDEX_PROBLEM, storageConnector.getOpenList());
+            return getFeedbackCal(MESSAGE_INDEX_PROBLEM, storageConnector.getOpenList(), null);
         }
     }
 
@@ -56,12 +56,16 @@ public class DoneByNum implements UndoableCommand {
         try {
             storageConnector.uncloseTask(closedTask.getTaskIndex());
             String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK,closedTask.toString());
-            return new Feedback(feedbackMessage, storageConnector.getOpenList());
+            return getFeedbackCal(feedbackMessage, storageConnector.getOpenList(), closedTask);
         }catch(IOException e){
-            return new Feedback(MESSAGE_UNDO_FAILURE, storageConnector.getOpenList());
+            return getFeedbackCal(MESSAGE_UNDO_FAILURE, storageConnector.getOpenList(), null);
         }
     }
 
-    
+    private Feedback getFeedbackCal(String message, ArrayList<Task> tasks, Task task){
+        Feedback fb = new Feedback(message, tasks, task);
+        fb.setCalFlag();
+        return fb;
+    }
     
 }

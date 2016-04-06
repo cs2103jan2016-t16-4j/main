@@ -62,14 +62,14 @@ public class Update implements UndoableCommand{
             updatedTask = returnedTasks.get(INDEX_UPDATED_TASK);
             String feedbackMessage = String.format(MESSAGE_UPDATE_FEEDBACK, "From: " 
                     + origTask.toString() + "\n" + "To: " + updatedTask.toString());
-            System.out.println("Orig:" + origTask.getStartDate());
-            System.out.println("Updated:" + updatedTask.getStartDate());
+            //System.out.println("Orig:" + origTask.getStartDate());
+            //System.out.println("Updated:" + updatedTask.getStartDate());
             
-            return new Feedback(feedbackMessage, storageConnector.getOpenList());
+            return getFeedbackCal(feedbackMessage, storageConnector.getOpenList(), updatedTask);
         } catch (IOException e){
-            return new Feedback(MESSAGE_UPDATE_ERROR, storageConnector.getOpenList());
+            return getFeedbackCal(MESSAGE_UPDATE_ERROR, storageConnector.getOpenList(), null);
         } catch (CloneNotSupportedException e){
-            return new Feedback(MESSAGE_UPDATE_ERROR, storageConnector.getOpenList());
+            return getFeedbackCal(MESSAGE_UPDATE_ERROR, storageConnector.getOpenList(), null);
         }
     }
     
@@ -82,20 +82,15 @@ public class Update implements UndoableCommand{
             origTask.getPriority());
             String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK,"From: " 
                     + deletedTask.toString() + "\n" + "To: " + revertedTask.toString());
-            return new Feedback(feedbackMessage, storageConnector.getOpenList());
+            return getFeedbackCal(feedbackMessage, storageConnector.getOpenList(), origTask);
         }catch(IOException e){
-            return new Feedback(MESSAGE_UNDO_FAILURE, storageConnector.getOpenList());
+            return getFeedbackCal(MESSAGE_UNDO_FAILURE, storageConnector.getOpenList(), null);
         }
     }
     
-    /*
-    private String makeFeedback(){
-        if (startDateTime.equals(EMPTY)){
-            return String.format(MESSAGE_UPDATE_FEEDBACK_NO_START_DATE, description, endDateTime, location);
-        } else {
-            return String.format(MESSAGE_UPDATE_FEEDBACK_WITH_START_DATE, description, startDateTime, endDateTime, location);
-        }
-        
+    private Feedback getFeedbackCal(String message, ArrayList<Task> tasks, Task task){
+        Feedback fb = new Feedback(message, tasks, task);
+        fb.setCalFlag();
+        return fb;
     }
-    */
 }

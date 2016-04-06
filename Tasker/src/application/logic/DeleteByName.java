@@ -31,7 +31,9 @@ public class DeleteByName implements UndoableCommand {
             Feedback feedback = takeAction(taskList, storageConnector);
             return feedback;
         }catch(IOException e){
-            return new Feedback(MESSAGE_DELETE_ERROR, storageConnector.getOpenList()); 
+            Feedback feedback = new Feedback(MESSAGE_DELETE_ERROR, storageConnector.getOpenList(), null);
+            feedback.setCalFlag();
+            return feedback;
         }
     }
     
@@ -39,13 +41,19 @@ public class DeleteByName implements UndoableCommand {
         assert(taskList != null);
         this.storageConnector = storageConnector;
         if (taskList.size() ==  0){
-            return new Feedback(MESSAGE_NOTHING_TO_DELETE, storageConnector.getOpenList());
+            Feedback feedback = new Feedback(MESSAGE_NOTHING_TO_DELETE, storageConnector.getOpenList(), null);
+            feedback.setCalFlag();
+            return feedback;
         } else if (taskList.size() ==  1){
             deletedTask = storageConnector.deleteTask(taskList.get(FIRST_INDEX).getTaskIndex());
             String feedbackMessage = String.format(FEEDBACK_DELETE, deletedTask.toString());
-            return new Feedback(feedbackMessage, storageConnector.getOpenList());
+            Feedback feedback = new Feedback(feedbackMessage, storageConnector.getOpenList(), null);
+            feedback.setCalFlag();
+            return feedback;
         } else {
-            return new Feedback(MESSAGE_WHICH_DELETE, taskList);
+            Feedback feedback = new Feedback(MESSAGE_WHICH_DELETE, taskList,null);
+            feedback.setListFlag();
+            return feedback;
         }
     }
     
@@ -56,12 +64,16 @@ public class DeleteByName implements UndoableCommand {
                         deletedTask.getEndDate(),  deletedTask.getLocation(),  deletedTask.getRemindDate(),
                         deletedTask.getPriority());
                 String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK,deletedTask.toString());
-                return new Feedback(feedbackMessage, storageConnector.getOpenList());
+                Feedback feedback = new Feedback(feedbackMessage, storageConnector.getOpenList(), deletedTask);
+                feedback.setCalFlag();
+                return feedback;
             }else{
                 throw new NothingToUndoException();
             }
         }catch(IOException e){
-            return new Feedback(MESSAGE_UNDO_FAILURE, storageConnector.getOpenList());
+            Feedback feedback = new Feedback(MESSAGE_UNDO_FAILURE, storageConnector.getOpenList(), null);
+            feedback.setCalFlag();
+            return feedback;
         }
     }
 

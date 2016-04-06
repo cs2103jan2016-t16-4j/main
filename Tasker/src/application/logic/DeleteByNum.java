@@ -28,11 +28,17 @@ public class DeleteByNum implements UndoableCommand {
             int idOfTaskToDelete = tasks.get(numToDelete).getTaskIndex();
             deletedTask = storageConnector.deleteTask(idOfTaskToDelete);
             String feedbackMessage = String.format(MESSAGE_DELETE_FEEDBACK,deletedTask.toString());
-            return new Feedback(feedbackMessage, storageConnector.getOpenList());
+            Feedback feedback = new Feedback(feedbackMessage, storageConnector.getOpenList(), null);
+            feedback.setCalFlag();
+            return feedback;
         } catch (IOException e) {
-            return new Feedback(MESSAGE_DELETE_FAILURE, storageConnector.getOpenList());
+            Feedback feedback = new Feedback(MESSAGE_DELETE_FAILURE, storageConnector.getOpenList(), null);
+            feedback.setCalFlag();
+            return feedback;
         } catch (IndexOutOfBoundsException e) {
-            return new Feedback(MESSAGE_INDEX_PROBLEM, storageConnector.getOpenList());
+            Feedback feedback = new Feedback(MESSAGE_INDEX_PROBLEM, storageConnector.getOpenList(), null);
+            feedback.setCalFlag();
+            return feedback;
         }
     }
     
@@ -42,9 +48,13 @@ public class DeleteByNum implements UndoableCommand {
             deletedTask.getEndDate(),  deletedTask.getLocation(),  deletedTask.getRemindDate(),
             deletedTask.getPriority());
             String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK,deletedTask.toString());
-            return new Feedback(feedbackMessage, storageConnector.getOpenList());
+            Feedback feedback = new Feedback(feedbackMessage, storageConnector.getOpenList(), deletedTask);
+            feedback.setCalFlag();
+            return feedback;
         }catch(IOException e){
-            return new Feedback(MESSAGE_UNDO_FAILURE, storageConnector.getOpenList());
+            Feedback feedback = new Feedback(MESSAGE_UNDO_FAILURE, storageConnector.getOpenList(), null);
+            feedback.setCalFlag();
+            return feedback;
         }
     }
     

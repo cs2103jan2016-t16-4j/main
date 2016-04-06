@@ -17,7 +17,13 @@ public class Undo implements Command {
             History history = History.getInstance();
             return history.undo();
         }catch(EmptyStackException e){
-            return new Feedback(MESSAGE_NOTHING_TO_UNDO, storageConnector.getOpenList());
+            return getFeedbackCal(MESSAGE_NOTHING_TO_UNDO, storageConnector.getOpenList(), null);
         }
+    }
+    
+    private Feedback getFeedbackCal(String message, ArrayList<Task> tasks, Task task){
+        Feedback fb = new Feedback(message, tasks, task);
+        fb.setCalFlag();
+        return fb;
     }
 }

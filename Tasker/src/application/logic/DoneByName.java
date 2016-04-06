@@ -43,7 +43,9 @@ public class DoneByName implements UndoableCommand {
             return feedback;
         } catch (IOException e) {
             logger.info("MESSAGE_CLOSE_ERROR");
-            return new Feedback(MESSAGE_CLOSE_ERROR, storageConnector.getOpenList());
+            Feedback feedback = new Feedback(MESSAGE_CLOSE_ERROR, storageConnector.getOpenList(), null);
+            feedback.setCalFlag();
+            return feedback;
         }
     }
 
@@ -53,13 +55,19 @@ public class DoneByName implements UndoableCommand {
         assert (taskList.size() > 0);
         this.storageConnector = storageConnector;
         if(taskList.size()== 0){
-            return new Feedback(MESSAGE_NOTHING_TO_CLOSE, storageConnector.getOpenList());
+            Feedback fb = new Feedback(MESSAGE_NOTHING_TO_CLOSE, storageConnector.getOpenList(), null);
+            fb.setCalFlag();
+            return fb;
         } else if (taskList.size() == 1) {
             closedTask = storageConnector.closeTask(taskList.get(FIRST_INDEX).getTaskIndex());
             String feedbackMessage = String.format(FEEDBACK_CLOSE, closedTask.toString());
-            return new Feedback(feedbackMessage, storageConnector.getOpenList());
+            Feedback fb = new Feedback(feedbackMessage, storageConnector.getOpenList(), null);
+            fb.setCalFlag();
+            return fb;
         } else {
-            return new Feedback(MESSAGE_WHICH_CLOSE, taskList);
+            Feedback fb = new Feedback(MESSAGE_WHICH_CLOSE, taskList, null);
+            fb.setListFlag();
+            return fb;
         }
     }
     
@@ -71,16 +79,23 @@ public class DoneByName implements UndoableCommand {
             if (closedTask != null){
                 storageConnector.uncloseTask(closedTask.getTaskIndex());
                 String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK,closedTask.toString());
-                return new Feedback(feedbackMessage, storageConnector.getOpenList());
+                return getFeedbackCal(feedbackMessage, storageConnector.getOpenList(), closedTask);
             }else{
                 throw new NothingToUndoException();
             }
         }catch(IOException e){
-            return new Feedback(MESSAGE_UNDO_FAILURE, storageConnector.getOpenList());
+            return getFeedbackCal(MESSAGE_UNDO_FAILURE, storageConnector.getOpenList(), null);
         }
     }
-
+    
+    private Feedback getFeedbackCal(String message, ArrayList<Task> tasks, Task task){
+        Feedback fb = new Feedback(message, tasks, task);
+        fb.setCalFlag();
+        return fb;
+    }
 }
+
+
 
 /*
  * private String closeSingleTask(ArrayList<Task> taskList, Storage storage)

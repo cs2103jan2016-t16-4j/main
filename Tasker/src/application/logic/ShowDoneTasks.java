@@ -18,11 +18,19 @@ public class ShowDoneTasks implements Command{
         return createAppropFeedback(storageConnector, tasks);
     }
     
-    private static Feedback createAppropFeedback(StorageConnector storageConnector, ArrayList<Task> tasks){
+    private Feedback createAppropFeedback(StorageConnector storageConnector, ArrayList<Task> tasks){
         if (tasks.size() == 0){
-            return new Feedback(MESSAGE_NO_CLOSED, storageConnector.getOpenList());
+            return getFeedbackCal(MESSAGE_NO_CLOSED, storageConnector.getOpenList(), null);
         } else{
-            return new Feedback(MESSAGE_CLOSED, tasks);
+            Feedback fb = new Feedback(MESSAGE_CLOSED, tasks, null);
+            fb.setListFlag();
+            return fb;
         }
+    }
+    
+    private Feedback getFeedbackCal(String message, ArrayList<Task> tasks, Task task){
+        Feedback fb = new Feedback(message, tasks, task);
+        fb.setCalFlag();
+        return fb;
     }
 }
