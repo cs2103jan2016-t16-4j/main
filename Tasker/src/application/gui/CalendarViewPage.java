@@ -181,14 +181,16 @@ public class CalendarViewPage extends AnchorPane {
 		ArrayList<Task> temporaryList = new ArrayList<Task>();
 		String tempoDate = FORMAT_DATE.format(taskList.get(0).getEndDate().getTime());
 		for (int i = 0; i < taskList.size(); i++) {
-			if (tempoDate.equals(FORMAT_DATE.format(taskList.get(i).getEndDate().getTime()))
-					|| FORMAT_YEAR.format(taskList.get(i).getEndDate().getTime()).equals(EMPTY_DATE)) {
-				temporaryList.add(taskList.get(i));
-			} else {
-				dateArray.add(temporaryList);
-				temporaryList = new ArrayList<Task>();
-				temporaryList.add(taskList.get(i));
-				tempoDate = FORMAT_DATE.format(taskList.get(i).getEndDate().getTime());
+			if (taskList.get(i).getEndDate() != null) {
+				if (tempoDate.equals(FORMAT_DATE.format(taskList.get(i).getEndDate().getTime()))
+						|| FORMAT_YEAR.format(taskList.get(i).getEndDate().getTime()).equals(EMPTY_DATE)) {
+					temporaryList.add(taskList.get(i));
+				} else {
+					dateArray.add(temporaryList);
+					temporaryList = new ArrayList<Task>();
+					temporaryList.add(taskList.get(i));
+					tempoDate = FORMAT_DATE.format(taskList.get(i).getEndDate().getTime());
+				}
 			}
 		}
 		dateArray.add(temporaryList);
