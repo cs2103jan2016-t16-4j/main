@@ -27,17 +27,17 @@ public class SearchByName implements Command {
 	}
 
 	@Override
-	public Feedback execute(Storage storage, ArrayList<Task> tasks) {
+	public Feedback execute(StorageConnector storageConnector, ArrayList<Task> tasks) {
 		// TODO Auto-generated method stub
-		taskList = storage.searchTaskByName(taskName);
-		return checkIfListEmpty(storage);
+		taskList = storageConnector.searchTaskByName(taskName);
+		return checkIfListEmpty(storageConnector);
 	}
 
-	private Feedback checkIfListEmpty(Storage storage) {
+	private Feedback checkIfListEmpty(StorageConnector storageConnector) {
 		if (taskList.size() != 0) {
 			return new Feedback(MESSAGE_SEARCH_RESULTS, taskList);
 		} else {
-			return new Feedback(MESSAGE_SEARCH_NOT_FOUND, storage.getOpenList());
+			return new Feedback(MESSAGE_SEARCH_NOT_FOUND, storageConnector.getOpenList());
 		}
 	}
 }

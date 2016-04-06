@@ -17,32 +17,32 @@ public class DeleteByName implements UndoableCommand {
     private static final String MESSAGE_UNDO_FEEDBACK = "Re-added: %1$s";
     
     String taskToDelete;
-    Storage storage;
+    StorageConnector storageConnector;
     Task deletedTask;
     
     DeleteByName(String taskToDelete){
         this.taskToDelete = taskToDelete;
     }
      
-    public Feedback execute(Storage storage, ArrayList<Task> tasks){
+    public Feedback execute(StorageConnector storageConnector, ArrayList<Task> tasks){
         try{
-            ArrayList<Task> taskList = storage.searchTaskByName(taskToDelete);
-            Feedback feedback = takeAction(taskList, storage);
+            ArrayList<Task> taskList = storageConnector.searchTaskByName(taskToDelete);
+            Feedback feedback = takeAction(taskList, storageConnector);
             return feedback;
         }catch(IOException e){
-            return new Feedback(MESSAGE_DELETE_ERROR, storage.getOpenList()); 
+            return new Feedback(MESSAGE_DELETE_ERROR, storageConnector.getOpenList()); 
         }
     }
     
-    public Feedback takeAction(ArrayList<Task> taskList, Storage storage) throws IOException{
+    public Feedback takeAction(ArrayList<Task> taskList, StorageConnector storageConnector) throws IOException{
         assert(taskList != null);
-        this.storage = storage;
+        this.storageConnector = storageConnector;
         if (taskList.size() ==  0){
-            return new Feedback(MESSAGE_NOTHING_TO_DELETE, storage.getOpenList());
+            return new Feedback(MESSAGE_NOTHING_TO_DELETE, storageConnector.getOpenList());
         } else if (taskList.size() ==  1){
-            deletedTask = storage.deleteTask(taskList.get(FIRST_INDEX).getTaskIndex());
+            deletedTask = storageConnector.deleteTask(taskList.get(FIRST_INDEX).getTaskIndex());
             String feedbackMessage = String.format(FEEDBACK_DELETE, deletedTask.toString());
-            return new Feedback(feedbackMessage, storage.getOpenList());
+            return new Feedback(feedbackMessage, storageConnector.getOpenList());
         } else {
             return new Feedback(MESSAGE_WHICH_DELETE, taskList);
         }
@@ -51,16 +51,16 @@ public class DeleteByName implements UndoableCommand {
     public Feedback undo() throws NothingToUndoException {
         try {
             if (deletedTask != null){
-                storage.addTaskInList(deletedTask.getTaskDescription(), deletedTask.getStartDate(),
+                storageConnector.addTaskInList(deletedTask.getTaskDescription(), deletedTask.getStartDate(),
                         deletedTask.getEndDate(),  deletedTask.getLocation(),  deletedTask.getRemindDate(),
                         deletedTask.getPriority());
                 String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK,deletedTask.toString());
-                return new Feedback(feedbackMessage, storage.getOpenList());
+                return new Feedback(feedbackMessage, storageConnector.getOpenList());
             }else{
                 throw new NothingToUndoException();
             }
         }catch(IOException e){
-            return new Feedback(MESSAGE_UNDO_FAILURE, storage.getOpenList());
+            return new Feedback(MESSAGE_UNDO_FAILURE, storageConnector.getOpenList());
         }
     }
 

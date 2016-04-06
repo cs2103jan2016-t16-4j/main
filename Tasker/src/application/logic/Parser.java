@@ -1,5 +1,6 @@
 package application.logic;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -491,10 +492,16 @@ public class Parser {
 	}
 
 	private int getDateStartIndex(String[] args) {
-		int fromIndex = getLastIndex(DATE_MARKERS_START, args);
-		int byIndex = getLastIndex(DATE_MARKERS_DEADLINE, args);
-		int onIndex = getLastIndex(DATE_MARKERS_FULL_DAY_EVENT, args);
-        int dateIndex = Math.max(Math.max(fromIndex, byIndex), onIndex);
+		ArrayList<Integer> indices = new ArrayList<Integer>();
+	    int eventDateIndex = getLastIndex(DATE_MARKERS_START, args);
+		if (eventDateIndex == -1){
+		    indices.add(getLastIndex(DATE_MARKERS_END, args));
+		}else{
+		    indices.add(eventDateIndex);
+		}
+		indices.add(getLastIndex(DATE_MARKERS_DEADLINE, args));
+		indices.add(getLastIndex(DATE_MARKERS_FULL_DAY_EVENT, args));
+        int dateIndex = (int) Collections.max(indices);
 		return dateIndex;
 	}
 	

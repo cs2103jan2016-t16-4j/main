@@ -11,14 +11,14 @@ public class ShowDoneTasks implements Command{
     private static final String MESSAGE_NO_CLOSED = "You have not closed any tasks.";
     
     @Override
-    public Feedback execute(Storage storage, ArrayList<Task> tasksOnScreen) {
-        ArrayList<Task> tasks = storage.getCloseList();
-        return createAppropFeedback(storage, tasks);
+    public Feedback execute(StorageConnector storageConnector, ArrayList<Task> tasksOnScreen) {
+        ArrayList<Task> tasks = storageConnector.getClosedList();
+        return createAppropFeedback(storageConnector, tasks);
     }
     
-    private static Feedback createAppropFeedback(Storage storage, ArrayList<Task> tasks){
+    private static Feedback createAppropFeedback(StorageConnector storageConnector, ArrayList<Task> tasks){
         if (tasks.size() == 0){
-            return new Feedback(MESSAGE_NO_CLOSED, storage.getOpenList());
+            return new Feedback(MESSAGE_NO_CLOSED, storageConnector.getOpenList());
         } else{
             return new Feedback(MESSAGE_CLOSED, tasks);
         }

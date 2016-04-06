@@ -21,7 +21,7 @@ public class DoneByNum implements UndoableCommand {
 
     Task closedTask;
     int numToClose;
-    Storage storage;
+    StorageConnector storageConnector;
 
     DoneByNum(int numToClose) {
         this.numToClose = numToClose;
@@ -34,28 +34,28 @@ public class DoneByNum implements UndoableCommand {
 
     }
 
-    public Feedback execute(Storage storage, ArrayList<Task> tasks) {
-        assert storage != null;
-        this.storage = storage;
+    public Feedback execute(StorageConnector storageConnector, ArrayList<Task> tasks) {
+        assert storageConnector != null;
+        this.storageConnector = storageConnector;
         try {
             int idOfTaskToClose = tasks.get(numToClose).getTaskIndex();
-            closedTask = storage.closeTask(idOfTaskToClose);
+            closedTask = storageConnector.closeTask(idOfTaskToClose);
             String feedbackMessage = String.format(MESSAGE_CLOSE_FEEDBACK,closedTask.toString());
-            return new Feedback(feedbackMessage, storage.getOpenList());
+            return new Feedback(feedbackMessage, storageConnector.getOpenList());
         } catch (IOException e) {
-            return new Feedback(MESSAGE_CLOSE_FAILURE, storage.getOpenList());
+            return new Feedback(MESSAGE_CLOSE_FAILURE, storageConnector.getOpenList());
         } catch (IndexOutOfBoundsException e) {
-            return new Feedback(MESSAGE_INDEX_PROBLEM, storage.getOpenList());
+            return new Feedback(MESSAGE_INDEX_PROBLEM, storageConnector.getOpenList());
         }
     }
 
     public Feedback undo() throws NothingToUndoException{
         try {
-            storage.uncloseTask(closedTask.getTaskIndex());
+            storageConnector.uncloseTask(closedTask.getTaskIndex());
             String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK,closedTask.toString());
-            return new Feedback(feedbackMessage, storage.getOpenList());
+            return new Feedback(feedbackMessage, storageConnector.getOpenList());
         }catch(IOException e){
-            return new Feedback(MESSAGE_UNDO_FAILURE, storage.getOpenList());
+            return new Feedback(MESSAGE_UNDO_FAILURE, storageConnector.getOpenList());
         }
     }
 

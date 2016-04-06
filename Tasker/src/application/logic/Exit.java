@@ -14,7 +14,7 @@ import application.storage.Task;
 public class Exit implements Command {
 
 	@Override
-	public Feedback execute(Storage storage, ArrayList<Task> tasks) {
+	public Feedback execute(StorageConnector storageConnector, ArrayList<Task> tasks) {
 		System.exit(0);
 		return null;
 	}

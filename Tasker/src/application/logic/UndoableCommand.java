@@ -7,6 +7,6 @@ import application.storage.Task;
 
 public interface UndoableCommand extends Command {
     @Override 
-    Feedback execute(Storage storage, ArrayList<Task> tasks);
+    Feedback execute(StorageConnector storageConnector, ArrayList<Task> tasks);
     Feedback undo() throws NothingToUndoException;
 }

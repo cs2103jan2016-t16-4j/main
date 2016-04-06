@@ -20,7 +20,7 @@ public class Add implements UndoableCommand{
     private static final String MESSAGE_UNDO_FEEDBACK = "Unadded: %1$s";
     
     Task addedTask;
-    Storage storage;
+    StorageConnector storageConnector;
     
     String description = EMPTY;
     Calendar startDateTime;
@@ -38,27 +38,27 @@ public class Add implements UndoableCommand{
     }
     
    
-    public Feedback execute(Storage storage, ArrayList<Task> tasks){
+    public Feedback execute(StorageConnector storageConnector, ArrayList<Task> tasks){
         try{
-            this.storage = storage;
-            addedTask = storage.addTaskInList(description, startDateTime
+            this.storageConnector = storageConnector;
+            addedTask = storageConnector.addTaskInList(description, startDateTime
                     ,endDateTime, location, remindDate, priority);
             String feedbackMessage = String.format(MESSAGE_ADD_FEEDBACK, addedTask.toString());
-            Feedback feedback = new Feedback(feedbackMessage, storage.getOpenList());
+            Feedback feedback = new Feedback(feedbackMessage, storageConnector.getOpenList());
             System.out.println(feedbackMessage);
             return feedback;
         } catch(IOException e) {
-            return new Feedback(MESSAGE_ADD_ERROR, storage.getOpenList());
+            return new Feedback(MESSAGE_ADD_ERROR, storageConnector.getOpenList());
         }
     }
     
     public Feedback undo(){
         try {
-            storage.deleteTask(addedTask.getTaskIndex());
+            storageConnector.deleteTask(addedTask.getTaskIndex());
             String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK,addedTask.toString());
-            return new Feedback(feedbackMessage, storage.getOpenList());
+            return new Feedback(feedbackMessage, storageConnector.getOpenList());
         }catch(IOException e){
-            return new Feedback(MESSAGE_UNDO_FAILURE, storage.getOpenList());
+            return new Feedback(MESSAGE_UNDO_FAILURE, storageConnector.getOpenList());
         }
     }
     

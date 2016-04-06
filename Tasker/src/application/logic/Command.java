@@ -7,6 +7,6 @@ import application.storage.Task;
 
 public interface Command {
 
-    Feedback execute(Storage storage, ArrayList<Task> tasksOnScreen);
+    Feedback execute(StorageConnector storageConnector, ArrayList<Task> tasksOnScreen);
     
 }

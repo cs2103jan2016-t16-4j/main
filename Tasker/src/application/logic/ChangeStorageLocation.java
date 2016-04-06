@@ -33,7 +33,7 @@ public class ChangeStorageLocation implements Command {
 	}
 
 	@Override
-	public Feedback execute(Storage storage, ArrayList<Task> tasksOnScreen) {
+	public Feedback execute(StorageConnector storage, ArrayList<Task> tasksOnScreen) {
 		if (arguments != EMPTY_STRING) {
 			if (new File(arguments).isDirectory()) {
 				return new Feedback(MESSAGE_STORAGE_URL_FOUND, tasksOnScreen);

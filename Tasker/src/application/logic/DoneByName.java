@@ -21,7 +21,7 @@ public class DoneByName implements UndoableCommand {
     Logger logger = null;
 
     String taskToClose;
-    Storage storage;
+    StorageConnector storageConnector;
     Task closedTask;
 
     DoneByName(String taskToClose) {
@@ -35,29 +35,29 @@ public class DoneByName implements UndoableCommand {
 
     }
 
-    public Feedback execute(Storage storage, ArrayList<Task> tasks) {
+    public Feedback execute(StorageConnector storageConnector, ArrayList<Task> tasks) {
         try {
-            ArrayList<Task> taskList = storage.searchTaskByName(taskToClose);
-            Feedback feedback = takeAction(taskList, storage);
+            ArrayList<Task> taskList = storageConnector.searchTaskByName(taskToClose);
+            Feedback feedback = takeAction(taskList, storageConnector);
             logger.info("execute DoneByName");
             return feedback;
         } catch (IOException e) {
             logger.info("MESSAGE_CLOSE_ERROR");
-            return new Feedback(MESSAGE_CLOSE_ERROR, storage.getOpenList());
+            return new Feedback(MESSAGE_CLOSE_ERROR, storageConnector.getOpenList());
         }
     }
 
-    public Feedback takeAction(ArrayList<Task> taskList, Storage storage) throws IOException {
+    public Feedback takeAction(ArrayList<Task> taskList, StorageConnector storageConnector) throws IOException {
         assert (taskList != null);
-        assert (storage != null);
+        assert (storageConnector != null);
         assert (taskList.size() > 0);
-        this.storage = storage;
+        this.storageConnector = storageConnector;
         if(taskList.size()== 0){
-            return new Feedback(MESSAGE_NOTHING_TO_CLOSE, storage.getOpenList());
+            return new Feedback(MESSAGE_NOTHING_TO_CLOSE, storageConnector.getOpenList());
         } else if (taskList.size() == 1) {
-            closedTask = storage.closeTask(taskList.get(FIRST_INDEX).getTaskIndex());
+            closedTask = storageConnector.closeTask(taskList.get(FIRST_INDEX).getTaskIndex());
             String feedbackMessage = String.format(FEEDBACK_CLOSE, closedTask.toString());
-            return new Feedback(feedbackMessage, storage.getOpenList());
+            return new Feedback(feedbackMessage, storageConnector.getOpenList());
         } else {
             return new Feedback(MESSAGE_WHICH_CLOSE, taskList);
         }
@@ -66,14 +66,14 @@ public class DoneByName implements UndoableCommand {
     public Feedback undo() throws NothingToUndoException{
         try {
             if (closedTask != null){
-                storage.uncloseTask(closedTask.getTaskIndex());
+                storageConnector.uncloseTask(closedTask.getTaskIndex());
                 String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK,closedTask.toString());
-                return new Feedback(feedbackMessage, storage.getOpenList());
+                return new Feedback(feedbackMessage, storageConnector.getOpenList());
             }else{
                 throw new NothingToUndoException();
             }
         }catch(IOException e){
-            return new Feedback(MESSAGE_UNDO_FAILURE, storage.getOpenList());
+            return new Feedback(MESSAGE_UNDO_FAILURE, storageConnector.getOpenList());
         }
     }
 

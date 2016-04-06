@@ -30,13 +30,13 @@ public class Logic {
     
 
 	private Parser parser = new Parser();
-	private Storage storage = new Storage();
-	private Ui ui;
+	private StorageConnector storageConnector = new StorageConnector();
+	//private Ui ui;
 	private static Logger logger = Logger.getLogger(LOGGER_NAME);
 	//private GUI guiHandler = new GUI();
 	private History history = History.getInstance();
 	private ArrayList<Task> tasksOnScreen;
-	
+	/*
 	public static void main(String[] args) throws IOException{
 	    initializeLogger();
 	    logger.info("Initialising Logic");
@@ -70,7 +70,7 @@ public class Logic {
 	            logger.info("Parsing command: " + userCommand);
 	            Command cmd = parser.interpretCommand(userCommand);
 	            logger.info("executing above parsed command");
-                Feedback feedback = cmd.execute(storage, tasksOnScreen);
+                Feedback feedback = cmd.execute(storageConnector, tasksOnScreen);
                 logger.info("displaying feedback");
                 history.add(cmd);
                 tasksOnScreen = feedback.getTasks();
@@ -84,39 +84,39 @@ public class Logic {
 	    }
 	}
 
-	
+	*/
 	private ArrayList<Task> setEnvironment() throws IOException{
 	    logger.info("Checking if file exists");
 	    checkIfFileExists();
 	    logger.info("Loading tasks");
         return loadDataFile();
     }
-
+/*
 	public void startDirectoryPrompt(String file) throws IOException {
-		storage.setDirectory(file);
+		storageConnector.setDirectory(file);
 		loadDataFile();
 	}
-
+*/
 	public void setDirectory(String file) throws IOException {
-        storage.setDirectory(file);
+        storageConnector.setDirectory(file);
     }
 
 	
 	public ArrayList<Task> loadDataFile() throws IOException {
-		storage.initialise();
-		return storage.getOpenList();
+		storageConnector.initialise();
+		return storageConnector.getOpenList();
 	}
 
 	// if false means user first time starting program
 	public boolean checkIfFileExists() throws IOException {
-		return storage.directoryExists();
+		return storageConnector.directoryExists();
 	}
-
+/*
 	public Feedback executeCommand(String command)throws NoDescriptionException {
         Feedback feedback;
         Command cmd = parser.interpretCommand(command);
         logger.info("executing above parsed command");
-        feedback = cmd.execute(storage, tasksOnScreen);
+        feedback = cmd.execute(storageConnector, tasksOnScreen);
         logger.info("adding command to history");
         history.add(cmd);
         logger.info("saving tasks to file.");
@@ -124,7 +124,7 @@ public class Logic {
         return feedback;
     }
     
-	
+	*/
 	
 	// for UI
 	
@@ -132,7 +132,7 @@ public class Logic {
 		Feedback feedback;
 		Command cmd = parser.interpretCommand(command);
 		logger.info("executing above parsed command");
-		feedback = cmd.execute(storage, tasksOnScreen);
+		feedback = cmd.execute(storageConnector, tasksOnScreen);
 		logger.info("adding command to history");
 		history.add(cmd);
 		logger.info("saving tasks to file.");

@@ -24,16 +24,16 @@ public class SearchByPriority implements Command {
 	}
 
 	@Override
-	public Feedback execute(Storage storage, ArrayList<Task> tasks) {
-		taskList = storage.searchTaskByPriority(priority);
-		return checkIfListEmpty(storage);
+	public Feedback execute(StorageConnector storageConnector, ArrayList<Task> tasks) {
+		taskList = storageConnector.searchTaskByPriority(priority);
+		return checkIfListEmpty(storageConnector);
 	}
 
-	private Feedback checkIfListEmpty(Storage storage) {
+	private Feedback checkIfListEmpty(StorageConnector storageConnector) {
 		if (taskList != null) {
 			return new Feedback(MESSAGE_SEARCH_RESULTS, taskList);
 		} else {
-			return new Feedback(MESSAGE_SEARCH_NOT_FOUND, storage.getOpenList());
+			return new Feedback(MESSAGE_SEARCH_NOT_FOUND, storageConnector.getOpenList());
 		}
 	}
 }
