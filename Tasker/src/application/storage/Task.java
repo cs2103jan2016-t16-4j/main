@@ -10,6 +10,7 @@ public class Task implements Cloneable {
 	protected Calendar remindDate;
 	private String priority;
 	private int taskIndex;
+//	private String categoryType;
 	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("d MMM yyyy");
 	private static final SimpleDateFormat FORMAT_TIME = new SimpleDateFormat("h:mm a");
     private static final int EMPTY = 1;
@@ -99,8 +100,12 @@ public class Task implements Cloneable {
 			return EMPTY_STRING;
 		}
 
-	}	
+	}
 	
+//	public String getCategoryType() {
+//		return categoryType;
+//	}
+
     protected Object clone() throws CloneNotSupportedException {
     	Task newTask = (Task) super.clone();
     	newTask.remindDate = (Calendar) remindDate.clone();
