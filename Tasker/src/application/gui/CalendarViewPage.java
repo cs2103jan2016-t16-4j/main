@@ -53,6 +53,10 @@ public class CalendarViewPage extends AnchorPane {
 	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd MMM yyyy");
 	private static final SimpleDateFormat FORMAT_YEAR = new SimpleDateFormat("yyyy");
 	private static final SimpleDateFormat FORMAT_COMPARE_DATE = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+	private static final String LIST_FLAG = "list";
+	private static final String CAL_FLAG = "cal";
+	private static final String HELP_FLAG = "help";
+	private static final String STORAGE_FLAG = "storage";
 
 	// Messages
 	private static final String ADD_HINT_MESSAGE = "To add: [task description] from [start] to [end] at [location]";
@@ -75,6 +79,7 @@ public class CalendarViewPage extends AnchorPane {
 	private static ArrayList<String> commands = new ArrayList<String>();
 	private static int pointer = 0;
 	private Task taskToFocus;
+	private String checkFlag;
 
 	@FXML
 	public Label feedbackLabel;
@@ -283,10 +288,11 @@ public class CalendarViewPage extends AnchorPane {
 							Feedback feedback = logic.executeCommand(text, tasksOnScreen);
 							System.out.println(feedback.getMessage());
 							tasksOnScreen = feedback.getTasks();
-							Task taskToFocus = feedback.getIndexToScroll();
+							taskToFocus = feedback.getIndexToScroll();
 							updateViews(tasksOnScreen, taskToFocus);
+							checkFlag = feedback.getFlag();
 							feedbackLabel.setText(feedback.getMessage());
-							promptStorage(feedback);
+							doFlagCommand(checkFlag, feedback);
 						} else {
 							notifyUser();
 							switchViews();
@@ -332,6 +338,23 @@ public class CalendarViewPage extends AnchorPane {
 			}
 		});
 
+	}
+
+	private void doFlagCommand(String checkFlag, Feedback feedback) throws IOException {
+		switch (checkFlag) {
+		case STORAGE_FLAG:
+			promptStorage(feedback);
+			break;
+		case CAL_FLAG:
+			calendarList.toFront();
+			break;
+		case HELP_FLAG:
+
+			break;
+		case LIST_FLAG:
+			displayList.toFront();
+			break;
+		}
 	}
 
 	private void promptStorage(Feedback feedback) throws IOException {
