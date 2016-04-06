@@ -2,7 +2,6 @@
 package application.gui;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import application.storage.Task;

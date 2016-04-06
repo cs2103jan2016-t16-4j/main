@@ -210,7 +210,7 @@ public class TaskManager {
 				openList.set(index, updateToEventTask(openList.get(index), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
 			}
 			// convert : floating task to deadline task	
-			if (startDate==null && endDate!=null) {
+			else if (startDate==null && endDate!=null) {
 				openList.set(index, updateToDeadlineTask(openList.get(index), taskDescription, endDate, location, remindDate, priority, taskIndex));
 			}
 			// no conversion
