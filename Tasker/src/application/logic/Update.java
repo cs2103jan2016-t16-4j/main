@@ -38,13 +38,14 @@ public class Update implements UndoableCommand{
     private Calendar remindDate;
     private String priority = EMPTY;
     
-    Update(int taskPosition, String description, Calendar start, Calendar end, String location, Calendar remindDate){
+    Update(int taskPosition, String description, Calendar start, Calendar end, String location, Calendar remindDate, String priority){
         this.taskPosition = taskPosition - ARRAY_INDEXING_OFFSET;
         this.description = description;
         this.startDateTime = start;
         this.endDateTime = end;
         this.location = location;
         this.remindDate = remindDate;
+        this.priority = priority;
     }
   
    

@@ -45,15 +45,21 @@ public class Parser {
     private static final String[] DATE_MARKERS_END = {"to", "till"};
     private static final String[] DATE_MARKERS_DEADLINE = {"by"};
 	private static final String[] DATE_MARKERS_FULL_DAY_EVENT = {"on"};
-	private static final String[] LOCATION_MARKERS = {"at", "in"};
 	private static final String[] DATE_MARKERS_REMIND = {"remind"};
+	private static final String[] LOCATION_MARKERS = {"at", "in"};
+	private static final String[] PRIORITY_MARKERS = {"priority"};
     
-	
-	private static final int ARGUMENT_NUMBER = 3;
+	private static final String PRIORITY_HIGH = "high";
+    private static final String PRIORITY_MEDIUM = "medium";
+    private static final String PRIORITY_LOW = "low";
+    private static final String[] PRIORITY_LEVELS = {PRIORITY_HIGH,PRIORITY_MEDIUM,PRIORITY_LOW};
+    
+    private static final int ARGUMENT_NUMBER = 4;
 	private static final int DESC_POS = 0;
 	private static final int DATE_POS = 1;
 	private static final int LOC_POS = 2;
-	private static final int ARRAY_INDEXING_OFFSET = 1;
+	private static final int PRI_POS = 3;
+    private static final int ARRAY_INDEXING_OFFSET = 1;
 
 	private static final boolean WITH_KEYWORD = true; // For add function. Since
 														// we accept no keyword.
@@ -151,14 +157,16 @@ public class Parser {
 		args = removeKeyWordIfReq(args, isWithKeyWord);
 		int dateStartIndex = getDateStartIndex(args);
 		int locationStartIndex = getLastIndex(LOCATION_MARKERS, args);
-		String[] segments = getSegments(dateStartIndex, locationStartIndex, args);
+		int priorityIndex = getLastIndex(PRIORITY_MARKERS, args);
+		priorityIndex = fixPriorityIndex(priorityIndex, args);
+		String[] segments = getSegments(dateStartIndex, locationStartIndex, priorityIndex, args);
 		Calendar[] dates = parseDates(segments);
 		if (segments[DESC_POS].equals(EMPTY)) {
 			throw new NoDescriptionException();
 		}
 		Calendar[] datesFixed = fixDatesForAdd(dates);
 		Calendar remindDate = convertToCalendar(createEmptyDate());
-		Command command = new Add(segments[DESC_POS], datesFixed[0], datesFixed[1], segments[LOC_POS], remindDate);
+		Command command = new Add(segments[DESC_POS], datesFixed[0], datesFixed[1], segments[LOC_POS], remindDate, segments[PRI_POS]);
 		return command;
 	}
 
@@ -195,11 +203,13 @@ public class Parser {
 		args = (String[]) ArrayUtils.remove(args, 0);
 		int dateStartIndex = getDateStartIndex(args);
 		int locationStartIndex = getLastIndex(LOCATION_MARKERS, args);
-		String[] segments = getSegments(dateStartIndex, locationStartIndex, args);
+		int priorityIndex = getLastIndex(PRIORITY_MARKERS, args);
+        priorityIndex = fixPriorityIndex(priorityIndex, args);
+        String[] segments = getSegments(dateStartIndex, locationStartIndex, priorityIndex, args);
 		Calendar[] dates = parseDates(segments);
 		Calendar remindDate = convertToCalendar(createEmptyDate());
 		Command command = new Update(taskToUpdate, segments[DESC_POS], dates[0], dates[1], segments[LOC_POS],
-				remindDate);
+				remindDate, segments[PRI_POS]);
 		return command;
 	}
 
@@ -441,23 +451,36 @@ public class Parser {
 		return cal;
 	}
 
-	private String[] getSegments(int dateIndex, int locationIndex, String[] args) {
-		String description = getDescription(dateIndex, locationIndex, args);
-		;
-		String date = getDateString(dateIndex, locationIndex, args);
-		String location = getLocationString(dateIndex, locationIndex, args);
+	private String[] getSegments(int dateIndex, int locationIndex, int priorityIndex, String[] args) {
+		String description = getDescription(dateIndex, locationIndex,priorityIndex, args);
+		String date = getDateString(dateIndex, locationIndex,priorityIndex, args);
+		String location = getLocationString(dateIndex, locationIndex,priorityIndex, args);
+		String priority = getPriority(priorityIndex, args);
 		String[] segments = new String[ARGUMENT_NUMBER];
 		System.out.println(description);
 		segments[DESC_POS] = description.trim();
 		segments[DATE_POS] = date;
 		segments[LOC_POS] = location.trim();
+		segments[PRI_POS] = priority.trim();
 		return segments;
 	}
 
-	private String getDescription(int dateIndex, int locationIndex, String[] args) {
+	private String getPriority(int priorityIndex, String[] args){
+	    if (priorityIndex == -1){
+	        return EMPTY;
+	    } else{
+	        return args[priorityIndex + 1];
+	    }
+	}
+	
+	private String getDescription(int dateIndex, int locationIndex, int priorityIndex, String[] args) {
 		String description;
+		int end = args.length;
+		if (priorityIndex != -1){
+		    end = priorityIndex;
+		}
 		if (dateIndex == -1 && locationIndex == -1) {
-			description = getString(args, 0, args.length - 1);
+			description = getString(args, 0, end - 1);
 		} else if ((dateIndex < locationIndex || locationIndex == -1) && dateIndex != -1) {
 			System.out.println(dateIndex);
 			description = getString(args, 0, dateIndex - 1);
@@ -467,23 +490,43 @@ public class Parser {
 		return description;
 	}
 
-	private String getDateString(int dateIndex, int locationIndex, String[] args) {
-		if (dateIndex == -1) {
+	private int fixPriorityIndex(int priorityIndex, String[] args){
+	    int priorityLevelPosition = priorityIndex + 1 ;
+	    List<String> levels = Arrays.asList(PRIORITY_LEVELS);
+	    if (priorityLevelPosition == args.length){
+	        return -1;
+	    }else if (!levels.contains(args[priorityLevelPosition].toLowerCase())){
+	        return -1;
+	    }else{
+	        return priorityIndex;
+	    }
+	}
+	
+	private String getDateString(int dateIndex, int locationIndex, int priorityIndex, String[] args) {
+	    int end = args.length;
+	    if (priorityIndex != -1){
+	        end = priorityIndex;
+	    }
+	    if (dateIndex == -1) {
 			return EMPTY;
 		} else if (dateIndex < locationIndex) {
 			return getString(args, dateIndex, locationIndex - 1);
 		} else {
-			return getString(args, dateIndex, args.length - 1);
+			return getString(args, dateIndex, end - 1);
 		}
 	}
 
-	private String getLocationString(int dateIndex, int locationIndex, String[] args) {
-		if (locationIndex == -1) {
+	private String getLocationString(int dateIndex, int locationIndex, int priorityIndex, String[] args) {
+	    int end = args.length;
+        if (priorityIndex != -1){
+            end = priorityIndex;
+        }
+        if (locationIndex == -1) {
 			return EMPTY;
 		} else if (locationIndex < dateIndex) {
 			return getString(args, locationIndex + 1, dateIndex - 1);
 		} else {
-			return getString(args, locationIndex + 1, args.length - 1);
+			return getString(args, locationIndex + 1, end - 1);
 		}
 	}
 
@@ -511,8 +554,12 @@ public class Parser {
 	
 	private static int getLastIndex(String[] keywords, String[] commandWords){
 	    int[] positions = new int[keywords.length];
+	    String[] commandLowerCase = new String[commandWords.length];
+	    for (int i = 0; i < commandWords.length; i++ ){
+	        commandLowerCase[i] = commandWords[i].toLowerCase();
+	    }
 	    for (int i = 0; i < keywords.length; i++){
-	        positions[i] = Arrays.asList(commandWords).lastIndexOf(keywords[i]);
+	        positions[i] = Arrays.asList(commandLowerCase).lastIndexOf(keywords[i].toLowerCase());
 	    }
 	    List<Integer> list = Arrays.asList(ArrayUtils.toObject(positions));
 	    return ((int) Collections.max(list));

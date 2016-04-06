@@ -30,12 +30,13 @@ public class Add implements UndoableCommand{
     Calendar remindDate;
     String priority = EMPTY;
     
-    Add(String description, Calendar startDateTime, Calendar endDateTime, String location, Calendar remindDate) throws NoDescriptionException{
+    Add(String description, Calendar startDateTime, Calendar endDateTime, String location, Calendar remindDate, String priority) throws NoDescriptionException{
         this.description = description;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.location = location;
         this.remindDate = remindDate;
+        this.priority = priority;
     }
     
    
