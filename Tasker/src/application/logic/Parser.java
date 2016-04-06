@@ -1,5 +1,7 @@
 package application.logic;
 
+//@@author A0132632R
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -21,6 +23,8 @@ import org.ocpsoft.prettytime.shade.edu.emory.mathcs.backport.java.util.Collecti
  * @author Pratyush
  *
  */
+
+//@@author A0132632R
 
 public class Parser {
 	private static final String LOGGER_NAME = "logfile";
