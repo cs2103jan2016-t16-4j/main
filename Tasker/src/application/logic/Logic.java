@@ -6,8 +6,6 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 import application.gui.Cli;
-import application.gui.GUI;
-import application.gui.GUIHandler;
 import application.gui.Ui;
 import application.logger.LoggerFormat;
 import application.storage.Storage;
