@@ -1,3 +1,4 @@
+//@@author A0125417L
 package application.gui;
 
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class CalendarItem extends AnchorPane {
 			fxmlLoader.setController(this);
 			fxmlLoader.load();
 			this.setLabels(name, date, location);
-			
+
 		} catch (IOException exception) {
 			System.out.println("Could not load");
 			throw new RuntimeException(exception);
@@ -41,9 +42,10 @@ public class CalendarItem extends AnchorPane {
 	private void setLocation(String location) {
 		if (!location.equals(EMPTY)) {
 			this.locationLabel.setText(location);
-		}else{
+		} else {
 			this.locationLabel.setText(EMPTY);
 		}
 	}
 
 }
+// @@author A0125417L

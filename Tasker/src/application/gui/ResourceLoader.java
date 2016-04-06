@@ -1,3 +1,4 @@
+//@@author A0125417L
 package application.gui;
 
 import java.io.InputStream;
@@ -13,3 +14,4 @@ public class ResourceLoader {
 		return input;
 	}
 }
+//@@author A0125417L

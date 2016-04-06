@@ -1,3 +1,4 @@
+// @@author A0125417L
 package application.gui;
 
 import java.text.SimpleDateFormat;
@@ -11,12 +12,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Callback;
-
-/**
- * 
- * @author Shawn
- *
- */
 
 public class TaskListView {
 	private ObservableList<Task> items = FXCollections.observableArrayList();
@@ -130,3 +125,4 @@ public class TaskListView {
 	}
 
 }
+//@@author A0125417L

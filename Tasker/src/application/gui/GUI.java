@@ -1,3 +1,4 @@
+// @@author A0125417L
 package application.gui;
 
 import java.io.File;
@@ -59,7 +60,7 @@ public class GUI extends Application {
 		TaskListView taskList = new TaskListView();
 		DirectoryChooser dirChooser = new DirectoryChooser();
 		configureDirectoryChooser(dirChooser);
-		
+
 		try {
 			logger.info("Initialising GUI");
 			Platform.setImplicitExit(false);
@@ -148,3 +149,4 @@ public class GUI extends Application {
 	}
 
 }
+// @@author A0125417L

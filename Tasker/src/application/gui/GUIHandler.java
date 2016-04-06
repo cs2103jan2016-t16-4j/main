@@ -1,3 +1,4 @@
+// @@author A0125417L
 package application.gui;
 
 import java.awt.AWTException;
@@ -350,3 +351,4 @@ public class GUIHandler {
 	}
 
 }
+// @@author A0125417L

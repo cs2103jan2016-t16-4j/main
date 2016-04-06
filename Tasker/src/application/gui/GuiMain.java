@@ -1,3 +1,4 @@
+// @@author A0125417L
 package application.gui;
 
 import java.awt.AWTException;
@@ -30,7 +31,7 @@ public class GuiMain extends Application {
 	private static final String EMPTY_STRING = "";
 	private static final String SPACE = "\\s+";
 	private static final String BACKSLASH = "\\";
-	private static final String CSS_URL = "application/gui/files/stylesheet.css";
+	private static final String CSS_URL = "application/gui/application.css";
 	private static final String LOGO_URL = "robot.jpg";
 	private TrayIcon trayIcon;
 
@@ -57,13 +58,10 @@ public class GuiMain extends Application {
 		try {
 			setEnvironment();
 			initializeSaveDirectory(primaryStage);
-			// OpeningPage cVPage = new OpeningPage(taskList, logic);
-			CalendarViewPage cVPage = new CalendarViewPage(taskList, logic);
+			CalendarViewPage page = new CalendarViewPage(taskList, logic);
 			Platform.setImplicitExit(false);
-			// Scene scene = new Scene(page);
-			Scene scene = new Scene(cVPage);
+			Scene scene = new Scene(page);
 			scene.getStylesheets().clear();
-			scene.getStylesheets().add("application/gui/application.css");
 			scene.getStylesheets().add(CSS_URL);
 			primaryStage.setScene(scene);
 			customiseGUIMenuBar(primaryStage);
@@ -233,3 +231,4 @@ public class GuiMain extends Application {
 	}
 
 }
+//@@author A0125417L

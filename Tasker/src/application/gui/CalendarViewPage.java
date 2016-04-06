@@ -1,9 +1,19 @@
+//@@author A0125417L
 package application.gui;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import org.controlsfx.control.Notifications;
 
 import application.logic.Feedback;
 import application.logic.Logic;
@@ -30,17 +40,19 @@ import javafx.util.Callback;
 public class CalendarViewPage extends AnchorPane {
 	private ArrayList<Task> tasksOnScreen;
 	private Logic logic;
+	private LocalDateTime timeNow;
 
 	private static final String SPACE = " ";
 	private static final String EMPTY_STRING = "";
 	private static final String LOCATION_PREFIX = "AT";
-	private static final String BY = "By ";
+	private static final String EMPTY_DATE = "0001";
 	private static final String BACKSLASH = "\\";
 	private static final String DIRECTORY_CHOOSER_TITLE = "Pick Where To Store Tasks";
 	private static final String CURRENT_DIRECTORY = "user.dir";
 	private static final int TASK_NUM_OFFSET = 1;
 	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd MMM yyyy");
 	private static final SimpleDateFormat FORMAT_YEAR = new SimpleDateFormat("yyyy");
+	private static final SimpleDateFormat FORMAT_COMPARE_DATE = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
 	// Messages
 	private static final String ADD_HINT_MESSAGE = "To add: [task description] from [start] to [end] at [location]";
@@ -99,26 +111,12 @@ public class CalendarViewPage extends AnchorPane {
 	private void initialize() {
 		helpLabel.setText(MESSAGE_HELP_INTRO);
 		feedbackLabel.setText(MESSAGE_FEEDBACK_INTRO);
-		calendarList.setPrefSize(1070, 580);
-		this.calendarList.setCellFactory(new Callback<ListView<ArrayList<Task>>, ListCell<ArrayList<Task>>>() {
-			public ListCell<ArrayList<Task>> call(ListView<ArrayList<Task>> param) {
-				ListCell<ArrayList<Task>> cell = new ListCell<ArrayList<Task>>() {
-					@Override
-					public void updateItem(ArrayList<Task> item, boolean empty) {
-						super.updateItem(item, empty);
-						if (item != null) {
-							DateObject listViewItem = new DateObject(
-									FORMAT_DATE.format(item.get(0).getEndDate().getTime()), item);
-							setGraphic(listViewItem.getHbox());
-						} else {
-							setGraphic(null);
-						}
-					}
-				};
+		initialiseCalendarList();
+		initialiseDisplayList();
+		updateViews(tasksOnScreen);
+	}
 
-				return cell;
-			}
-		});
+	private void initialiseDisplayList() {
 		displayList.setPrefSize(1070, 580);
 		this.displayList.setCellFactory(new Callback<ListView<Task>, ListCell<Task>>() {
 			public ListCell<Task> call(ListView<Task> param) {
@@ -144,7 +142,29 @@ public class CalendarViewPage extends AnchorPane {
 				return cell;
 			}
 		});
-		updateViews(tasksOnScreen);
+	}
+
+	private void initialiseCalendarList() {
+		calendarList.setPrefSize(1070, 580);
+		this.calendarList.setCellFactory(new Callback<ListView<ArrayList<Task>>, ListCell<ArrayList<Task>>>() {
+			public ListCell<ArrayList<Task>> call(ListView<ArrayList<Task>> param) {
+				ListCell<ArrayList<Task>> cell = new ListCell<ArrayList<Task>>() {
+					@Override
+					public void updateItem(ArrayList<Task> item, boolean empty) {
+						super.updateItem(item, empty);
+						if (item != null) {
+							DateObject listViewItem = new DateObject(
+									FORMAT_DATE.format(item.get(0).getEndDate().getTime()), item);
+							setGraphic(listViewItem.getHbox());
+						} else {
+							setGraphic(null);
+						}
+					}
+				};
+
+				return cell;
+			}
+		});
 	}
 
 	private String getLocationString(Task task) {
@@ -162,14 +182,13 @@ public class CalendarViewPage extends AnchorPane {
 		String tempoDate = FORMAT_DATE.format(taskList.get(0).getEndDate().getTime());
 		for (int i = 0; i < taskList.size(); i++) {
 			if (tempoDate.equals(FORMAT_DATE.format(taskList.get(i).getEndDate().getTime()))
-					|| FORMAT_YEAR.format(taskList.get(i).getEndDate().getTime()).equals("0001")) {
+					|| FORMAT_YEAR.format(taskList.get(i).getEndDate().getTime()).equals(EMPTY_DATE)) {
 				temporaryList.add(taskList.get(i));
 			} else {
 				dateArray.add(temporaryList);
 				temporaryList = new ArrayList<Task>();
 				temporaryList.add(taskList.get(i));
 				tempoDate = FORMAT_DATE.format(taskList.get(i).getEndDate().getTime());
-				System.out.println(tempoDate);
 			}
 		}
 		dateArray.add(temporaryList);
@@ -177,14 +196,48 @@ public class CalendarViewPage extends AnchorPane {
 	}
 
 	private void updateViews(ArrayList<Task> taskList) {
-		ArrayList<ArrayList<Task>> dateArray = new ArrayList<ArrayList<Task>>();
-		dateArray = getDateArray(taskList);
-		ObservableList<ArrayList<Task>> calList = makeCalendarList(dateArray);
-		this.calendarList.getItems().clear();
-		this.calendarList.setItems(calList);
-		ObservableList<Task> list = makeDisplayList(taskList);
+		// Timer timer = new Timer();
+		// timer.schedule(new TimerTask() {
+		// public void run() {
+		// Calendar cal = Calendar.getInstance();
+		// System.out.println(FORMAT_COMPARE_DATE.format(cal.getTime()));
+		// for (int x = 0; x < taskList.size(); x++) {
+		// System.out.println(FORMAT_COMPARE_DATE.format(taskList.get(x).getEndDate().getTime())
+		// .compareTo(FORMAT_COMPARE_DATE.format(cal.getTime())));
+		// if
+		// (FORMAT_COMPARE_DATE.format(taskList.get(x).getEndDate().getTime())
+		// .compareTo(FORMAT_COMPARE_DATE.format(cal.getTime())) == 0) {
+		// System.out.println("Task Overdue");
+		// updateViews(taskList);
+		// }
+		// }
+		//
+		// }
+		// }, 0, 60 * 250);
+		updateCalendarList(taskList);
+		updateDisplayList(taskList);
+	}
+
+	private void notifyUser() {
+		Notifications.create().title("Task Reminder").text("END").showInformation();
+	}
+
+	private void updateDisplayList(ArrayList<Task> taskList) {
 		this.displayList.getItems().clear();
-		this.displayList.setItems(list);
+		if (taskList.size() != 0) {
+			ObservableList<Task> list = makeDisplayList(taskList);
+			this.displayList.setItems(list);
+		}
+	}
+
+	private void updateCalendarList(ArrayList<Task> taskList) {
+		this.calendarList.getItems().clear();
+		if (taskList.size() != 0) {
+			ArrayList<ArrayList<Task>> dateArray = new ArrayList<ArrayList<Task>>();
+			dateArray = getDateArray(taskList);
+			ObservableList<ArrayList<Task>> calList = makeCalendarList(dateArray);
+			this.calendarList.setItems(calList);
+		}
 	}
 
 	private ObservableList<ArrayList<Task>> makeCalendarList(ArrayList<ArrayList<Task>> taskList) {
@@ -218,13 +271,9 @@ public class CalendarViewPage extends AnchorPane {
 							tasksOnScreen = feedback.getTasks();
 							updateViews(tasksOnScreen);
 							feedbackLabel.setText(feedback.getMessage());
-							if (feedback.getMessage().equals(MESSAGE_STORAGE_URL_NOT_FOUND)) {
-								DirectoryChooser dirChooser = new DirectoryChooser();
-								configureDirectoryChooser(dirChooser);
-								Stage stage = new Stage();
-								directoryPrompt(stage, dirChooser);
-							}
+							promptStorage(feedback);
 						} else {
+							notifyUser();
 							switchViews();
 						}
 						textInputArea.clear();
@@ -260,14 +309,6 @@ public class CalendarViewPage extends AnchorPane {
 					}
 				}
 			}
-
-			private void switchViews() {
-				if (stackPane.getChildren().get(0).equals(displayList)) {
-					displayList.toFront();
-				} else {
-					calendarList.toFront();
-				}
-			}
 		});
 		textInputArea.textProperty().addListener(new ChangeListener<String>() {
 			@Override
@@ -276,6 +317,23 @@ public class CalendarViewPage extends AnchorPane {
 			}
 		});
 
+	}
+
+	private void promptStorage(Feedback feedback) throws IOException {
+		if (feedback.getMessage().equals(MESSAGE_STORAGE_URL_NOT_FOUND)) {
+			DirectoryChooser dirChooser = new DirectoryChooser();
+			configureDirectoryChooser(dirChooser);
+			Stage stage = new Stage();
+			directoryPrompt(stage, dirChooser);
+		}
+	}
+
+	private void switchViews() {
+		if (stackPane.getChildren().get(0).equals(displayList)) {
+			displayList.toFront();
+		} else {
+			calendarList.toFront();
+		}
 	}
 
 	public void directoryPrompt(Stage primaryStage, DirectoryChooser dirChooser) throws IOException {
@@ -415,3 +473,4 @@ public class CalendarViewPage extends AnchorPane {
 		return secondLetter;
 	}
 }
+// @@author A0125417L

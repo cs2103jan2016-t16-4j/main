@@ -1,3 +1,4 @@
+// @@author A0125417L
 package application.gui;
 
 import java.io.IOException;
@@ -35,15 +36,6 @@ public class DateObject extends HBox {
 			fxmlLoader.load();
 			this.setLabels(date);
 			ObservableList<Task> list = FXCollections.observableArrayList();
-			// for (Task task : taskList) {
-			// CalendarItem item = new CalendarItem(task.getTaskDescription(),
-			// FORMAT_DATE.format(task.getEndDate().getTime()),
-			// task.getLocation());
-			// list.add(item);
-			// System.out.println(task.getTaskDescription() +
-			// FORMAT_DATE.format(task.getEndDate().getTime())
-			// + task.getLocation());
-			// }
 			this.listViewItem.setCellFactory(new Callback<ListView<Task>, ListCell<Task>>() {
 				public ListCell<Task> call(ListView<Task> param) {
 					ListCell<Task> cell = new ListCell<Task>() {
@@ -96,3 +88,4 @@ public class DateObject extends HBox {
 	}
 
 }
+// @@author A0125417L
