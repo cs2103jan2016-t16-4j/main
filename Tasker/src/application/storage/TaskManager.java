@@ -205,8 +205,7 @@ public class TaskManager {
 		// update task
 		if (openList.get(index) instanceof FloatingTask) {
 			// convert : floating task to event task
-			if (startDate!=null && endDate!=null) {
-				if (startDate.get(Calendar.YEAR)!=EMPTY && endDate.get(Calendar.YEAR)!=EMPTY)
+			if (startDate!=null && endDate!=null && startDate.get(Calendar.YEAR)!=EMPTY && endDate.get(Calendar.YEAR)!=EMPTY) {
 				openList.set(index, updateToEventTask(openList.get(index), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
 			}
 			// convert : floating task to deadline task	
@@ -223,8 +222,7 @@ public class TaskManager {
 		
 		else if (openList.get(index) instanceof DeadlineTask) {
 			// convert : deadline task to event task
-			if (startDate!=null && endDate!=null) {
-				if (startDate.get(Calendar.YEAR)!=EMPTY && endDate.get(Calendar.YEAR)!=EMPTY)
+			if (startDate!=null && endDate!=null && startDate.get(Calendar.YEAR)!=EMPTY && endDate.get(Calendar.YEAR)!=EMPTY) {
 				openList.set(index, updateToEventTask(openList.get(index), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
 			}
 			// convert : deadline task to floating task
@@ -340,8 +338,11 @@ public class TaskManager {
 		if (originalTask instanceof EventTask) {
 			deadlineTask = new DeadlineTask(originalTask.getTaskDescription(), ((EventTask) originalTask).getEndDate(), originalTask.getLocation(), originalTask.getRemindDate(), originalTask.getPriority(), originalTask.getTaskIndex());
 		}
-		else {
+		else if (originalTask instanceof FloatingTask) {
 			deadlineTask = new DeadlineTask(originalTask.getTaskDescription(), Calendar.getInstance(), originalTask.getLocation(), originalTask.getRemindDate(), originalTask.getPriority(), originalTask.getTaskIndex());
+		}
+		else {
+			deadlineTask = new DeadlineTask(originalTask.getTaskDescription(), ((DeadlineTask) originalTask).getEndDate(), originalTask.getLocation(), originalTask.getRemindDate(), originalTask.getPriority(), originalTask.getTaskIndex());
 		}
 		// update task
 		if (!taskDescription.equalsIgnoreCase("")) {

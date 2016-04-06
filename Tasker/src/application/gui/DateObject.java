@@ -3,6 +3,7 @@ package application.gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import application.storage.Task;
 import javafx.collections.FXCollections;
@@ -25,7 +26,7 @@ public class DateObject extends HBox {
 	@FXML
 	public HBox dateObject;
 
-	public DateObject(String date, ArrayList<Task> taskList) {
+	public DateObject(String date, ArrayList<Task> taskList, int index) {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DateObject.fxml"));
 		try {
 			fxmlLoader.setRoot(this);
@@ -40,8 +41,15 @@ public class DateObject extends HBox {
 						public void updateItem(Task item, boolean empty) {
 							super.updateItem(item, empty);
 							if (item != null) {
+								int currentIndex = index + this.getIndex();
+								Calendar cal = Calendar.getInstance();
+								int overdueCheck = 0;
+								if (item.getEndDate() != null) {
+									overdueCheck = item.getEndDate().getTime().compareTo(cal.getTime());
+								}
 								CalendarItem calItem = new CalendarItem(item.getTaskDescription(),
-										item.durationToString(), item.getLocation(), item.getPriority());
+										item.durationToString(), item.getLocation(), item.getPriority(), overdueCheck,
+										currentIndex);
 								setGraphic(calItem);
 							} else {
 								setGraphic(null);

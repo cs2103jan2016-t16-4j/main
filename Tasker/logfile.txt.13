@@ -32,3 +32,73 @@
 30.03.2016 12:36:48 - INFO    - application.logic.Logic - executeCommand - displaying feedback
 30.03.2016 12:36:48 - INFO    - application.logic.Feedback - display - feedback object using ui to display itself to user
 30.03.2016 12:36:48 - INFO    - application.logic.Logic - executeCommand - saving tasks to file.
+ ----------------------  Start Thu Apr 07 03:43:20 SGT 2016 ---------------------- 
+07.04.2016 03:43:20 - INFO    - application.logic.Parser - interpretCommand - Checking for error in user command: exit
+07.04.2016 03:43:20 - INFO    - application.logic.Parser - interpretCommand - Splitting command into array of its words
+07.04.2016 03:43:20 - INFO    - application.logic.Parser - interpretCommand - Getting command key word
+07.04.2016 03:43:20 - INFO    - application.logic.Parser - interpretCommand - Converting to command object: exit
+07.04.2016 03:43:20 - INFO    - application.logic.Parser - convertToCommand - Making exit command object
+07.04.2016 03:43:20 - INFO    - application.logic.Parser - convertToCommand - Returning command object
+07.04.2016 03:43:20 - INFO    - application.logic.Parser - interpretCommand - Returning command object
+07.04.2016 03:43:20 - INFO    - application.logic.Logic - executeCommand - executing above parsed command
+ ----------------------   End  Thu Apr 07 03:43:20 SGT 2016 ---------------------- 
+ ----------------------  Start Thu Apr 07 03:45:30 SGT 2016 ---------------------- 
+07.04.2016 03:45:30 - INFO    - application.logic.Parser - interpretCommand - Checking for error in user command: play tennis from 5 pm to 6 pm tomorrow
+07.04.2016 03:45:30 - INFO    - application.logic.Parser - interpretCommand - Splitting command into array of its words
+07.04.2016 03:45:30 - INFO    - application.logic.Parser - interpretCommand - Getting command key word
+07.04.2016 03:45:30 - INFO    - application.logic.Parser - interpretCommand - Converting to command object: play
+07.04.2016 03:45:30 - INFO    - application.logic.Parser - convertToCommand - Making add command object
+07.04.2016 03:45:31 - INFO    - application.logic.Parser - convertToCommand - Returning command object
+07.04.2016 03:45:31 - INFO    - application.logic.Parser - interpretCommand - Returning command object
+07.04.2016 03:45:31 - INFO    - application.logic.Logic - executeCommand - executing above parsed command
+07.04.2016 03:45:31 - INFO    - application.logic.Logic - executeCommand - adding command to history
+07.04.2016 03:45:31 - INFO    - application.logic.Logic - executeCommand - saving tasks to file.
+07.04.2016 03:45:42 - INFO    - application.logic.Parser - interpretCommand - Checking for error in user command: update 2 priority high
+07.04.2016 03:45:42 - INFO    - application.logic.Parser - interpretCommand - Splitting command into array of its words
+07.04.2016 03:45:42 - INFO    - application.logic.Parser - interpretCommand - Getting command key word
+07.04.2016 03:45:42 - INFO    - application.logic.Parser - interpretCommand - Converting to command object: update
+07.04.2016 03:45:42 - INFO    - application.logic.Parser - convertToCommand - Making update command object
+07.04.2016 03:45:42 - INFO    - application.logic.Parser - convertToCommand - Returning command object
+07.04.2016 03:45:42 - INFO    - application.logic.Parser - interpretCommand - Returning command object
+07.04.2016 03:45:42 - INFO    - application.logic.Logic - executeCommand - executing above parsed command
+07.04.2016 03:45:42 - INFO    - application.logic.Logic - executeCommand - adding command to history
+07.04.2016 03:45:42 - INFO    - application.logic.Logic - executeCommand - saving tasks to file.
+07.04.2016 03:45:59 - INFO    - application.logic.Parser - interpretCommand - Checking for error in user command: add football by tomorrow
+07.04.2016 03:45:59 - INFO    - application.logic.Parser - interpretCommand - Splitting command into array of its words
+07.04.2016 03:45:59 - INFO    - application.logic.Parser - interpretCommand - Getting command key word
+07.04.2016 03:45:59 - INFO    - application.logic.Parser - interpretCommand - Converting to command object: add
+07.04.2016 03:45:59 - INFO    - application.logic.Parser - convertToCommand - Making add command object
+07.04.2016 03:46:00 - INFO    - application.logic.Parser - convertToCommand - Returning command object
+07.04.2016 03:46:00 - INFO    - application.logic.Parser - interpretCommand - Returning command object
+07.04.2016 03:46:00 - INFO    - application.logic.Logic - executeCommand - executing above parsed command
+07.04.2016 03:46:00 - INFO    - application.logic.Logic - executeCommand - adding command to history
+07.04.2016 03:46:00 - INFO    - application.logic.Logic - executeCommand - saving tasks to file.
+07.04.2016 03:46:09 - INFO    - application.logic.Parser - interpretCommand - Checking for error in user command: volleyball by tomorrow
+07.04.2016 03:46:09 - INFO    - application.logic.Parser - interpretCommand - Splitting command into array of its words
+07.04.2016 03:46:09 - INFO    - application.logic.Parser - interpretCommand - Getting command key word
+07.04.2016 03:46:09 - INFO    - application.logic.Parser - interpretCommand - Converting to command object: volleyball
+07.04.2016 03:46:09 - INFO    - application.logic.Parser - convertToCommand - Making add command object
+07.04.2016 03:46:09 - INFO    - application.logic.Parser - convertToCommand - Returning command object
+07.04.2016 03:46:09 - INFO    - application.logic.Parser - interpretCommand - Returning command object
+07.04.2016 03:46:09 - INFO    - application.logic.Logic - executeCommand - executing above parsed command
+07.04.2016 03:46:09 - INFO    - application.logic.Logic - executeCommand - adding command to history
+07.04.2016 03:46:09 - INFO    - application.logic.Logic - executeCommand - saving tasks to file.
+07.04.2016 03:46:17 - INFO    - application.logic.Parser - interpretCommand - Checking for error in user command: cs 2103 lecture by tomorrow
+07.04.2016 03:46:17 - INFO    - application.logic.Parser - interpretCommand - Splitting command into array of its words
+07.04.2016 03:46:17 - INFO    - application.logic.Parser - interpretCommand - Getting command key word
+07.04.2016 03:46:17 - INFO    - application.logic.Parser - interpretCommand - Converting to command object: cs
+07.04.2016 03:46:17 - INFO    - application.logic.Parser - convertToCommand - Making add command object
+07.04.2016 03:46:17 - INFO    - application.logic.Parser - convertToCommand - Returning command object
+07.04.2016 03:46:17 - INFO    - application.logic.Parser - interpretCommand - Returning command object
+07.04.2016 03:46:17 - INFO    - application.logic.Logic - executeCommand - executing above parsed command
+07.04.2016 03:46:17 - INFO    - application.logic.Logic - executeCommand - adding command to history
+07.04.2016 03:46:17 - INFO    - application.logic.Logic - executeCommand - saving tasks to file.
+07.04.2016 03:48:24 - INFO    - application.logic.Parser - interpretCommand - Checking for error in user command: exit 
+07.04.2016 03:48:24 - INFO    - application.logic.Parser - interpretCommand - Splitting command into array of its words
+07.04.2016 03:48:24 - INFO    - application.logic.Parser - interpretCommand - Getting command key word
+07.04.2016 03:48:24 - INFO    - application.logic.Parser - interpretCommand - Converting to command object: exit
+07.04.2016 03:48:24 - INFO    - application.logic.Parser - convertToCommand - Making exit command object
+07.04.2016 03:48:24 - INFO    - application.logic.Parser - convertToCommand - Returning command object
+07.04.2016 03:48:24 - INFO    - application.logic.Parser - interpretCommand - Returning command object
+07.04.2016 03:48:24 - INFO    - application.logic.Logic - executeCommand - executing above parsed command
+ ----------------------   End  Thu Apr 07 03:48:24 SGT 2016 ---------------------- 

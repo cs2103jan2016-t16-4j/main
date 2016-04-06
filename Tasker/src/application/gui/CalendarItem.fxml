@@ -18,7 +18,7 @@
 
 <fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="178.0" prefWidth="274.0" style="-fx-border-insets: 0; -fx-border-color: black; -fx-background-radius: 0; -fx-border-width: 0;" type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="178.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="274.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="178.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" style="-fx-background-radius: 0;" width="274.0">
          <effect>
             <DropShadow color="#000000b9" offsetY="5.0" />
          </effect>

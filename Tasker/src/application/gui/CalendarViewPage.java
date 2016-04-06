@@ -133,8 +133,7 @@ public class CalendarViewPage extends AnchorPane {
 							Calendar cal = Calendar.getInstance();
 							int overdueCheck = 0;
 							if (item.getEndDate() != null) {
-								overdueCheck = FORMAT_COMPARE_DATE.format(item.getEndDate().getTime())
-										.compareTo(FORMAT_COMPARE_DATE.format(cal.getTime()));
+								overdueCheck = item.getEndDate().getTime().compareTo(cal.getTime());
 							}
 							int taskNumber = this.getIndex() + TASK_NUM_OFFSET;
 							String taskDescription = item.getTaskDescription();
@@ -164,8 +163,10 @@ public class CalendarViewPage extends AnchorPane {
 					public void updateItem(ArrayList<Task> item, boolean empty) {
 						super.updateItem(item, empty);
 						if (item != null) {
+							int index = this.getIndex() + 1;
 							DateObject listViewItem = new DateObject(
-									FORMAT_DATE.format(item.get(0).getEndDate().getTime()), item);
+									FORMAT_DATE.format(item.get(0).getEndDate().getTime()), item, index);
+							index = index + item.size();
 							setGraphic(listViewItem.getHbox());
 						} else {
 							setGraphic(null);
@@ -241,23 +242,22 @@ public class CalendarViewPage extends AnchorPane {
 	private void notifyUser(Task taskToFocus) {
 		String title = null;
 		String text = null;
-		if (taskToFocus == null){
-		    return;
-		}
-		if (taskToFocus.getEndDate() == null) {
-			title = "Reminder";
-			text = "No End Date Set";
-		}
-		if (taskToFocus.getStartDate() == null) {
-			title = "Reminder";
-			text = "No Start Date Set";
-		}
-		if (taskToFocus.getStartDate() == null && taskToFocus.getEndDate() == null) {
-			title = "Reminder";
-			text = "No Dates Set";
-		}
-		if (title != null && text != null) {
-			Notifications.create().title(title).text(text).showInformation();
+		if (taskToFocus != null) {
+			if (taskToFocus.getEndDate() == null) {
+				title = "Reminder";
+				text = "No End Date Set";
+			}
+			if (taskToFocus.getStartDate() == null) {
+				title = "Reminder";
+				text = "No Start Date Set";
+			}
+			if (taskToFocus.getStartDate() == null && taskToFocus.getEndDate() == null) {
+				title = "Reminder";
+				text = "No Dates Set";
+			}
+			if (title != null && text != null) {
+				Notifications.create().title(title).text(text).showInformation();
+			}
 		}
 	}
 

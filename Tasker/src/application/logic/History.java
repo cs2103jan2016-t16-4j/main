@@ -1,18 +1,15 @@
 package application.logic;
+//@@author A0132632R
 
 import java.util.Stack;
-//@@author A0132632R
 
 public class History {
 
     private Stack<UndoableCommand> executedCommands;
-    private Stack<UndoableCommand> undoneCommands;
-
-    private static History instance;
+        private static History instance;
     
     private History(){
         this.executedCommands = new Stack<UndoableCommand>();
-        this.undoneCommands = new Stack<UndoableCommand>();
     }
     
     public static History getInstance(){

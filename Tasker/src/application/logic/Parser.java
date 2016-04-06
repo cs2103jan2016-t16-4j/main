@@ -26,6 +26,8 @@ import org.ocpsoft.prettytime.shade.edu.emory.mathcs.backport.java.util.Collecti
 
 //@@author A0132632R
 
+
+
 public class Parser {
 	private static final String LOGGER_NAME = "logfile";
 	private static final String MESSAGE_NULL_ERROR = "command cannot be null";
@@ -70,6 +72,10 @@ public class Parser {
 
 	private PrettyTimeParser dateParser = new PrettyTimeParser();
 
+	public Parser(){
+	    dateParser.parse("2 hours before midnight day after tomorrow");
+	}
+	
 	public Command interpretCommand(String userCommand)
 			throws NoDescriptionException /* throws Exception */ {
 		logger.info("Checking for error in user command: " + userCommand);
