@@ -2,12 +2,8 @@
 package application.gui;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
@@ -58,6 +54,9 @@ public class ListItem extends HBox {
 			listNumber.setStyle(String.format(BACKGROUND_STYLE, BLUE));
 			break;
 		case "low":
+			listNumber.setStyle(String.format(BACKGROUND_STYLE, GREEN));
+			break;
+		default:
 			listNumber.setStyle(String.format(BACKGROUND_STYLE, GREEN));
 			break;
 		}
