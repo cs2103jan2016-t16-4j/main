@@ -2,6 +2,13 @@
 
 <!-- @@author A0125417L -->
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -9,12 +16,25 @@
 
 <!-- @@author A0125417L -->
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="178.0" prefWidth="349.0" style="-fx-border-insets: 0; -fx-border-color: black;" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="178.0" prefWidth="274.0" style="-fx-border-insets: 0; -fx-border-color: black; -fx-background-radius: 0; -fx-border-width: 0;" type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-		<Rectangle fx:id="rectangle" arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="41.0" layoutY="142.0" stroke="BLACK" strokeType="INSIDE" width="349.0" />
-		<Label fx:id="taskName" alignment="TOP_LEFT" layoutX="14.0" layoutY="14.0" prefHeight="41.0" prefWidth="324.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="178.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="274.0">
+         <effect>
+            <DropShadow color="#000000b9" offsetY="5.0" />
+         </effect>
+      </Rectangle>
+		<Rectangle fx:id="rectangle" arcWidth="5.0" fill="#ff1f1f" height="41.0" layoutY="142.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" style="-fx-border-width: 0; -fx-background-radius: 0;" width="274.0" />
+		<Label fx:id="taskName" alignment="TOP_LEFT" layoutX="14.0" layoutY="14.0" prefHeight="41.0" prefWidth="244.0" textFill="#757474">
+         <font>
+            <Font size="22.0" />
+         </font></Label>
 		<Label fx:id="date" layoutX="14.0" layoutY="62.0" />
 		<Label fx:id="locationLabel" layoutX="14.0" layoutY="107.0" />
+      <Label fx:id="indexLabel" alignment="CENTER" layoutX="112.0" layoutY="149.0" prefHeight="27.0" prefWidth="53.0" text="1" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
 	</children>
 	<padding>
 		<Insets right="50.0" />

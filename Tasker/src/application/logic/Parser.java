@@ -460,6 +460,8 @@ public class Parser {
             startDate = convertToCalendar(createEmptyDate());
         }
         Calendar[] fixedDates = {startDate, endDate};
+        System.out.println("START:" + startDate);
+        System.out.println("END:" + endDate);
         return fixedDates;
     }
     
