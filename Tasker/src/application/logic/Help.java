@@ -1,6 +1,9 @@
-package application.parser;
+package application.logic;
+
+import java.util.ArrayList;
 
 import application.storage.Storage;
+import application.storage.Task;
 
 public class Help implements Command {
 	 private static final String COMMAND_ADD="add:\n--Adds new tasks (keyword add is not required)\n--Adds"
@@ -14,7 +17,7 @@ public class Help implements Command {
          private static final String COMMAND_UNDO="undo:\n --Undoes the last input\n";
          private static final String COMMAND_STORAGE="storage:\n --Changes the storage location\n";
           private static final String COMMAND_HELP="help:\n--Shows help screen for commands.\n";
-	public Feedback execute(Storage storage) {
+	public static Feedback execute(Storage storage) {
           
           String msg="";
           msg+=COMMAND_ADD;
@@ -27,6 +30,11 @@ public class Help implements Command {
           msg+=COMMAND_HELP;
          
           return new Feedback(msg, null);
+	}
+	@Override
+	public Feedback execute(Storage storage, ArrayList<Task> tasksOnScreen) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
