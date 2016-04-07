@@ -361,7 +361,9 @@ public class Parser {
 	}
 
 	private Command getAppropDoneCommand(String[] args) {
-		if (args.length == 1) {
+	    if (args.length == 0){
+	        return new ShowDoneTasks();
+	    } else if (args.length == 1) {
 			int index = Integer.parseInt(args[0]) - ARRAY_INDEXING_OFFSET;
 			Command command = new DoneByNum(index);
 			return command;

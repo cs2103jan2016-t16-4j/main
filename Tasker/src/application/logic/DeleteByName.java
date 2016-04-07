@@ -11,6 +11,7 @@ public class DeleteByName implements UndoableCommand {
     private static final int FIRST_INDEX = 0;
     private static final String FEEDBACK_DELETE = "Deleted Task: %1$s";
     private static final String MESSAGE_NOTHING_TO_DELETE = "There is no task with that description.";
+    private static final String MESSAGE_CANNOT_DELETE_EMPTY = "Please enter some keywords from, or the number of, the task you want to delete.";
     private static final String MESSAGE_WHICH_DELETE = "Which task would you like to delete?";
     private static final String MESSAGE_DELETE_ERROR = "We encountered some "
             + "problem while deleting this task. We apologise for the inconvenience.";
@@ -22,6 +23,7 @@ public class DeleteByName implements UndoableCommand {
     Task deletedTask;
     
     DeleteByName(String taskToDelete){
+        System.out.println("HERE" +taskToDelete);
         this.taskToDelete = taskToDelete;
     }
      
@@ -40,6 +42,10 @@ public class DeleteByName implements UndoableCommand {
     public Feedback takeAction(ArrayList<Task> taskList, StorageConnector storageConnector) throws IOException{
         assert(taskList != null);
         this.storageConnector = storageConnector;
+        System.out.println(taskList.size());
+        if (taskToDelete.trim().equalsIgnoreCase("")){
+            return getFeedbackCal(MESSAGE_CANNOT_DELETE_EMPTY, storageConnector.getOpenList(), null);
+        }
         if (taskList.size() ==  0){
             return getFeedbackCal(MESSAGE_NOTHING_TO_DELETE, storageConnector.getOpenList(), null);
             
