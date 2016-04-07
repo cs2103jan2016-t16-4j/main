@@ -31,6 +31,7 @@ public class StorageStub {
 	// takes in String as "DD/MM/YYYY" with 2 slashes included
 	// returns true = if date is before and equal against searched-date
 	// returns false = if date is not before/equal against searched-date(i.e exceeds)
+	//@@author A0125522R
 	public boolean dateIsBeforeOrEqual(String scannedDate, String dateSearch) {
 		return true;	
 	}
