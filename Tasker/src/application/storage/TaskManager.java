@@ -11,7 +11,7 @@ import java.util.Comparator;
 public class TaskManager {
     private static final int EMPTY = 1;
 	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd-MM-yyyy");
-	
+//@@author A0110422E	
 	public ArrayList<Task> add(ArrayList<Task> openList,
 			String taskDescription, Calendar startDate, Calendar endDate,
 			String location, Calendar remindDate, String priority, int taskIndex) {
@@ -77,7 +77,7 @@ public class TaskManager {
 		lists.add(openList);
 		return lists;
 	}	
-	
+//@@author A0125522R	
 	public ArrayList<Task> delete(ArrayList<Task> openList, int taskIndex) {
 		for (int i = 0; i < openList.size(); i++) {
 			if (openList.get(i).getTaskIndex() == taskIndex) {
@@ -162,7 +162,7 @@ public class TaskManager {
 		}
 		return searchList;
 	}
-	
+//@@author A0110422E	
 	public ArrayList<Task> searchPriority(ArrayList<Task> openList, String searchPriority) {
 		ArrayList<Task> searchList = new ArrayList<Task>();
 		for (int i = 0; i < openList.size(); i++) {
@@ -175,7 +175,7 @@ public class TaskManager {
 			}
 		return searchList;
 	}	
-	
+//@@author A0125522R	
 	public ArrayList<Task> sortDate(ArrayList<Task> openList) {
 		Collections.sort(openList, new ComparatorDate());
 		return openList;
@@ -373,7 +373,24 @@ public class TaskManager {
 		
 		return deadlineTask;
 	}
-	
+
+//@@author A0110422E
+/*	
+	public ArrayList<Task> searchCategoryType(ArrayList<Task> openList, String categoryType) {
+		ArrayList<Task> searchList = new ArrayList<Task>();
+		for (int i = 0; i < openList.size(); i++) {
+			Task obj = openList.get(i);
+			if (obj.getCategoryType().toLowerCase()
+					.contains(categoryType.toLowerCase())) {
+				searchList.add(obj);
+//				System.out.println("Found a entry..");			
+				}
+			}
+		return searchList;
+	}
+*/
+
+//@@author A0125522R
 }
 
 class ComparatorPriority implements Comparator<Task> {
