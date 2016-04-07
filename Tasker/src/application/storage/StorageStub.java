@@ -1,3 +1,4 @@
+	//@@author A0110422E
 package application.storage;
 
 public class StorageStub {
