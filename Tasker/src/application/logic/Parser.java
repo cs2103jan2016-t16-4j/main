@@ -288,19 +288,17 @@ public class Parser {
 
 	}
 
-	// @@author A0125417L
 	private Command getSearchCommand(String[] args) throws NotDateException {
 		String[] argsForDate = (String[]) ArrayUtils.remove(args, 0);
 		if (args[0].equalsIgnoreCase("by")) {
 			return getSearchByDateCommand(argsForDate);
 		} else if (args[0].equalsIgnoreCase("on")) {
 			return getSearchOnDateCommand(argsForDate);
-		} else if (args[0].equalsIgnoreCase("priority")) {
+		} else if (args.length > 1 && args[0].equalsIgnoreCase("priority") && Arrays.asList(PRIORITY_LEVELS).contains(args[1])){
 			return getSearchByPriorityCommand(argsForDate);
 		} else
 			return getSearchByName(args);
 	}
-	// @@author A0125417L
 
 	private Command getSearchByName(String[] args) {
 		String taskName = getString(args, 0, args.length - 1);
@@ -320,14 +318,13 @@ public class Parser {
 		return cmd;
 	}
 
-	// @@author A0125417L
 	private Command getSearchByPriorityCommand(String[] args) {
-		System.out.println(args);
-		Command cmd = new SearchByPriority(args);
+		//System.out.println(args);
+	    String priority = getString(args, 0, 0);
+		Command cmd = new SearchByPriority(priority);
 		return cmd;
 	}
 
-	// @@author A0125417L
 
 	private Calendar getDateForSearch(String[] args) throws NotDateException {
 		String dateString = getString(args, 0, args.length - 1);

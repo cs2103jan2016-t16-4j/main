@@ -14,8 +14,8 @@ public class SearchByPriority implements Command {
 
 	private ArrayList<Task> taskList;
 
-	SearchByPriority(String[] arguments) {
-		priority = arguments[0];
+	SearchByPriority(String priority) {
+		this.priority = priority;
 	}
 
 	@Override
