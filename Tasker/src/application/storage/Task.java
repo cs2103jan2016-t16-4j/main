@@ -102,7 +102,17 @@ public abstract class Task implements Cloneable {
 		}
 
 	}
-	
+
+//@@author A0110422E
+/*	
+	private String categoryType;
+
+	public String getCategoryType() {
+		return categoryType;
+	}
+*/
+
+//@@author A0125522R
 	public abstract Calendar getStartDate();
 	
 	public abstract Calendar getEndDate();
