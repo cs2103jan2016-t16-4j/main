@@ -24,9 +24,7 @@ import org.ocpsoft.prettytime.shade.edu.emory.mathcs.backport.java.util.Collecti
  *
  */
 
-//@@author A0132632R
-
-
+// @@author A0132632R
 
 public class Parser {
 	private static final String LOGGER_NAME = "logfile";
@@ -40,30 +38,30 @@ public class Parser {
 	private static final String KEYWORD_UNDO = "undo";
 	private static final String KEYWORD_HELP = "help";
 	private static final String KEYWORD_LIST_DISPLAY = "list";
-    private static final String KEYWORD_STORAGE = "storage";
+	private static final String KEYWORD_STORAGE = "storage";
 	private static final String KEYWORD_EXIT = "exit";
 	private static final String EMPTY = "";
 
-    private static final String[] DATE_MARKERS_START = {"from"};
-    private static final String[] DATE_MARKERS_END = {"to", "till"};
-    private static final String[] DATE_MARKERS_DEADLINE = {"by"};
-	private static final String[] DATE_MARKERS_FULL_DAY_EVENT = {"on"};
-	private static final String[] DATE_MARKERS_REMIND = {"remind"};
-	private static final String[] LOCATION_MARKERS = {"at", "in"};
-	private static final String[] PRIORITY_MARKERS = {"priority"};
-    
+	private static final String[] DATE_MARKERS_START = { "from" };
+	private static final String[] DATE_MARKERS_END = { "to", "till" };
+	private static final String[] DATE_MARKERS_DEADLINE = { "by" };
+	private static final String[] DATE_MARKERS_FULL_DAY_EVENT = { "on" };
+	private static final String[] DATE_MARKERS_REMIND = { "remind" };
+	private static final String[] LOCATION_MARKERS = { "at", "in" };
+	private static final String[] PRIORITY_MARKERS = { "priority" };
+
 	private static final String PRIORITY_HIGH = "high";
-    private static final String PRIORITY_MEDIUM = "medium";
-    private static final String PRIORITY_LOW = "low";
-    private static final String[] PRIORITY_LEVELS = {PRIORITY_HIGH,PRIORITY_MEDIUM,PRIORITY_LOW};
-    
-    public static final int DEFAULT_EVENT_DURATION = 2;
-    private static final int ARGUMENT_NUMBER = 4;
+	private static final String PRIORITY_MEDIUM = "medium";
+	private static final String PRIORITY_LOW = "low";
+	private static final String[] PRIORITY_LEVELS = { PRIORITY_HIGH, PRIORITY_MEDIUM, PRIORITY_LOW };
+
+	public static final int DEFAULT_EVENT_DURATION = 2;
+	private static final int ARGUMENT_NUMBER = 4;
 	private static final int DESC_POS = 0;
 	private static final int DATE_POS = 1;
 	private static final int LOC_POS = 2;
 	private static final int PRI_POS = 3;
-    private static final int ARRAY_INDEXING_OFFSET = 1;
+	private static final int ARRAY_INDEXING_OFFSET = 1;
 
 	private static final boolean WITH_KEYWORD = true; // For add function. Since
 														// we accept no keyword.
@@ -72,10 +70,10 @@ public class Parser {
 
 	private PrettyTimeParser dateParser = new PrettyTimeParser();
 
-	public Parser(){
-	    dateParser.parse("2 hours before midnight day after tomorrow");
+	public Parser() {
+		dateParser.parse("2 hours before midnight day after tomorrow");
 	}
-	
+
 	public Command interpretCommand(String userCommand)
 			throws NoDescriptionException /* throws Exception */ {
 		logger.info("Checking for error in user command: " + userCommand);
@@ -110,10 +108,9 @@ public class Parser {
 			break;
 
 		case KEYWORD_LIST_DISPLAY:
-            command = processListInput(args);
-            break;
+			command = processListInput(args);
+			break;
 
-			
 		case KEYWORD_DELETE:
 			logger.info("Making delete command object");
 			command = initializeDelete(args);
@@ -167,16 +164,16 @@ public class Parser {
 	}
 
 	private Command processListInput(String[] args) throws NoDescriptionException {
-        Command command;
-        if (args.length == 1) {
-            logger.info("Making list command object");
-            command = initializeListDisplay();
-        } else {
-            logger.info("Making add command object");
-            command = initializeAdd(args, !WITH_KEYWORD);
-        }
-        return command;
-    }
+		Command command;
+		if (args.length == 1) {
+			logger.info("Making list command object");
+			command = initializeListDisplay();
+		} else {
+			logger.info("Making add command object");
+			command = initializeAdd(args, !WITH_KEYWORD);
+		}
+		return command;
+	}
 
 	private Command initializeAdd(String[] args, boolean isWithKeyWord) throws NoDescriptionException {
 		args = removeKeyWordIfReq(args, isWithKeyWord);
@@ -191,7 +188,8 @@ public class Parser {
 		}
 		Calendar[] datesFixed = fixDatesForAdd(dates);
 		Calendar remindDate = convertToCalendar(createEmptyDate());
-		Command command = new Add(segments[DESC_POS], datesFixed[0], datesFixed[1], segments[LOC_POS], remindDate, segments[PRI_POS]);
+		Command command = new Add(segments[DESC_POS], datesFixed[0], datesFixed[1], segments[LOC_POS], remindDate,
+				segments[PRI_POS]);
 		return command;
 	}
 
@@ -212,11 +210,11 @@ public class Parser {
 	private Command initializeHome() {
 		return new Home();
 	}
-    
+
 	private Command initializeListDisplay() {
-        return new ListDisplay();
-    }
-	
+		return new ListDisplay();
+	}
+
 	private Command initializeDelete(String[] args) {
 		args = (String[]) ArrayUtils.remove(args, 0);
 		try {
@@ -233,8 +231,8 @@ public class Parser {
 		int dateStartIndex = getDateStartIndex(args);
 		int locationStartIndex = getLastIndex(LOCATION_MARKERS, args);
 		int priorityIndex = getLastIndex(PRIORITY_MARKERS, args);
-        priorityIndex = fixPriorityIndex(priorityIndex, args);
-        String[] segments = getSegments(dateStartIndex, locationStartIndex, priorityIndex, args);
+		priorityIndex = fixPriorityIndex(priorityIndex, args);
+		String[] segments = getSegments(dateStartIndex, locationStartIndex, priorityIndex, args);
 		Calendar[] dates = parseDates(segments);
 		dates = fixDatesForUpdate(dates);
 		Calendar remindDate = convertToCalendar(createEmptyDate());
@@ -261,8 +259,8 @@ public class Parser {
 	 * private Command initializeHelp(){ Command command = new Help (); return
 	 * command; }
 	 */
-        
-        // @@author A0125417L
+
+	// @@author A0125417L
 	// Requests the logic to call for new storage location from the GUI then
 	// sends the data to Storage
 	private Command initializeStorageLocation(String[] args) {
@@ -280,7 +278,7 @@ public class Parser {
 		return command;
 	}
 
-        // @@author A0125417L
+	// @@author A0125417L
 	private Command getAppropSearchCommand(String[] args) {
 		try {
 			return getSearchCommand(args);
@@ -290,18 +288,19 @@ public class Parser {
 
 	}
 
-        // @@author A0125417L
+	// @@author A0125417L
 	private Command getSearchCommand(String[] args) throws NotDateException {
 		String[] argsForDate = (String[]) ArrayUtils.remove(args, 0);
 		if (args[0].equalsIgnoreCase("by")) {
 			return getSearchByDateCommand(argsForDate);
 		} else if (args[0].equalsIgnoreCase("on")) {
 			return getSearchOnDateCommand(argsForDate);
-		} else {
+		} else if (args[0].equalsIgnoreCase("priority")) {
+			return getSearchByPriorityCommand(argsForDate);
+		} else
 			return getSearchByName(args);
-		}
 	}
-        // @@author A0125417L
+	// @@author A0125417L
 
 	private Command getSearchByName(String[] args) {
 		String taskName = getString(args, 0, args.length - 1);
@@ -320,6 +319,15 @@ public class Parser {
 		Command cmd = new SearchByDate(date);
 		return cmd;
 	}
+
+	// @@author A0125417L
+	private Command getSearchByPriorityCommand(String[] args) {
+		System.out.println(args);
+		Command cmd = new SearchByPriority(args);
+		return cmd;
+	}
+
+	// @@author A0125417L
 
 	private Calendar getDateForSearch(String[] args) throws NotDateException {
 		String dateString = getString(args, 0, args.length - 1);
@@ -361,9 +369,9 @@ public class Parser {
 	}
 
 	private Command getAppropDoneCommand(String[] args) {
-	    if (args.length == 0){
-	        return new ShowDoneTasks();
-	    } else if (args.length == 1) {
+		if (args.length == 0) {
+			return new ShowDoneTasks();
+		} else if (args.length == 1) {
 			int index = Integer.parseInt(args[0]) - ARRAY_INDEXING_OFFSET;
 			Command command = new DoneByNum(index);
 			return command;
@@ -404,76 +412,73 @@ public class Parser {
 		if (tempDates1.size() == 0) {
 			date = null;
 		} else if (tempDates1.size() == 1) {
-		    if (Arrays.asList(DATE_MARKERS_START).indexOf(keyword) != -1){
-		        date = fixDate(tempDates1.get(0), tempDates2.get(0));
-		    }else if (Arrays.asList(DATE_MARKERS_END).indexOf(keyword) != -1){
-		        date = createEmptyDate();
-		    }else if (Arrays.asList(DATE_MARKERS_FULL_DAY_EVENT).indexOf(keyword) != -1){
-		        date = fixDate(tempDates1.get(0), tempDates2.get(0));
-		        date = date.withMillisOfDay(0);
-		    }else{
-		        date = null;
-		    }
+			if (Arrays.asList(DATE_MARKERS_START).indexOf(keyword) != -1) {
+				date = fixDate(tempDates1.get(0), tempDates2.get(0));
+			} else if (Arrays.asList(DATE_MARKERS_END).indexOf(keyword) != -1) {
+				date = createEmptyDate();
+			} else if (Arrays.asList(DATE_MARKERS_FULL_DAY_EVENT).indexOf(keyword) != -1) {
+				date = fixDate(tempDates1.get(0), tempDates2.get(0));
+				date = date.withMillisOfDay(0);
+			} else {
+				date = null;
+			}
 		} else {
 			date = fixDate(tempDates1.get(0), tempDates2.get(0));
 		}
-		//System.out.println(date);
+		// System.out.println(date);
 		return convertToCalendar(date);
 	}
 
-	
-	
 	private Calendar getEndDate(String keyword, List<Date> tempDates1, List<Date> tempDates2) {
 		LocalDateTime date;
 		if (tempDates1.size() == 0) {
 			date = null;
 		} else if (tempDates1.size() == 1) {
-		    if (Arrays.asList(DATE_MARKERS_START).indexOf(keyword) != -1){
-                date = createEmptyDate();
-            }else if (Arrays.asList(DATE_MARKERS_FULL_DAY_EVENT).indexOf(keyword) != -1){
-                date = fixDate(tempDates1.get(0), tempDates2.get(0));
-                date = date.withTime(23, 59, 59, 999);
-            }else{
-                date = fixDate(tempDates1.get(0), tempDates2.get(0));
-            }
+			if (Arrays.asList(DATE_MARKERS_START).indexOf(keyword) != -1) {
+				date = createEmptyDate();
+			} else if (Arrays.asList(DATE_MARKERS_FULL_DAY_EVENT).indexOf(keyword) != -1) {
+				date = fixDate(tempDates1.get(0), tempDates2.get(0));
+				date = date.withTime(23, 59, 59, 999);
+			} else {
+				date = fixDate(tempDates1.get(0), tempDates2.get(0));
+			}
 		} else {
 			date = fixDate(tempDates1.get(1), tempDates2.get(1));
 		}
-		//System.out.println(date);
+		// System.out.println(date);
 		return convertToCalendar(date);
 	}
 
-	private Calendar[] fixDatesForAdd(Calendar[] dates){
-	    Calendar startDate = dates[0];
-	    Calendar endDate = dates[1];
-	    if (startDate != null){
-	        if (startDate.equals(convertToCalendar(createEmptyDate()))){
-               startDate = (Calendar) endDate.clone();
-               startDate.add(Calendar.HOUR, - DEFAULT_EVENT_DURATION); 
-               
-            } else if (endDate.equals(convertToCalendar(createEmptyDate()))){
-                endDate = (Calendar) startDate.clone();
-                endDate.add(Calendar.HOUR, + DEFAULT_EVENT_DURATION); 
-            }
-        }
-        Calendar[] fixedDates = {startDate, endDate};
-        return fixedDates;
+	private Calendar[] fixDatesForAdd(Calendar[] dates) {
+		Calendar startDate = dates[0];
+		Calendar endDate = dates[1];
+		if (startDate != null) {
+			if (startDate.equals(convertToCalendar(createEmptyDate()))) {
+				startDate = (Calendar) endDate.clone();
+				startDate.add(Calendar.HOUR, -DEFAULT_EVENT_DURATION);
+
+			} else if (endDate.equals(convertToCalendar(createEmptyDate()))) {
+				endDate = (Calendar) startDate.clone();
+				endDate.add(Calendar.HOUR, +DEFAULT_EVENT_DURATION);
+			}
+		}
+		Calendar[] fixedDates = { startDate, endDate };
+		return fixedDates;
 	}
-	
-	private Calendar[] fixDatesForUpdate(Calendar[] dates){
-        Calendar startDate = dates[0];
-        Calendar endDate = dates[1];
-        if (endDate == null && startDate == null){
-            endDate = convertToCalendar(createEmptyDate());
-            startDate = convertToCalendar(createEmptyDate());
-        }
-        Calendar[] fixedDates = {startDate, endDate};
-        System.out.println("START:" + startDate);
-        System.out.println("END:" + endDate);
-        return fixedDates;
-    }
-    
-	
+
+	private Calendar[] fixDatesForUpdate(Calendar[] dates) {
+		Calendar startDate = dates[0];
+		Calendar endDate = dates[1];
+		if (endDate == null && startDate == null) {
+			endDate = convertToCalendar(createEmptyDate());
+			startDate = convertToCalendar(createEmptyDate());
+		}
+		Calendar[] fixedDates = { startDate, endDate };
+		System.out.println("START:" + startDate);
+		System.out.println("END:" + endDate);
+		return fixedDates;
+	}
+
 	private LocalDateTime fixDate(Date date1, Date date2) {
 		if (date1.equals(date2)) {
 			return new LocalDateTime(date1);
@@ -493,8 +498,8 @@ public class Parser {
 	}
 
 	private Calendar convertToCalendar(LocalDateTime date) {
-		if ( date == null){
-		    return null;
+		if (date == null) {
+			return null;
 		}
 		Date temp = date.toDate();
 		Calendar cal = Calendar.getInstance();
@@ -503,9 +508,9 @@ public class Parser {
 	}
 
 	private String[] getSegments(int dateIndex, int locationIndex, int priorityIndex, String[] args) {
-		String description = getDescription(dateIndex, locationIndex,priorityIndex, args);
-		String date = getDateString(dateIndex, locationIndex,priorityIndex, args);
-		String location = getLocationString(dateIndex, locationIndex,priorityIndex, args);
+		String description = getDescription(dateIndex, locationIndex, priorityIndex, args);
+		String date = getDateString(dateIndex, locationIndex, priorityIndex, args);
+		String location = getLocationString(dateIndex, locationIndex, priorityIndex, args);
 		String priority = getPriority(priorityIndex, args);
 		String[] segments = new String[ARGUMENT_NUMBER];
 		System.out.println(description);
@@ -516,19 +521,19 @@ public class Parser {
 		return segments;
 	}
 
-	private String getPriority(int priorityIndex, String[] args){
-	    if (priorityIndex == -1){
-	        return EMPTY;
-	    } else{
-	        return args[priorityIndex + 1];
-	    }
+	private String getPriority(int priorityIndex, String[] args) {
+		if (priorityIndex == -1) {
+			return EMPTY;
+		} else {
+			return args[priorityIndex + 1];
+		}
 	}
-	
+
 	private String getDescription(int dateIndex, int locationIndex, int priorityIndex, String[] args) {
 		String description;
 		int end = args.length;
-		if (priorityIndex != -1){
-		    end = priorityIndex;
+		if (priorityIndex != -1) {
+			end = priorityIndex;
 		}
 		if (dateIndex == -1 && locationIndex == -1) {
 			description = getString(args, 0, end - 1);
@@ -541,24 +546,24 @@ public class Parser {
 		return description;
 	}
 
-	private int fixPriorityIndex(int priorityIndex, String[] args){
-	    int priorityLevelPosition = priorityIndex + 1 ;
-	    List<String> levels = Arrays.asList(PRIORITY_LEVELS);
-	    if (priorityLevelPosition == args.length){
-	        return -1;
-	    }else if (!levels.contains(args[priorityLevelPosition].toLowerCase())){
-	        return -1;
-	    }else{
-	        return priorityIndex;
-	    }
+	private int fixPriorityIndex(int priorityIndex, String[] args) {
+		int priorityLevelPosition = priorityIndex + 1;
+		List<String> levels = Arrays.asList(PRIORITY_LEVELS);
+		if (priorityLevelPosition == args.length) {
+			return -1;
+		} else if (!levels.contains(args[priorityLevelPosition].toLowerCase())) {
+			return -1;
+		} else {
+			return priorityIndex;
+		}
 	}
-	
+
 	private String getDateString(int dateIndex, int locationIndex, int priorityIndex, String[] args) {
-	    int end = args.length;
-	    if (priorityIndex != -1){
-	        end = priorityIndex;
-	    }
-	    if (dateIndex == -1) {
+		int end = args.length;
+		if (priorityIndex != -1) {
+			end = priorityIndex;
+		}
+		if (dateIndex == -1) {
 			return EMPTY;
 		} else if (dateIndex < locationIndex) {
 			return getString(args, dateIndex, locationIndex - 1);
@@ -568,11 +573,11 @@ public class Parser {
 	}
 
 	private String getLocationString(int dateIndex, int locationIndex, int priorityIndex, String[] args) {
-	    int end = args.length;
-        if (priorityIndex != -1){
-            end = priorityIndex;
-        }
-        if (locationIndex == -1) {
+		int end = args.length;
+		if (priorityIndex != -1) {
+			end = priorityIndex;
+		}
+		if (locationIndex == -1) {
 			return EMPTY;
 		} else if (locationIndex < dateIndex) {
 			return getString(args, locationIndex + 1, dateIndex - 1);
@@ -591,29 +596,29 @@ public class Parser {
 
 	private int getDateStartIndex(String[] args) {
 		ArrayList<Integer> indices = new ArrayList<Integer>();
-	    int eventDateIndex = getLastIndex(DATE_MARKERS_START, args);
-		if (eventDateIndex == -1){
-		    indices.add(getLastIndex(DATE_MARKERS_END, args));
-		}else{
-		    indices.add(eventDateIndex);
+		int eventDateIndex = getLastIndex(DATE_MARKERS_START, args);
+		if (eventDateIndex == -1) {
+			indices.add(getLastIndex(DATE_MARKERS_END, args));
+		} else {
+			indices.add(eventDateIndex);
 		}
 		indices.add(getLastIndex(DATE_MARKERS_DEADLINE, args));
 		indices.add(getLastIndex(DATE_MARKERS_FULL_DAY_EVENT, args));
-        int dateIndex = (int) Collections.max(indices);
+		int dateIndex = (int) Collections.max(indices);
 		return dateIndex;
 	}
-	
-	private static int getLastIndex(String[] keywords, String[] commandWords){
-	    int[] positions = new int[keywords.length];
-	    String[] commandLowerCase = new String[commandWords.length];
-	    for (int i = 0; i < commandWords.length; i++ ){
-	        commandLowerCase[i] = commandWords[i].toLowerCase();
-	    }
-	    for (int i = 0; i < keywords.length; i++){
-	        positions[i] = Arrays.asList(commandLowerCase).lastIndexOf(keywords[i].toLowerCase());
-	    }
-	    List<Integer> list = Arrays.asList(ArrayUtils.toObject(positions));
-	    return ((int) Collections.max(list));
+
+	private static int getLastIndex(String[] keywords, String[] commandWords) {
+		int[] positions = new int[keywords.length];
+		String[] commandLowerCase = new String[commandWords.length];
+		for (int i = 0; i < commandWords.length; i++) {
+			commandLowerCase[i] = commandWords[i].toLowerCase();
+		}
+		for (int i = 0; i < keywords.length; i++) {
+			positions[i] = Arrays.asList(commandLowerCase).lastIndexOf(keywords[i].toLowerCase());
+		}
+		List<Integer> list = Arrays.asList(ArrayUtils.toObject(positions));
+		return ((int) Collections.max(list));
 	}
 
 	private void checkForError(String userCommand) /* throws Error */ {
