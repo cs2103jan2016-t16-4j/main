@@ -19,7 +19,7 @@ public class Storage implements Cloneable {
 		fileManager = new FileManager();
 		taskManager = new TaskManager();		
 	}
-	
+//@@author A0110422E
 	public Task addTaskInList(String taskDescription, Calendar startDate,
 			Calendar endDate, String location, Calendar remindDate,
 			String priority) throws IOException {
@@ -47,7 +47,7 @@ public class Storage implements Cloneable {
 		saveFile();
 		return databaseManager.getOpenList().get((databaseManager.getOpenList().size())-1);
 	}	
-	
+//@@author A0125522R	
 	public Task deleteTask(int index) throws IOException {
 		Task deletedTask = null;
 		for (int i = 0; i<databaseManager.getOpenList().size(); i++) {
@@ -105,7 +105,13 @@ public class Storage implements Cloneable {
 	public ArrayList<Task> searchTaskByPriority(String priority) {
 		return taskManager.searchPriority(databaseManager.getOpenList(), priority);
 	}
-	
+//@@author A0110422E
+/*	
+	public ArrayList<Task> searchTaskByCategoryType(String categoryType) {
+		return taskManager.searchCategoryType(databaseManager.getOpenList(), categoryType);
+	}
+*/
+//@@author A0125522R	
 	public void setDirectory(String path) throws IOException {
 		fileManager.setDirectory(path);
 	}
