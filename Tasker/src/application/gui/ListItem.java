@@ -1,4 +1,4 @@
-//@@author A0132632R
+// @@author A0125417L
 package application.gui;
 
 import java.io.IOException;
@@ -49,8 +49,6 @@ public class ListItem extends HBox {
 		overdueCheck(overdueCheck);
 	}
 
-	// @@author A0125417L
-	
 	private void overdueCheck(int overdueCheck) {
 		if (overdueCheck < 0) {
 			listNumber.setStyle(String.format(BACKGROUND_STYLE, DARK_RED));
@@ -75,7 +73,6 @@ public class ListItem extends HBox {
 		}
 
 	}
-	//@@author A0132632R
 
 	private void setLocation(String location) {
 		if (!location.equals(EMPTY)) {
@@ -83,3 +80,4 @@ public class ListItem extends HBox {
 		}
 	}
 }
+// @@author A0125417L
