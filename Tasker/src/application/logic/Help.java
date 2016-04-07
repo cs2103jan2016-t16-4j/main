@@ -1,5 +1,7 @@
 package application.logic;
 
+//@@author A0078688A
+
 import java.util.ArrayList;
 
 import application.storage.Storage;
@@ -29,10 +31,16 @@ public class Help implements Command {
           msg+=COMMAND_STORAGE;
           msg+=COMMAND_HELP;
          
-          return new Feedback(msg, null);
+          return new Feedback(msg, null, null);
 	}
+	
+//	@Override
+//	public Feedback execute(Storage storage, ArrayList<Task> tasksOnScreen) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 	@Override
-	public Feedback execute(Storage storage, ArrayList<Task> tasksOnScreen) {
+	public Feedback execute(StorageConnector storageConnector, ArrayList<Task> tasksOnScreen) {
 		// TODO Auto-generated method stub
 		return null;
 	}
