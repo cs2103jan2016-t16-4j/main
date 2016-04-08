@@ -129,9 +129,9 @@ public class Parser {
 		case KEYWORD_UNDO:
 			command = initializeUndo();
 			break;
-		/*
-		 * case KEYWORD_HELP : command = initializeHelp(); break;
-		 */
+		
+		 case KEYWORD_HELP : command = initializeHelp(); break;
+		
 		case KEYWORD_STORAGE:
 			command = initializeStorageLocation(args);
 			break;
@@ -255,10 +255,10 @@ public class Parser {
 		return command;
 	}
 
-	/*
-	 * private Command initializeHelp(){ Command command = new Help (); return
-	 * command; }
-	 */
+	
+	private Command initializeHelp(){ Command command = new Help (); return
+	 command; }
+	 
 
 	// @@author A0125417L
 	// Requests the logic to call for new storage location from the GUI then
