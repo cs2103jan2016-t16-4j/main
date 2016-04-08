@@ -88,34 +88,6 @@ public class DeadlineTask extends Task implements Cloneable {
     	newTask.remindDate = (Calendar) remindDate.clone();
     	return newTask;
     }
-  //@@author A0110422E
-	public String getPriority() {
-		Calendar currentTime = Calendar.getInstance();
-		Calendar endTime = endDate;
-		String tempPriority = "low";
-		if (endTime.before(currentTime)) {
-			setPriority("high");
-		}
-		if (priority == "") {
-			// End time is in less than two hours or before current time
-			currentTime.roll(Calendar.HOUR, 2);
-			if (endTime.before(currentTime)) {
-				tempPriority = "high";
-			} else {
-				currentTime.roll(Calendar.HOUR, -2);		
-				// End time is between two hours and one day
-				currentTime.roll(Calendar.DATE, 1);
-				if (endTime.before(currentTime)) {
-					tempPriority = "medium";
-					currentTime.roll(Calendar.DATE, -1);
-				}	
-			}		
-			currentTime.roll(Calendar.DATE, -1);	
-		} else {
-			tempPriority = priority;
-		}
-		return tempPriority;
-	}   
        //@@author A0110422E	
 	public String getPriority() {
 		Calendar currentTime = Calendar.getInstance();
