@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
@@ -68,16 +69,17 @@
 				<ListView fx:id="calendarList" prefHeight="526.0" prefWidth="1066.0" style="-fx-background-insets: 0;" />
 			</children>
 		</StackPane>
-      <AnchorPane fx:id="hiddenMenu" layoutX="-237.0" layoutY="184.0" prefHeight="566.0" prefWidth="230.0" style="-fx-background-color: white;">
+      <AnchorPane fx:id="hiddenMenu" layoutX="-333.0" layoutY="184.0" prefHeight="575.0" prefWidth="328.0" style="-fx-background-color: #D3D3D3;">
          <children>
-            <Label fx:id="Summary" layoutX="58.0" layoutY="21.0" style="-fx-underline: true; -fx-font-weight: bold;" text="Summary">
+            <Label fx:id="Summary" layoutX="98.0" layoutY="21.0" style="-fx-underline: true; -fx-font-weight: bold;" text="Summary">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label fx:id="overdueLabel" alignment="CENTER" layoutX="66.0" layoutY="57.0" text="Overdue Tasks:" textFill="#b71c1c" />
-            <Label fx:id="completedLabel" alignment="CENTER" layoutX="53.0" layoutY="87.0" text="Completed Tasks:" textFill="#a5d6a7" />
-            <Label fx:id="remainingLabel" alignment="CENTER" layoutX="59.0" layoutY="119.0" text="Remaning Tasks:" textFill="#b2ebf2" />
+            <Label fx:id="overdueLabel" alignment="CENTER" layoutX="106.0" layoutY="57.0" text="Overdue Tasks:" />
+            <Label fx:id="completedLabel" alignment="CENTER" layoutX="93.0" layoutY="87.0" text="Completed Tasks:" />
+            <Label fx:id="remainingLabel" alignment="CENTER" layoutX="99.0" layoutY="119.0" text="Remaning Tasks:" />
+            <PieChart fx:id="pieChart" layoutX="2.0" layoutY="247.0" prefHeight="259.0" prefWidth="326.0" />
          </children>
       </AnchorPane>
 		<!-- @@author A0125417L -->

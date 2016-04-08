@@ -19,6 +19,8 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Side;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -92,6 +94,8 @@ public class CalendarViewPage extends AnchorPane {
 	private Label completedLabel;
 	@FXML
 	private Label remainingLabel;
+	@FXML
+	private PieChart pieChart;
 
 	public CalendarViewPage(ArrayList<Task> taskList, Logic logic) {
 		tasksOnScreen = taskList;
@@ -245,6 +249,13 @@ public class CalendarViewPage extends AnchorPane {
 		completedLabel.setText("Completed Tasks: " + logic.getCompletedTaskCount());
 		remainingLabel.setText("Remaining Tasks: " + logic.getRemainingTaskCount());
 		overdueLabel.setText("Overdue Tasks: " + logic.getOverdueTaskCount());
+		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
+				new PieChart.Data("Completed Tasks", logic.getCompletedTaskCount()),
+				new PieChart.Data("Remaining Tasks", logic.getRemainingTaskCount()),
+				new PieChart.Data("Overdue Tasks", logic.getOverdueTaskCount()));
+		pieChart.setData(pieChartData);
+		pieChart.setLabelsVisible(false);
+		pieChart.setLegendSide(Side.BOTTOM);
 	}
 
 	private void notifyUser(Task taskToFocus) {
@@ -553,4 +564,3 @@ public class CalendarViewPage extends AnchorPane {
 		return secondLetter;
 	}
 }
-// @@author A0125417L
