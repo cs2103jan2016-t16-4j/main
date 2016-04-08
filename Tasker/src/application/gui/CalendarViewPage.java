@@ -9,7 +9,9 @@ import java.util.Calendar;
 import org.controlsfx.control.Notifications;
 
 import application.logic.Feedback;
+import application.logic.Help;
 import application.logic.Logic;
+import application.storage.Storage;
 import application.storage.Task;
 import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
@@ -21,6 +23,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Side;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -402,6 +406,15 @@ public class CalendarViewPage extends AnchorPane {
 			calendarList.toFront();
 			break;
 		case HELP_FLAG:
+			Storage storage = null;
+			Feedback help = Help.execute(storage);
+			String helpMessage = help.getMessage();
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Information Dialog");
+			alert.setHeaderText(null);
+			alert.setContentText(helpMessage);
+
+			alert.showAndWait();
 
 			break;
 		case LIST_FLAG:
