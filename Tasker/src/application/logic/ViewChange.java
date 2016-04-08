@@ -11,7 +11,7 @@ public class ViewChange implements Command {
     
     @Override
     public Feedback execute(StorageConnector storageConnector, ArrayList<Task> tasksOnScreen) {
-        Feedback feedback = new Feedback(MESSAGE_LIST, storageConnector.getOpenList(),null);
+        Feedback feedback = new Feedback(MESSAGE_LIST, tasksOnScreen ,null);
         feedback.setViewChangeFlag();
         return feedback;
     }
