@@ -2,9 +2,6 @@
 package application.gui;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
-import application.storage.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;

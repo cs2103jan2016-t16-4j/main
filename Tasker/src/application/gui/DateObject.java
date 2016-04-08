@@ -34,7 +34,6 @@ public class DateObject extends HBox {
 			fxmlLoader.setController(this);
 			fxmlLoader.load();
 			this.setLabels(date);
-			ObservableList<Task> list = FXCollections.observableArrayList();
 			this.listViewItem.setCellFactory(new Callback<ListView<Task>, ListCell<Task>>() {
 				public ListCell<Task> call(ListView<Task> param) {
 					ListCell<Task> cell = new ListCell<Task>() {

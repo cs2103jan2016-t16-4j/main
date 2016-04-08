@@ -3,21 +3,15 @@ package application.gui;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import org.controlsfx.control.Notifications;
 
 import application.logic.Feedback;
 import application.logic.Logic;
 import application.storage.Task;
+import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -36,6 +30,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.Duration;
 
 public class CalendarViewPage extends AnchorPane {
 	private ArrayList<Task> tasksOnScreen;
@@ -49,8 +44,6 @@ public class CalendarViewPage extends AnchorPane {
 	private static final String CURRENT_DIRECTORY = "user.dir";
 	private static final int TASK_NUM_OFFSET = 1;
 	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd MMM yyyy");
-	private static final SimpleDateFormat FORMAT_YEAR = new SimpleDateFormat("yyyy");
-	private static final SimpleDateFormat FORMAT_COMPARE_DATE = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 	private static final String LIST_FLAG = "list";
 	private static final String CAL_FLAG = "cal";
 	private static final String HELP_FLAG = "help";
@@ -91,6 +84,14 @@ public class CalendarViewPage extends AnchorPane {
 	private ListView<Task> displayList;
 	@FXML
 	private ListView<ArrayList<Task>> calendarList;
+	@FXML
+	private AnchorPane hiddenMenu;
+	@FXML
+	private Label overdueLabel;
+	@FXML
+	private Label completedLabel;
+	@FXML
+	private Label remainingLabel;
 
 	public CalendarViewPage(ArrayList<Task> taskList, Logic logic) {
 		tasksOnScreen = taskList;
@@ -119,6 +120,26 @@ public class CalendarViewPage extends AnchorPane {
 		initialiseDisplayList();
 		taskToFocus = null;
 		updateViews(tasksOnScreen, taskToFocus);
+		// Timer timer = new Timer();
+		// timer.schedule(new TimerTask() {
+		// public void run() {
+		// // Calendar cal = Calendar.getInstance();
+		// // System.out.println(FORMAT_COMPARE_DATE.format(cal.getTime()));
+		// // for (int x = 0; x < tasksOnScreen.size(); x++) {
+		// //
+		// System.out.println(FORMAT_COMPARE_DATE.format(taskList.get(x).getEndDate().getTime())
+		// // .compareTo(FORMAT_COMPARE_DATE.format(cal.getTime())));
+		// // if
+		// //
+		// (FORMAT_COMPARE_DATE.format(taskList.get(x).getEndDate().getTime())
+		// // .compareTo(FORMAT_COMPARE_DATE.format(cal.getTime())) == 0) {
+		// // System.out.println("Task Overdue");
+		// updateViews(tasksOnScreen, null);
+		// }
+		// // }
+		//
+		// // }
+		// }, 0, 60 * 250);
 	}
 
 	private void initialiseDisplayList() {
@@ -215,26 +236,15 @@ public class CalendarViewPage extends AnchorPane {
 	}
 
 	private void updateViews(ArrayList<Task> taskList, Task taskToFocus) {
-		// Timer timer = new Timer();
-		// timer.schedule(new TimerTask() {
-		// public void run() {
-		// Calendar cal = Calendar.getInstance();
-		// System.out.println(FORMAT_COMPARE_DATE.format(cal.getTime()));
-		// for (int x = 0; x < taskList.size(); x++) {
-		// System.out.println(FORMAT_COMPARE_DATE.format(taskList.get(x).getEndDate().getTime())
-		// .compareTo(FORMAT_COMPARE_DATE.format(cal.getTime())));
-		// if
-		// (FORMAT_COMPARE_DATE.format(taskList.get(x).getEndDate().getTime())
-		// .compareTo(FORMAT_COMPARE_DATE.format(cal.getTime())) == 0) {
-		// System.out.println("Task Overdue");
-		// updateViews(taskList);
-		// }
-		// }
-		//
-		// }
-		// }, 0, 60 * 250);
 		updateCalendarList(taskList);
 		updateDisplayList(taskList, taskToFocus);
+		updateSummary();
+	}
+
+	private void updateSummary() {
+		completedLabel.setText("Completed Tasks: " + logic.getCompletedTaskCount());
+		remainingLabel.setText("Remaining Tasks: " + logic.getRemainingTaskCount());
+		overdueLabel.setText("Overdue Tasks: " + logic.getOverdueTaskCount());
 	}
 
 	private void notifyUser(Task taskToFocus) {
@@ -305,7 +315,18 @@ public class CalendarViewPage extends AnchorPane {
 					try {
 						text = textInputArea.getText();
 						commands.add(text);
-						if (!text.equalsIgnoreCase("view")) {
+						if (text.equals("summary")) {
+							TranslateTransition openNav = new TranslateTransition(new Duration(350), hiddenMenu);
+							openNav.setToX(0);
+							TranslateTransition closeNav = new TranslateTransition(new Duration(350), hiddenMenu);
+							if (hiddenMenu.getTranslateX() != 0) {
+								openNav.play();
+							} else {
+								closeNav.setToX(+(hiddenMenu.getWidth()));
+								closeNav.play();
+							}
+							hiddenMenu.toFront();
+						} else if (!text.equalsIgnoreCase("view")) {
 							Feedback feedback = logic.executeCommand(text, tasksOnScreen);
 							System.out.println(feedback.getMessage());
 							tasksOnScreen = feedback.getTasks();
@@ -320,8 +341,7 @@ public class CalendarViewPage extends AnchorPane {
 						}
 						textInputArea.clear();
 					} catch (Exception e) {
-					    e.printStackTrace(System.out);
-					    feedbackLabel.setText(MESSAGE_ERROR);
+						feedbackLabel.setText(MESSAGE_ERROR);
 					}
 				}
 				if (ke.getCode().equals(KeyCode.UP)) {

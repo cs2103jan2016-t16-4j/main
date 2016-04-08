@@ -29,7 +29,6 @@ import javafx.stage.WindowEvent;
 public class GuiMain extends Application {
 	private static final String APPLICATION_NAME = "Tasker";
 	private static final String EMPTY_STRING = "";
-	private static final String SPACE = "\\s+";
 	private static final String BACKSLASH = "\\";
 	private static final String CSS_URL = "application/gui/application.css";
 	private static final String LOGO_URL = "robot.jpg";
@@ -76,7 +75,7 @@ public class GuiMain extends Application {
 
 	private void customiseGUIMenuBar(Stage primaryStage) {
 		setProgramName(primaryStage);
-		//setProgramLogo(primaryStage);
+		setProgramLogo(primaryStage);
 	}
 
 	private void setProgramName(Stage primaryStage) {

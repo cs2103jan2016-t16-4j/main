@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
@@ -19,7 +11,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1107.0" style="-fx-background-color: white;" type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1107.0" style="-fx-background-color: white;" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
 		<Rectangle arcWidth="5.0" fill="#00acc1" height="172.0" smooth="false" stroke="#fcf8f800" strokeType="INSIDE" strokeWidth="0.0" style="-fx-border-color: transparent;" width="1116.0">
 			<effect>
@@ -76,6 +68,18 @@
 				<ListView fx:id="calendarList" prefHeight="526.0" prefWidth="1066.0" style="-fx-background-insets: 0;" />
 			</children>
 		</StackPane>
+      <AnchorPane fx:id="hiddenMenu" layoutX="-237.0" layoutY="184.0" prefHeight="566.0" prefWidth="230.0" style="-fx-background-color: white;">
+         <children>
+            <Label fx:id="Summary" layoutX="58.0" layoutY="21.0" style="-fx-underline: true; -fx-font-weight: bold;" text="Summary">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="overdueLabel" alignment="CENTER" layoutX="66.0" layoutY="57.0" text="Overdue Tasks:" textFill="#b71c1c" />
+            <Label fx:id="completedLabel" alignment="CENTER" layoutX="53.0" layoutY="87.0" text="Completed Tasks:" textFill="#a5d6a7" />
+            <Label fx:id="remainingLabel" alignment="CENTER" layoutX="59.0" layoutY="119.0" text="Remaning Tasks:" textFill="#b2ebf2" />
+         </children>
+      </AnchorPane>
 		<!-- @@author A0125417L -->
 	</children>
 	<effect>
