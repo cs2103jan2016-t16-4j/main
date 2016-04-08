@@ -13,9 +13,7 @@ import java.util.Optional;
 import org.controlsfx.control.Notifications;
 
 import application.logic.Feedback;
-import application.logic.Help;
 import application.logic.Logic;
-import application.storage.Storage;
 import application.storage.Task;
 import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
@@ -42,6 +40,7 @@ import javafx.util.Callback;
 import javafx.util.Duration;
 
 public class CalendarViewPage extends AnchorPane {
+	private static final String LISTVIEW_FXML_URL = "ListView.fxml";
 	private ArrayList<Task> tasksOnScreen;
 	private Logic logic;
 
@@ -57,6 +56,8 @@ public class CalendarViewPage extends AnchorPane {
 	private static final String CAL_FLAG = "cal";
 	private static final String HELP_FLAG = "help";
 	private static final String STORAGE_FLAG = "storage";
+	private static final String VIEW_CHANGE_FLAG = "view";
+	private static final String SUMMARY_FLAG = "summary";
 
 	// Messages
 	private static final String ADD_HINT_MESSAGE = "To add: [task description] from [start] to [end] at [location]";
@@ -71,11 +72,10 @@ public class CalendarViewPage extends AnchorPane {
 	private static final String MESSAGE_STORAGE_URL_NOT_FOUND = "Storage Location Invalid: Opening Directory Chooser";
 	private static final String MESSAGE_HELP_INTRO = "Start typing and we'll help you out!";
 	private static final String MESSAGE_FEEDBACK_INTRO = "We'll give you feedback on your commands here.";
-
 	private static final String MESSAGE_ERROR = "There was some problem processing your request. "
 			+ "Please check your input format.";
 
-	String text = EMPTY_STRING;
+	private String text = EMPTY_STRING;
 	private static ArrayList<String> commands = new ArrayList<String>();
 	private static int pointer = 0;
 	private Task taskToFocus;
@@ -107,7 +107,7 @@ public class CalendarViewPage extends AnchorPane {
 	public CalendarViewPage(ArrayList<Task> taskList, Logic logic) {
 		tasksOnScreen = taskList;
 		this.logic = logic;
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ListView.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(LISTVIEW_FXML_URL));
 		loadFromFxml(fxmlLoader);
 		initialize();
 		initializeInputArea();
@@ -247,7 +247,7 @@ public class CalendarViewPage extends AnchorPane {
 	}
 
 	private void updateViews(ArrayList<Task> taskList, Task taskToFocus) {
-		updateCalendarList(taskList);
+		updateCalendarList(taskList, taskToFocus);
 		updateDisplayList(taskList, taskToFocus);
 		updateSummary();
 	}
@@ -294,11 +294,12 @@ public class CalendarViewPage extends AnchorPane {
 			this.displayList.setItems(list);
 			if (taskToFocus != null) {
 				this.displayList.scrollTo(taskToFocus);
+				this.displayList.getSelectionModel().select(taskToFocus);
 			}
 		}
 	}
 
-	private void updateCalendarList(ArrayList<Task> taskList) {
+	private void updateCalendarList(ArrayList<Task> taskList, Task taskToFocus) {
 		this.calendarList.getItems().clear();
 		if (taskList.size() != 0) {
 			ArrayList<ArrayList<Task>> dateArray = new ArrayList<ArrayList<Task>>();
@@ -344,7 +345,7 @@ public class CalendarViewPage extends AnchorPane {
 								closeNav.play();
 							}
 							hiddenMenu.toFront();
-						} else if (!text.equalsIgnoreCase("view")) {
+						} else {
 							Feedback feedback = logic.executeCommand(text, tasksOnScreen);
 							System.out.println(feedback.getMessage());
 							tasksOnScreen = feedback.getTasks();
@@ -357,10 +358,7 @@ public class CalendarViewPage extends AnchorPane {
 							if (checkFlag != HELP_FLAG) {
 								textInputArea.clear();
 							}
-						} else {
-							switchViews();
 						}
-
 					} catch (Exception e) {
 						feedbackLabel.setText(MESSAGE_ERROR);
 					}
@@ -445,82 +443,13 @@ public class CalendarViewPage extends AnchorPane {
 		case LIST_FLAG:
 			displayList.toFront();
 			break;
+
+		case VIEW_CHANGE_FLAG:
+			switchViews();
+			break;
+		case SUMMARY_FLAG:
+			break;
 		}
-	}
-
-	private void showExitDialog() {
-		textInputArea.setText("Exit");
-		feedbackLabel.setText("");
-		helpLabel.setText(EXIT_HINT_MESSAGE);
-	}
-
-	private void showStorageDialog() {
-		textInputArea.setText("Storage");
-		feedbackLabel.setText("");
-		helpLabel.setText(STORAGE_HINT_MESSAGE);
-	}
-
-	private void showUndoDialog() {
-		textInputArea.setText("Undo");
-		feedbackLabel.setText("");
-		helpLabel.setText(UNDO_HINT_MESSAGE);
-	}
-
-	private void showSearchDialog() {
-		textInputArea.setText("search [task decription/priority [level]/[task description] by [date]]");
-		feedbackLabel.setText("");
-		helpLabel.setText(SEARCH_HINT_MESSAGE);
-	}
-
-	private void showCloseDialog() {
-		textInputArea.setText("Done [task number]");
-		feedbackLabel.setText("");
-		helpLabel.setText(DONE_HINT_MESSAGE);
-	}
-
-	private void showUpdateDialog() {
-		textInputArea.setText("update [task number] [new task desc]");
-		feedbackLabel.setText("");
-		helpLabel.setText(UPDATE_HINT_MESSAGE);
-	}
-
-	private void showDeleteDialog() {
-		textInputArea.setText("delete [task description/number]");
-		feedbackLabel.setText("");
-		helpLabel.setText(DELETE_HINT_MESSAGE);
-	}
-
-	private String showHelpDialog() {
-		ChoiceDialog<String> dialog;
-		final String[] arrayData = { "Add", "Delete", "Update", "Close", "Search", "Undo", "Storage", "Exit" };
-		List<String> dialogData;
-		dialogData = Arrays.asList(arrayData);
-		dialog = new ChoiceDialog<String>(dialogData.get(0), dialogData);
-		String titleTxt = null;
-		dialog.setTitle(titleTxt);
-		dialog.setHeaderText("What do you want?");
-		Optional<String> result = dialog.showAndWait();
-		String selected = "cancelled.";
-
-		if (result.isPresent()) {
-			selected = result.get();
-		}
-		return selected;
-	}
-
-	private void showAddDialog() {
-		// final String COMMAND_ADD = "add:\n--Adds new tasks (keyword add is
-		// not required)\n--Adds"
-		// + " <Task> due by <date> at <Venue> and sets reminder\n--Note: by
-		// <Date>, @ <Venue>, remind <When>, priority <Level> are optional.\n";
-		// Alert alert1 = new Alert(AlertType.INFORMATION);
-		// alert1.setTitle("Add Commands");
-		// alert1.setHeaderText(null);
-		// alert1.setContentText(COMMAND_ADD);
-		//
-		// alert1.showAndWait();
-		textInputArea.setText("[desc] from [start date] to [end date] at [location] priority [priority]");
-		feedbackLabel.setText("");
 	}
 
 	private void promptStorage(Feedback feedback) throws IOException {
@@ -675,5 +604,80 @@ public class CalendarViewPage extends AnchorPane {
 	private String getSecondLetter(String input) {
 		String secondLetter = input.substring(0, 2);
 		return secondLetter;
+	}
+
+	private void showExitDialog() {
+		textInputArea.setText("Exit");
+		feedbackLabel.setText("");
+		helpLabel.setText(EXIT_HINT_MESSAGE);
+	}
+
+	private void showStorageDialog() {
+		textInputArea.setText("Storage");
+		feedbackLabel.setText("");
+		helpLabel.setText(STORAGE_HINT_MESSAGE);
+	}
+
+	private void showUndoDialog() {
+		textInputArea.setText("Undo");
+		feedbackLabel.setText("");
+		helpLabel.setText(UNDO_HINT_MESSAGE);
+	}
+
+	private void showSearchDialog() {
+		textInputArea.setText("search [task decription/priority [level]/[task description] by [date]]");
+		feedbackLabel.setText("");
+		helpLabel.setText(SEARCH_HINT_MESSAGE);
+	}
+
+	private void showCloseDialog() {
+		textInputArea.setText("Done [task number]");
+		feedbackLabel.setText("");
+		helpLabel.setText(DONE_HINT_MESSAGE);
+	}
+
+	private void showUpdateDialog() {
+		textInputArea.setText("update [task number] [new task desc]");
+		feedbackLabel.setText("");
+		helpLabel.setText(UPDATE_HINT_MESSAGE);
+	}
+
+	private void showDeleteDialog() {
+		textInputArea.setText("delete [task description/number]");
+		feedbackLabel.setText("");
+		helpLabel.setText(DELETE_HINT_MESSAGE);
+	}
+
+	private String showHelpDialog() {
+		ChoiceDialog<String> dialog;
+		final String[] arrayData = { "Add", "Delete", "Update", "Close", "Search", "Undo", "Storage", "Exit" };
+		List<String> dialogData;
+		dialogData = Arrays.asList(arrayData);
+		dialog = new ChoiceDialog<String>(dialogData.get(0), dialogData);
+		String titleTxt = null;
+		dialog.setTitle(titleTxt);
+		dialog.setHeaderText("What do you want?");
+		Optional<String> result = dialog.showAndWait();
+		String selected = "cancelled.";
+
+		if (result.isPresent()) {
+			selected = result.get();
+		}
+		return selected;
+	}
+
+	private void showAddDialog() {
+		// final String COMMAND_ADD = "add:\n--Adds new tasks (keyword add is
+		// not required)\n--Adds"
+		// + " <Task> due by <date> at <Venue> and sets reminder\n--Note: by
+		// <Date>, @ <Venue>, remind <When>, priority <Level> are optional.\n";
+		// Alert alert1 = new Alert(AlertType.INFORMATION);
+		// alert1.setTitle("Add Commands");
+		// alert1.setHeaderText(null);
+		// alert1.setContentText(COMMAND_ADD);
+		//
+		// alert1.showAndWait();
+		textInputArea.setText("[desc] from [start date] to [end date] at [location] priority [priority]");
+		feedbackLabel.setText("");
 	}
 }

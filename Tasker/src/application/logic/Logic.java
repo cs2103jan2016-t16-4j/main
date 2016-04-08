@@ -3,26 +3,19 @@ package application.logic;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
-import application.gui.Cli;
-import application.gui.Ui;
-import application.logger.LoggerFormat;
-import application.storage.FloatingTask;
-import application.storage.Storage;
+import application.logger.LoggerHandler;
 import application.storage.Task;
 
 //@@author A0132632R
 
 public class Logic {
 
-	private static final String LOGGER_NAME = "logfile";
-
 	private Parser parser = new Parser();
 	private StorageConnector storageConnector = new StorageConnector();
 
-	private static Logger logger = Logger.getLogger(LOGGER_NAME);
+	private static Logger logger = LoggerHandler.getLog();
 
 	private History history = History.getInstance();
 

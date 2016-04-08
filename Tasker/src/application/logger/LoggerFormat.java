@@ -48,4 +48,3 @@ public class LoggerFormat extends Formatter {
 	}
 
 }
-// @@author A0125417L

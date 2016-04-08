@@ -1,5 +1,4 @@
 package application.logic;
-//@@author A0132632R
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,6 +7,7 @@ import java.util.Calendar;
 import application.storage.Storage;
 import application.storage.Task;
 
+//@@author A0132632R
 
 
 public class StorageConnector {

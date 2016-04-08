@@ -3,7 +3,6 @@ package application.logic;
 
 import java.util.ArrayList;
 
-import application.storage.Storage;
 import application.storage.Task;
 
 public class SearchByPriority implements Command {

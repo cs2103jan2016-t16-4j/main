@@ -4,7 +4,6 @@ package application.logic;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import application.storage.Storage;
 import application.storage.Task;
 
 /**

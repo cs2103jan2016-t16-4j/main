@@ -15,6 +15,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 import application.logger.LoggerFormat;
+import application.logger.LoggerHandler;
 import application.logic.Logic;
 import application.storage.Task;
 import javafx.application.Application;
@@ -27,6 +28,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class GuiMain extends Application {
+	private static final String ROBOT_GIF_URL = "src/application/gui/files/robot.gif";
 	private static final String APPLICATION_NAME = "Tasker";
 	private static final String EMPTY_STRING = "";
 	private static final String BACKSLASH = "\\";
@@ -36,7 +38,6 @@ public class GuiMain extends Application {
 
 	private static final String DIRECTORY_CHOOSER_TITLE = "Pick Where To Store Tasks";
 	private static final String CURRENT_DIRECTORY = "user.dir";
-	private static final String LOGGER_NAME = "logfile";
 	private static final String ERROR_LOGGER_INIT = "There was a problem trying to initialise logger.";
 
 	private static final String SYSTEM_TRAY_HINT = "Tasker is still running in the background.";
@@ -89,7 +90,7 @@ public class GuiMain extends Application {
 
 	private void setEnvironment() {
 		this.logic = new Logic();
-		this.logger = Logger.getLogger(LOGGER_NAME);
+		this.logger = LoggerHandler.getLog();
 		initializeLogger();
 	}
 
@@ -154,9 +155,9 @@ public class GuiMain extends Application {
 
 	// Configuration for Tray Icon
 	private void trayIconConfiguration(ActionListener showListener, PopupMenu popup) {
-		java.awt.Image image = Toolkit.getDefaultToolkit().getImage("src/application/gui/files/" + LOGO_URL);
+		java.awt.Image image = Toolkit.getDefaultToolkit().getImage(ROBOT_GIF_URL);
 		trayIcon = new TrayIcon(image, APPLICATION_NAME, popup);
-		trayIcon.setImageAutoSize(false);
+		trayIcon.setImageAutoSize(true);
 		trayIcon.addActionListener(showListener);
 	}
 

@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import application.storage.Storage;
 import application.storage.Task;
 
 public class ChangeStorageLocation implements Command {

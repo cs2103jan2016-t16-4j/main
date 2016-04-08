@@ -3,7 +3,6 @@ package application.logic;
 
 import java.util.ArrayList;
 
-import application.storage.Storage;
 import application.storage.Task;
 
 public class Exit implements Command {
@@ -14,4 +13,3 @@ public class Exit implements Command {
 		return null;
 	}
 }
-// @@author A0125417L
