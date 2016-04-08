@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Optional;
+
 import org.controlsfx.control.Notifications;
 
 import application.logic.Feedback;
@@ -24,7 +26,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Side;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -351,10 +355,13 @@ public class CalendarViewPage extends AnchorPane {
 							checkFlag = feedback.getFlag();
 							feedbackLabel.setText(feedback.getMessage());
 							doFlagCommand(checkFlag, feedback);
+							if (checkFlag != HELP_FLAG) {
+								textInputArea.clear();
+							}
 						} else {
 							switchViews();
 						}
-						textInputArea.clear();
+
 					} catch (Exception e) {
 						feedbackLabel.setText(MESSAGE_ERROR);
 					}
@@ -406,16 +413,39 @@ public class CalendarViewPage extends AnchorPane {
 			calendarList.toFront();
 			break;
 		case HELP_FLAG:
-			Storage storage = null;
-			Feedback help = Help.execute(storage);
-			String helpMessage = help.getMessage();
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Information Dialog");
-			alert.setHeaderText(null);
-			alert.setContentText(helpMessage);
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("");
+			alert.setHeaderText("What do you want?");
+			alert.setContentText("");
 
-			alert.showAndWait();
+			ButtonType buttonTypeOne = new ButtonType("add");
+			ButtonType buttonTypeTwo = new ButtonType("delete");
+			ButtonType buttonTypeThree = new ButtonType("done");
+			ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 
+			alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeThree, buttonTypeCancel);
+
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == buttonTypeOne) {
+				// ... user chose "One"
+				final String COMMAND_ADD = "add:\n--Adds new tasks (keyword add is not required)\n--Adds"
+						+ " <Task> due by <date> at <Venue> and sets reminder\n--Note: by <Date>, @ <Venue>, remind <When>, priority <Level> are optional.\n"
+						+ "--Note: Use ¡°instead of¡± to add recurring tasks.\n";
+				Alert alert1 = new Alert(AlertType.INFORMATION);
+				alert1.setTitle("Information Dialog");
+				alert1.setHeaderText(null);
+				alert1.setContentText(COMMAND_ADD);
+
+				alert1.showAndWait();
+				textInputArea.setText("[desc] from [start date] to [end date] at [location] priority [priority]");
+				feedbackLabel.setText("");
+			} else if (result.get() == buttonTypeTwo) {
+				// ... user chose "Two"
+			} else if (result.get() == buttonTypeThree) {
+				// ... user chose "Three"
+			} else {
+				// ... user chose CANCEL or closed the dialog
+			}
 			break;
 		case LIST_FLAG:
 			displayList.toFront();
