@@ -5,7 +5,9 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Optional;
 
 import org.controlsfx.control.Notifications;
@@ -25,10 +27,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Side;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -413,44 +412,115 @@ public class CalendarViewPage extends AnchorPane {
 			calendarList.toFront();
 			break;
 		case HELP_FLAG:
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("");
-			alert.setHeaderText("What do you want?");
-			alert.setContentText("");
-
-			ButtonType buttonTypeOne = new ButtonType("add");
-			ButtonType buttonTypeTwo = new ButtonType("delete");
-			ButtonType buttonTypeThree = new ButtonType("done");
-			ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-
-			alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeThree, buttonTypeCancel);
-
-			Optional<ButtonType> result = alert.showAndWait();
-			if (result.get() == buttonTypeOne) {
-				// ... user chose "One"
-				final String COMMAND_ADD = "add:\n--Adds new tasks (keyword add is not required)\n--Adds"
-						+ " <Task> due by <date> at <Venue> and sets reminder\n--Note: by <Date>, @ <Venue>, remind <When>, priority <Level> are optional.\n"
-						+ "--Note: Use ¡°instead of¡± to add recurring tasks.\n";
-				Alert alert1 = new Alert(AlertType.INFORMATION);
-				alert1.setTitle("Information Dialog");
-				alert1.setHeaderText(null);
-				alert1.setContentText(COMMAND_ADD);
-
-				alert1.showAndWait();
-				textInputArea.setText("[desc] from [start date] to [end date] at [location] priority [priority]");
-				feedbackLabel.setText("");
-			} else if (result.get() == buttonTypeTwo) {
-				// ... user chose "Two"
-			} else if (result.get() == buttonTypeThree) {
-				// ... user chose "Three"
-			} else {
-				// ... user chose CANCEL or closed the dialog
+			String selected = showHelpDialog();
+			switch (selected) {
+			case "Add":
+				showAddDialog();
+				break;
+			case "Delete":
+				showDeleteDialog();
+				break;
+			case "Update":
+				showUpdateDialog();
+				break;
+			case "Close":
+				showCloseDialog();
+				break;
+			case "Search":
+				showSearchDialog();
+				break;
+			case "Undo":
+				showUndoDialog();
+				break;
+			case "Storage":
+				showStorageDialog();
+				break;
+			case "Exit":
+				showExitDialog();
+				break;
+			default:
+				break;
 			}
 			break;
 		case LIST_FLAG:
 			displayList.toFront();
 			break;
 		}
+	}
+
+	private void showExitDialog() {
+		textInputArea.setText("Exit");
+		feedbackLabel.setText("");
+		helpLabel.setText(EXIT_HINT_MESSAGE);
+	}
+
+	private void showStorageDialog() {
+		textInputArea.setText("Storage");
+		feedbackLabel.setText("");
+		helpLabel.setText(STORAGE_HINT_MESSAGE);
+	}
+
+	private void showUndoDialog() {
+		textInputArea.setText("Undo");
+		feedbackLabel.setText("");
+		helpLabel.setText(UNDO_HINT_MESSAGE);
+	}
+
+	private void showSearchDialog() {
+		textInputArea.setText("search [task decription/priority [level]/[task description] by [date]]");
+		feedbackLabel.setText("");
+		helpLabel.setText(SEARCH_HINT_MESSAGE);
+	}
+
+	private void showCloseDialog() {
+		textInputArea.setText("Done [task number]");
+		feedbackLabel.setText("");
+		helpLabel.setText(DONE_HINT_MESSAGE);
+	}
+
+	private void showUpdateDialog() {
+		textInputArea.setText("update [task number] [new task desc]");
+		feedbackLabel.setText("");
+		helpLabel.setText(UPDATE_HINT_MESSAGE);
+	}
+
+	private void showDeleteDialog() {
+		textInputArea.setText("delete [task description/number]");
+		feedbackLabel.setText("");
+		helpLabel.setText(DELETE_HINT_MESSAGE);
+	}
+
+	private String showHelpDialog() {
+		ChoiceDialog<String> dialog;
+		final String[] arrayData = { "Add", "Delete", "Update", "Close", "Search", "Undo", "Storage", "Exit" };
+		List<String> dialogData;
+		dialogData = Arrays.asList(arrayData);
+		dialog = new ChoiceDialog<String>(dialogData.get(0), dialogData);
+		String titleTxt = null;
+		dialog.setTitle(titleTxt);
+		dialog.setHeaderText("What do you want?");
+		Optional<String> result = dialog.showAndWait();
+		String selected = "cancelled.";
+
+		if (result.isPresent()) {
+			selected = result.get();
+		}
+		return selected;
+	}
+
+	private void showAddDialog() {
+		// final String COMMAND_ADD = "add:\n--Adds new tasks (keyword add is
+		// not required)\n--Adds"
+		// + " <Task> due by <date> at <Venue> and sets reminder\n--Note: by
+		// <Date>, @ <Venue>, remind <When>, priority <Level> are optional.\n";
+		// Alert alert1 = new Alert(AlertType.INFORMATION);
+		// alert1.setTitle("Add Commands");
+		// alert1.setHeaderText(null);
+		// alert1.setContentText(COMMAND_ADD);
+		//
+		// alert1.showAndWait();
+		textInputArea.setText("[desc] from [start date] to [end date] at [location] priority [priority]");
+		feedbackLabel.setText("");
 	}
 
 	private void promptStorage(Feedback feedback) throws IOException {
