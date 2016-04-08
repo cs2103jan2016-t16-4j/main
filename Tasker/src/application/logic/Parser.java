@@ -24,7 +24,6 @@ import org.ocpsoft.prettytime.shade.edu.emory.mathcs.backport.java.util.Collecti
  *
  */
 
-// @@author A0132632R
 
 public class Parser {
 	private static final String LOGGER_NAME = "logfile";
@@ -37,7 +36,7 @@ public class Parser {
 	private static final String KEYWORD_DONE = "done";
 	private static final String KEYWORD_UNDO = "undo";
 	private static final String KEYWORD_HELP = "help";
-	private static final String KEYWORD_LIST_DISPLAY = "list";
+	private static final String KEYWORD_VIEW_CHANGE = "view";
 	private static final String KEYWORD_STORAGE = "storage";
 	private static final String KEYWORD_EXIT = "exit";
 	private static final String EMPTY = "";
@@ -107,8 +106,8 @@ public class Parser {
 			command = processHomeInput(args);
 			break;
 
-		case KEYWORD_LIST_DISPLAY:
-			command = processListInput(args);
+		case KEYWORD_VIEW_CHANGE:
+			command = processViewInput(args);
 			break;
 
 		case KEYWORD_DELETE:
@@ -163,11 +162,11 @@ public class Parser {
 		return command;
 	}
 
-	private Command processListInput(String[] args) throws NoDescriptionException {
+	private Command processViewInput(String[] args) throws NoDescriptionException {
 		Command command;
 		if (args.length == 1) {
-			logger.info("Making list command object");
-			command = initializeListDisplay();
+			logger.info("Making view command object");
+			command = initializeViewChange();
 		} else {
 			logger.info("Making add command object");
 			command = initializeAdd(args, !WITH_KEYWORD);
@@ -211,8 +210,8 @@ public class Parser {
 		return new Home();
 	}
 
-	private Command initializeListDisplay() {
-		return new ListDisplay();
+	private Command initializeViewChange() {
+		return new ViewChange();
 	}
 
 	private Command initializeDelete(String[] args) {
@@ -278,7 +277,7 @@ public class Parser {
 		return command;
 	}
 
-	// @@author A0125417L
+	// @@author A0132632R
 	private Command getAppropSearchCommand(String[] args) {
 		try {
 			return getSearchCommand(args);

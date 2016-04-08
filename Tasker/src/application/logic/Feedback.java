@@ -15,6 +15,8 @@ public class Feedback {
     private static final String CAL_FLAG = "cal";
     private static final String HELP_FLAG = "help";
     private static final String STORAGE_FLAG = "storage";
+    private static final String VIEW_CHANGE_FLAG = "view";
+    private static final String SUMMARY_FLAG = "summary";
 
     private String flag; 
     private Task taskToScroll;
@@ -32,12 +34,18 @@ public class Feedback {
         flag = LIST_FLAG;
     }
     
-
+    public void setViewChangeFlag(){
+        flag = VIEW_CHANGE_FLAG;
+    }
+    
     public void setCalFlag(){
         flag = CAL_FLAG;
     }
     
-
+    public void setSummaryFlag(){
+        flag = SUMMARY_FLAG;
+    }
+    
     public void setHelpFlag(){
         flag = HELP_FLAG;
     }
