@@ -405,7 +405,50 @@ public class StorageTest {
 		System.out.println("Old : "+list.get(0).toString());
 		System.out.println("New : "+list.get(1).toString());
 	}
-	
+//	@Test
+	public void testGetPriority() {
+		DeadlineTask deadlineTask = new DeadlineTask();
+		Calendar endDate = Calendar.getInstance();
+		endDate.roll(Calendar.SECOND, -1);
+		deadlineTask.setEndDate(endDate);
+		assertTrue(deadlineTask.getPriority()=="high");
+		
+		endDate = Calendar.getInstance();
+		endDate.roll(Calendar.MINUTE, 1);
+		deadlineTask.setEndDate(endDate);
+		assertTrue(deadlineTask.getPriority()=="high");
+		
+		endDate = Calendar.getInstance();
+		endDate.roll(Calendar.HOUR, 1);
+		deadlineTask.setEndDate(endDate);
+		assertTrue(deadlineTask.getPriority()=="high");
+		
+		endDate = Calendar.getInstance();
+		endDate.roll(Calendar.HOUR, 3);
+		deadlineTask.setEndDate(endDate);
+		assertTrue(deadlineTask.getPriority()=="medium");
+		
+		endDate = Calendar.getInstance();
+		endDate.roll(Calendar.HOUR, 23);
+		deadlineTask.setEndDate(endDate);
+		assertTrue(deadlineTask.getPriority()=="medium");
+		
+		endDate = Calendar.getInstance();
+		endDate.roll(Calendar.HOUR, 25);
+		deadlineTask.setEndDate(endDate);
+		assertTrue(deadlineTask.getPriority()=="low");
+		
+		deadlineTask.setPriority("low");
+		assertTrue(deadlineTask.getPriority()=="low");
+		
+		deadlineTask.setPriority("medium");
+		assertTrue(deadlineTask.getPriority()=="medium");
+		
+		deadlineTask.setPriority("high");
+		assertTrue(deadlineTask.getPriority()=="high");
+	}
+
+		
 //	@After
 	public void after() {
 		File a = new File(FILE_DIRECTORY_NAME);
