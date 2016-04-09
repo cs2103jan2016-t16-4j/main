@@ -12,13 +12,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
-
-import application.backend.Logic;
 import application.logger.LoggerHandler;
-<<<<<<< HEAD
-=======
-import application.logic.LogicFacade;
->>>>>>> 0b6c69fe0187c09be2a31329142ed962b0c5e133
+import application.backend.LogicFacade;
 import application.storage.Task;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -44,7 +39,7 @@ public class GuiMain extends Application {
 	private static Logger logger = LoggerHandler.getLog();
 
 	// Constants
-	private static final String ROBOT_GIF_URL = "src/application/gui/files/robot.gif";
+	private static final String ROBOT_GIF_URL = "robot.gif";
 	private static final String APPLICATION_NAME = "Tasker";
 	private static final String EMPTY_STRING = "";
 	private static final String BACKSLASH = "\\";
@@ -156,7 +151,8 @@ public class GuiMain extends Application {
 
 	// Configuration for Tray Icon
 	private void trayIconConfiguration(ActionListener showListener, PopupMenu popup) {
-		java.awt.Image image = Toolkit.getDefaultToolkit().getImage(ROBOT_GIF_URL);
+		java.awt.Image image = Toolkit.getDefaultToolkit()
+				.getImage(getClass().getClassLoader().getResource((ROBOT_GIF_URL)));
 		trayIcon = new TrayIcon(image, APPLICATION_NAME, popup);
 		trayIcon.setImageAutoSize(true);
 		trayIcon.addActionListener(showListener);
