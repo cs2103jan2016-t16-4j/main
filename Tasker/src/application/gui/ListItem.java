@@ -27,6 +27,7 @@ public class ListItem extends HBox {
 	private static final int overdueCheckVariable = 0;
 
 	// Formatting
+	// @@author A0132632R
 	private static final String BACKGROUND_STYLE = "-fx-background-color: %1$s;";
 	private static final String FONT_STYLE = "-fx-text-fill: %1$s;";
 	private static final String RED = "#EF9A9A";
@@ -76,6 +77,14 @@ public class ListItem extends HBox {
 		overdueCheck(overdueCheck);
 	}
 
+    private void setLocation(String location) {
+        if (!location.equals(EMPTY)) {
+            this.taskLocation.setText(location);
+        }
+    }
+
+	// @@author A0125417L
+
 	private void overdueCheck(int overdueCheck) {
 		if (overdueCheck < overdueCheckVariable) {
 			setOverdueItems();
@@ -103,11 +112,5 @@ public class ListItem extends HBox {
 			break;
 		}
 
-	}
-
-	private void setLocation(String location) {
-		if (!location.equals(EMPTY)) {
-			this.taskLocation.setText(location);
-		}
 	}
 }

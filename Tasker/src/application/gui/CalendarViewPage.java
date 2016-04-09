@@ -161,6 +161,7 @@ public class CalendarViewPage extends AnchorPane {
 	@FXML
 	private PieChart pieChart;
 
+	//@@author A0132632R
 	public CalendarViewPage(ArrayList<Task> taskList, Logic logic) {
 		tasksOnScreen = taskList;
 		this.logic = logic;
@@ -189,6 +190,7 @@ public class CalendarViewPage extends AnchorPane {
 		taskToFocus = null;
 		updateViews(tasksOnScreen, taskToFocus);
 	}
+	//@@author A0125417L
 
 	// Setup cell factory for task list view
 	private void initialiseDisplayList() {

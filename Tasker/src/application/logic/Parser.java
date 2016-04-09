@@ -42,6 +42,7 @@ public class Parser {
 	private static final String KEYWORD_HELP = "help";
 	private static final String KEYWORD_VIEW_CHANGE = "view";
 	private static final String KEYWORD_STORAGE = "storage";
+	private static final String KEYWORD_SUMMARY = "summary";
 	private static final String KEYWORD_EXIT = "exit";
 	private static final String EMPTY = "";
 
@@ -136,7 +137,12 @@ public class Parser {
 			logger.info("Making done command object");
 			command = initializeDone(args);
 			break;
-
+		
+		case KEYWORD_SUMMARY:
+            logger.info("Making summary command object");
+            command = initializeSummary(args);
+            break;
+        
 		case KEYWORD_UNDO:
 			command = initializeUndo();
 			break;
@@ -260,9 +266,15 @@ public class Parser {
 	}
 
 	
-	private Command initializeHelp(){ Command command = new Help (); return
-	 command; }
-	 
+	private Command initializeHelp(){ 
+	    Command command = new Help ()
+	            ; return command;
+    }
+
+    private Command initializeSummary(){ 
+        Command command = new Summary (); 
+        return command;
+    }
 
 	// @@author A0125417L
 	// Requests the logic to call for new storage location from the GUI then
