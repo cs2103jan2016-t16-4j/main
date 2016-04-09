@@ -188,26 +188,6 @@ public class CalendarViewPage extends AnchorPane {
 		initialiseDisplayList();
 		taskToFocus = null;
 		updateViews(tasksOnScreen, taskToFocus);
-		// Timer timer = new Timer();
-		// timer.schedule(new TimerTask() {
-		// public void run() {
-		// // Calendar cal = Calendar.getInstance();
-		// // System.out.println(FORMAT_COMPARE_DATE.format(cal.getTime()));
-		// // for (int x = 0; x < tasksOnScreen.size(); x++) {
-		// //
-		// System.out.println(FORMAT_COMPARE_DATE.format(taskList.get(x).getEndDate().getTime())
-		// // .compareTo(FORMAT_COMPARE_DATE.format(cal.getTime())));
-		// // if
-		// //
-		// (FORMAT_COMPARE_DATE.format(taskList.get(x).getEndDate().getTime())
-		// // .compareTo(FORMAT_COMPARE_DATE.format(cal.getTime())) == 0) {
-		// // System.out.println("Task Overdue");
-		// updateViews(tasksOnScreen, null);
-		// }
-		// // }
-		//
-		// // }
-		// }, 0, 60 * 250);
 	}
 
 	// Setup cell factory for task list view
@@ -715,6 +695,7 @@ public class CalendarViewPage extends AnchorPane {
 				checkA(helpLabel);
 			}
 		}
+
 	}
 
 	private String getFirstLetter(String input) {

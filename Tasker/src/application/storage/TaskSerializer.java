@@ -12,8 +12,13 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
+/**
+ * TaskSerializer is a custom serializer that originated from GSON Library.
+ * It is used for easy and neat saving/load of the tasks data into/from the text file.
+ */
 public class TaskSerializer implements JsonSerializer<Task>, JsonDeserializer<Task> {
 
+	// Constants
 	private static final String TASK_TYPE = "taskType";
 	private static final String TASK_DESCRIPTION = "taskDescription";
 	private static final String TASK_START_DATE = "startDate";
@@ -26,6 +31,9 @@ public class TaskSerializer implements JsonSerializer<Task>, JsonDeserializer<Ta
 	private static final String TASK_PRIORITY = "priority";
 	private static final String TASK_INDEX = "taskIndex";
 
+	/**
+	 * Saves the Task properties into a JSON object.
+	 */
 	@Override
 	public JsonElement serialize(Task src, Type typeOfSrc, JsonSerializationContext context) {
 
@@ -49,7 +57,6 @@ public class TaskSerializer implements JsonSerializer<Task>, JsonDeserializer<Ta
 			long endMilliseconds = ((EventTask) src).getEndDate().get(Calendar.MILLISECOND);
 			object.addProperty(TASK_END_DATE_MILLISECONDS, endMilliseconds);
 		}
-
 		object.addProperty(TASK_LOCATION, src.getLocation());
 		JsonElement remindDate = context.serialize(src.getRemindDate());
 		object.add(TASK_REMIND_DATE, remindDate);
@@ -57,10 +64,12 @@ public class TaskSerializer implements JsonSerializer<Task>, JsonDeserializer<Ta
 		object.addProperty(TASK_REMIND_DATE_MILLISECONDS, remindMilliseconds);
 		object.addProperty(TASK_PRIORITY, src.getPriority());
 		object.addProperty(TASK_INDEX, src.getTaskIndex());
-
 		return object;
 	}
 
+	/**
+	 * Load the task properties from JSON object into a Task object.
+	 */
 	@Override
 	public Task deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
 			throws JsonParseException {

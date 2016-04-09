@@ -2,11 +2,13 @@
 
 package application.storage;
 
-import java.io.IOException;
 import java.util.Calendar;
-
 import java.util.ArrayList;
 
+/**
+ * Storage is implemented with facade pattern which acts as an simple interface to
+ * components who wish to utilize its task manipulation function.
+ */
 public class Storage implements Cloneable {
 
 	private static final int UPDATED_CLOSE_LIST = 0;
@@ -22,7 +24,7 @@ public class Storage implements Cloneable {
 //@@author A0110422E
 	public Task addTaskInList(String taskDescription, Calendar startDate,
 			Calendar endDate, String location, Calendar remindDate,
-			String priority) throws IOException {
+			String priority) {
 	    
 		databaseManager.updateOpenList(taskManager.add(databaseManager.getOpenList(), taskDescription,
 				startDate, endDate, location, remindDate, priority,
@@ -31,7 +33,7 @@ public class Storage implements Cloneable {
 		return databaseManager.getOpenList().get((databaseManager.getOpenList().size())-1);
 	}
 	
-	public Task closeTask(int index) throws IOException {
+	public Task closeTask(int index) {
 		ArrayList<ArrayList<Task>> lists = taskManager.close(databaseManager.getCloseList(), databaseManager.getOpenList(), index);
 		databaseManager.updateCloseList(lists.get(UPDATED_CLOSE_LIST));
 		databaseManager.updateOpenList(lists.get(UPDATED_DATE_LIST));
@@ -39,7 +41,7 @@ public class Storage implements Cloneable {
 		return databaseManager.getCloseList().get((databaseManager.getCloseList().size())-1);
 	}
 	
-	public Task uncloseTask(int index) throws IOException {
+	public Task uncloseTask(int index) {
 		ArrayList<ArrayList<Task>> lists = taskManager.unclose(databaseManager.getCloseList(), databaseManager.getOpenList(), index);
 		databaseManager.updateCloseList(lists.get(UPDATED_CLOSE_LIST));
 		databaseManager.updateOpenList(lists.get(UPDATED_DATE_LIST));
@@ -47,7 +49,10 @@ public class Storage implements Cloneable {
 		return databaseManager.getOpenList().get((databaseManager.getOpenList().size())-1);
 	}	
 //@@author A0125522R	
-	public Task deleteTask(int index) throws IOException {
+	/**
+	 * Delete a task in the open list with the specified task index and save.
+	 */
+	public Task deleteTask(int index) {
 		Task deletedTask = null;
 		for (int i = 0; i<databaseManager.getOpenList().size(); i++) {
 			if (databaseManager.getOpenList().get(i).getTaskIndex()==index) {
@@ -60,21 +65,33 @@ public class Storage implements Cloneable {
 		return deletedTask;
 	}
 	
-	public boolean directoryExists() throws IOException {
+	/**
+	 * Checks if the directory file exist.
+	 */
+	public boolean directoryExists() {
 		return fileManager.isDirectoryExists();
 	}
 	
+	/**
+	 * Gets the updated open list (ongoing tasks).
+	 */
 	public ArrayList<Task> getOpenList() {
 		databaseManager.updateOpenList(taskManager.sortDate(databaseManager.getOpenList()));
 		return databaseManager.getOpenList();
 	}
 	
+	/**
+	 * Gets the updated close list (tasks done).
+	 */
 	public ArrayList<Task> getCloseList() {
 		databaseManager.updateCloseList(taskManager.sortDate(databaseManager.getCloseList()));
 		return databaseManager.getCloseList();
 	}
 	
-	public boolean initialise() throws IOException {
+	/**
+	 * Initialise the Storage by loading the necessary components for task functions.
+	 */
+	public boolean initialise() {
 		fileManager.loadDirectoryFile();
 		databaseManager.updateCloseList(fileManager.loadFile(fileManager.getClosedFilePath()));
 		databaseManager.updateOpenList(fileManager.loadFile(fileManager.getDataFilePath()));
@@ -82,25 +99,40 @@ public class Storage implements Cloneable {
 		return true;
 	}
 	
-	private void saveFile() throws IOException {
+	/**
+	 * Saves all current data into file.
+	 */
+	private void saveFile() {
 		fileManager.clear(fileManager.getClosedFilePath());
 		fileManager.saveTaskIndex(databaseManager.getTaskIndex());
 		fileManager.saveFile(databaseManager.getCloseList(), fileManager.getClosedFilePath());
 		fileManager.saveFile(databaseManager.getOpenList(), fileManager.getDataFilePath());
 	}
 	
+	/**
+	 * Search the tasks by a specified date.
+	 */
 	public ArrayList<Task> searchTaskByDate(Calendar date) {
 		return taskManager.searchDateBy(databaseManager.getOpenList(), date);
 	}
 	
+	/**
+	 * Search the tasks on a specified date.
+	 */
 	public ArrayList<Task> searchTaskOnDate(Calendar date) {
 		return taskManager.searchDateOn(databaseManager.getOpenList(), date);
 	}
 	
+	/**
+	 * Search the tasks by a specified name.
+	 */
 	public ArrayList<Task> searchTaskByName(String taskName) {
 		return taskManager.searchName(databaseManager.getOpenList(), taskName);
 	}
 	
+	/**
+	 * Search the tasks by a specified priority.
+	 */
 	public ArrayList<Task> searchTaskByPriority(String priority) {
 		return taskManager.searchPriority(databaseManager.getOpenList(), priority);
 	}
@@ -111,28 +143,43 @@ public class Storage implements Cloneable {
 	}
 */
 //@@author A0125522R	
-	public void setDirectory(String path) throws IOException {
+	/**
+	 * Sets the directory path to hold the data files (open and close list).
+	 */
+	public void setDirectory(String path) {
 		fileManager.setDirectory(path);
 	}
 	
+	/**
+	 * Sorts the open list (ongoing tasks) by ascending end date.
+	 */
 	public ArrayList<Task> sortByDate() {
 		databaseManager.updateOpenList(taskManager.sortDate(databaseManager.getOpenList()));
 		return databaseManager.getOpenList();
 	}
 	
+	/**
+	 * Sorts the open list (ongoing tasks) by ascending task name.
+	 */
 	public ArrayList<Task> sortByName() {
 		databaseManager.updateOpenList(taskManager.sortName(databaseManager.getOpenList()));
 		return databaseManager.getOpenList();
 	}
 	
+	/**
+	 * Sorts the open list (ongoing tasks) by priority (high to low)
+	 */
 	public ArrayList<Task> sortByPriority() {
 		databaseManager.updateOpenList(taskManager.sortPriority(databaseManager.getOpenList()));
 		return databaseManager.getOpenList();
 	}
 	
+	/**
+	 * Update a task and save the file.
+	 */
 	public ArrayList<Task> updateTask(int index, String taskDescription, Calendar startDate,
 			Calendar endDate, String location, Calendar remindDate,
-			String priority) throws IOException, CloneNotSupportedException {
+			String priority) {
 		ArrayList<Task> list = new ArrayList<Task>();
 		
 		// add original/old task 
@@ -155,14 +202,21 @@ public class Storage implements Cloneable {
 		return list;
 	}
 	
-	private Task cloneObject (Task obj) throws CloneNotSupportedException {
-		if (obj instanceof FloatingTask) {
-			return (FloatingTask) obj.clone();
-		}
-		if (obj instanceof DeadlineTask) {
-			return (DeadlineTask) obj.clone();
-		} else {
-			return (EventTask) obj.clone();
+	/**
+	 * Clones a Task object.
+	 */
+	private Task cloneObject (Task obj) {
+		try {
+			if (obj instanceof FloatingTask) {
+				return (FloatingTask) obj.clone();
+			}
+			if (obj instanceof DeadlineTask) {
+				return (DeadlineTask) obj.clone();
+			} else {
+				return (EventTask) obj.clone();
+			}
+		} catch (CloneNotSupportedException e) {
+			return null;
 		}
 	}
 	
