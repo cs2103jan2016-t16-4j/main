@@ -13,7 +13,7 @@ import application.storage.Task;
 
 public class ParserTester {
 
-        Storage storage = new Storage();
+        StorageConnector storageConnector = new StorageConnector();
         Parser parser = new Parser();
     
       /*  @Test
@@ -46,13 +46,13 @@ public class ParserTester {
         @Test
         public void updateTest(){
             try{
-                storage.initialise();
+                storageConnector.initialise();
                 System.out.println("IM HEREE");
                 
-                ArrayList<Task> tasks = storage.getFileList();
+                ArrayList<Task> tasks = storageConnector.getOpenList();
                 int numb = tasks.size();
                 Command cmd = parser.interpretCommand("update 2 tennis");
-                Feedback fb = cmd.execute(storage, tasks);
+                Feedback fb = cmd.execute(storageConnector, tasks);
                 System.out.println(fb.getMessage());
                 /*
                 Command cmd2 = parser.interpretCommand("delete -1");
