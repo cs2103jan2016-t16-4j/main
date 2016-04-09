@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import application.logger.LoggerHandler;
 
 public class TaskManager {
 	private static final int EMPTY_DATE = 1;
@@ -19,6 +23,7 @@ public class TaskManager {
     private static final String DEADLINE_TASK = "DEADLINE_TASK";
     private static final String EVENT_TASK = "EVENT_TASK";
     private static final int DATE_IS_BY_AND_ON = 0;
+	private static Logger logger = LoggerHandler.getLog();
 //	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd-MM-yyyy");
 //@@author A0110422E	
 	public ArrayList<Task> add(ArrayList<Task> openList,
@@ -29,16 +34,19 @@ public class TaskManager {
 		if (toFloatingTask(startDate, endDate)) {
 			FloatingTask floatingTask = new FloatingTask(taskDescription, location, remindDate, priority, taskIndex);
 			openList.add(floatingTask);
+			logger.log(Level.INFO, "Adding Floating Task");
 		}
 		// deadline task
 		else if (toDeadlineTask(startDate, endDate)) {
 			DeadlineTask deadlineTask = new DeadlineTask(taskDescription, endDate, location, remindDate, priority, taskIndex);	
 			openList.add(deadlineTask);
+			logger.log(Level.INFO, "Adding Deadline Task");
 		}
 		// event task
 		else {
 			EventTask eventTask = new EventTask(taskDescription, startDate, endDate, location, remindDate, priority, taskIndex);
 			openList.add(eventTask);
+			logger.log(Level.INFO, "Adding Event Task");
 		}
 //		System.out.println("Added : "+newTask.toString());
 		return openList;
@@ -99,6 +107,7 @@ public class TaskManager {
 		assert (indexOfTask > INVALID_INDEX);
 		if (indexOfTask > INVALID_INDEX) {
 			openList.remove(indexOfTask);
+			logger.log(Level.INFO, "Deleted Task");
 		}
 
 		return openList;
@@ -107,6 +116,7 @@ public class TaskManager {
 	public ArrayList<Task> searchName(ArrayList<Task> openList, String searchTask) {
 		String[] splitArray = searchTask.split("\\s+");
 		ArrayList<Task> searchList = new ArrayList<Task>();
+		logger.log(Level.INFO, "Searching tasks with name");
 		for (int i = 0; i < openList.size(); i++) {
 			Task obj = openList.get(i);
 			for (int k = 0; k<splitArray.length; k++) {
@@ -121,6 +131,7 @@ public class TaskManager {
 	
 	public ArrayList<Task> searchDateBy(ArrayList<Task> openList, Calendar searchDate) {
 		ArrayList<Task> searchList = new ArrayList<Task>();
+		logger.log(Level.INFO, "Searching tasks by date");
 		for (int i = 0; i < openList.size(); i++) {
 			Task obj = openList.get(i);
 //			if (obj instanceof DeadlineTask) {
@@ -149,6 +160,7 @@ public class TaskManager {
 	
 	public ArrayList<Task> searchDateOn(ArrayList<Task> openList, Calendar searchDate) {
 		ArrayList<Task> searchList = new ArrayList<Task>();
+		logger.log(Level.INFO, "Searching tasks on date");
 		for (int i = 0; i < openList.size(); i++) {
 			Task obj = openList.get(i);
 			if (obj.getEndDate()!=null) {
@@ -243,18 +255,20 @@ public class TaskManager {
 		// find task
 		int indexOfTask = findIndexOfTaskInList(openList, taskIndex);
 		assert (indexOfTask>INVALID_INDEX);
-		
+		logger.log(Level.INFO, "Updating Task");
 		// update task
 		if (openList.get(indexOfTask) instanceof FloatingTask) {
 			// convert : floating task to event task
 			if (toEventTask(startDate, endDate)) {
 //				openList.set(indexOfTask, updateToEventTask(openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
 				openList.set(indexOfTask, updateToTaskType(EVENT_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
+				logger.log(Level.INFO, "Converting to Event Task");
 			}
 			// convert : floating task to deadline task	
 			else if (toDeadlineTask(startDate, endDate)) {
 //				openList.set(indexOfTask, updateToDeadlineTask(openList.get(indexOfTask), taskDescription, endDate, location, remindDate, priority, taskIndex));
 				openList.set(indexOfTask, updateToTaskType(DEADLINE_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
+				logger.log(Level.INFO, "Converting to Deadline Task");
 			}
 			// no conversion
 			else {
@@ -270,11 +284,13 @@ public class TaskManager {
 			if (toEventTask(startDate, endDate)) {
 //				openList.set(indexOfTask, updateToEventTask(openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
 				openList.set(indexOfTask, updateToTaskType(EVENT_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
+				logger.log(Level.INFO, "Converting to Event Task");
 			}
 //			// convert : deadline task to floating task
 			else if (toFloatingTask(startDate, endDate)) {
 	//			openList.set(indexOfTask, updateToFloatingTask(openList.get(indexOfTask), taskDescription, location, remindDate, priority, taskIndex));
 				openList.set(indexOfTask, updateToTaskType(FLOATING_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
+				logger.log(Level.INFO, "Converting to Floating Task");
 
 			}
 //			// no conversion
@@ -291,11 +307,13 @@ public class TaskManager {
 			if (toDeadlineTask(startDate, endDate)) {
 //				openList.set(indexOfTask, updateToDeadlineTask(openList.get(indexOfTask), taskDescription, endDate, location, remindDate, priority, taskIndex));
 				openList.set(indexOfTask, updateToTaskType(DEADLINE_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
+				logger.log(Level.INFO, "Converting to Deadline Task");
 				}
 //			// convert : event task to floating task
 			else if (toFloatingTask(startDate, endDate)) {
 //				openList.set(indexOfTask, updateToFloatingTask(openList.get(indexOfTask), taskDescription, location, remindDate, priority, taskIndex));
 				openList.set(indexOfTask, updateToTaskType(FLOATING_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
+				logger.log(Level.INFO, "Converting to Floating Task");
 			}
 //			// no conversion
 			else {
@@ -500,28 +518,35 @@ public class TaskManager {
 		// update task
 		if (!taskDescription.equalsIgnoreCase(EMPTY_STRING)) {
 			obj.setTaskDescription(taskDescription);
+			logger.log(Level.INFO, "Updated task description");
 		}
 
 		if (!location.equalsIgnoreCase(EMPTY_STRING)) {
 			obj.setLocation(location);
+			logger.log(Level.INFO, "Updated location");
 		}
 		if (!isDateEmpty(remindDate)) {
 			obj.setRemindDate(remindDate);
+			logger.log(Level.INFO, "Updated remind date");
 		}
 		if (!isTimeEmpty(remindDate)) {
 			obj.setRemindTime(remindDate);
+			logger.log(Level.INFO, "Updated remind time");
 		}
 		if (!priority.equalsIgnoreCase(EMPTY_STRING)) {
 			obj.setPriority(priority);
+			logger.log(Level.INFO, "Updated priority");
 		}
 		
 		if (obj instanceof DeadlineTask) {
 			if (!isDateEmpty(endDate)) {
 				((DeadlineTask) obj).setEndDate(endDate);
 				((DeadlineTask) obj).setEndTime(endDate);
+				logger.log(Level.INFO, "Updated Deadline Task's end date");
 			}
 			if (!isTimeEmpty(endDate)) {
 				((DeadlineTask) obj).setEndTime(endDate);
+				logger.log(Level.INFO, "Updated Deadline Task's end time");
 			}
 			
 			return obj;
@@ -530,16 +555,20 @@ public class TaskManager {
 		if (obj instanceof EventTask) {
 			if (!isDateEmpty(startDate)) {
 				((EventTask) obj).setStartDate(startDate);
+				logger.log(Level.INFO, "Updated Event Task's start date");
 			}
 			if (!isTimeEmpty(startDate)) {
 				((EventTask) obj).setStartTime(startDate);
+				logger.log(Level.INFO, "Updated Event Task's start time");
 			}
 			if (!isDateEmpty(endDate)) {
 				((EventTask) obj).setEndDate(endDate);
 				((EventTask) obj).setEndTime(endDate);
+				logger.log(Level.INFO, "Updated Event Task's end date");
 			}
 			if (!isTimeEmpty(endDate)) {
 				((EventTask) obj).setEndTime(endDate);
+				logger.log(Level.INFO, "Updated Event Task's end time");
 			}
 			
 			return obj;

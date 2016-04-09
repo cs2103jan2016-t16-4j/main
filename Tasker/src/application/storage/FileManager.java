@@ -15,8 +15,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import application.logger.LoggerHandler;
 
 public class FileManager {
 
@@ -28,7 +33,8 @@ public class FileManager {
 	private static final String EMPTY_PATH = "";
 	private String closedFilePath = "";
 	private String dataFilePath = "";
-
+	private static Logger logger = LoggerHandler.getLog();
+	
 	public void clear(String filePath) throws FileNotFoundException {
 		File file = new File(filePath);
 		if (file.exists()) {
@@ -63,6 +69,7 @@ public class FileManager {
 		File file = new File(filePath);
 		BufferedReader in;
 		ArrayList<Task> list = new ArrayList<Task>();
+		logger.log(Level.INFO, "Loading tasks into list");
 		if (file.exists()) {
 			String readText;
 			in = new BufferedReader(new FileReader(filePath));
@@ -86,6 +93,7 @@ public class FileManager {
 	public void loadDirectoryFile() throws IOException {
 		// check whether user specified a custom directory to save datafile
 		BufferedReader in = new BufferedReader(new FileReader(FILE_DIRECTORY_NAME));
+		logger.log(Level.INFO, "Loading directory file");
 		String readText = in.readLine();
 		if (readText == null) {
 			closedFilePath = FILE_CLOSED_NAME;
@@ -113,6 +121,7 @@ public class FileManager {
 
 	private void saveAllTasks(ArrayList<Task> list, String filePath) throws IOException {
 		PrintWriter fwz = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
+		logger.log(Level.INFO, "Saving tasks into file");
 		Gson gson = new GsonBuilder().registerTypeAdapter(Task.class, new TaskSerializer())
 				.registerTypeAdapter(EventTask.class, new TaskSerializer())
 				.registerTypeAdapter(DeadlineTask.class, new TaskSerializer())
@@ -130,7 +139,7 @@ public class FileManager {
 		if (!f.exists()) {
 			f.createNewFile();
 		}
-
+		logger.log(Level.INFO, "Saving file");
 		// #save all the tasks
 		saveAllTasks(list, filePath);
 	}
@@ -147,11 +156,11 @@ public class FileManager {
 	public boolean setDirectory(String path) throws IOException {
 
 		if (path.equalsIgnoreCase(EMPTY_PATH)) {
-			System.out.println("Directory choosen : EMPTY");
+			logger.log(Level.INFO, "No directory choosen.");
 			return false;
 		} else {
 			clear(FILE_DIRECTORY_NAME);
-
+			logger.log(Level.INFO, "New directory choosen");
 			PrintWriter fw = new PrintWriter(FILE_DIRECTORY_NAME);
 			// get current path
 			Path oldClosedFilePath = Paths.get(closedFilePath);

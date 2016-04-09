@@ -4,6 +4,7 @@ package application.storage;
 
 import java.io.IOException;
 import java.util.Calendar;
+
 import java.util.ArrayList;
 
 public class Storage implements Cloneable {
@@ -13,7 +14,6 @@ public class Storage implements Cloneable {
 	private DatabaseManager databaseManager;
 	private FileManager fileManager;
 	private TaskManager taskManager;
-
 	public Storage() {
 		databaseManager = new DatabaseManager();
 		fileManager = new FileManager();
@@ -27,7 +27,6 @@ public class Storage implements Cloneable {
 		databaseManager.updateOpenList(taskManager.add(databaseManager.getOpenList(), taskDescription,
 				startDate, endDate, location, remindDate, priority,
 				databaseManager.updateTaskIndex()));
-		
 		saveFile();
 		return databaseManager.getOpenList().get((databaseManager.getOpenList().size())-1);
 	}
