@@ -9,20 +9,17 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Logger;
 import org.controlsfx.control.Notifications;
-
-import application.backend.Feedback;
-import application.backend.Logic;
 import application.logger.LoggerHandler;
-<<<<<<< HEAD
-=======
-import application.logic.Feedback;
-import application.logic.LogicFacade;
->>>>>>> 0b6c69fe0187c09be2a31329142ed962b0c5e133
+import application.backend.Feedback;
+import application.backend.LogicFacade;
 import application.storage.FloatingTask;
 import application.storage.Task;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -36,6 +33,7 @@ import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -53,8 +51,6 @@ import javafx.util.Duration;
 
 public class CalendarViewPage extends AnchorPane {
 
-	private static final int STACK_PANE_FIRST_CHILD = 0;
-	private static final String DIRECTORY_NOT_CHANGED_MESSAGE = "Directory Not Changed!";
 	// Constants
 	private static final int FIRST_WORD = 0;
 	private static final int ONE_LETTER = 1;
@@ -108,6 +104,7 @@ public class CalendarViewPage extends AnchorPane {
 	private static final int BOX_WIDTH = 1070;
 	private static final int TRANSITION_TIME = 350;
 	private static final int overdueCheckVariable = 0;
+	private static final int STACK_PANE_FIRST_CHILD = 0;
 
 	// Initialization
 	private static Logger logger = LoggerHandler.getLog();
@@ -116,14 +113,15 @@ public class CalendarViewPage extends AnchorPane {
 	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd MMM yyyy");
 
 	// Messages
-	private static final String ADD_HINT_MESSAGE = "To add: [task description] from [start] to [end] at [location]";
+	private static final String ADD_HINT_MESSAGE = "To add: [task description] from [start] to [end] at [location] priority [priority]";
 	private static final String HELP_HINT_MESSAGE = "To get help: help";
 	private static final String DELETE_HINT_MESSAGE = "To delete: delete [task description/number]";
-	private static final String SEARCH_HINT_MESSAGE = "To search: search [task decription/priority [level]/[task description] by [date]]";
+	private static final String SEARCH_HINT_MESSAGE = "To search: search [task description/priority [level]/by [date]/on [date]]";
 	private static final String EXIT_HINT_MESSAGE = "To exit: exit";
-	private static final String UPDATE_HINT_MESSAGE = "To update: update [task number] [new task desc]";
+	private static final String UPDATE_HINT_MESSAGE = "To update: update [task number] [new task description"
+			+ "/priority [level]/from [start] to [end]/at [location]] ";
 	private static final String UNDO_HINT_MESSAGE = "To undo: undo";
-	private static final String STORAGE_HINT_MESSAGE = "To change storage: storage";
+	private static final String STORAGE_HINT_MESSAGE = "To change storage: storage [url]";
 	private static final String DONE_HINT_MESSAGE = "To mark task as complete: done [task number]";
 	private static final String VIEW_HINT_MESSAGE = "To Toggle Views: view";
 	private static final String MESSAGE_HELP_INTRO = "Start typing and we'll help you out!";
@@ -132,6 +130,7 @@ public class CalendarViewPage extends AnchorPane {
 			+ "Please check your input format.";
 	private static String MESSAGE_TASK = "%1$s: %2$s";
 	private static String MESSAGE_DIRECTORY_CHANGED = "Directory Changed: %1$s%2$s";
+	private static final String DIRECTORY_NOT_CHANGED_MESSAGE = "Directory Not Changed!";
 
 	// Error Messages
 	private static final String FXML_LOAD_FAILED = "Failed to load ListView FXML file";
@@ -200,10 +199,32 @@ public class CalendarViewPage extends AnchorPane {
 		taskToFocus = null;
 		initializeHiddenPanel();
 		updateViews(tasksOnScreen, taskToFocus);
+		setupTimer();
 	}
 
 	// @@author A0125417L
 
+	// Timer for on the fly update
+	private void setupTimer() {
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+			public void run() {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						updateViews(tasksOnScreen, taskToFocus);
+						try {
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+
+					}
+				});
+			}
+		}, 0, 15000);
+	}
+
+	// Setup hidden panel
 	private void initializeHiddenPanel() {
 		openPanel = new TranslateTransition(new Duration(TRANSITION_TIME), hiddenMenu);
 		openPanel.setToX(STARTPOSITION);
@@ -268,6 +289,7 @@ public class CalendarViewPage extends AnchorPane {
 	// Set date accordingly
 	private String setDate(ArrayList<Task> item) {
 		String date = null;
+		assert (item.get(START).getEndDate() != null);
 		if (item.get(START).getEndDate() != null) {
 			date = FORMAT_DATE.format(item.get(START).getEndDate().getTime());
 		}
@@ -277,6 +299,7 @@ public class CalendarViewPage extends AnchorPane {
 	// Check if task is overdue
 	private int checkIfOverdue(Task item, Calendar cal) {
 		int overdueCheck = overdueCheckVariable;
+		assert (item.getEndDate() != null);
 		if (item.getEndDate() != null) {
 			overdueCheck = item.getEndDate().getTime().compareTo(cal.getTime());
 		}
@@ -329,6 +352,7 @@ public class CalendarViewPage extends AnchorPane {
 				tempoDate = null;
 			}
 		}
+		assert (temporaryList.size() != EMPTY);
 		if (temporaryList.size() != EMPTY) {
 			dateArray.add(temporaryList);
 		}
@@ -337,8 +361,12 @@ public class CalendarViewPage extends AnchorPane {
 
 	// Method that calls other methods to update the data
 	private void updateViews(ArrayList<Task> taskList, Task taskToFocus) {
+		ArrayList<Task> clashList = null;
+		if (taskToFocus != null) {
+			clashList = logicFacade.getClashes(taskToFocus);
+		}
 		updateCalendarList(taskList, taskToFocus);
-		updateDisplayList(taskList, taskToFocus);
+		updateDisplayList(taskList, clashList);
 		updateSummary();
 	}
 
@@ -381,14 +409,18 @@ public class CalendarViewPage extends AnchorPane {
 	}
 
 	// Updates data of the task view
-	private void updateDisplayList(ArrayList<Task> taskList, Task taskToFocus) {
+	private void updateDisplayList(ArrayList<Task> taskList, ArrayList<Task> clashList) {
 		this.displayList.getItems().clear();
+		assert (taskList.size() != EMPTY);
 		if (taskList.size() != EMPTY) {
 			ObservableList<Task> list = makeDisplayList(taskList);
 			this.displayList.setItems(list);
-			if (taskToFocus != null) {
-				this.displayList.scrollTo(taskToFocus);
-				this.displayList.getSelectionModel().select(taskToFocus);
+			if (clashList != null) {
+				// this.displayList.scrollTo(clashList);
+				this.displayList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+				for (Task task : clashList) {
+					this.displayList.getSelectionModel().select(task);
+				}
 			}
 		}
 	}
@@ -396,6 +428,7 @@ public class CalendarViewPage extends AnchorPane {
 	// Updates data of the calendar view
 	private void updateCalendarList(ArrayList<Task> taskList, Task taskToFocus) {
 		this.calendarList.getItems().clear();
+		assert (taskList.size() != EMPTY);
 		if (taskList.size() != EMPTY) {
 			ArrayList<ArrayList<Task>> dateArray = new ArrayList<ArrayList<Task>>();
 			dateArray = getDateArray(taskList);
@@ -433,7 +466,7 @@ public class CalendarViewPage extends AnchorPane {
 						Feedback feedback = logicFacade.executeCommand(text, tasksOnScreen);
 						System.out.println(feedback.getMessage());
 						tasksOnScreen = feedback.getTasks();
-						taskToFocus = feedback.getIndexToScroll();
+						taskToFocus = feedback.getTaskToScrollTo();
 						notifyUser(taskToFocus);
 						updateViews(tasksOnScreen, taskToFocus);
 						checkFlag = feedback.getFlag();
@@ -441,8 +474,8 @@ public class CalendarViewPage extends AnchorPane {
 						doFlagCommand(checkFlag, feedback);
 						if (checkFlag != HELP_FLAG) {
 							textInputArea.clear();
-
 						}
+						closePanel();
 					} catch (Exception e) {
 						feedbackLabel.setText(MESSAGE_ERROR);
 					}
@@ -485,6 +518,7 @@ public class CalendarViewPage extends AnchorPane {
 
 	}
 
+	// Do flag command
 	private void doFlagCommand(String checkFlag, Feedback feedback) throws IOException {
 		switch (checkFlag) {
 		case STORAGE_FLAG:
@@ -537,6 +571,7 @@ public class CalendarViewPage extends AnchorPane {
 		}
 	}
 
+	// Toggle hidden panel
 	private void toggleHiddenPanel() {
 		if (hiddenMenu.getTranslateX() != STARTPOSITION) {
 			openPanel.play();
@@ -546,13 +581,14 @@ public class CalendarViewPage extends AnchorPane {
 		}
 	}
 
-	private void promptStorage(Feedback feedback) throws IOException {
-		DirectoryChooser dirChooser = new DirectoryChooser();
-		configureDirectoryChooser(dirChooser);
-		Stage stage = new Stage();
-		directoryPrompt(stage, dirChooser);
+	// Close hidden panel
+	private void closePanel() {
+		if (hiddenMenu.getTranslateX() != STARTPOSITION) {
+			openPanel.play();
+		}
 	}
 
+	// Toggle Views
 	private void switchViews() {
 		if (stackPane.getChildren().get(STACK_PANE_FIRST_CHILD).equals(displayList)) {
 			displayList.toFront();
@@ -561,6 +597,7 @@ public class CalendarViewPage extends AnchorPane {
 		}
 	}
 
+	// Prompt for directory change
 	public void directoryPrompt(Stage primaryStage, DirectoryChooser dirChooser) throws IOException {
 		final File selectedDirectory = dirChooser.showDialog(primaryStage);
 		if (selectedDirectory != null) {
@@ -573,11 +610,21 @@ public class CalendarViewPage extends AnchorPane {
 		}
 	}
 
+	// Setup for directory change
+	private void promptStorage(Feedback feedback) throws IOException {
+		DirectoryChooser dirChooser = new DirectoryChooser();
+		configureDirectoryChooser(dirChooser);
+		Stage stage = new Stage();
+		directoryPrompt(stage, dirChooser);
+	}
+
+	// Configure directory change dialog
 	private void configureDirectoryChooser(final DirectoryChooser dirChooser) {
 		dirChooser.setTitle(DIRECTORY_CHOOSER_TITLE);
 		dirChooser.setInitialDirectory(new File(System.getProperty(CURRENT_DIRECTORY)));
 	}
 
+	// Update hint label
 	private void getHints(String oldValue, String newValue, Label helpLabel) {
 		String newLetter = EMPTY_STRING;
 		String oldWord = EMPTY_STRING;

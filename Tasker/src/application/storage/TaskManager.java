@@ -26,6 +26,7 @@ public class TaskManager {
     private static final String FLOATING_TASK = "FLOATING_TASK";
     private static final String DEADLINE_TASK = "DEADLINE_TASK";
     private static final String EVENT_TASK = "EVENT_TASK";
+    private static final String SPACE = "\\s+";
     private static final int DATE_IS_BY_AND_ON = 0;
     
     // Logger
@@ -54,7 +55,6 @@ public class TaskManager {
 			openList.add(eventTask);
 			logger.log(Level.INFO, "Adding Event Task");
 		}
-//		System.out.println("Added : "+newTask.toString());
 		return openList;
 	}
 	
@@ -127,7 +127,7 @@ public class TaskManager {
 	 * Search "name" in the open list and and return search results.
 	 */
 	public ArrayList<Task> searchName(ArrayList<Task> openList, String searchTask) {
-		String[] splitArray = searchTask.split("\\s+");
+		String[] splitArray = searchTask.split(SPACE);
 		ArrayList<Task> searchList = new ArrayList<Task>();
 		logger.log(Level.INFO, "Searching tasks with name");
 		for (int i = 0; i < openList.size(); i++) {
@@ -489,6 +489,7 @@ public class TaskManager {
 		String originalLocation = originalTask.getLocation();
 		String originalPriority = originalTask.getPriority();
 		
+		assert (taskIndex > INVALID_INDEX);
 		switch (taskType) {
 		case (FLOATING_TASK):
 			FloatingTask floatingTask = new FloatingTask(originalTaskDescription, originalLocation, originalRemindDate,
@@ -533,6 +534,8 @@ public class TaskManager {
 	 */
 	private Task updateTaskParameters(Task obj, String taskDescription, Calendar startDate, Calendar endDate,
 			String location, Calendar remindDate, String priority, int taskIndex) {
+		
+		assert (taskIndex > INVALID_INDEX);
 		// update task
 		if (!taskDescription.equalsIgnoreCase(EMPTY_STRING)) {
 			obj.setTaskDescription(taskDescription);
@@ -679,7 +682,7 @@ class ComparatorPriority implements Comparator<Task> {
     private static final String MEDIUM_PRIORITY = "medium";
     private static final String LOW_PRIORITY = "low";
     private static final int TASK_1_PRIORITY = 0;
-    private static final int TASK_2_PRIORITY = 0;
+    private static final int TASK_2_PRIORITY = 1;
     
     @Override
     public int compare(Task o1, Task o2) {

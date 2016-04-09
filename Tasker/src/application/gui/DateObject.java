@@ -87,6 +87,7 @@ public class DateObject extends HBox {
 	private int checkIfOverdue(Task item) {
 		Calendar cal = Calendar.getInstance();
 		int overdueCheck = NOT_OVERDUE_VARIABLE;
+		assert (item.getEndDate() != null);
 		if (item.getEndDate() != null) {
 			overdueCheck = item.getEndDate().getTime().compareTo(cal.getTime());
 		}

@@ -76,10 +76,11 @@ public class FileManager {
 		return dataFilePath;
 	}
 	
+	/**
+	 * Return the storage path in the directory file .
+	 */
 	public String getDirectoryPath() {
-		File directoryFile = new File(FILE_DIRECTORY_NAME);
-		String absolutePath = directoryFile.getAbsolutePath();
-		return absolutePath.substring(DIRECTORY_BEGIN_INDEX, absolutePath.lastIndexOf(File.separator))+KEYWORD_SLASH;
+		return loadDirectoryFile();
 	}
 
 	/**
@@ -137,9 +138,9 @@ public class FileManager {
 	}
 
 	/**
-	 * Loads the directory file and initialise the close and data file path.
+	 * Loads the directory file and initialise the close, data file path and return storage directory path of data files.
 	 */
-	public void loadDirectoryFile() {
+	public String loadDirectoryFile() {
 		BufferedReader in;
 		try {
 			in = new BufferedReader(new FileReader(FILE_DIRECTORY_NAME));
@@ -150,13 +151,18 @@ public class FileManager {
 			if (readText == null) {
 				closedFilePath = FILE_CLOSED_NAME;
 				dataFilePath = FILE_DATA_NAME;
+				File directoryFile = new File(FILE_DIRECTORY_NAME);
+				String absolutePath = directoryFile.getAbsolutePath();
+				readText = absolutePath.substring(DIRECTORY_BEGIN_INDEX, absolutePath.lastIndexOf(File.separator))+ KEYWORD_SLASH;
 			} else {
 				closedFilePath = readText + FILE_CLOSED_NAME;
 				dataFilePath = readText + FILE_DATA_NAME;
 			}
 			in.close();
+			return readText;
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Error loading directory file.");
+			return null;
 		}
 	}
 
@@ -242,7 +248,7 @@ public class FileManager {
 	}
 
 	/**
-	 * Set the directory path that the user specified.
+	 * Set the storage directory at the path that the user specified.
 	 */
 	public boolean setDirectory(String path) {
 		if (path.equalsIgnoreCase(EMPTY_PATH)) {
