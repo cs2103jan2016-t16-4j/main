@@ -5,9 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.scene.control.SelectionMode;
-
-import application.logic.Feedback;
-import application.logic.Logic;
+import application.backend.Feedback;
+import application.backend.Logic;
 import application.storage.Task;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

@@ -13,9 +13,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import application.logic.Logic;
-import application.logic.NoDescriptionException;
-import application.logic.Feedback;
+import application.backend.Feedback;
+import application.backend.Logic;
+import application.backend.NoDescriptionException;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

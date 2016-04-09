@@ -11,9 +11,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 import org.controlsfx.control.Notifications;
+
+import application.backend.Feedback;
+import application.backend.Logic;
 import application.logger.LoggerHandler;
-import application.logic.Feedback;
-import application.logic.Logic;
 import application.storage.FloatingTask;
 import application.storage.Task;
 import javafx.animation.TranslateTransition;

@@ -12,8 +12,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
+
+import application.backend.Logic;
 import application.logger.LoggerHandler;
-import application.logic.Logic;
 import application.storage.Task;
 import javafx.application.Application;
 import javafx.application.Platform;

@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
+import application.backend.Logic;
 import application.logger.LoggerFormat;
-import application.logic.Logic;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;

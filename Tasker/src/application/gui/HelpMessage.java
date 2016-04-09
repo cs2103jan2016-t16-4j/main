@@ -1,9 +1,7 @@
 package application.gui;
 
-//@@author A0078688A
-
-import application.logic.Feedback;
-import application.logic.Help;
+import application.backend.Feedback;
+import application.backend.Help;
 import application.storage.Storage;
 import javafx.application.Application;
 import javafx.scene.Group;
