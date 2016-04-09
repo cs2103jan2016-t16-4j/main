@@ -25,7 +25,7 @@ public class DateObject extends HBox {
 	// Constants
 	private static final int NOT_OVERDUE_VARIABLE = 0;
 	private static final String DATE_OBJECT_FXML_URL = "DateObject.fxml";
-	private static final String UNDATED_TEXT = "Undated";
+	private static final String UNDATED_TEXT = "UNDATED";
 	public static final String EMPTY = "";
 	public static final int OFFSET = 1;
 
