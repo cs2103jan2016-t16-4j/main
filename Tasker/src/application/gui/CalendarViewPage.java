@@ -9,9 +9,9 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
+
 import org.controlsfx.control.Notifications;
-import application.logger.LoggerHandler;
+
 import application.logic.Feedback;
 import application.logic.Logic;
 import application.storage.FloatingTask;
@@ -40,42 +40,11 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
 
-/*
- * Holds the main page of the gui that runs most of the program
- * 
- */
-
 public class CalendarViewPage extends AnchorPane {
-
-	// Constants
-	private static final int FIRST_WORD = 0;
-	private static final int ONE_LETTER = 1;
-	private static final int TWO_LETTERS = 2;
-	private static final String STORAGE_TEXT = "storage";
-	private static final String SEARCH_TEXT = "search";
-	private static final String SE_TEXT = "se";
-	private static final String S_TEXT = "s";
-	private static final String EXIT_TEXT = "exit";
-	private static final String E_TEXT = "e";
-	private static final String UPDATE_TEXT = "update";
-	private static final String UNDO_TEXT = "undo";
-	private static final String UN_TEXT = "un";
-	private static final String U_TEXT = "u";
-	private static final String DELETE_TEXT = "delete";
-	private static final String DONE_TEXT = "done";
-	private static final String DO_TEXT = "do";
-	private static final String D_TEXT = "d";
-	private static final String H_TEXT = "h";
-	private static final String A_TEXT = "a";
-	private static final String V_TEXT = "v";
-	private static final String HELP_TEXT = "help";
 	private static final String LISTVIEW_FXML_URL = "ListView.fxml";
-	private static final String LIST_FLAG = "list";
-	private static final String CAL_FLAG = "cal";
-	private static final String HELP_FLAG = HELP_TEXT;
-	private static final String STORAGE_FLAG = STORAGE_TEXT;
-	private static final String VIEW_CHANGE_FLAG = "view";
-	private static final String SUMMARY_FLAG = "summary";
+	private ArrayList<Task> tasksOnScreen;
+	private Logic logic;
+
 	private static final String SPACE = " ";
 	private static final String EMPTY_STRING = "";
 	private static final String LOCATION_PREFIX = "AT";
@@ -83,29 +52,13 @@ public class CalendarViewPage extends AnchorPane {
 	private static final String DIRECTORY_CHOOSER_TITLE = "Pick Where To Store Tasks";
 	private static final String CURRENT_DIRECTORY = "user.dir";
 	private static final int TASK_NUM_OFFSET = 1;
-	private static final String OVERDUE_TASKS_TEXT = "Overdue Tasks";
-	private static final String REMAINING_TASKS_TEXT = "Remaining Tasks";
-	private static final String COMPLETED_TASKS_TEXT = "Completed Tasks";
-	private static final String NO_DATES_TEXT = "No Dates Set";
-	private static final String NO_START_DATE_TEXT = "No Start Date Set";
-	private static final String NO_END_DATE_TEXT = "No End Date Set";
-	private static final String REMINDER_TEXT = "Reminder";
-	private static final int EMPTY = 0;
-	private static final int STARTPOSITION = 0;
-	private static final int OFFSET = 1;
-	private static final int NEXT = 1;
-	private static final int START = 0;
-	private static final int previous = 1;
-	private static final int BOX_HEIGHT = 580;
-	private static final int BOX_WIDTH = 1070;
-	private static final int TRANSITION_TIME = 350;
-	private static final int overdueCheckVariable = 0;
-
-	// Initialization
-	private static Logger logger = LoggerHandler.getLog();
-
-	// Formats
 	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd MMM yyyy");
+	private static final String LIST_FLAG = "list";
+	private static final String CAL_FLAG = "cal";
+	private static final String HELP_FLAG = "help";
+	private static final String STORAGE_FLAG = "storage";
+	private static final String VIEW_CHANGE_FLAG = "view";
+	private static final String SUMMARY_FLAG = "summary";
 
 	// Messages
 	private static final String ADD_HINT_MESSAGE = "To add: [task description] from [start] to [end] at [location]";
@@ -117,27 +70,18 @@ public class CalendarViewPage extends AnchorPane {
 	private static final String UNDO_HINT_MESSAGE = "To undo: undo";
 	private static final String STORAGE_HINT_MESSAGE = "To change storage: storage";
 	private static final String DONE_HINT_MESSAGE = "To mark task as complete: done [task number]";
-	private static final String VIEW_HINT_MESSAGE = "To Toggle Views: view";
 	private static final String MESSAGE_STORAGE_URL_NOT_FOUND = "Storage Location Invalid: Opening Directory Chooser";
 	private static final String MESSAGE_HELP_INTRO = "Start typing and we'll help you out!";
 	private static final String MESSAGE_FEEDBACK_INTRO = "We'll give you feedback on your commands here.";
 	private static final String MESSAGE_ERROR = "There was some problem processing your request. "
 			+ "Please check your input format.";
-	private static String MESSAGE_TASK = "%1$s: %2$s";
 
-	// Error Messages
-	private static final String FXML_LOAD_FAILED = "Failed to load ListView FXML file";
-
-	// Variables
-	private static int pointer = START;
-	private Task taskToFocus;
-	private String checkFlag;
 	private String text = EMPTY_STRING;
 	private static ArrayList<String> commands = new ArrayList<String>();
-	private ArrayList<Task> tasksOnScreen;
-	private Logic logic;
+	private static int pointer = 0;
+	private Task taskToFocus;
+	private String checkFlag;
 
-	// FXML Variables
 	@FXML
 	public Label feedbackLabel;
 	@FXML
@@ -176,7 +120,7 @@ public class CalendarViewPage extends AnchorPane {
 			fxmlLoader.setController(this);
 			fxmlLoader.load();
 		} catch (IOException exception) {
-			logger.severe(FXML_LOAD_FAILED);
+			System.out.println("Could not load");
 			throw new RuntimeException(exception);
 		}
 	}
@@ -210,9 +154,8 @@ public class CalendarViewPage extends AnchorPane {
 		// }, 0, 60 * 250);
 	}
 
-	// Setup cell factory for task list view
 	private void initialiseDisplayList() {
-		displayList.setPrefSize(BOX_WIDTH, BOX_HEIGHT);
+		displayList.setPrefSize(1070, 580);
 		this.displayList.setCellFactory(new Callback<ListView<Task>, ListCell<Task>>() {
 			public ListCell<Task> call(ListView<Task> param) {
 				ListCell<Task> cell = new ListCell<Task>() {
@@ -221,7 +164,10 @@ public class CalendarViewPage extends AnchorPane {
 						super.updateItem(item, empty);
 						if (item != null) {
 							Calendar cal = Calendar.getInstance();
-							int overdueCheck = checkIfOverdue(item, cal);
+							int overdueCheck = 0;
+							if (item.getEndDate() != null) {
+								overdueCheck = item.getEndDate().getTime().compareTo(cal.getTime());
+							}
 							int taskNumber = this.getIndex() + TASK_NUM_OFFSET;
 							String taskDescription = item.getTaskDescription();
 							String taskDuration = item.durationToString();
@@ -241,9 +187,8 @@ public class CalendarViewPage extends AnchorPane {
 		});
 	}
 
-	// Setup cell factory for calendar view
 	private void initialiseCalendarList() {
-		calendarList.setPrefSize(BOX_WIDTH, BOX_HEIGHT);
+		calendarList.setPrefSize(1070, 580);
 		this.calendarList.setCellFactory(new Callback<ListView<ArrayList<Task>>, ListCell<ArrayList<Task>>>() {
 			public ListCell<ArrayList<Task>> call(ListView<ArrayList<Task>> param) {
 				ListCell<ArrayList<Task>> cell = new ListCell<ArrayList<Task>>() {
@@ -251,7 +196,10 @@ public class CalendarViewPage extends AnchorPane {
 					public void updateItem(ArrayList<Task> item, boolean empty) {
 						super.updateItem(item, empty);
 						if (item != null) {
-							String date = setDate(item);
+							String date = null;
+							if (item.get(0).getEndDate() != null) {
+								date = FORMAT_DATE.format(item.get(0).getEndDate().getTime());
+							}
 							DateObject listViewItem = new DateObject(date, item, tasksOnScreen);
 							setGraphic(listViewItem.getHbox());
 						} else {
@@ -265,25 +213,6 @@ public class CalendarViewPage extends AnchorPane {
 		});
 	}
 
-	// Set date accordingly
-	private String setDate(ArrayList<Task> item) {
-		String date = null;
-		if (item.get(START).getEndDate() != null) {
-			date = FORMAT_DATE.format(item.get(START).getEndDate().getTime());
-		}
-		return date;
-	}
-
-	// Check if task is overdue
-	private int checkIfOverdue(Task item, Calendar cal) {
-		int overdueCheck = overdueCheckVariable;
-		if (item.getEndDate() != null) {
-			overdueCheck = item.getEndDate().getTime().compareTo(cal.getTime());
-		}
-		return overdueCheck;
-	}
-
-	// Format for the location section of task list view
 	private String getLocationString(Task task) {
 		String location = task.getLocation();
 		if (location.trim().equals(EMPTY_STRING)) {
@@ -293,12 +222,11 @@ public class CalendarViewPage extends AnchorPane {
 		}
 	}
 
-	// Set the data for the calendar view
 	private ArrayList<ArrayList<Task>> getDateArray(ArrayList<Task> taskList) {
 		String tempoDate = null;
 		ArrayList<ArrayList<Task>> dateArray = new ArrayList<ArrayList<Task>>();
 		ArrayList<Task> temporaryList = new ArrayList<Task>();
-		for (int i = START; i < taskList.size(); i++) {
+		for (int i = 0; i < taskList.size(); i++) {
 			if (!(taskList.get(i) instanceof FloatingTask) && tempoDate != null) {
 				if (tempoDate.equals(FORMAT_DATE.format(taskList.get(i).getEndDate().getTime()))) {
 					temporaryList.add(taskList.get(i));
@@ -329,49 +257,46 @@ public class CalendarViewPage extends AnchorPane {
 				tempoDate = null;
 			}
 		}
-		if (temporaryList.size() != EMPTY) {
+		if (temporaryList.size() != 0) {
 			dateArray.add(temporaryList);
 		}
 		return dateArray;
 	}
 
-	// Method that calls other methods to update the data
 	private void updateViews(ArrayList<Task> taskList, Task taskToFocus) {
 		updateCalendarList(taskList, taskToFocus);
 		updateDisplayList(taskList, taskToFocus);
 		updateSummary();
 	}
 
-	// Update the side panel
 	private void updateSummary() {
-		completedLabel.setText(String.format(MESSAGE_TASK, COMPLETED_TASKS_TEXT, logic.getCompletedTaskCount()));
-		remainingLabel.setText(String.format(MESSAGE_TASK, REMAINING_TASKS_TEXT, logic.getRemainingTaskCount()));
-		overdueLabel.setText(String.format(MESSAGE_TASK, OVERDUE_TASKS_TEXT, logic.getOverdueTaskCount()));
+		completedLabel.setText("Completed Tasks: " + logic.getCompletedTaskCount());
+		remainingLabel.setText("Remaining Tasks: " + logic.getRemainingTaskCount());
+		overdueLabel.setText("Overdue Tasks: " + logic.getOverdueTaskCount());
 		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-				new PieChart.Data(COMPLETED_TASKS_TEXT, logic.getCompletedTaskCount()),
-				new PieChart.Data(REMAINING_TASKS_TEXT, logic.getRemainingTaskCount()),
-				new PieChart.Data(OVERDUE_TASKS_TEXT, logic.getOverdueTaskCount()));
+				new PieChart.Data("Completed Tasks", logic.getCompletedTaskCount()),
+				new PieChart.Data("Remaining Tasks", logic.getRemainingTaskCount()),
+				new PieChart.Data("Overdue Tasks", logic.getOverdueTaskCount()));
 		pieChart.setData(pieChartData);
 		pieChart.setLabelsVisible(false);
 		pieChart.setLegendSide(Side.BOTTOM);
 	}
 
-	// Notification behavior for adding or updating tasks
 	private void notifyUser(Task taskToFocus) {
 		String title = null;
 		String text = null;
 		if (taskToFocus != null) {
 			if (taskToFocus.getEndDate() == null) {
-				title = REMINDER_TEXT;
-				text = NO_END_DATE_TEXT;
+				title = "Reminder";
+				text = "No End Date Set";
 			}
 			if (taskToFocus.getStartDate() == null) {
-				title = REMINDER_TEXT;
-				text = NO_START_DATE_TEXT;
+				title = "Reminder";
+				text = "No Start Date Set";
 			}
 			if (taskToFocus.getStartDate() == null && taskToFocus.getEndDate() == null) {
-				title = REMINDER_TEXT;
-				text = NO_DATES_TEXT;
+				title = "Reminder";
+				text = "No Dates Set";
 			}
 			if (title != null && text != null) {
 				Notifications.create().title(title).text(text).showInformation();
@@ -379,10 +304,9 @@ public class CalendarViewPage extends AnchorPane {
 		}
 	}
 
-	// Updates data of the task view
 	private void updateDisplayList(ArrayList<Task> taskList, Task taskToFocus) {
 		this.displayList.getItems().clear();
-		if (taskList.size() != EMPTY) {
+		if (taskList.size() != 0) {
 			ObservableList<Task> list = makeDisplayList(taskList);
 			this.displayList.setItems(list);
 			if (taskToFocus != null) {
@@ -392,10 +316,9 @@ public class CalendarViewPage extends AnchorPane {
 		}
 	}
 
-	// Updates data of the calendar view
 	private void updateCalendarList(ArrayList<Task> taskList, Task taskToFocus) {
 		this.calendarList.getItems().clear();
-		if (taskList.size() != EMPTY) {
+		if (taskList.size() != 0) {
 			ArrayList<ArrayList<Task>> dateArray = new ArrayList<ArrayList<Task>>();
 			dateArray = getDateArray(taskList);
 			ObservableList<ArrayList<Task>> calList = makeCalendarList(dateArray);
@@ -420,7 +343,6 @@ public class CalendarViewPage extends AnchorPane {
 		return displayList;
 	}
 
-	// Sets behavior of the text area
 	public void initializeInputArea() {
 		textInputArea.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
@@ -430,12 +352,10 @@ public class CalendarViewPage extends AnchorPane {
 						text = textInputArea.getText();
 						commands.add(text);
 						if (text.equals("summary")) {
-							TranslateTransition openNav = new TranslateTransition(new Duration(TRANSITION_TIME),
-									hiddenMenu);
-							openNav.setToX(STARTPOSITION);
-							TranslateTransition closeNav = new TranslateTransition(new Duration(TRANSITION_TIME),
-									hiddenMenu);
-							if (hiddenMenu.getTranslateX() != STARTPOSITION) {
+							TranslateTransition openNav = new TranslateTransition(new Duration(350), hiddenMenu);
+							openNav.setToX(0);
+							TranslateTransition closeNav = new TranslateTransition(new Duration(350), hiddenMenu);
+							if (hiddenMenu.getTranslateX() != 0) {
 								openNav.play();
 							} else {
 								closeNav.setToX(+(hiddenMenu.getWidth()));
@@ -469,8 +389,8 @@ public class CalendarViewPage extends AnchorPane {
 							pointer = commands.indexOf(textInputArea.getText());
 						}
 						// if pointer is not at the front end
-						if (pointer != START) {
-							textInputArea.setText(commands.get(pointer - previous));
+						if (pointer != 0) {
+							textInputArea.setText(commands.get(pointer - 1));
 						}
 					}
 				}
@@ -482,8 +402,8 @@ public class CalendarViewPage extends AnchorPane {
 							pointer = commands.indexOf(textInputArea.getText());
 						}
 						// if pointer is not at the end
-						if (pointer != commands.size() - OFFSET) {
-							textInputArea.setText(commands.get(pointer + NEXT));
+						if (pointer != commands.size() - 1) {
+							textInputArea.setText(commands.get(pointer + 1));
 						}
 					}
 				}
@@ -603,133 +523,103 @@ public class CalendarViewPage extends AnchorPane {
 			return;
 		} else {
 			switch (newLetter.toLowerCase()) {
-			case A_TEXT:
-				checkA(helpLabel);
+			case "a":
+				helpLabel.setText(ADD_HINT_MESSAGE);
 				break;
-			case H_TEXT:
-				checkH(newValue, helpLabel, newWord);
+			case "h":
+				helpLabel.setText(HELP_HINT_MESSAGE);
+				if (!newValue.isEmpty() && newValue.length() >= 4) {
+					if (!newWord.equalsIgnoreCase("help")) {
+						helpLabel.setText(ADD_HINT_MESSAGE);
+					}
+				}
 				break;
-			case D_TEXT:
-				checkD(newValue, helpLabel, newWord);
+			case "d":
+				if (!newValue.isEmpty() && newValue.length() > 1) {
+					if (getSecondLetter(newValue).equalsIgnoreCase("do")) {
+						helpLabel.setText(DONE_HINT_MESSAGE);
+						if (!newValue.isEmpty() && newValue.length() >= 4) {
+							if (!newWord.equalsIgnoreCase("done")) {
+								helpLabel.setText(ADD_HINT_MESSAGE);
+							}
+						}
+					}
+				} else {
+					helpLabel.setText(DELETE_HINT_MESSAGE);
+				}
+				if (!newValue.isEmpty() && newValue.length() >= 6) {
+					if (!newWord.equalsIgnoreCase("delete")) {
+						helpLabel.setText(ADD_HINT_MESSAGE);
+					}
+				}
 				break;
-			case U_TEXT:
-				checkU(newValue, helpLabel, newWord);
+			case "u":
+				if (!newValue.isEmpty() && newValue.length() > 1) {
+					if (getSecondLetter(newValue).equalsIgnoreCase("un")) {
+						helpLabel.setText(UNDO_HINT_MESSAGE);
+						if (!newValue.isEmpty() && newValue.length() >= 4) {
+							if (!newWord.equalsIgnoreCase("undo")) {
+								helpLabel.setText(ADD_HINT_MESSAGE);
+							}
+						}
+					}
+				} else {
+					helpLabel.setText(UPDATE_HINT_MESSAGE);
+				}
+				if (!newValue.isEmpty() && newValue.length() >= 6) {
+					if (!newWord.equalsIgnoreCase("update")) {
+						helpLabel.setText(ADD_HINT_MESSAGE);
+					}
+				}
 				break;
-			case E_TEXT:
-				checkE(newValue, helpLabel, newWord);
+			case "e":
+				helpLabel.setText(EXIT_HINT_MESSAGE);
+				if (!newValue.isEmpty() && newValue.length() >= 4) {
+					if (!newWord.equalsIgnoreCase("exit")) {
+						helpLabel.setText(ADD_HINT_MESSAGE);
+					}
+				}
 				break;
-			case S_TEXT:
-				checkS(newValue, helpLabel, newWord);
-				break;
-			case V_TEXT:
-				checkV(helpLabel);
+			case "s":
+				if (!newValue.isEmpty() && newValue.length() > 1) {
+					if (getSecondLetter(newValue).equalsIgnoreCase("se")) {
+						helpLabel.setText(SEARCH_HINT_MESSAGE);
+						if (!newValue.isEmpty() && newValue.length() >= 6) {
+							if (!newWord.equalsIgnoreCase("search")) {
+								helpLabel.setText(ADD_HINT_MESSAGE);
+							}
+						}
+					}
+				} else {
+					helpLabel.setText(STORAGE_HINT_MESSAGE);
+
+				}
+				if (!newValue.isEmpty() && newValue.length() >= 7) {
+					if (!newWord.equalsIgnoreCase("storage")) {
+						helpLabel.setText(ADD_HINT_MESSAGE);
+					}
+				}
 				break;
 			default:
-				checkA(helpLabel);
+				helpLabel.setText(ADD_HINT_MESSAGE);
 				break;
-			}
-		}
-	}
-
-	private void checkV(Label helpLabel) {
-		helpLabel.setText(VIEW_HINT_MESSAGE);
-	}
-
-	private void checkS(String newValue, Label helpLabel, String newWord) {
-		if (!newValue.isEmpty() && newValue.length() > S_TEXT.length()) {
-			if (getTwoLetters(newValue).equalsIgnoreCase(SE_TEXT)) {
-				helpLabel.setText(SEARCH_HINT_MESSAGE);
-				if (!newValue.isEmpty() && newValue.length() >= SEARCH_TEXT.length()) {
-					if (!newWord.equalsIgnoreCase(SEARCH_TEXT)) {
-						checkA(helpLabel);
-					}
-				}
-			}
-		} else {
-			helpLabel.setText(STORAGE_HINT_MESSAGE);
-		}
-		if (!newValue.isEmpty() && newValue.length() >= STORAGE_TEXT.length()) {
-			if (!newWord.equalsIgnoreCase(STORAGE_TEXT)) {
-				checkA(helpLabel);
-			}
-		}
-	}
-
-	private void checkE(String newValue, Label helpLabel, String newWord) {
-		helpLabel.setText(EXIT_HINT_MESSAGE);
-		if (!newValue.isEmpty() && newValue.length() >= EXIT_TEXT.length()) {
-			if (!newWord.equalsIgnoreCase(EXIT_TEXT)) {
-				checkA(helpLabel);
-			}
-		}
-	}
-
-	private void checkU(String newValue, Label helpLabel, String newWord) {
-		if (!newValue.isEmpty() && newValue.length() > U_TEXT.length()) {
-			if (getTwoLetters(newValue).equalsIgnoreCase(UN_TEXT)) {
-				helpLabel.setText(UNDO_HINT_MESSAGE);
-				if (!newValue.isEmpty() && newValue.length() >= UNDO_TEXT.length()) {
-					if (!newWord.equalsIgnoreCase(UNDO_TEXT)) {
-						checkA(helpLabel);
-					}
-				}
-			}
-		} else {
-			helpLabel.setText(UPDATE_HINT_MESSAGE);
-		}
-		if (!newValue.isEmpty() && newValue.length() >= UPDATE_TEXT.length()) {
-			if (!newWord.equalsIgnoreCase(UPDATE_TEXT)) {
-				checkA(helpLabel);
-			}
-		}
-	}
-
-	private void checkD(String newValue, Label helpLabel, String newWord) {
-		if (!newValue.isEmpty() && newValue.length() > D_TEXT.length()) {
-			if (getTwoLetters(newValue).equalsIgnoreCase(DO_TEXT)) {
-				helpLabel.setText(DONE_HINT_MESSAGE);
-				if (!newValue.isEmpty() && newValue.length() >= DONE_TEXT.length()) {
-					if (!newWord.equalsIgnoreCase(DONE_TEXT)) {
-						checkA(helpLabel);
-					}
-				}
-			}
-		} else {
-			helpLabel.setText(DELETE_HINT_MESSAGE);
-		}
-		if (!newValue.isEmpty() && newValue.length() >= DELETE_TEXT.length()) {
-			if (!newWord.equalsIgnoreCase(DELETE_TEXT)) {
-				checkA(helpLabel);
-			}
-		}
-	}
-
-	private void checkA(Label helpLabel) {
-		helpLabel.setText(ADD_HINT_MESSAGE);
-	}
-
-	private void checkH(String newValue, Label helpLabel, String newWord) {
-		helpLabel.setText(HELP_HINT_MESSAGE);
-		if (!newValue.isEmpty() && newValue.length() >= HELP_TEXT.length()) {
-			if (!newWord.equalsIgnoreCase(HELP_TEXT)) {
-				checkA(helpLabel);
 			}
 		}
 	}
 
 	private String getFirstLetter(String input) {
-		String firstLetter = input.substring(START, ONE_LETTER);
+		String firstLetter = input.substring(0, 1);
 		return firstLetter;
 	}
 
 	private String getFirstWord(String input) {
 		String[] inputArgs = input.trim().split(SPACE);
-		String firstWord = inputArgs[FIRST_WORD];
+		String firstWord = inputArgs[0];
 		return firstWord;
 	}
 
-	private String getTwoLetters(String input) {
-		String secondLetter = input.substring(START, TWO_LETTERS);
+	private String getSecondLetter(String input) {
+		String secondLetter = input.substring(0, 2);
 		return secondLetter;
 	}
 

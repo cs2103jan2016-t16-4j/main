@@ -11,7 +11,10 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.FileHandler;
 import java.util.logging.Logger;
+
+import application.logger.LoggerFormat;
 import application.logger.LoggerHandler;
 import application.logic.Logic;
 import application.storage.Task;
@@ -25,35 +28,25 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 public class GuiMain extends Application {
-
-	// Logger Messages
-	private static final String CLOSE_CLICK_TRAY_LOGGER_MSG = "Clicked close on system tray icon";
-	private static final String SHOW_CLICK_TRAY_LOGGER_MSG = "Clicked show on system tray icon";
-	private static final String GUI_SETUP = "Setting up gui";
-
-	// Error Messages
-	private static final String LOAD_LOGO_FAIL_MSG = "Failed to load logo";
-	private static final String GUI_LOAD_FAIL_MSG = "Failed to load GUI";
-
-	// Initialization
-	private static Logger logger = LoggerHandler.getLog();
-
-	// Constants
 	private static final String ROBOT_GIF_URL = "src/application/gui/files/robot.gif";
 	private static final String APPLICATION_NAME = "Tasker";
 	private static final String EMPTY_STRING = "";
 	private static final String BACKSLASH = "\\";
 	private static final String CSS_URL = "application/gui/application.css";
 	private static final String LOGO_URL = "robot.jpg";
+	private TrayIcon trayIcon;
+
 	private static final String DIRECTORY_CHOOSER_TITLE = "Pick Where To Store Tasks";
 	private static final String CURRENT_DIRECTORY = "user.dir";
+	private static final String ERROR_LOGGER_INIT = "There was a problem trying to initialise logger.";
+
 	private static final String SYSTEM_TRAY_HINT = "Tasker is still running in the background.";
+
 	private static final String SHOW_MENU_TEXT = "Show";
 	private static final String EXIT_MENU_TEXT = "Exit";
 
-	// Variables
-	private TrayIcon trayIcon;
 	private Logic logic;
+	private Logger logger;
 	private ArrayList<Task> taskList;
 
 	public static void main(String[] args) {
@@ -62,7 +55,6 @@ public class GuiMain extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws ExceptionHandler {
-		logger.info(GUI_SETUP);
 		try {
 			setEnvironment();
 			initializeSaveDirectory(primaryStage);
@@ -78,8 +70,7 @@ public class GuiMain extends Application {
 			createTrayIcon(primaryStage);
 		} catch (IOException e) {
 			e.printStackTrace();
-			logger.severe(GUI_LOAD_FAIL_MSG);
-			throw new ExceptionHandler(GUI_LOAD_FAIL_MSG);
+			throw new ExceptionHandler("Failed to load GUI");
 		}
 	}
 
@@ -88,22 +79,21 @@ public class GuiMain extends Application {
 		setProgramLogo(primaryStage);
 	}
 
-	// Set program name
 	private void setProgramName(Stage primaryStage) {
 		primaryStage.setTitle(APPLICATION_NAME);
 	}
 
-	// Set program logo
 	private void setProgramLogo(Stage primaryStage) {
+
 		primaryStage.getIcons().add(new Image(ResourceLoader.load(LOGO_URL)));
 	}
 
 	private void setEnvironment() {
 		this.logic = new Logic();
+		this.logger = LoggerHandler.getLog();
+		initializeLogger();
 	}
 
-	// Checks if user has used the program at least once if not prompt to save
-	// file
 	private void initializeSaveDirectory(Stage primaryStage) throws IOException {
 		if (!logic.checkIfFileExists()) {
 			DirectoryChooser dirChooser = new DirectoryChooser();
@@ -115,7 +105,6 @@ public class GuiMain extends Application {
 		}
 	}
 
-	// Does the directory prompt then sends the data to logic accordingly
 	public void directoryPrompt(Stage primaryStage, DirectoryChooser dirChooser) throws IOException {
 		final File selectedDirectory = dirChooser.showDialog(primaryStage);
 		if (selectedDirectory != null) {
@@ -125,10 +114,21 @@ public class GuiMain extends Application {
 		}
 	}
 
-	// Configuration for directory chooser
 	private void configureDirectoryChooser(final DirectoryChooser dirChooser) {
 		dirChooser.setTitle(DIRECTORY_CHOOSER_TITLE);
 		dirChooser.setInitialDirectory(new File(System.getProperty(CURRENT_DIRECTORY)));
+	}
+
+	private void initializeLogger() {
+		try {
+			FileHandler fileHandler = new FileHandler("logfile.txt", true);
+			LoggerFormat formatter = new LoggerFormat();
+			fileHandler.setFormatter(formatter);
+			logger.setUseParentHandlers(false);
+			logger.addHandler(fileHandler);
+		} catch (IOException e) {
+			System.out.println(ERROR_LOGGER_INIT);
+		}
 	}
 
 	// Create Tray Icon
@@ -136,14 +136,18 @@ public class GuiMain extends Application {
 		if (SystemTray.isSupported()) {
 			SystemTray tray = SystemTray.getSystemTray();
 			setToTray(primaryStage);
+
 			ActionListener showListener = showApplication(primaryStage);
 			ActionListener closeListener = closeTray();
+
 			PopupMenu popup = popupMenuConfiguration(closeListener, showListener);
+
 			trayIconConfiguration(showListener, popup);
+
 			try {
 				tray.add(trayIcon);
 			} catch (AWTException e) {
-				logger.severe(LOAD_LOGO_FAIL_MSG);
+				System.err.println(e);
 			}
 
 		}
@@ -165,7 +169,7 @@ public class GuiMain extends Application {
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
-						logger.info(SHOW_CLICK_TRAY_LOGGER_MSG);
+						logger.info("Clicked show on system tray icon");
 						primaryStage.show();
 						primaryStage.setIconified(false);
 					}
@@ -180,7 +184,7 @@ public class GuiMain extends Application {
 		ActionListener closeListener = new ActionListener() {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				logger.info(CLOSE_CLICK_TRAY_LOGGER_MSG);
+				logger.info("Clicked close on system tray icon");
 				System.exit(0);
 			}
 		};
@@ -227,3 +231,4 @@ public class GuiMain extends Application {
 	}
 
 }
+//@@author A0125417L

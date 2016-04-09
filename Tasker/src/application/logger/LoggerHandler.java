@@ -7,24 +7,19 @@ import java.util.logging.Logger;
 
 public class LoggerHandler {
 
-	// Exception Message
-	private static final String INITIALISE_LOGGER_EXCEPTION_MSG = "Failed to initialise Logger";
-
-	// Static logger for all classes
 	private static Logger log;
 
-	// Logger File Name Constants
 	private static final String LOGGER_NAME = "logfile";
 	private static final String LOGGER_FILE_NAME = "logfile.txt";
 
 	public static Logger getLog() {
 		if (log == null) {
-			initialiseLogger();
+			initLog();
 		}
 		return log;
 	}
 
-	private static void initialiseLogger() {
+	private static void initLog() {
 		log = Logger.getLogger(LOGGER_NAME);
 		FileHandler fileHandler;
 		try {
@@ -36,7 +31,7 @@ public class LoggerHandler {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			try {
-				throw new LoggerException(INITIALISE_LOGGER_EXCEPTION_MSG);
+				throw new LoggerException("Failed to initialise Logger");
 			} catch (LoggerException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
