@@ -33,8 +33,10 @@ public class FileManager {
 	private static final String FILE_DATA_NAME = "TaskerData.txt";
 	private static final String FILE_DIRECTORY_NAME = "TaskerDirectory.txt";
 	private static final int NO_TASK = 0;
+	private static final int DIRECTORY_BEGIN_INDEX = 0;
 	private static final String EMPTY = "";
 	private static final String EMPTY_PATH = "";
+	private static final String KEYWORD_SLASH = "\\";
 	
 	// Path variables
 	private String closedFilePath = "";
@@ -72,6 +74,12 @@ public class FileManager {
 	 */
 	public String getDataFilePath() {
 		return dataFilePath;
+	}
+	
+	public String getDirectoryPath() {
+		File directoryFile = new File(FILE_DIRECTORY_NAME);
+		String absolutePath = directoryFile.getAbsolutePath();
+		return absolutePath.substring(DIRECTORY_BEGIN_INDEX, absolutePath.lastIndexOf(File.separator))+KEYWORD_SLASH;
 	}
 
 	/**
@@ -206,11 +214,13 @@ public class FileManager {
 		if (!f.exists()) {
 			try {
 				f.createNewFile();
-				// save all the tasks
-				saveAllTasks(list, filePath);
 			} catch (IOException e) {
 				logger.log(Level.SEVERE, "Error saving file");
 			}
+		}
+		else {
+			// save all the tasks
+			saveAllTasks(list, filePath);
 		}
 	}
 

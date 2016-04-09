@@ -13,7 +13,9 @@ import java.util.Calendar;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
+/**
+ * StorageTest is used to test all task manipulation functions.
+ */
 public class StorageTest {
 	Storage storageController;
 	static final String FILE_CLOSED_NAME = "TaskerDataHistory.txt";
@@ -117,7 +119,7 @@ public class StorageTest {
 		}
 	}
 	
-	@Test
+//	@Test
 	public void searchByDate() throws IOException {
 		storageController.addTaskInList("Go to hell", null, null, "Doom", noDate, "high");
 		storageController.addTaskInList("Do homework", null, cal1, "Home", cal2, "low");
@@ -448,6 +450,10 @@ public class StorageTest {
 		assertTrue(deadlineTask.getPriority()=="high");
 	}
 
+	@Test
+	public void checkDirectoryPath() throws IOException {
+		System.out.println(storageController.setDirectory(""));
+	}
 		
 	@After
 	public void after() {

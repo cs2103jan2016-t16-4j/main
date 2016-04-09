@@ -28,7 +28,6 @@ import org.ocpsoft.prettytime.shade.edu.emory.mathcs.backport.java.util.Collecti
  *
  */
 
-
 public class Parser {
 	private static final String LOGGER_NAME = "logfile";
 	private static final String MESSAGE_NULL_ERROR = "command cannot be null";
@@ -55,8 +54,8 @@ public class Parser {
 	private static final String UNIX_DATE_MARKER = "-d";
 	private static final String UNIX_LOC_MARKER = "-l";
 	private static final String UNIX_PRI_MARKER = "-p";
-	private static final String[] UNIX_MARKERS = {UNIX_DATE_MARKER, UNIX_LOC_MARKER, UNIX_PRI_MARKER};
-	
+	private static final String[] UNIX_MARKERS = { UNIX_DATE_MARKER, UNIX_LOC_MARKER, UNIX_PRI_MARKER };
+
 	private static final String PRIORITY_HIGH = "high";
 	private static final String PRIORITY_MEDIUM = "medium";
 	private static final String PRIORITY_LOW = "low";
@@ -64,9 +63,9 @@ public class Parser {
 
 	private static final int NUMBER_INDICES = 3;
 	private static final int DATE_IND_POS = 0;
-    private static final int LOC_IND_POS = 1;
-    private static final int PRI_IND_POS = 2;
-	
+	private static final int LOC_IND_POS = 1;
+	private static final int PRI_IND_POS = 2;
+
 	public static final int DEFAULT_EVENT_DURATION = 2;
 	private static final int ARGUMENT_NUMBER = 4;
 	private static final int DESC_POS = 0;
@@ -74,6 +73,8 @@ public class Parser {
 	private static final int LOC_POS = 2;
 	private static final int PRI_POS = 3;
 	private static final int ARRAY_INDEXING_OFFSET = 1;
+	private static final int STORAGE_CHANGE_LIMIT = 2;
+	private static final int SECOND_WORD = 1;
 
 	private static final boolean WITH_KEYWORD = true; // For add function. Since
 														// we accept no keyword.
@@ -146,7 +147,7 @@ public class Parser {
 			logger.info("Making done command object");
 			command = initializeDone(args);
 			break;
-		
+
 		case KEYWORD_SUMMARY:
             logger.info("Making summary command object");
             command = initializeSummary();
@@ -156,12 +157,10 @@ public class Parser {
             logger.info("Making undo command object");
 			command = initializeUndo();
 			break;
-		
     	case KEYWORD_HELP : 
     	    logger.info("Making help command object");
     	    command = initializeHelp(); 
     	    break;
-    		
 		case KEYWORD_STORAGE:
 		    logger.info("Making storage location change command object");
             command = initializeStorageLocation(args);
@@ -220,6 +219,7 @@ public class Parser {
 				segments[PRI_POS]);
 		return command;
 	}
+
 	private String[] removeKeyWordIfReq(String[] args, boolean isWithKeyWord) {
 		if (isWithKeyWord) {
 			return (String[]) ArrayUtils.remove(args, 0);
@@ -256,8 +256,8 @@ public class Parser {
 		int taskToUpdate = Integer.parseInt(args[0]);
 		args = (String[]) ArrayUtils.remove(args, 0);
 		Integer[] indices = getIndices(args);
-        String[] segments = getSegments(indices[DATE_IND_POS], indices[LOC_IND_POS], indices[PRI_IND_POS], args);
-        Calendar[] dates = parseDates(segments);
+		String[] segments = getSegments(indices[DATE_IND_POS], indices[LOC_IND_POS], indices[PRI_IND_POS], args);
+		Calendar[] dates = parseDates(segments);
 		dates = fixDatesForUpdate(dates);
 		Calendar remindDate = convertToCalendar(createEmptyDate());
 		Command command = new Update(taskToUpdate, segments[DESC_POS], dates[0], dates[1], segments[LOC_POS],
@@ -279,26 +279,25 @@ public class Parser {
 		return command;
 	}
 
-	
-	private Command initializeHelp(){ 
-	    Command command = new Help ()
-	            ; return command;
-    }
+	private Command initializeHelp() {
+		Command command = new Help();
+		return command;
+	}
 
-    private Command initializeSummary(){ 
-        Command command = new Summary (); 
-        return command;
-    }
+	private Command initializeSummary() {
+		Command command = new Summary();
+		return command;
+	}
 
 	// @@author A0125417L
 	// Requests the logic to call for new storage location from the GUI then
 	// sends the data to Storage
 	private Command initializeStorageLocation(String[] args) {
 		Command command = null;
-		if (args.length == 2) {
-			command = new ChangeStorageLocation(args[1]);
+		if (args.length == STORAGE_CHANGE_LIMIT) {
+			command = new ChangeStorageLocation(args[SECOND_WORD]);
 		} else {
-			command = new ChangeStorageLocation("");
+			command = new ChangeStorageLocation(EMPTY);
 		}
 		return command;
 	}
@@ -342,9 +341,7 @@ public class Parser {
             args[indices[DATE_IND_POS] - 1] = EMPTY; //Setting the unix marker to empty
         }
     }
-    
-
-	
+    	
 	private Command getAppropSearchCommand(String[] args) {
 		try {
 			return getSearchCommand(args);
@@ -360,7 +357,8 @@ public class Parser {
 			return getSearchByDateCommand(argsForDate);
 		} else if (args[0].equalsIgnoreCase("on")) {
 			return getSearchOnDateCommand(argsForDate);
-		} else if (args.length > 1 && args[0].equalsIgnoreCase("priority") && Arrays.asList(PRIORITY_LEVELS).contains(args[1])){
+		} else if (args.length > 1 && args[0].equalsIgnoreCase("priority")
+				&& Arrays.asList(PRIORITY_LEVELS).contains(args[1])) {
 			return getSearchByPriorityCommand(argsForDate);
 		} else
 			return getSearchByName(args);
@@ -389,7 +387,6 @@ public class Parser {
 		Command cmd = new SearchByPriority(priority);
 		return cmd;
 	}
-
 
 	private Calendar getDateForSearch(String[] args) throws NotDateException {
 		String dateString = getString(args, 0, args.length - 1);
@@ -463,20 +460,20 @@ public class Parser {
 		return dates;
 	}
 
-	private String fixDateFormatIfNeeded(String dateString){
-	    String[] parts = dateString.split("\\s+");
-	    for (String part: parts){
-	        try{
-	            DateFormat originalFormat = new SimpleDateFormat("d/M/yyyy");
-	            DateFormat targetFormat = new SimpleDateFormat("MM/dd/yyyy");
-	            Date date = originalFormat.parse(part);
-	            part = targetFormat.format(date);
-	        } catch(ParseException e){
-	        }
-	    }
-	    return getString(parts,0, parts.length - 1);
+	private String fixDateFormatIfNeeded(String dateString) {
+		String[] parts = dateString.split("\\s+");
+		for (String part : parts) {
+			try {
+				DateFormat originalFormat = new SimpleDateFormat("d/M/yyyy");
+				DateFormat targetFormat = new SimpleDateFormat("MM/dd/yyyy");
+				Date date = originalFormat.parse(part);
+				part = targetFormat.format(date);
+			} catch (ParseException e) {
+			}
+		}
+		return getString(parts, 0, parts.length - 1);
 	}
-	
+
 	private void changeSegmentsIfNeeded(String[] segments, int size) {
 		if (size == 0) {
 			segments[DESC_POS] = segments[DESC_POS].trim() + " " + segments[DATE_POS];

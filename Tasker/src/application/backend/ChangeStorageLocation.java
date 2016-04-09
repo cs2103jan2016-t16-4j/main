@@ -96,8 +96,8 @@ public class ChangeStorageLocation implements Command {
 	// Create feedback when user inputs an invalid directory path
 	private Feedback invalidDirectoryFound(ArrayList<Task> tasksOnScreen) {
 		Feedback feedback;
-		feedback = new Feedback(MESSAGE_STORAGE_URL_NOT_FOUND + arguments + BACKSLASH, tasksOnScreen, null);
-		feedback.setCalFlag();
+		feedback = new Feedback(MESSAGE_STORAGE_URL_NOT_FOUND, tasksOnScreen, null);
+		feedback.setStorageFlag();
 		return feedback;
 	}
 

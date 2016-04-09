@@ -130,7 +130,7 @@ public class EventTask extends Task implements Cloneable {
 			durationMessage += KEYWORD_TO + endingDate;
 			if (!endingTime.equals(EMPTY_TIME_STRING)) {
 				durationMessage += KEYWORD_SPACE + endingTime;
-			} // display end date, if exist
+			} // display only end date, if exist
 		} else if (startingDate.equals(EMPTY_DATE_STRING) && (!endingDate.equals(EMPTY_DATE_STRING))) {
 			durationMessage += KEYWORD_BY + endingDate;
 			if (!endingTime.equals(EMPTY_TIME_STRING)) {
