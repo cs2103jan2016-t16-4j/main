@@ -280,7 +280,7 @@ public class StorageTest {
 		assertEquals(floatingTask.toString(), list.get(1).toString());
 	}
 	
-	@Test	// event task ---> event task
+//	@Test	// event task ---> event task
 	public void updateTaskType3() throws IOException, CloneNotSupportedException {
 		storageController.addTaskInList("Go to hell", null, null, "Doom", noDate, "high");
 		storageController.addTaskInList("Do homework", null, cal1, "Home", cal2, "low");
@@ -293,7 +293,6 @@ public class StorageTest {
 		Calendar cal = (Calendar) cal2.clone();
 		cal.set(2030, Calendar.DECEMBER, 25);
 		EventTask eventTask = new EventTask("Sign up for homework", cal, cal3, "School", noDate, "high", 3);
-		System.out.println(eventTask.toString());
 		System.out.println("Old : "+list.get(0).toString());
 		System.out.println("New : "+list.get(1).toString());
 		assertEquals(eventTask.toString(), list.get(1).toString());
@@ -309,9 +308,10 @@ public class StorageTest {
 		newDate.set(2035, Calendar.JUNE, 30);
 		ArrayList<Task> list = new ArrayList<Task>();
 		list = storageController.updateTask(1, "", cal1, cal2, "Hell", noDate, "high");
-		System.out.println(list.size());
+		EventTask eventTask = new EventTask("Go to hell", cal1, cal2, "Hell", noDate, "high", 1);
 		System.out.println("Old : "+list.get(0).toString());
 		System.out.println("New : "+list.get(1).toString());
+		assertEquals(eventTask.toString(), list.get(1).toString());
 	}
 	
 //	@Test // floating task ---> deadline task
@@ -324,9 +324,10 @@ public class StorageTest {
 		newDate.set(2035, Calendar.JUNE, 30);
 		ArrayList<Task> list = new ArrayList<Task>();
 		list = storageController.updateTask(1, "", null, cal2, "Heaven", noDate, "high");
-		System.out.println(list.size());
+		DeadlineTask deadlineTask = new DeadlineTask("Go to hell", cal2, "Heaven", noDate, "high",1);
 		System.out.println("Old : "+list.get(0).toString());
 		System.out.println("New : "+list.get(1).toString());
+		assertEquals(deadlineTask.toString(), list.get(1).toString());
 	}
 	
 //	@Test // floating task ---> floating task
@@ -339,9 +340,10 @@ public class StorageTest {
 		newDate.set(2035, Calendar.JUNE, 30);
 		ArrayList<Task> list = new ArrayList<Task>();
 		list = storageController.updateTask(1, "", null, null, "LT33", noDate, "high");
-		System.out.println(list.size());
+		FloatingTask floatingTask = new FloatingTask("Go to hell", "LT33", noDate, "high", 3);
 		System.out.println("Old : "+list.get(0).toString());
 		System.out.println("New : "+list.get(1).toString());
+		assertEquals(floatingTask.toString(), list.get(1).toString());
 	}
 	
 //	@Test // deadline task ---> event task	
@@ -354,9 +356,12 @@ public class StorageTest {
 		newDate.set(2035, Calendar.JUNE, 30);
 		ArrayList<Task> list = new ArrayList<Task>();
 		list = storageController.updateTask(2, "", cal1, cal2, "Hell", noDate, "high");
-		System.out.println(list.size());
+		Calendar cal = (Calendar) cal1.clone();
+		cal.set(2020, Calendar.JUNE, 30);
+		EventTask eventTask = new EventTask("Do homework", cal, cal2, "Hell", noDate, "high", 2);
 		System.out.println("Old : "+list.get(0).toString());
 		System.out.println("New : "+list.get(1).toString());
+		assertEquals(eventTask.toString(), list.get(1).toString());
 	}
 	
 //	@Test // deadline task --> floating task
@@ -369,9 +374,10 @@ public class StorageTest {
 		newDate.set(2035, Calendar.JUNE, 30);
 		ArrayList<Task> list = new ArrayList<Task>();
 		list = storageController.updateTask(2, "", null, null, "Hell", noDate, "high");
-		System.out.println(list.size());
+		FloatingTask floatingTask = new FloatingTask("Do homework", "Hell", noDate, "high", 3);
 		System.out.println("Old : "+list.get(0).toString());
 		System.out.println("New : "+list.get(1).toString());
+		assertEquals(floatingTask.toString(), list.get(1).toString());
 	}
 	
 //	@Test // deadline task ---> deadline task
@@ -384,9 +390,10 @@ public class StorageTest {
 		newDate.set(2035, Calendar.JUNE, 30);
 		ArrayList<Task> list = new ArrayList<Task>();
 		list = storageController.updateTask(2, "", null, cal3, "Hell", noDate, "high");
-		System.out.println(list.size());
+		DeadlineTask deadlineTask = new DeadlineTask("Do homework", cal3, "Hell", noDate, "high",1);
 		System.out.println("Old : "+list.get(0).toString());
 		System.out.println("New : "+list.get(1).toString());
+		assertEquals(deadlineTask.toString(), list.get(1).toString());
 	}
 //	@Test
 	public void testGetPriority() {
@@ -429,11 +436,6 @@ public class StorageTest {
 		
 		deadlineTask.setPriority("high");
 		assertTrue(deadlineTask.getPriority()=="high");
-	}
-
-//	@Test
-	public void checkDirectoryPath() throws IOException {
-		System.out.println(storageController.setDirectory(""));
 	}
 		
 	@After
