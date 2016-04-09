@@ -82,7 +82,6 @@
             <PieChart fx:id="pieChart" layoutX="2.0" layoutY="247.0" prefHeight="259.0" prefWidth="326.0" />
          </children>
       </AnchorPane>
-		<!-- @@author A0125417L -->
 	</children>
 	<effect>
 		<DropShadow />
