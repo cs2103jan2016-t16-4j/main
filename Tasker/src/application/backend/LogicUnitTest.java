@@ -20,11 +20,11 @@ public class LogicUnitTest {
     public void addTest() throws NoDescriptionException{
         ArrayList<Task> tasksOnScreen = storage.getOpenList(); 
         Feedback fb = logic.executeCommand("play tennis from 5 pm to 6 pm tomorrow", tasksOnScreen);
-        assertEquals("play tennis", fb.getIndexToScroll().getTaskDescription());
+        assertEquals("play tennis", fb.getTaskToScrollTo().getTaskDescription());
         Feedback fb2 = logic.executeCommand("add football coaching from 2 pm tomorrow", tasksOnScreen);
-        assertEquals("football coaching", fb2.getIndexToScroll().getTaskDescription());
+        assertEquals("football coaching", fb2.getTaskToScrollTo().getTaskDescription());
         Feedback fb3 = logic.executeCommand("add football coaching from now to then at NUS -d from 2 pm tomorrow", tasksOnScreen);
-        assertEquals("football coaching from now to then at NUS", fb3.getIndexToScroll().getTaskDescription());   
+        assertEquals("football coaching from now to then at NUS", fb3.getTaskToScrollTo().getTaskDescription());   
     }
     
     

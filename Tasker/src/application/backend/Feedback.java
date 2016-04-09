@@ -66,7 +66,7 @@ public class Feedback {
         return flag;
     }
     
-    public Task getIndexToScroll(){
+    public Task getTaskToScrollTo(){
         return taskToScroll;
     }
     
