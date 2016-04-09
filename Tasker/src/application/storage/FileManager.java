@@ -22,19 +22,30 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import application.logger.LoggerHandler;
-
+/**
+ * FileManager is used to save/load tasks into/into text file.
+ * It also holds the current storage location path, and the data files (open and close lists) path.
+ */
 public class FileManager {
 
+	// Constants
 	private static final String FILE_CLOSED_NAME = "TaskerDataHistory.txt";
 	private static final String FILE_DATA_NAME = "TaskerData.txt";
 	private static final String FILE_DIRECTORY_NAME = "TaskerDirectory.txt";
 	private static final int NO_TASK = 0;
 	private static final String EMPTY = "";
 	private static final String EMPTY_PATH = "";
+	
+	// Path variables
 	private String closedFilePath = "";
 	private String dataFilePath = "";
+	
+	// Logger
 	private static Logger logger = LoggerHandler.getLog();
 
+	/**
+	 * Clears the given file.
+	 */
 	public void clear(String filePath) {
 		File file = new File(filePath);
 		if (file.exists()) {
@@ -49,14 +60,23 @@ public class FileManager {
 		}
 	}
 
+	/**
+	 * Return the path of close list.
+	 */
 	public String getClosedFilePath() {
 		return closedFilePath;
 	}
 
+	/**
+	 * Return the path of data list.
+	 */
 	public String getDataFilePath() {
 		return dataFilePath;
 	}
 
+	/**
+	 * Checks whether the directory file exist.
+	 */
 	public boolean isDirectoryExists() {
 		// check whether its user first time opening program
 		File directoryFile = new File(FILE_DIRECTORY_NAME);
@@ -64,7 +84,7 @@ public class FileManager {
 			PrintWriter fw;
 			try {
 				fw = new PrintWriter(new BufferedWriter(new FileWriter(FILE_DIRECTORY_NAME, true)));
-				fw.print(EMPTY); // indicate path name is not specified yet
+				fw.print(EMPTY); 
 				fw.close();
 				return false;
 			} catch (IOException e) {
@@ -76,6 +96,9 @@ public class FileManager {
 		}
 	}
 
+	/**
+	 * Loads the given file of tasks (close,open) into ArrayList<Task>.
+	 */
 	public ArrayList<Task> loadFile(String filePath) {
 		File file = new File(filePath);
 		BufferedReader in;
@@ -85,8 +108,8 @@ public class FileManager {
 			String readText;
 			try {
 				in = new BufferedReader(new FileReader(filePath));
-				// skip first line first for data file
 				if (filePath.equalsIgnoreCase(dataFilePath)) {
+					// skip first line first for data file
 					readText = in.readLine();
 					Gson gson = new GsonBuilder().registerTypeAdapter(Task.class, new TaskSerializer())
 							.registerTypeAdapter(EventTask.class, new TaskSerializer())
@@ -105,8 +128,10 @@ public class FileManager {
 		return list;
 	}
 
+	/**
+	 * Loads the directory file and initialise the close and data file path.
+	 */
 	public void loadDirectoryFile() {
-		// check whether user specified a custom directory to save datafile
 		BufferedReader in;
 		try {
 			in = new BufferedReader(new FileReader(FILE_DIRECTORY_NAME));
@@ -127,6 +152,9 @@ public class FileManager {
 		}
 	}
 
+	/**
+	 * Loads the total task index count.
+	 */
 	public int loadTaskIndex() {
 		File f = new File(dataFilePath);
 		if (f.exists()) {
@@ -147,6 +175,9 @@ public class FileManager {
 		}
 	}
 
+	/**
+	 * Saves all tasks into the file path specified.
+	 */
 	private void saveAllTasks(ArrayList<Task> list, String filePath) {
 		PrintWriter fwz;
 		logger.log(Level.INFO, "Saving tasks into file");
@@ -166,14 +197,16 @@ public class FileManager {
 		}
 	}
 
+	/**
+	 * Saves a given file.
+	 */
 	public void saveFile(ArrayList<Task> list, String filePath) {
-		// #check if file exists
 		File f = new File(filePath);
 		logger.log(Level.INFO, "Saving file");
 		if (!f.exists()) {
 			try {
 				f.createNewFile();
-				// #save all the tasks
+				// save all the tasks
 				saveAllTasks(list, filePath);
 			} catch (IOException e) {
 				logger.log(Level.SEVERE, "Error saving file");
@@ -181,6 +214,9 @@ public class FileManager {
 		}
 	}
 
+	/**
+	 * Saves the total task index count.
+	 */
 	public void saveTaskIndex(int index) {
 		// #clear datafile first
 		clear(dataFilePath);
@@ -195,6 +231,9 @@ public class FileManager {
 		}
 	}
 
+	/**
+	 * Set the directory path that the user specified.
+	 */
 	public boolean setDirectory(String path) {
 		if (path.equalsIgnoreCase(EMPTY_PATH)) {
 			logger.log(Level.INFO, "No directory choosen.");
