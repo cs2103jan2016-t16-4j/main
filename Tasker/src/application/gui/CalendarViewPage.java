@@ -14,6 +14,7 @@ import org.controlsfx.control.Notifications;
 
 import application.logic.Feedback;
 import application.logic.Logic;
+import application.storage.FloatingTask;
 import application.storage.Task;
 import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
@@ -195,8 +196,11 @@ public class CalendarViewPage extends AnchorPane {
 					public void updateItem(ArrayList<Task> item, boolean empty) {
 						super.updateItem(item, empty);
 						if (item != null) {
-							DateObject listViewItem = new DateObject(
-									FORMAT_DATE.format(item.get(0).getEndDate().getTime()), item, tasksOnScreen);
+							String date = null;
+							if (item.get(0).getEndDate() != null) {
+								date = FORMAT_DATE.format(item.get(0).getEndDate().getTime());
+							}
+							DateObject listViewItem = new DateObject(date, item, tasksOnScreen);
 							setGraphic(listViewItem.getHbox());
 						} else {
 							setGraphic(null);
@@ -223,21 +227,34 @@ public class CalendarViewPage extends AnchorPane {
 		ArrayList<ArrayList<Task>> dateArray = new ArrayList<ArrayList<Task>>();
 		ArrayList<Task> temporaryList = new ArrayList<Task>();
 		for (int i = 0; i < taskList.size(); i++) {
-			if (taskList.get(i).getEndDate() != null && tempoDate == null) {
-				tempoDate = FORMAT_DATE.format(taskList.get(i).getEndDate().getTime());
-			}
-
-		}
-		for (int i = 0; i < taskList.size(); i++) {
-			if (taskList.get(i).getEndDate() != null && tempoDate != null) {
+			if (!(taskList.get(i) instanceof FloatingTask) && tempoDate != null) {
 				if (tempoDate.equals(FORMAT_DATE.format(taskList.get(i).getEndDate().getTime()))) {
 					temporaryList.add(taskList.get(i));
 				} else {
 					dateArray.add(temporaryList);
 					temporaryList = new ArrayList<Task>();
 					temporaryList.add(taskList.get(i));
-					tempoDate = FORMAT_DATE.format(taskList.get(i).getEndDate().getTime());
 				}
+			}
+
+			if (!(taskList.get(i) instanceof FloatingTask) && tempoDate == null) {
+				temporaryList.add(taskList.get(i));
+			}
+
+			if ((taskList.get(i) instanceof FloatingTask) && tempoDate != null) {
+				dateArray.add(temporaryList);
+				temporaryList = new ArrayList<Task>();
+				temporaryList.add(taskList.get(i));
+			}
+
+			if ((taskList.get(i) instanceof FloatingTask) && tempoDate == null) {
+				temporaryList.add(taskList.get(i));
+			}
+
+			if (!(taskList.get(i) instanceof FloatingTask)) {
+				tempoDate = FORMAT_DATE.format(taskList.get(i).getEndDate().getTime());
+			} else {
+				tempoDate = null;
 			}
 		}
 		if (temporaryList.size() != 0) {

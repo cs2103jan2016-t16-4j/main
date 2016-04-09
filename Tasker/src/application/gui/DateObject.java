@@ -81,7 +81,11 @@ public class DateObject extends HBox {
 	}
 
 	private void setLabels(String date) {
-		this.dateLabel.setText(date.toUpperCase());
+		if (date != null) {
+			this.dateLabel.setText(date.toUpperCase());
+		} else {
+			this.dateLabel.setText("Undated");
+		}
 	}
 
 	public HBox getHbox() {

@@ -14,4 +14,3 @@ public class ResourceLoader {
 		return input;
 	}
 }
-//@@author A0125417L

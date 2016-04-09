@@ -87,4 +87,3 @@ public class CalendarItem extends AnchorPane {
 	}
 
 }
-// @@author A0125417L
