@@ -4,7 +4,8 @@ package application.gui;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-
+import java.util.logging.Logger;
+import application.logger.LoggerHandler;
 import application.storage.Task;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,10 +17,25 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
-public class DateObject extends HBox {
-	public static final String EMPTY = "";
-	public static final int offset = 1;
+/*
+ * Creates a date object item that holds all tasks on the same date
+ */
 
+public class DateObject extends HBox {
+	// Constants
+	private static final int NOT_OVERDUE_VARIABLE = 0;
+	private static final String DATE_OBJECT_FXML_URL = "DateObject.fxml";
+	private static final String UNDATED_TEXT = "Undated";
+	public static final String EMPTY = "";
+	public static final int OFFSET = 1;
+
+	// Error Messages
+	private static final String FXML_LOAD_FAIL_MSG = "Failed to load date object fxml file";
+
+	// Initialization
+	private static Logger logger = LoggerHandler.getLog();
+
+	// FXML Variables
 	@FXML
 	public Label dateLabel;
 	@FXML
@@ -28,50 +44,62 @@ public class DateObject extends HBox {
 	public HBox dateObject;
 
 	public DateObject(String date, ArrayList<Task> taskList, ArrayList<Task> wholeList) {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("DateObject.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(DATE_OBJECT_FXML_URL));
 		try {
 			fxmlLoader.setRoot(this);
 			fxmlLoader.setController(this);
 			fxmlLoader.load();
 			this.setLabels(date);
-			this.listViewItem.setCellFactory(new Callback<ListView<Task>, ListCell<Task>>() {
-				public ListCell<Task> call(ListView<Task> param) {
-					ListCell<Task> cell = new ListCell<Task>() {
-						@Override
-						public void updateItem(Task item, boolean empty) {
-							super.updateItem(item, empty);
-							if (item != null) {
-								Calendar cal = Calendar.getInstance();
-								int overdueCheck = 0;
-								if (item.getEndDate() != null) {
-									overdueCheck = item.getEndDate().getTime().compareTo(cal.getTime());
-								}
-								CalendarItem calItem = new CalendarItem(item.getTaskDescription(),
-										item.durationToString(), item.getLocation(), item.getPriority(), overdueCheck,
-										wholeList.indexOf(item) + offset);
-								setGraphic(calItem);
-							} else {
-								setGraphic(null);
-							}
-						}
-					};
-
-					return cell;
-				}
-			});
+			setCellFactoryDateItems(wholeList);
 			updateListView(taskList);
 		} catch (IOException exception) {
-			System.out.println("Could not load");
+			logger.severe(FXML_LOAD_FAIL_MSG);
 			throw new RuntimeException(exception);
 		}
 
 	}
 
+	// Setup cell factory
+	private void setCellFactoryDateItems(ArrayList<Task> wholeList) {
+		this.listViewItem.setCellFactory(new Callback<ListView<Task>, ListCell<Task>>() {
+			public ListCell<Task> call(ListView<Task> param) {
+				ListCell<Task> cell = new ListCell<Task>() {
+					@Override
+					public void updateItem(Task item, boolean empty) {
+						super.updateItem(item, empty);
+						if (item != null) {
+							int overdueCheck = checkIfOverdue(item);
+							CalendarItem calItem = new CalendarItem(item.getTaskDescription(), item.durationToString(),
+									item.getLocation(), item.getPriority(), overdueCheck,
+									wholeList.indexOf(item) + OFFSET);
+							setGraphic(calItem);
+						} else {
+							setGraphic(null);
+						}
+					}
+				};
+				return cell;
+			}
+		});
+	}
+
+	// Check if the items are overdue
+	private int checkIfOverdue(Task item) {
+		Calendar cal = Calendar.getInstance();
+		int overdueCheck = NOT_OVERDUE_VARIABLE;
+		if (item.getEndDate() != null) {
+			overdueCheck = item.getEndDate().getTime().compareTo(cal.getTime());
+		}
+		return overdueCheck;
+	}
+
+	// Update List View
 	private void updateListView(ArrayList<Task> taskList) {
 		ObservableList<Task> list = makeDisplayList(taskList);
 		this.listViewItem.setItems(list);
 	}
 
+	// Adds items to be displayed
 	private ObservableList<Task> makeDisplayList(ArrayList<Task> taskList) {
 		ObservableList<Task> displayList = FXCollections.observableArrayList();
 		for (Task task : taskList) {
@@ -80,17 +108,18 @@ public class DateObject extends HBox {
 		return displayList;
 	}
 
+	// Set date labels
 	private void setLabels(String date) {
 		if (date != null) {
 			this.dateLabel.setText(date.toUpperCase());
 		} else {
-			this.dateLabel.setText("Undated");
+			this.dateLabel.setText(UNDATED_TEXT);
 		}
 	}
 
+	// Returns HBox
 	public HBox getHbox() {
 		return this.dateObject;
 	}
 
 }
-// @@author A0125417L
