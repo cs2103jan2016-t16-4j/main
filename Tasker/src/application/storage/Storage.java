@@ -55,7 +55,7 @@ public class Storage implements Cloneable {
 	}	
 //@@author A0125522R	
 	/**
-	 * Delete a task in the open list with the specified task index and save.
+	 * Delete a task in the open list with the specified task index and save and return deleted task.
 	 */
 	public Task deleteTask(int index) {
 		Task deletedTask = null;
@@ -149,7 +149,7 @@ public class Storage implements Cloneable {
 */
 //@@author A0125522R	
 	/**
-	 * Sets the directory path to hold the data files (open and close list).
+	 * Sets the directory path to hold the data files (open and close list) and return the original directory path.
 	 */
 	public String setDirectory(String path) {
 		String originalDirectoryPath = fileManager.getDirectoryPath();
@@ -182,7 +182,7 @@ public class Storage implements Cloneable {
 	}
 	
 	/**
-	 * Update a task and save the file.
+	 * Update a task, save the file and return the original and updated task.
 	 */
 	public ArrayList<Task> updateTask(int index, String taskDescription, Calendar startDate,
 			Calendar endDate, String location, Calendar remindDate,
