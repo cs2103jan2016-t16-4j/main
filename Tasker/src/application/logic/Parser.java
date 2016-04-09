@@ -1,5 +1,9 @@
 package application.logic;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 //@@author A0132632R
 
 import java.util.ArrayList;
@@ -417,6 +421,7 @@ public class Parser {
 
 	private Calendar[] parseDates(String[] segments) {
 		String dateString = segments[DATE_POS];
+		dateString = fixDateFormatIfNeeded(dateString);
 		String dateTypeKeyword = dateString.split("\\s+")[0];
 		List<Date> tempDates1 = dateParser.parse(dateString);
 		List<Date> tempDates2 = dateParser.parse(dateString);
@@ -429,6 +434,20 @@ public class Parser {
 		return dates;
 	}
 
+	private String fixDateFormatIfNeeded(String dateString){
+	    String[] parts = dateString.split("\\s+");
+	    for (String part: parts){
+	        try{
+	            DateFormat originalFormat = new SimpleDateFormat("d/M/yyyy");
+	            DateFormat targetFormat = new SimpleDateFormat("MM/dd/yyyy");
+	            Date date = originalFormat.parse(part);
+	            part = targetFormat.format(date);
+	        } catch(ParseException e){
+	        }
+	    }
+	    return getString(parts,0, parts.length - 1);
+	}
+	
 	private void changeSegmentsIfNeeded(String[] segments, int size) {
 		if (size == 0) {
 			segments[DESC_POS] = segments[DESC_POS].trim() + " " + segments[DATE_POS];
