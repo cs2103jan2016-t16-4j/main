@@ -3,6 +3,7 @@
 package application.storage;
 
 import java.util.Calendar;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -11,11 +12,15 @@ import java.util.ArrayList;
  */
 public class Storage implements Cloneable {
 
+	// Constants
 	private static final int UPDATED_CLOSE_LIST = 0;
 	private static final int UPDATED_DATE_LIST = 1;
+	
+	// Managers
 	private DatabaseManager databaseManager;
 	private FileManager fileManager;
 	private TaskManager taskManager;
+	
 	public Storage() {
 		databaseManager = new DatabaseManager();
 		fileManager = new FileManager();
@@ -146,8 +151,10 @@ public class Storage implements Cloneable {
 	/**
 	 * Sets the directory path to hold the data files (open and close list).
 	 */
-	public void setDirectory(String path) {
+	public String setDirectory(String path) {
+		String originalDirectoryPath = fileManager.getDirectoryPath();
 		fileManager.setDirectory(path);
+		return originalDirectoryPath;
 	}
 	
 	/**
