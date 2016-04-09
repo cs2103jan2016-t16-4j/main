@@ -873,3 +873,59 @@ INFO: executing above parsed command
 07.04.2016 12:31:09 - INFO    - application.logic.Logic - executeCommand - executing above parsed command
 07.04.2016 12:31:09 - INFO    - application.logic.Logic - executeCommand - adding command to history
 07.04.2016 12:31:09 - INFO    - application.logic.Logic - executeCommand - saving tasks to file.
+ ----------------------  Start Sat Apr 09 19:23:25 SGT 2016 ---------------------- 
+09.04.2016 07:23:25 - INFO    - application.storage.FileManager - loadDirectoryFile - Loading directory file
+09.04.2016 07:23:26 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+09.04.2016 07:23:26 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+ ----------------------   End  Sat Apr 09 19:23:27 SGT 2016 ---------------------- 
+ ----------------------  Start Sat Apr 09 19:25:28 SGT 2016 ---------------------- 
+09.04.2016 07:25:28 - INFO    - application.storage.FileManager - loadDirectoryFile - Loading directory file
+09.04.2016 07:25:28 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+09.04.2016 07:25:28 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+ ----------------------   End  Sat Apr 09 19:25:30 SGT 2016 ---------------------- 
+ ----------------------  Start Sat Apr 09 19:26:37 SGT 2016 ---------------------- 
+09.04.2016 07:26:37 - INFO    - application.storage.FileManager - loadDirectoryFile - Loading directory file
+09.04.2016 07:26:37 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+09.04.2016 07:26:37 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+09.04.2016 07:27:16 - INFO    - application.logic.Parser - interpretCommand - Checking for error in user command: view
+09.04.2016 07:27:16 - INFO    - application.logic.Parser - interpretCommand - Splitting command into array of its words
+09.04.2016 07:27:16 - INFO    - application.logic.Parser - interpretCommand - Getting command key word
+09.04.2016 07:27:16 - INFO    - application.logic.Parser - interpretCommand - Converting to command object: view
+09.04.2016 07:27:16 - INFO    - application.logic.Parser - processViewInput - Making view command object
+09.04.2016 07:27:16 - INFO    - application.logic.Parser - convertToCommand - Returning command object
+09.04.2016 07:27:16 - INFO    - application.logic.Parser - interpretCommand - Returning command object
+09.04.2016 07:27:16 - INFO    - application.logic.Logic - executeCommand - executing above parsed command
+09.04.2016 07:27:16 - INFO    - application.logic.Logic - executeCommand - adding command to history
+09.04.2016 07:27:16 - INFO    - application.logic.Logic - executeCommand - saving tasks to file.
+09.04.2016 07:27:32 - INFO    - application.logic.Parser - interpretCommand - Checking for error in user command: play tennis
+09.04.2016 07:27:32 - INFO    - application.logic.Parser - interpretCommand - Splitting command into array of its words
+09.04.2016 07:27:32 - INFO    - application.logic.Parser - interpretCommand - Getting command key word
+09.04.2016 07:27:32 - INFO    - application.logic.Parser - interpretCommand - Converting to command object: play
+09.04.2016 07:27:32 - INFO    - application.logic.Parser - convertToCommand - Making add command object
+09.04.2016 07:27:32 - INFO    - application.logic.Parser - convertToCommand - Returning command object
+09.04.2016 07:27:32 - INFO    - application.logic.Parser - interpretCommand - Returning command object
+09.04.2016 07:27:32 - INFO    - application.logic.Logic - executeCommand - executing above parsed command
+09.04.2016 07:27:32 - INFO    - application.storage.TaskManager - add - Adding Floating Task
+09.04.2016 07:27:32 - INFO    - application.storage.FileManager - saveFile - Saving file
+09.04.2016 07:27:32 - INFO    - application.storage.FileManager - saveFile - Saving file
+09.04.2016 07:27:32 - INFO    - application.logic.Logic - executeCommand - adding command to history
+09.04.2016 07:27:32 - INFO    - application.logic.Logic - executeCommand - saving tasks to file.
+09.04.2016 07:27:37 - INFO    - application.logic.Parser - interpretCommand - Checking for error in user command: view
+09.04.2016 07:27:37 - INFO    - application.logic.Parser - interpretCommand - Splitting command into array of its words
+09.04.2016 07:27:37 - INFO    - application.logic.Parser - interpretCommand - Getting command key word
+09.04.2016 07:27:37 - INFO    - application.logic.Parser - interpretCommand - Converting to command object: view
+09.04.2016 07:27:37 - INFO    - application.logic.Parser - processViewInput - Making view command object
+09.04.2016 07:27:37 - INFO    - application.logic.Parser - convertToCommand - Returning command object
+09.04.2016 07:27:37 - INFO    - application.logic.Parser - interpretCommand - Returning command object
+09.04.2016 07:27:37 - INFO    - application.logic.Logic - executeCommand - executing above parsed command
+09.04.2016 07:27:37 - INFO    - application.logic.Logic - executeCommand - adding command to history
+09.04.2016 07:27:37 - INFO    - application.logic.Logic - executeCommand - saving tasks to file.
+09.04.2016 07:28:28 - INFO    - application.logic.Parser - interpretCommand - Checking for error in user command: exit
+09.04.2016 07:28:28 - INFO    - application.logic.Parser - interpretCommand - Splitting command into array of its words
+09.04.2016 07:28:28 - INFO    - application.logic.Parser - interpretCommand - Getting command key word
+09.04.2016 07:28:28 - INFO    - application.logic.Parser - interpretCommand - Converting to command object: exit
+09.04.2016 07:28:28 - INFO    - application.logic.Parser - convertToCommand - Making exit command object
+09.04.2016 07:28:28 - INFO    - application.logic.Parser - convertToCommand - Returning command object
+09.04.2016 07:28:28 - INFO    - application.logic.Parser - interpretCommand - Returning command object
+09.04.2016 07:28:28 - INFO    - application.logic.Logic - executeCommand - executing above parsed command
+ ----------------------   End  Sat Apr 09 19:28:28 SGT 2016 ---------------------- 
