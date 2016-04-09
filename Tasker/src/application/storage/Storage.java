@@ -22,7 +22,7 @@ public class Storage implements Cloneable {
 //@@author A0110422E
 	public Task addTaskInList(String taskDescription, Calendar startDate,
 			Calendar endDate, String location, Calendar remindDate,
-			String priority) throws IOException {
+			String priority) {
 	    
 		databaseManager.updateOpenList(taskManager.add(databaseManager.getOpenList(), taskDescription,
 				startDate, endDate, location, remindDate, priority,
@@ -31,7 +31,7 @@ public class Storage implements Cloneable {
 		return databaseManager.getOpenList().get((databaseManager.getOpenList().size())-1);
 	}
 	
-	public Task closeTask(int index) throws IOException {
+	public Task closeTask(int index) {
 		ArrayList<ArrayList<Task>> lists = taskManager.close(databaseManager.getCloseList(), databaseManager.getOpenList(), index);
 		databaseManager.updateCloseList(lists.get(UPDATED_CLOSE_LIST));
 		databaseManager.updateOpenList(lists.get(UPDATED_DATE_LIST));
@@ -39,7 +39,7 @@ public class Storage implements Cloneable {
 		return databaseManager.getCloseList().get((databaseManager.getCloseList().size())-1);
 	}
 	
-	public Task uncloseTask(int index) throws IOException {
+	public Task uncloseTask(int index) {
 		ArrayList<ArrayList<Task>> lists = taskManager.unclose(databaseManager.getCloseList(), databaseManager.getOpenList(), index);
 		databaseManager.updateCloseList(lists.get(UPDATED_CLOSE_LIST));
 		databaseManager.updateOpenList(lists.get(UPDATED_DATE_LIST));
@@ -47,7 +47,7 @@ public class Storage implements Cloneable {
 		return databaseManager.getOpenList().get((databaseManager.getOpenList().size())-1);
 	}	
 //@@author A0125522R	
-	public Task deleteTask(int index) throws IOException {
+	public Task deleteTask(int index) {
 		Task deletedTask = null;
 		for (int i = 0; i<databaseManager.getOpenList().size(); i++) {
 			if (databaseManager.getOpenList().get(i).getTaskIndex()==index) {
@@ -60,7 +60,7 @@ public class Storage implements Cloneable {
 		return deletedTask;
 	}
 	
-	public boolean directoryExists() throws IOException {
+	public boolean directoryExists() {
 		return fileManager.isDirectoryExists();
 	}
 	
@@ -74,7 +74,7 @@ public class Storage implements Cloneable {
 		return databaseManager.getCloseList();
 	}
 	
-	public boolean initialise() throws IOException {
+	public boolean initialise() {
 		fileManager.loadDirectoryFile();
 		databaseManager.updateCloseList(fileManager.loadFile(fileManager.getClosedFilePath()));
 		databaseManager.updateOpenList(fileManager.loadFile(fileManager.getDataFilePath()));
@@ -82,7 +82,7 @@ public class Storage implements Cloneable {
 		return true;
 	}
 	
-	private void saveFile() throws IOException {
+	private void saveFile() {
 		fileManager.clear(fileManager.getClosedFilePath());
 		fileManager.saveTaskIndex(databaseManager.getTaskIndex());
 		fileManager.saveFile(databaseManager.getCloseList(), fileManager.getClosedFilePath());
@@ -111,7 +111,7 @@ public class Storage implements Cloneable {
 	}
 */
 //@@author A0125522R	
-	public void setDirectory(String path) throws IOException {
+	public void setDirectory(String path) {
 		fileManager.setDirectory(path);
 	}
 	
@@ -132,7 +132,7 @@ public class Storage implements Cloneable {
 	
 	public ArrayList<Task> updateTask(int index, String taskDescription, Calendar startDate,
 			Calendar endDate, String location, Calendar remindDate,
-			String priority) throws IOException, CloneNotSupportedException {
+			String priority) {
 		ArrayList<Task> list = new ArrayList<Task>();
 		
 		// add original/old task 
@@ -155,14 +155,18 @@ public class Storage implements Cloneable {
 		return list;
 	}
 	
-	private Task cloneObject (Task obj) throws CloneNotSupportedException {
-		if (obj instanceof FloatingTask) {
-			return (FloatingTask) obj.clone();
-		}
-		if (obj instanceof DeadlineTask) {
-			return (DeadlineTask) obj.clone();
-		} else {
-			return (EventTask) obj.clone();
+	private Task cloneObject (Task obj) {
+		try {
+			if (obj instanceof FloatingTask) {
+				return (FloatingTask) obj.clone();
+			}
+			if (obj instanceof DeadlineTask) {
+				return (DeadlineTask) obj.clone();
+			} else {
+				return (EventTask) obj.clone();
+			}
+		} catch (CloneNotSupportedException e) {
+			return null;
 		}
 	}
 	

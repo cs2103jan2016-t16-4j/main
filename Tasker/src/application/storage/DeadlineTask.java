@@ -6,7 +6,7 @@ import java.util.Calendar;
 
 public class DeadlineTask extends Task implements Cloneable {
 	private Calendar endDate;
-	
+
 	public DeadlineTask() {
 		setTaskDescription(EMPTY_STRING);
 		endDate = Calendar.getInstance();
@@ -15,10 +15,9 @@ public class DeadlineTask extends Task implements Cloneable {
 		setPriority(EMPTY_STRING);
 		setTaskIndex(EMPTY_TASK);
 	}
-	
+
 	public DeadlineTask(String taskDescription, Calendar endDate, String location, Calendar remindDate, String priority,
 			int taskIndex) {
-		
 		setTaskDescription(taskDescription);
 		this.endDate = endDate;
 		setEndTime(endDate);
@@ -27,7 +26,7 @@ public class DeadlineTask extends Task implements Cloneable {
 		setPriority(priority);
 		setTaskIndex(taskIndex);
 	}
-	
+
 	public void setEndDate(Calendar endDate) {
 		this.endDate.set(endDate.get(Calendar.YEAR), endDate.get(Calendar.MONTH), endDate.get(Calendar.DATE));
 	}
@@ -38,15 +37,15 @@ public class DeadlineTask extends Task implements Cloneable {
 		this.endDate.set(Calendar.SECOND, endTime.get(Calendar.SECOND));
 		this.endDate.set(Calendar.MILLISECOND, endTime.get(Calendar.MILLISECOND));
 	}
-	
+
 	public Calendar getStartDate() {
 		return NO_DATE;
 	}
-	
+
 	public Calendar getStartTime() {
 		return NO_TIME;
 	}
-	
+
 	public Calendar getEndDate() {
 		return endDate;
 	}
@@ -54,7 +53,7 @@ public class DeadlineTask extends Task implements Cloneable {
 	public Calendar getEndTime() {
 		return endDate;
 	}
-	
+
 	public String durationToString() {
 		String durationMessage = EMPTY_STRING;
 		String endingDate = dateToString(endDate);
@@ -65,30 +64,28 @@ public class DeadlineTask extends Task implements Cloneable {
 				durationMessage += KEYWORD_SPACE + endingTime;
 			}
 		}
-		return durationMessage;		
+		return durationMessage;
 	}
-	
+
 	public String toString() {
 		String taskDetails = KEYWORD_QUOTE;
 		taskDetails += getTaskDescription();
 		taskDetails += KEYWORD_SPACE + durationToString();
-		
 		if (!getLocation().equalsIgnoreCase(EMPTY_STRING)) {
 			taskDetails += KEYWORD_AT + getLocation();
 		}
-		
 		taskDetails += KEYWORD_QUOTE;
-		
-		return taskDetails;	
+		return taskDetails;
 	}
-	
-    protected Object clone() throws CloneNotSupportedException {
-    	DeadlineTask newTask = (DeadlineTask) super.clone();
-    	newTask.endDate = (Calendar) endDate.clone();
-    	newTask.remindDate = (Calendar) remindDate.clone();
-    	return newTask;
-    }
-       //@@author A0110422E	
+
+	protected Object clone() throws CloneNotSupportedException {
+		DeadlineTask newTask = (DeadlineTask) super.clone();
+		newTask.endDate = (Calendar) endDate.clone();
+		newTask.remindDate = (Calendar) remindDate.clone();
+		return newTask;
+	}
+
+	// @@author A0110422E
 	public String getPriority() {
 		Calendar currentTime = Calendar.getInstance();
 		Calendar endTime = endDate;
@@ -102,15 +99,15 @@ public class DeadlineTask extends Task implements Cloneable {
 			if (endTime.before(currentTime)) {
 				tempPriority = "high";
 			} else {
-				currentTime.roll(Calendar.HOUR, -2);		
+				currentTime.roll(Calendar.HOUR, -2);
 				// End time is between two hours and one day
 				currentTime.roll(Calendar.DATE, 1);
 				if (endTime.before(currentTime)) {
 					tempPriority = "medium";
 					currentTime.roll(Calendar.DATE, -1);
-				}	
-			}		
-			currentTime.roll(Calendar.DATE, -1);	
+				}
+			}
+			currentTime.roll(Calendar.DATE, -1);
 		} else {
 			tempPriority = priority;
 		}
