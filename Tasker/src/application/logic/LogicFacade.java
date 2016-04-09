@@ -20,7 +20,23 @@ public class LogicFacade {
     public void setDirectory(String filePath) throws IOException{
         logic.setDirectory(filePath);
     }
+
+    public ArrayList<Task> getClashes (Task task){
+        return logic.getClashes(task);
+    }
     
+    public int getCompletedTaskCount() {
+        return logic.getCompletedTaskCount();
+    }
+
+    public int getRemainingTaskCount() {
+        return logic.getRemainingTaskCount();
+    }
+
+    public int getOverdueTaskCount() {
+        return logic.getOverdueTaskCount();
+    }
+
     public Feedback executeCommand(String command,  ArrayList<Task> tasksOnScreen)throws NoDescriptionException {
         return logic.executeCommand(command, tasksOnScreen);
     }
