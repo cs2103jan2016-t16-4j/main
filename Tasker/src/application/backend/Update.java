@@ -24,6 +24,7 @@ public class Update implements UndoableCommand{
     private static final String MESSAGE_UNDO_FEEDBACK = 
             "Reverted: %1$s";  
     private static final String MESSAGE_UNDO_FAILURE = "We encountered an error while undoing.";
+    private static final String MESSAGE_INDEX_ERROR = "Please enter a valid task number.";
             
     
     Task origTask;
@@ -70,6 +71,8 @@ public class Update implements UndoableCommand{
             return getFeedbackCal(MESSAGE_UPDATE_ERROR, storageConnector.getOpenList(), null);
         } catch (CloneNotSupportedException e){
             return getFeedbackCal(MESSAGE_UPDATE_ERROR, storageConnector.getOpenList(), null);
+        } catch (IndexOutOfBoundsException e){
+            return getFeedbackCal(MESSAGE_INDEX_ERROR, storageConnector.getOpenList(), null);
         }
     }
     

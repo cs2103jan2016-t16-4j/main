@@ -1382,3 +1382,549 @@ INFO: executing above parsed command
 09.04.2016 10:53:02 - INFO    - application.backend.Logic - executeCommand - adding command to history
 09.04.2016 10:53:02 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
  ----------------------   End  Sat Apr 09 22:53:02 SGT 2016 ---------------------- 
+ ----------------------  Start Sun Apr 10 01:01:50 SGT 2016 ---------------------- 
+10.04.2016 01:01:50 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: play tennis from 5 pm to 6 pm tomorrow
+10.04.2016 01:01:50 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:01:50 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:01:50 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: play
+10.04.2016 01:01:50 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 01:01:51 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:01:51 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:01:51 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:01:51 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:01:51 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:01:51 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: add football coaching from 2 pm tomorrow
+10.04.2016 01:01:51 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:01:51 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:01:51 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: add
+10.04.2016 01:01:51 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 01:01:51 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:01:51 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:01:51 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:01:51 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:01:51 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:01:51 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: add football coaching from now to then at NUS -d from 2 pm tomorrow
+10.04.2016 01:01:51 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:01:51 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:01:51 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: add
+10.04.2016 01:01:51 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 01:01:51 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:01:51 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:01:51 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:01:51 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:01:51 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:01:51 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: delete 2
+10.04.2016 01:01:51 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:01:51 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:01:51 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: delete
+10.04.2016 01:01:51 - INFO    - application.backend.Parser - convertToCommand - Making delete command object
+10.04.2016 01:01:51 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:01:51 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:01:51 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:01:51 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:01:51 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+ ----------------------   End  Sun Apr 10 01:01:51 SGT 2016 ---------------------- 
+ ----------------------  Start Sun Apr 10 01:02:15 SGT 2016 ---------------------- 
+10.04.2016 01:02:15 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: play tennis from 5 pm to 6 pm tomorrow
+10.04.2016 01:02:15 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:02:15 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:02:15 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: play
+10.04.2016 01:02:15 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 01:02:16 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:02:16 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:02:16 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:02:16 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:02:16 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:02:16 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: add football coaching from 2 pm tomorrow
+10.04.2016 01:02:16 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:02:16 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:02:16 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: add
+10.04.2016 01:02:16 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 01:02:16 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:02:16 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:02:16 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:02:16 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:02:16 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:02:16 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: add football coaching from now to then at NUS -d from 2 pm tomorrow
+10.04.2016 01:02:16 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:02:16 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:02:16 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: add
+10.04.2016 01:02:16 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 01:02:16 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:02:16 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:02:16 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:02:16 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:02:16 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:02:16 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: delete 2
+10.04.2016 01:02:16 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:02:16 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:02:16 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: delete
+10.04.2016 01:02:16 - INFO    - application.backend.Parser - convertToCommand - Making delete command object
+10.04.2016 01:02:16 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:02:16 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:02:16 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:02:16 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:02:16 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+ ----------------------   End  Sun Apr 10 01:02:16 SGT 2016 ---------------------- 
+ ----------------------  Start Sun Apr 10 01:06:10 SGT 2016 ---------------------- 
+10.04.2016 01:06:10 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: play tennis from 5 pm to 6 pm tomorrow
+10.04.2016 01:06:10 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:06:10 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:06:10 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: play
+10.04.2016 01:06:10 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 01:06:11 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:06:11 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:06:11 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:06:11 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:06:11 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:06:11 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: add football coaching from 2 pm tomorrow
+10.04.2016 01:06:11 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:06:11 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:06:11 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: add
+10.04.2016 01:06:11 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 01:06:11 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:06:11 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:06:11 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:06:11 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:06:11 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:06:11 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: add football coaching from now to then at NUS -d from 2 pm tomorrow
+10.04.2016 01:06:11 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:06:11 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:06:11 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: add
+10.04.2016 01:06:11 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 01:06:11 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:06:11 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:06:11 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:06:11 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:06:11 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:06:11 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: delete 2
+10.04.2016 01:06:11 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:06:11 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:06:11 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: delete
+10.04.2016 01:06:11 - INFO    - application.backend.Parser - convertToCommand - Making delete command object
+10.04.2016 01:06:11 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:06:11 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:06:11 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:06:11 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:06:11 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+ ----------------------   End  Sun Apr 10 01:06:11 SGT 2016 ---------------------- 
+ ----------------------  Start Sun Apr 10 01:07:49 SGT 2016 ---------------------- 
+10.04.2016 01:07:49 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: play tennis from 5 pm to 6 pm tomorrow
+10.04.2016 01:07:49 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:07:49 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:07:49 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: play
+10.04.2016 01:07:49 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 01:07:49 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:07:49 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:07:49 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:07:49 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:07:49 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:07:49 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: add football coaching from 2 pm tomorrow
+10.04.2016 01:07:49 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:07:49 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:07:49 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: add
+10.04.2016 01:07:49 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 01:07:50 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:07:50 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:07:50 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:07:50 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:07:50 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:07:50 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: add football coaching from now to then at NUS -d from 2 pm tomorrow
+10.04.2016 01:07:50 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:07:50 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:07:50 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: add
+10.04.2016 01:07:50 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 01:07:50 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:07:50 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:07:50 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:07:50 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:07:50 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:07:50 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: delete 2
+10.04.2016 01:07:50 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:07:50 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:07:50 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: delete
+10.04.2016 01:07:50 - INFO    - application.backend.Parser - convertToCommand - Making delete command object
+10.04.2016 01:07:50 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:07:50 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:07:50 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:07:50 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:07:50 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:07:50 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: delete 11
+10.04.2016 01:07:50 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:07:50 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:07:50 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: delete
+10.04.2016 01:07:50 - INFO    - application.backend.Parser - convertToCommand - Making delete command object
+10.04.2016 01:07:50 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:07:50 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:07:50 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:07:50 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:07:50 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+ ----------------------   End  Sun Apr 10 01:07:50 SGT 2016 ---------------------- 
+ ----------------------  Start Sun Apr 10 01:10:42 SGT 2016 ---------------------- 
+10.04.2016 01:10:42 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: play tennis from 5 pm to 6 pm tomorrow
+10.04.2016 01:10:42 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:10:42 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:10:42 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: play
+10.04.2016 01:10:42 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:10:43 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:10:43 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:10:43 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: add football coaching from 2 pm tomorrow
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: add
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:10:43 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:10:43 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:10:43 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: add football coaching from now to then at NUS -d from 2 pm tomorrow
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: add
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:10:43 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:10:43 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:10:43 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: delete 1
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: delete
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - convertToCommand - Making delete command object
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:10:43 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:10:43 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:10:43 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: delete 0
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: delete
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - convertToCommand - Making delete command object
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:10:43 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:10:43 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:10:43 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: delete 5
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: delete
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - convertToCommand - Making delete command object
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:10:43 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:10:43 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:10:43 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: delete 10
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: delete
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - convertToCommand - Making delete command object
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:10:43 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:10:43 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:10:43 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: delete 11
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: delete
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - convertToCommand - Making delete command object
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:10:43 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:10:43 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:10:43 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:10:43 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+ ----------------------   End  Sun Apr 10 01:10:43 SGT 2016 ---------------------- 
+ ----------------------  Start Sun Apr 10 01:33:07 SGT 2016 ---------------------- 
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: play tennis from 5 pm to 6 pm tomorrow
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: play
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:33:07 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:33:07 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:33:07 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: add football coaching from 2 pm tomorrow
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: add
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:33:07 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:33:07 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:33:07 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: add football coaching from now to then at NUS -d from 2 pm tomorrow
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: add
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:33:07 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:33:07 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:33:07 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: delete 1
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: delete
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - convertToCommand - Making delete command object
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:33:07 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:33:07 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:33:07 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: delete 0
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: delete
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - convertToCommand - Making delete command object
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:33:07 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:33:07 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:33:08 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:33:08 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:33:08 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: delete 5
+10.04.2016 01:33:08 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:33:08 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:33:08 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: delete
+10.04.2016 01:33:08 - INFO    - application.backend.Parser - convertToCommand - Making delete command object
+10.04.2016 01:33:08 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:33:08 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:33:08 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:33:08 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:33:08 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:33:08 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: delete 10
+10.04.2016 01:33:08 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:33:08 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:33:08 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: delete
+10.04.2016 01:33:08 - INFO    - application.backend.Parser - convertToCommand - Making delete command object
+10.04.2016 01:33:08 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:33:08 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:33:08 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:33:08 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:33:08 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+ ----------------------   End  Sun Apr 10 01:33:08 SGT 2016 ---------------------- 
+ ----------------------  Start Sun Apr 10 01:34:41 SGT 2016 ---------------------- 
+10.04.2016 01:34:41 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: play tennis from 5 pm to 6 pm tomorrow
+10.04.2016 01:34:41 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:34:41 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:34:41 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: play
+10.04.2016 01:34:41 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:34:42 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:34:42 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:34:42 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: add football coaching from 2 pm tomorrow
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: add
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:34:42 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:34:42 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:34:42 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: add football coaching from now to then at NUS -d from 2 pm tomorrow
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: add
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:34:42 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:34:42 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:34:42 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: delete 1
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: delete
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - convertToCommand - Making delete command object
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:34:42 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:34:42 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:34:42 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: delete 0
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: delete
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - convertToCommand - Making delete command object
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:34:42 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:34:42 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:34:42 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: delete 5
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: delete
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - convertToCommand - Making delete command object
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:34:42 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:34:42 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:34:42 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: delete 10
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: delete
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - convertToCommand - Making delete command object
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:34:42 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:34:42 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:34:42 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: delete 11
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: delete
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - convertToCommand - Making delete command object
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:34:42 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:34:42 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:34:42 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:34:42 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+ ----------------------   End  Sun Apr 10 01:34:42 SGT 2016 ---------------------- 
+ ----------------------  Start Sun Apr 10 01:34:58 SGT 2016 ---------------------- 
+10.04.2016 01:34:58 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: play tennis from 5 pm to 6 pm tomorrow
+10.04.2016 01:34:58 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:34:58 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:34:58 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: play
+10.04.2016 01:34:58 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: add football coaching from 2 pm tomorrow
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: add
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: add football coaching from now to then at NUS -d from 2 pm tomorrow
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: add
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: update 0 hello
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: update
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - convertToCommand - Making update command object
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: update 1 play
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: update
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - convertToCommand - Making update command object
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: update 4 tennis
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: update
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - convertToCommand - Making update command object
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: update 10 football
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: update
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - convertToCommand - Making update command object
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: update 11 football
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: update
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - convertToCommand - Making update command object
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: delete 1
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: delete
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - convertToCommand - Making delete command object
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: delete 0
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: delete
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - convertToCommand - Making delete command object
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: delete 5
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: delete
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - convertToCommand - Making delete command object
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: delete 10
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: delete
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - convertToCommand - Making delete command object
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: delete 11
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: delete
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - convertToCommand - Making delete command object
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 01:34:59 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 01:34:59 - INFO    - application.backend.Logic - executeCommand - saving tasks to file.
+ ----------------------   End  Sun Apr 10 01:34:59 SGT 2016 ---------------------- 
