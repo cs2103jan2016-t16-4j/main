@@ -2,6 +2,7 @@
 
 package application.storage;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -10,13 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import application.logger.LoggerHandler;
-/**
- * TaskManager is used when task manipulation functions are needed.
- * It runs and execute all the given task functions, i.e add, close, delete, search, update, etc.
- */
+
 public class TaskManager {
-	
-	// Constants
 	private static final int EMPTY_DATE = 1;
     private static final int EMPTY_TIME_PARAMETER_1 = 1;
     private static final int EMPTY_TIME_PARAMETER_2 = 0;
@@ -27,10 +23,8 @@ public class TaskManager {
     private static final String DEADLINE_TASK = "DEADLINE_TASK";
     private static final String EVENT_TASK = "EVENT_TASK";
     private static final int DATE_IS_BY_AND_ON = 0;
-    
-    // Logger
 	private static Logger logger = LoggerHandler.getLog();
-
+//	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd-MM-yyyy");
 //@@author A0110422E	
 	public ArrayList<Task> add(ArrayList<Task> openList,
 			String taskDescription, Calendar startDate, Calendar endDate,
@@ -100,11 +94,7 @@ public class TaskManager {
 		lists.add(openList);
 		return lists;
 	}	
-
-//@@author A0125522R
-	/**
-	 * Find and delete the task in the open list.
-	 */
+//@@author A0125522R	
 	public ArrayList<Task> delete(ArrayList<Task> openList, int taskIndex) {
 //		for (int i = 0; i < openList.size(); i++) {
 //			if (openList.get(i).getTaskIndex() == taskIndex) {
@@ -123,9 +113,6 @@ public class TaskManager {
 		return openList;
 	}
 	
-	/**
-	 * Search "name" in the open list and and return search results.
-	 */
 	public ArrayList<Task> searchName(ArrayList<Task> openList, String searchTask) {
 		String[] splitArray = searchTask.split("\\s+");
 		ArrayList<Task> searchList = new ArrayList<Task>();
@@ -142,9 +129,6 @@ public class TaskManager {
 		return searchList;
 	}
 	
-	/**
-	 * Search the tasks by a specified date in the open list and return search results.
-	 */
 	public ArrayList<Task> searchDateBy(ArrayList<Task> openList, Calendar searchDate) {
 		ArrayList<Task> searchList = new ArrayList<Task>();
 		logger.log(Level.INFO, "Searching tasks by date");
@@ -174,9 +158,6 @@ public class TaskManager {
 		return searchList;
 	}
 	
-	/**
-	 * Search the tasks on a specified date in the open list and return search results.
-	 */
 	public ArrayList<Task> searchDateOn(ArrayList<Task> openList, Calendar searchDate) {
 		ArrayList<Task> searchList = new ArrayList<Task>();
 		logger.log(Level.INFO, "Searching tasks on date");
@@ -233,9 +214,6 @@ public class TaskManager {
 		return searchList;
 	}
 
-	/**
-	 * Checks two given date if its same.
-	 */
 	private boolean isDatesSame(Calendar searchDate, Calendar obj) {
 		return obj.get(Calendar.YEAR) == searchDate.get(Calendar.YEAR)
 				&& obj.get(Calendar.MONTH) == searchDate.get(Calendar.MONTH)
@@ -249,39 +227,27 @@ public class TaskManager {
 			if (obj.getPriority().toLowerCase()
 					.contains(searchPriority.toLowerCase())) {
 				searchList.add(obj);
+//				System.out.println("Found a entry..");			
 				}
 			}
 		return searchList;
 	}	
-
-	//@@author A0125522R	
-	/**
-	 * Sort the open list in ascending date.
-	 */
+//@@author A0125522R	
 	public ArrayList<Task> sortDate(ArrayList<Task> openList) {
 		Collections.sort(openList, new ComparatorDate());
 		return openList;
 	}
 	
-	/**
-	 * Sort the open list in ascending task name.
-	 */
 	public ArrayList<Task> sortName(ArrayList<Task> openList) {
 		Collections.sort(openList, (o1, o2) -> o1.getTaskDescription().compareTo(o2.getTaskDescription()));
 		return openList;
 	}
 	
-	/**
-	 * Sort the open list in priority (high to low).
-	 */
 	public ArrayList<Task> sortPriority(ArrayList<Task> openList) {
 		Collections.sort(openList, new ComparatorPriority());
 		return openList;
 	}
 	
-	/**
-	 * Update a specified task with specified variables.
-	 */
 	public ArrayList<Task> update(ArrayList<Task> openList,
 			String taskDescription, Calendar startDate, Calendar endDate,
 			String location, Calendar remindDate, String priority, int taskIndex) {
@@ -358,7 +324,29 @@ public class TaskManager {
 //		 return updated list
 			
 		return openList;
-	}	
+	}
+
+	private boolean toFloatingTask(Calendar startDate, Calendar endDate) {
+		return startDate==null && endDate==null;
+	}
+
+	private boolean toDeadlineTask(Calendar startDate, Calendar endDate) {
+		return startDate==null && endDate!=null;
+	}
+
+	private boolean toEventTask(Calendar startDate, Calendar endDate) {
+		return startDate!=null && endDate!=null && !isDateEmpty(startDate) && !isDateEmpty(endDate);
+	}
+
+	private int findIndexOfTaskInList(ArrayList<Task> openList, int taskIndex) {
+		for (int i = 0; i < openList.size(); i++) {
+			if (openList.get(i).getTaskIndex() == taskIndex) {
+				return i;
+			}
+		}
+		return INVALID_TASK;
+	}
+		
 //	private EventTask updateToEventTask(Task originalTask,
 //			String taskDescription, Calendar startDate, Calendar endDate,
 //			String location, Calendar remindDate, String priority, int taskIndex) {
@@ -475,9 +463,6 @@ public class TaskManager {
 //		return deadlineTask;
 //	}
 	
-	/**
-	 * Updates and convert a task to the task type specified.
-	 */
 	private Task updateToTaskType(String taskType, Task originalTask,
 			String taskDescription, Calendar startDate, Calendar endDate, String location, Calendar remindDate,
 			String priority, int taskIndex) {
@@ -528,9 +513,6 @@ public class TaskManager {
 		}
 	}
 	
-	/**
-	 * Updates a task with the specified variables.
-	 */
 	private Task updateTaskParameters(Task obj, String taskDescription, Calendar startDate, Calendar endDate,
 			String location, Calendar remindDate, String priority, int taskIndex) {
 		// update task
@@ -595,56 +577,14 @@ public class TaskManager {
 		return obj;
 	}
 
-
-
-	/**
-	 * Find the index of the task in the open list.
-	 */
-	private int findIndexOfTaskInList(ArrayList<Task> openList, int taskIndex) {
-		for (int i = 0; i < openList.size(); i++) {
-			if (openList.get(i).getTaskIndex() == taskIndex) {
-				return i;
-			}
-		}
-		return INVALID_TASK;
-	}
-	
-	/**
-	 * Checks whether convert task to FloatingTask.
-	 */
-	private boolean toFloatingTask(Calendar startDate, Calendar endDate) {
-		return startDate==null && endDate==null;
-	}
-
-	/**
-	 * Checks whether convert task to DeadlineTask.
-	 */
-	private boolean toDeadlineTask(Calendar startDate, Calendar endDate) {
-		return startDate==null && endDate!=null;
-	}
-
-	/**
-	 * Checks whether convert task to EventTask.
-	 */
-	private boolean toEventTask(Calendar startDate, Calendar endDate) {
-		return startDate!=null && endDate!=null && !isDateEmpty(startDate) && !isDateEmpty(endDate);
-	}
-	
-
-	/**
-	 * Checks whether a date is "empty".
-	 */
 	private boolean isDateEmpty(Calendar date) {
 		return date.get(Calendar.YEAR)==EMPTY_DATE;
 	}
 
-	/**
-	 * Checks whether a time is "empty".
-	 */
 	private boolean isTimeEmpty(Calendar date) {
 		return date.get(Calendar.MILLISECOND)==EMPTY_TIME_PARAMETER_1 && date.get(Calendar.HOUR_OF_DAY)==EMPTY_TIME_PARAMETER_2 && date.get(Calendar.MINUTE)==EMPTY_TIME_PARAMETER_2 && date.get(Calendar.SECOND)==EMPTY_TIME_PARAMETER_2;
 	}
-	
+
 //@@author A0110422E
 /*	
 	public ArrayList<Task> searchCategoryType(ArrayList<Task> openList, String categoryType) {
@@ -664,12 +604,7 @@ public class TaskManager {
 //@@author A0125522R
 }
 
-/**
- * Custom comparator for sorting tasks based on priority.
- */
 class ComparatorPriority implements Comparator<Task> {
-	
-	// Constants
     private static final int NO_PRIORITY_VALUE = 4;
     private static final int LOW_PRIORITY_VALUE = 3;
     private static final int MEDIUM_PRIORITY_VALUE = 2;
@@ -680,7 +615,6 @@ class ComparatorPriority implements Comparator<Task> {
     private static final String LOW_PRIORITY = "low";
     private static final int TASK_1_PRIORITY = 0;
     private static final int TASK_2_PRIORITY = 0;
-    
     @Override
     public int compare(Task o1, Task o2) {
     	Task[] tasks = {o1,o2};
@@ -717,17 +651,11 @@ class ComparatorPriority implements Comparator<Task> {
     }
 }
 
-/**
- * Custom comparator for sorting tasks based on date.
- */
 class ComparatorDate implements Comparator<Task> {
-	
-	// Constants
 	private static final int LEFT_TASK_DATE_IS_BEFORE = -1;
 	private static final int LEFT_TASK_DATE_IS_AFTER = 1;
 	private static final int INVALID = 0;
-   
-	@Override
+    @Override
     public int compare(Task o1, Task o2) {
     	if (o1 instanceof DeadlineTask && o2 instanceof DeadlineTask) {
     		return ((DeadlineTask) o1).getEndTime().compareTo(((DeadlineTask) o2).getEndTime());

@@ -3,18 +3,11 @@
 package application.storage;
 
 import java.util.Calendar;
-/**
- * EventTask is a subclass of Task class. 
- * This class is used when the user creates a task with a event duration. 
- * It has an two extra parameter, startDate and endDate, to denote the task duration.
- */
+
 public class EventTask extends Task implements Cloneable {
 	private Calendar startDate;
 	private Calendar endDate;
 
-	/**
-	 * Creates a EventTask object with "empty" variables initalised.
-	 */
 	public EventTask() {
 		setTaskDescription(EMPTY_STRING);
 		startDate = Calendar.getInstance();
@@ -24,10 +17,7 @@ public class EventTask extends Task implements Cloneable {
 		setPriority(EMPTY_STRING);
 		setTaskIndex(EMPTY_TASK);
 	}
-	
-	/**
-	 * Creates a EventTask object with specified variables.
-	 */
+
 	public EventTask(String taskDescription, Calendar startDate, Calendar endDate, String location, Calendar remindDate,
 			String priority, int taskIndex) {
 		setTaskDescription(taskDescription);
@@ -39,16 +29,10 @@ public class EventTask extends Task implements Cloneable {
 		setTaskIndex(taskIndex);
 	}
 
-	/**
-	 * Set the start date (year, month, date).
-	 */
 	public void setStartDate(Calendar startDate) {
 		this.startDate.set(startDate.get(Calendar.YEAR), startDate.get(Calendar.MONTH), startDate.get(Calendar.DATE));
 	}
-	
-	/**
-	 * Set the start time (hour, minute, seconds, milliseconds).
-	 */
+
 	public void setStartTime(Calendar startTime) {
 		this.startDate.set(Calendar.HOUR_OF_DAY, startTime.get(Calendar.HOUR_OF_DAY));
 		this.startDate.set(Calendar.MINUTE, startTime.get(Calendar.MINUTE));
@@ -56,16 +40,10 @@ public class EventTask extends Task implements Cloneable {
 		this.startDate.set(Calendar.MILLISECOND, startTime.get(Calendar.MILLISECOND));
 	}
 
-	/**
-	 * Set the end date (year, month, date).
-	 */
 	public void setEndDate(Calendar endDate) {
 		this.endDate.set(endDate.get(Calendar.YEAR), endDate.get(Calendar.MONTH), endDate.get(Calendar.DATE));
 	}
 
-	/**
-	 * Set the end time (hour, minute, seconds, milliseconds).
-	 */
 	public void setEndTime(Calendar endTime) {
 		this.endDate.set(Calendar.HOUR_OF_DAY, endTime.get(Calendar.HOUR_OF_DAY));
 		this.endDate.set(Calendar.MINUTE, endTime.get(Calendar.MINUTE));
@@ -73,37 +51,22 @@ public class EventTask extends Task implements Cloneable {
 		this.endDate.set(Calendar.MILLISECOND, endTime.get(Calendar.MILLISECOND));
 	}
 
-	/**
-	 * Returns the start date.
-	 */
 	public Calendar getStartDate() {
 		return startDate;
 	}
 
-	/**
-	 * Returns the start time.
-	 */
 	public Calendar getStartTime() {
 		return startDate;
 	}
-	
-	/**
-	 * Returns the end date.
-	 */
+
 	public Calendar getEndDate() {
 		return endDate;
 	}
 
-	/**
-	 * Returns the end time.
-	 */
 	public Calendar getEndTime() {
 		return endDate;
 	}
 
-	/**
-	 * Returns the event duration in String.
-	 */
 	public String durationToString() {
 		String durationMessage = EMPTY_STRING;
 		String startingDate = dateToString(startDate);
@@ -115,7 +78,8 @@ public class EventTask extends Task implements Cloneable {
 			durationMessage += startingDate;
 			if (!startingTime.equals(EMPTY_TIME_STRING)) {
 				durationMessage += KEYWORD_SPACE + startingTime;
-			} // if start date and end date is same, display same date + both time
+			} // if start date and end date is same, display 1 date + both time
+				// only
 			if (startingDate.equalsIgnoreCase(endingDate)) {
 				if (startingTime.equals(EMPTY_TIME_STRING)) {
 					durationMessage += endingTime;
@@ -139,10 +103,7 @@ public class EventTask extends Task implements Cloneable {
 		}
 		return durationMessage;
 	}
-	
-	/**
-	 * Returns the task details in String.
-	 */
+
 	public String toString() {
 		String taskDetails = KEYWORD_QUOTE;
 		taskDetails += getTaskDescription();
@@ -154,9 +115,6 @@ public class EventTask extends Task implements Cloneable {
 		return taskDetails;
 	}
 
-	/**
-	 * Clones a EventTask.
-	 */
 	protected Object clone() throws CloneNotSupportedException {
 		EventTask newTask = (EventTask) super.clone();
 		newTask.startDate = (Calendar) startDate.clone();
