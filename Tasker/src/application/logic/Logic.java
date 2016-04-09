@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.logging.Logger;
 
 import application.logger.LoggerHandler;
+import application.storage.EventTask;
 import application.storage.Task;
 
 //@@author A0132632R
@@ -55,6 +56,28 @@ public class Logic {
 		logger.info("saving tasks to file.");
 		return feedback;
 	}
+	
+	public ArrayList<Task> getClashes (Task task){
+	    ArrayList<Task> openTasks = storageConnector.getOpenList();
+	    ArrayList<Task> tasksClashing = new ArrayList<Task>();
+	    tasksClashing.add(task);
+	    for (Task taskUnderConsideration : openTasks){
+	        addIfClashing(tasksClashing, task, taskUnderConsideration);
+	    }
+	    return tasksClashing;
+	}
+	
+	private void addIfClashing(ArrayList<Task> tasksClashing, Task task, Task taskUnderConsideration){
+	    if (taskUnderConsideration instanceof EventTask){
+	        Calendar startDate = taskUnderConsideration.getStartDate();
+	        Calendar endDate = taskUnderConsideration.getEndDate();
+            if (endDate.compareTo(task.getStartDate()) > 0){
+                tasksClashing.add(taskUnderConsideration);
+            } else if (startDate.compareTo(task.getEndDate()) < 0){
+                tasksClashing.add(taskUnderConsideration);
+            }
+	    }
+	}
     // @@author A0125417L
 
 	public int getCompletedTaskCount() {
@@ -79,5 +102,7 @@ public class Logic {
 		}
 		return overdueCount;
 	}
+	
+	
 
 }

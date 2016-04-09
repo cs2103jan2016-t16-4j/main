@@ -24,4 +24,22 @@ public class LogicFacade {
     public Feedback executeCommand(String command,  ArrayList<Task> tasksOnScreen)throws NoDescriptionException {
         return logic.executeCommand(command, tasksOnScreen);
     }
+    
+    public ArrayList<Task> getClashes (Task task){
+        return logic.getClashes(task);
+    }
+    
+    public int getCompletedTaskCount() {
+        return logic.getCompletedTaskCount();
+    }
+
+    public int getRemainingTaskCount() {
+        return logic.getRemainingTaskCount();
+    }
+
+    public int getOverdueTaskCount() {
+        return logic.getOverdueTaskCount();
+    }
+
+    
 }
