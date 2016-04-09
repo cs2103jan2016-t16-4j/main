@@ -160,7 +160,7 @@ public class Storage implements Cloneable {
 		if (obj instanceof FloatingTask) {
 			return (FloatingTask) obj.clone();
 		}
-		else if (obj instanceof DeadlineTask) {
+		if (obj instanceof DeadlineTask) {
 			return (DeadlineTask) obj.clone();
 		} else {
 			return (EventTask) obj.clone();

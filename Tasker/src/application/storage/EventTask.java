@@ -9,13 +9,13 @@ public class EventTask extends Task implements Cloneable{
 	private Calendar endDate;
 	
 	public EventTask() {
-		setTaskDescription("");
+		setTaskDescription(EMPTY_STRING);
 		startDate = Calendar.getInstance();
 		endDate = Calendar.getInstance();
-		setLocation("");
+		setLocation(EMPTY_STRING);
 		setRemindDate(Calendar.getInstance());
-		setPriority("");
-		setTaskIndex(-1);
+		setPriority(EMPTY_STRING);
+		setTaskIndex(EMPTY_TASK);
 	}
 	
 	public EventTask(String taskDescription, Calendar startDate,
@@ -69,54 +69,54 @@ public class EventTask extends Task implements Cloneable{
 	}
 	
 	public String durationToString() {
-		String message = "";
+		String durationMessage = EMPTY_STRING;
 		String startingDate = dateToString(startDate);
 		String startingTime = timeToString(startDate);
 		String endingDate = dateToString(endDate);
 		String endingTime = timeToString(endDate);
 		// display start date, if exist
-		if (!startingDate.equals("")) {
-			message += startingDate;
-			if (!startingTime.equals("")) {
-				message += " " + startingTime;
+		if (!startingDate.equals(EMPTY_DATE_STRING)) {
+			durationMessage += startingDate;
+			if (!startingTime.equals(EMPTY_TIME_STRING)) {
+				durationMessage += KEYWORD_SPACE + startingTime;
 			} // if start date and end date is same, display 1 date + both time only
 			if (startingDate.equalsIgnoreCase(endingDate)) {
-				if (startingTime.equals("")) {
-					message += endingTime;
+				if (startingTime.equals(EMPTY_TIME_STRING)) {
+					durationMessage += endingTime;
 				}
-				else if (!endingTime.equals("") && !startingTime.equals("")) {
-					message += " to " + endingTime;
+				else if (!endingTime.equals(EMPTY_TIME_STRING) && !startingTime.equals(EMPTY_TIME_STRING)) {
+					durationMessage += KEYWORD_TO + endingTime;
 				}
-				return message;
+				return durationMessage;
 			}
 		}
 		// display start date and end date, if both exist
-		if ( (!startingDate.equals("")) && (!endingDate.equals("")) ) {
-			message += " to " + endingDate;
-			if (!endingTime.equals("")) {
-				message += " " + endingTime;
+		if ( (!startingDate.equals(EMPTY_DATE_STRING)) && (!endingDate.equals(EMPTY_DATE_STRING)) ) {
+			durationMessage += KEYWORD_TO + endingDate;
+			if (!endingTime.equals(EMPTY_TIME_STRING)) {
+				durationMessage += KEYWORD_SPACE + endingTime;
 			} // display end date, if exist
-		} else if (startingDate.equals("") && (!endingDate.equals(""))) {
-			message += "by " + endingDate;
-			if (!endingTime.equals("")) {
-				message += " " + endingTime;
+		} else if (startingDate.equals(EMPTY_DATE_STRING) && (!endingDate.equals(EMPTY_DATE_STRING))) {
+			durationMessage += KEYWORD_BY + endingDate;
+			if (!endingTime.equals(EMPTY_TIME_STRING)) {
+				durationMessage += KEYWORD_SPACE + endingTime;
 			}
 		}
-		return message;		
+		return durationMessage;		
 	}
 	
 	public String toString() {
-		String message = "\"";
-		message += getTaskDescription();
-		message += " " + durationToString();
+		String taskDetails = KEYWORD_QUOTE;
+		taskDetails += getTaskDescription();
+		taskDetails += KEYWORD_SPACE + durationToString();
 		
-		if (!getLocation().equalsIgnoreCase("")) {
-			message += ", at " + getLocation();
+		if (!getLocation().equalsIgnoreCase(EMPTY_STRING)) {
+			taskDetails += KEYWORD_AT + getLocation();
 		}
 		
-		message += "\"";
+		taskDetails += KEYWORD_QUOTE;
 		
-		return message;	
+		return taskDetails;	
 	}
 	
     protected Object clone() throws CloneNotSupportedException {

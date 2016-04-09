@@ -8,12 +8,12 @@ public class DeadlineTask extends Task implements Cloneable {
 	private Calendar endDate;
 	
 	public DeadlineTask() {
-		setTaskDescription("");
+		setTaskDescription(EMPTY_STRING);
 		endDate = Calendar.getInstance();
-		setLocation("");
+		setLocation(EMPTY_STRING);
 		setRemindDate(Calendar.getInstance());
-		setPriority("");
-		setTaskIndex(-1);
+		setPriority(EMPTY_STRING);
+		setTaskIndex(EMPTY_TASK);
 	}
 	
 	public DeadlineTask(String taskDescription, Calendar endDate, String location, Calendar remindDate, String priority,
@@ -40,11 +40,11 @@ public class DeadlineTask extends Task implements Cloneable {
 	}
 	
 	public Calendar getStartDate() {
-		return null;
+		return NO_DATE;
 	}
 	
 	public Calendar getStartTime() {
-		return null;
+		return NO_TIME;
 	}
 	
 	public Calendar getEndDate() {
@@ -56,30 +56,30 @@ public class DeadlineTask extends Task implements Cloneable {
 	}
 	
 	public String durationToString() {
-		String message = "";
+		String durationMessage = EMPTY_STRING;
 		String endingDate = dateToString(endDate);
 		String endingTime = timeToString(endDate);
-		if (!endingDate.equals("")) {
-			message += "by " + endingDate;
-			if (!endingTime.equals("")) {
-				message += " " + endingTime;
+		if (!endingDate.equals(EMPTY_DATE_STRING)) {
+			durationMessage += KEYWORD_BY + endingDate;
+			if (!endingTime.equals(EMPTY_TIME_STRING)) {
+				durationMessage += KEYWORD_SPACE + endingTime;
 			}
 		}
-		return message;		
+		return durationMessage;		
 	}
 	
 	public String toString() {
-		String message = "\"";
-		message += getTaskDescription();
-		message += " " + durationToString();
+		String taskDetails = KEYWORD_QUOTE;
+		taskDetails += getTaskDescription();
+		taskDetails += KEYWORD_SPACE + durationToString();
 		
-		if (!getLocation().equalsIgnoreCase("")) {
-			message += ", at " + getLocation();
+		if (!getLocation().equalsIgnoreCase(EMPTY_STRING)) {
+			taskDetails += KEYWORD_AT + getLocation();
 		}
 		
-		message += "\"";
+		taskDetails += KEYWORD_QUOTE;
 		
-		return message;	
+		return taskDetails;	
 	}
 	
     protected Object clone() throws CloneNotSupportedException {
@@ -96,7 +96,7 @@ public class DeadlineTask extends Task implements Cloneable {
 		if (endTime.before(currentTime)) {
 			setPriority("high");
 		}
-		if (priority == "") {
+		if (priority.equalsIgnoreCase("")) {
 			// End time is in less than two hours or before current time
 			currentTime.roll(Calendar.HOUR, 2);
 			if (endTime.before(currentTime)) {
@@ -116,4 +116,5 @@ public class DeadlineTask extends Task implements Cloneable {
 		}
 		return tempPriority;
 	}
+
 }

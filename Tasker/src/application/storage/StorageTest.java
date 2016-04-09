@@ -117,7 +117,7 @@ public class StorageTest {
 		}
 	}
 	
-//	@Test
+	@Test
 	public void searchByDate() throws IOException {
 		storageController.addTaskInList("Go to hell", null, null, "Doom", noDate, "high");
 		storageController.addTaskInList("Do homework", null, cal1, "Home", cal2, "low");
@@ -173,10 +173,10 @@ public class StorageTest {
 	
 //	@Test
 	public void sortPriority() throws IOException {
-//		storageController.addTaskInList("Go to hell", cal1, noDate, "Doom", noDate, "high");
-//		storageController.addTaskInList("Do homework", noDate, cal1, "Home", cal2, "low");
-//		storageController.addTaskInList("Finish CS2103", noDate, noDate, "School", noDate, "high");
-//		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "low");
+		storageController.addTaskInList("Go to hell", null, null, "Doom", noDate, "high");
+		storageController.addTaskInList("Do homework", null, cal1, "Home", cal2, "low");
+		storageController.addTaskInList("Sign up for homework", cal1, cal2, "Home", noDate, "medium");
+		storageController.addTaskInList("Finish CS2103", null, null, "School", noDate, "high");
 		ArrayList<Task> searchList = storageController.sortByPriority();
 		for (int i = 0; i<searchList.size(); i++) {
 			System.out.println(i+") " +searchList.get(i).toString());
@@ -449,7 +449,7 @@ public class StorageTest {
 	}
 
 		
-//	@After
+	@After
 	public void after() {
 		File a = new File(FILE_DIRECTORY_NAME);
 		File b = new File(FILE_CLOSED_NAME);

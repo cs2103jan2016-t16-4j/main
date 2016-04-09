@@ -24,14 +24,16 @@ public class FileManager {
 	private static final String FILE_DATA_NAME = "TaskerData.txt";
 	private static final String FILE_DIRECTORY_NAME = "TaskerDirectory.txt";
 	private static final int NO_TASK = 0;
+	private static final String EMPTY = "";
+	private static final String EMPTY_PATH = "";
 	private String closedFilePath = "";
 	private String dataFilePath = "";
 
-	public void clear(String path) throws FileNotFoundException {
-		File f = new File(path);
-		if (f.exists()) {
-			PrintWriter fw = new PrintWriter(path);
-			fw.print("");
+	public void clear(String filePath) throws FileNotFoundException {
+		File file = new File(filePath);
+		if (file.exists()) {
+			PrintWriter fw = new PrintWriter(filePath);
+			fw.print(EMPTY);
 			fw.close();
 		}
 	}
@@ -46,10 +48,10 @@ public class FileManager {
 
 	public boolean isDirectoryExists() throws IOException {
 		// check whether its user first time opening program
-		File d = new File(FILE_DIRECTORY_NAME);
-		if (!d.exists()) {
+		File directoryFile = new File(FILE_DIRECTORY_NAME);
+		if (!directoryFile.exists()) {
 			PrintWriter fw = new PrintWriter(new BufferedWriter(new FileWriter(FILE_DIRECTORY_NAME, true)));
-			fw.print(""); // indicate path name is not specified yet
+			fw.print(EMPTY); // indicate path name is not specified yet
 			fw.close();
 			return false;
 		} else {
@@ -58,10 +60,10 @@ public class FileManager {
 	}
 
 	public ArrayList<Task> loadFile(String filePath) throws NumberFormatException, IOException {
-		File f = new File(filePath);
+		File file = new File(filePath);
 		BufferedReader in;
 		ArrayList<Task> list = new ArrayList<Task>();
-		if (f.exists()) {
+		if (file.exists()) {
 			String readText;
 			in = new BufferedReader(new FileReader(filePath));
 			// skip first line first for data file
@@ -144,7 +146,7 @@ public class FileManager {
 
 	public boolean setDirectory(String path) throws IOException {
 
-		if (path.equalsIgnoreCase("")) {
+		if (path.equalsIgnoreCase(EMPTY_PATH)) {
 			System.out.println("Directory choosen : EMPTY");
 			return false;
 		} else {

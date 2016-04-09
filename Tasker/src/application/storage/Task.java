@@ -10,19 +10,33 @@ public abstract class Task implements Cloneable {
 	private String taskDescription;
 	private String location;
 	protected Calendar remindDate;
-	private String priority;
+	protected String priority;
 	private int taskIndex;
 	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("d MMM yyyy");
 	private static final SimpleDateFormat FORMAT_TIME = new SimpleDateFormat("h:mm a");
-    private static final int EMPTY = 1;
-    private static final String EMPTY_STRING = "";
+	protected static final int EMPTY_DATE = 1;
+    protected static final int EMPTY_TASK = -1;
+    protected static final int EMPTY_TIME_PARAMETER_1 = 1;
+    protected static final int EMPTY_TIME_PARAMETER_2 = 0;
+    protected static final String EMPTY_DATE_STRING = "";
+    protected static final String EMPTY_STRING = "";
+    protected static final String EMPTY_TIME_STRING = "";
+    protected static final String KEYWORD_AND = "and";
+    protected static final String KEYWORD_AT = ", at ";
+    protected static final String KEYWORD_BY = "by ";
+    protected static final String KEYWORD_QUOTE = "\"";
+    protected static final String KEYWORD_TO = " to ";
+    protected static final String KEYWORD_SPACE = " ";
+    protected static final Calendar NO_DATE = null;
+    protected static final Calendar NO_TIME = null;
+
     
 	public Task() {
-		taskDescription = "";
-		location = "";
+		taskDescription = EMPTY_STRING;
+		location = EMPTY_STRING;
 		remindDate = Calendar.getInstance();
-		priority = "";
-		taskIndex = -1;
+		priority = EMPTY_STRING;
+		taskIndex = EMPTY_TASK;
 	}
 	
 	public Task(String taskDescription, Calendar startDate,
@@ -87,20 +101,28 @@ public abstract class Task implements Cloneable {
 	}
 	
 	public String dateToString(Calendar date) {
-		if (date.get(Calendar.YEAR)!=EMPTY) {
+		if (!isDateEmpty(date)) {
 			return FORMAT_DATE.format(date.getTime());
 		} else {
 			return EMPTY_STRING;
 		}
 	}
+
+	public boolean isDateEmpty(Calendar date) {
+		return date.get(Calendar.YEAR)==EMPTY_DATE;
+	}
 	
 	public String timeToString(Calendar date) {
-		if (!((date.get(Calendar.MILLISECOND)==EMPTY) && (date.get(Calendar.HOUR_OF_DAY)==0) && (date.get(Calendar.MINUTE)==0) && (date.get(Calendar.SECOND)==0))) {
+		if (!isTimeEmpty(date)) {
 			return FORMAT_TIME.format(date.getTime());
 		} else {
 			return EMPTY_STRING;
 		}
 
+	}
+
+	public boolean isTimeEmpty(Calendar date) {
+		return (date.get(Calendar.MILLISECOND)==EMPTY_TIME_PARAMETER_1) && (date.get(Calendar.HOUR_OF_DAY)==EMPTY_TIME_PARAMETER_2) && (date.get(Calendar.MINUTE)==EMPTY_TIME_PARAMETER_2) && (date.get(Calendar.SECOND)==EMPTY_TIME_PARAMETER_2);
 	}
 
 //@@author A0110422E
@@ -116,6 +138,10 @@ public abstract class Task implements Cloneable {
 	public abstract Calendar getStartDate();
 	
 	public abstract Calendar getEndDate();
+	
+	public abstract Calendar getStartTime();
+	
+	public abstract Calendar getEndTime();
 	
 	public abstract String durationToString();
     

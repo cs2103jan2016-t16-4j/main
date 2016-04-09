@@ -7,11 +7,11 @@ import java.util.Calendar;
 public class FloatingTask extends Task implements Cloneable  {
 
 	public FloatingTask() {
-		setTaskDescription("");
-		setLocation("");
+		setTaskDescription(EMPTY_STRING);
+		setLocation(EMPTY_STRING);
 		setRemindDate(Calendar.getInstance());
-		setPriority("");
-		setTaskIndex(-1);
+		setPriority(EMPTY_STRING);
+		setTaskIndex(EMPTY_TASK);
 	}
 	
 	public FloatingTask(String taskDescription, String location, Calendar remindDate, String priority, int taskIndex) {
@@ -24,36 +24,36 @@ public class FloatingTask extends Task implements Cloneable  {
 	}
 		
 	public Calendar getStartDate() {
-		return null;
+		return NO_DATE;
 	}
 
 	public Calendar getEndDate() {
-		return null;
+		return NO_DATE;
 	}
 	
 	public Calendar getStartTime() {
-		return null;
+		return NO_TIME;
 	}
 
 	public Calendar getEndTime() {
-		return null;
+		return NO_TIME;
 	}
 	
 	public String durationToString() {
-		return "";
+		return EMPTY_STRING;
 	}
 	
 	public String toString() {
-		String message = "\"";
-		message += getTaskDescription();
+		String taskDetails = KEYWORD_QUOTE;
+		taskDetails += getTaskDescription();
 		
-		if (!getLocation().equalsIgnoreCase("")) {
-			message += " at " + getLocation();
+		if (!getLocation().equalsIgnoreCase(EMPTY_STRING)) {
+			taskDetails += KEYWORD_AT + getLocation();
 		}
 		
-		message += "\"";
+		taskDetails += KEYWORD_QUOTE;
 		
-		return message;	
+		return taskDetails;	
 	}
 	
     protected Object clone() throws CloneNotSupportedException {
