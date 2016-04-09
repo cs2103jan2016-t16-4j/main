@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 import application.logger.LoggerHandler;
-import application.logic.Logic;
+import application.logic.LogicFacade;
 import application.storage.Task;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -53,7 +53,7 @@ public class GuiMain extends Application {
 
 	// Variables
 	private TrayIcon trayIcon;
-	private Logic logic;
+	private LogicFacade logicFacade;
 	private ArrayList<Task> taskList;
 
 	public static void main(String[] args) {
@@ -66,7 +66,7 @@ public class GuiMain extends Application {
 		try {
 			setEnvironment();
 			initializeSaveDirectory(primaryStage);
-			CalendarViewPage page = new CalendarViewPage(taskList, logic);
+			CalendarViewPage page = new CalendarViewPage(taskList, logicFacade);
 			Platform.setImplicitExit(false);
 			Scene scene = new Scene(page);
 			scene.getStylesheets().clear();
@@ -99,19 +99,19 @@ public class GuiMain extends Application {
 	}
 
 	private void setEnvironment() {
-		this.logic = new Logic();
+		this.logicFacade = new LogicFacade();
 	}
 
 	// Checks if user has used the program at least once if not prompt to save
 	// file
 	private void initializeSaveDirectory(Stage primaryStage) throws IOException {
-		if (!logic.checkIfFileExists()) {
+		if (!logicFacade.checkIfFileExists()) {
 			DirectoryChooser dirChooser = new DirectoryChooser();
 			configureDirectoryChooser(dirChooser);
 			directoryPrompt(primaryStage, dirChooser);
-			taskList = logic.loadDataFile();
+			taskList = logicFacade.loadDataFile();
 		} else {
-			taskList = logic.loadDataFile();
+			taskList = logicFacade.loadDataFile();
 		}
 	}
 
@@ -119,9 +119,9 @@ public class GuiMain extends Application {
 	public void directoryPrompt(Stage primaryStage, DirectoryChooser dirChooser) throws IOException {
 		final File selectedDirectory = dirChooser.showDialog(primaryStage);
 		if (selectedDirectory != null) {
-			logic.setDirectory(selectedDirectory.getPath().toString() + BACKSLASH);
+			logicFacade.setDirectory(selectedDirectory.getPath().toString() + BACKSLASH);
 		} else {
-			logic.setDirectory(EMPTY_STRING);
+			logicFacade.setDirectory(EMPTY_STRING);
 		}
 	}
 

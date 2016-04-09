@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 import org.controlsfx.control.Notifications;
 import application.logger.LoggerHandler;
 import application.logic.Feedback;
-import application.logic.Logic;
+import application.logic.LogicFacade;
 import application.storage.FloatingTask;
 import application.storage.Task;
 import javafx.animation.TranslateTransition;
@@ -47,6 +47,8 @@ import javafx.util.Duration;
 
 public class CalendarViewPage extends AnchorPane {
 
+	private static final int STACK_PANE_FIRST_CHILD = 0;
+	private static final String DIRECTORY_NOT_CHANGED_MESSAGE = "Directory Not Changed!";
 	// Constants
 	private static final int FIRST_WORD = 0;
 	private static final int ONE_LETTER = 1;
@@ -118,12 +120,12 @@ public class CalendarViewPage extends AnchorPane {
 	private static final String STORAGE_HINT_MESSAGE = "To change storage: storage";
 	private static final String DONE_HINT_MESSAGE = "To mark task as complete: done [task number]";
 	private static final String VIEW_HINT_MESSAGE = "To Toggle Views: view";
-	private static final String MESSAGE_STORAGE_URL_NOT_FOUND = "Storage Location Invalid: Opening Directory Chooser";
 	private static final String MESSAGE_HELP_INTRO = "Start typing and we'll help you out!";
 	private static final String MESSAGE_FEEDBACK_INTRO = "We'll give you feedback on your commands here.";
 	private static final String MESSAGE_ERROR = "There was some problem processing your request. "
 			+ "Please check your input format.";
 	private static String MESSAGE_TASK = "%1$s: %2$s";
+	private static String MESSAGE_DIRECTORY_CHANGED = "Directory Changed: %1$s%2$s";
 
 	// Error Messages
 	private static final String FXML_LOAD_FAILED = "Failed to load ListView FXML file";
@@ -135,7 +137,9 @@ public class CalendarViewPage extends AnchorPane {
 	private String text = EMPTY_STRING;
 	private static ArrayList<String> commands = new ArrayList<String>();
 	private ArrayList<Task> tasksOnScreen;
-	private Logic logic;
+	private LogicFacade logicFacade;
+	TranslateTransition openPanel;
+	TranslateTransition closePanel;
 
 	// FXML Variables
 	@FXML
@@ -161,10 +165,10 @@ public class CalendarViewPage extends AnchorPane {
 	@FXML
 	private PieChart pieChart;
 
-	//@@author A0132632R
-	public CalendarViewPage(ArrayList<Task> taskList, Logic logic) {
+	// @@author A0132632R
+	public CalendarViewPage(ArrayList<Task> taskList, LogicFacade logicFacade) {
 		tasksOnScreen = taskList;
-		this.logic = logic;
+		this.logicFacade = logicFacade;
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(LISTVIEW_FXML_URL));
 		loadFromFxml(fxmlLoader);
 		initialize();
@@ -188,9 +192,17 @@ public class CalendarViewPage extends AnchorPane {
 		initialiseCalendarList();
 		initialiseDisplayList();
 		taskToFocus = null;
+		initializeHiddenPanel();
 		updateViews(tasksOnScreen, taskToFocus);
 	}
-	//@@author A0125417L
+
+	// @@author A0125417L
+
+	private void initializeHiddenPanel() {
+		openPanel = new TranslateTransition(new Duration(TRANSITION_TIME), hiddenMenu);
+		openPanel.setToX(STARTPOSITION);
+		closePanel = new TranslateTransition(new Duration(TRANSITION_TIME), hiddenMenu);
+	}
 
 	// Setup cell factory for task list view
 	private void initialiseDisplayList() {
@@ -326,13 +338,13 @@ public class CalendarViewPage extends AnchorPane {
 
 	// Update the side panel
 	private void updateSummary() {
-		completedLabel.setText(String.format(MESSAGE_TASK, COMPLETED_TASKS_TEXT, logic.getCompletedTaskCount()));
-		remainingLabel.setText(String.format(MESSAGE_TASK, REMAINING_TASKS_TEXT, logic.getRemainingTaskCount()));
-		overdueLabel.setText(String.format(MESSAGE_TASK, OVERDUE_TASKS_TEXT, logic.getOverdueTaskCount()));
+		completedLabel.setText(String.format(MESSAGE_TASK, COMPLETED_TASKS_TEXT, logicFacade.getCompletedTaskCount()));
+		remainingLabel.setText(String.format(MESSAGE_TASK, REMAINING_TASKS_TEXT, logicFacade.getRemainingTaskCount()));
+		overdueLabel.setText(String.format(MESSAGE_TASK, OVERDUE_TASKS_TEXT, logicFacade.getOverdueTaskCount()));
 		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-				new PieChart.Data(COMPLETED_TASKS_TEXT, logic.getCompletedTaskCount()),
-				new PieChart.Data(REMAINING_TASKS_TEXT, logic.getRemainingTaskCount()),
-				new PieChart.Data(OVERDUE_TASKS_TEXT, logic.getOverdueTaskCount()));
+				new PieChart.Data(COMPLETED_TASKS_TEXT, logicFacade.getCompletedTaskCount()),
+				new PieChart.Data(REMAINING_TASKS_TEXT, logicFacade.getRemainingTaskCount()),
+				new PieChart.Data(OVERDUE_TASKS_TEXT, logicFacade.getOverdueTaskCount()));
 		pieChart.setData(pieChartData);
 		pieChart.setLabelsVisible(false);
 		pieChart.setLegendSide(Side.BOTTOM);
@@ -342,6 +354,7 @@ public class CalendarViewPage extends AnchorPane {
 	private void notifyUser(Task taskToFocus) {
 		String title = null;
 		String text = null;
+		assert (taskToFocus != null);
 		if (taskToFocus != null) {
 			if (taskToFocus.getEndDate() == null) {
 				title = REMINDER_TEXT;
@@ -411,32 +424,18 @@ public class CalendarViewPage extends AnchorPane {
 					try {
 						text = textInputArea.getText();
 						commands.add(text);
-						if (text.equals("summary")) {
-							TranslateTransition openNav = new TranslateTransition(new Duration(TRANSITION_TIME),
-									hiddenMenu);
-							openNav.setToX(STARTPOSITION);
-							TranslateTransition closeNav = new TranslateTransition(new Duration(TRANSITION_TIME),
-									hiddenMenu);
-							if (hiddenMenu.getTranslateX() != STARTPOSITION) {
-								openNav.play();
-							} else {
-								closeNav.setToX(+(hiddenMenu.getWidth()));
-								closeNav.play();
-							}
-							hiddenMenu.toFront();
-						} else {
-							Feedback feedback = logic.executeCommand(text, tasksOnScreen);
-							System.out.println(feedback.getMessage());
-							tasksOnScreen = feedback.getTasks();
-							taskToFocus = feedback.getIndexToScroll();
-							notifyUser(taskToFocus);
-							updateViews(tasksOnScreen, taskToFocus);
-							checkFlag = feedback.getFlag();
-							feedbackLabel.setText(feedback.getMessage());
-							doFlagCommand(checkFlag, feedback);
-							if (checkFlag != HELP_FLAG) {
-								textInputArea.clear();
-							}
+						Feedback feedback = logicFacade.executeCommand(text, tasksOnScreen);
+						System.out.println(feedback.getMessage());
+						tasksOnScreen = feedback.getTasks();
+						taskToFocus = feedback.getIndexToScroll();
+						notifyUser(taskToFocus);
+						updateViews(tasksOnScreen, taskToFocus);
+						checkFlag = feedback.getFlag();
+						feedbackLabel.setText(feedback.getMessage());
+						doFlagCommand(checkFlag, feedback);
+						if (checkFlag != HELP_FLAG) {
+							textInputArea.clear();
+
 						}
 					} catch (Exception e) {
 						feedbackLabel.setText(MESSAGE_ERROR);
@@ -527,21 +526,29 @@ public class CalendarViewPage extends AnchorPane {
 			switchViews();
 			break;
 		case SUMMARY_FLAG:
+			toggleHiddenPanel();
 			break;
 		}
 	}
 
-	private void promptStorage(Feedback feedback) throws IOException {
-		if (feedback.getMessage().equals(MESSAGE_STORAGE_URL_NOT_FOUND)) {
-			DirectoryChooser dirChooser = new DirectoryChooser();
-			configureDirectoryChooser(dirChooser);
-			Stage stage = new Stage();
-			directoryPrompt(stage, dirChooser);
+	private void toggleHiddenPanel() {
+		if (hiddenMenu.getTranslateX() != STARTPOSITION) {
+			openPanel.play();
+		} else {
+			closePanel.setToX(+(hiddenMenu.getWidth()));
+			closePanel.play();
 		}
 	}
 
+	private void promptStorage(Feedback feedback) throws IOException {
+		DirectoryChooser dirChooser = new DirectoryChooser();
+		configureDirectoryChooser(dirChooser);
+		Stage stage = new Stage();
+		directoryPrompt(stage, dirChooser);
+	}
+
 	private void switchViews() {
-		if (stackPane.getChildren().get(0).equals(displayList)) {
+		if (stackPane.getChildren().get(STACK_PANE_FIRST_CHILD).equals(displayList)) {
 			displayList.toFront();
 		} else {
 			calendarList.toFront();
@@ -551,11 +558,12 @@ public class CalendarViewPage extends AnchorPane {
 	public void directoryPrompt(Stage primaryStage, DirectoryChooser dirChooser) throws IOException {
 		final File selectedDirectory = dirChooser.showDialog(primaryStage);
 		if (selectedDirectory != null) {
-			logic.setDirectory(selectedDirectory.getPath().toString() + BACKSLASH);
-			feedbackLabel.setText("Directory Changed: " + selectedDirectory.getPath().toString() + BACKSLASH);
+			logicFacade.setDirectory(selectedDirectory.getPath().toString() + BACKSLASH);
+			feedbackLabel.setText(
+					String.format(MESSAGE_DIRECTORY_CHANGED, selectedDirectory.getPath().toString(), BACKSLASH));
 		} else {
-			logic.setDirectory(EMPTY_STRING);
-			feedbackLabel.setText("Directory Not Changed!");
+			logicFacade.setDirectory(EMPTY_STRING);
+			feedbackLabel.setText(DIRECTORY_NOT_CHANGED_MESSAGE);
 		}
 	}
 
