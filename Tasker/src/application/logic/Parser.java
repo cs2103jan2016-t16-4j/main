@@ -45,15 +45,23 @@ public class Parser {
 	private static final String[] DATE_MARKERS_END = { "to", "till" };
 	private static final String[] DATE_MARKERS_DEADLINE = { "by" };
 	private static final String[] DATE_MARKERS_FULL_DAY_EVENT = { "on" };
-	private static final String[] DATE_MARKERS_REMIND = { "remind" };
 	private static final String[] LOCATION_MARKERS = { "at", "in" };
 	private static final String[] PRIORITY_MARKERS = { "priority" };
-
+	private static final String UNIX_DATE_MARKER = "-d";
+	private static final String UNIX_LOC_MARKER = "-l";
+	private static final String UNIX_PRI_MARKER = "-p";
+	private static final String[] UNIX_MARKERS = {UNIX_DATE_MARKER, UNIX_LOC_MARKER, UNIX_PRI_MARKER};
+	
 	private static final String PRIORITY_HIGH = "high";
 	private static final String PRIORITY_MEDIUM = "medium";
 	private static final String PRIORITY_LOW = "low";
 	private static final String[] PRIORITY_LEVELS = { PRIORITY_HIGH, PRIORITY_MEDIUM, PRIORITY_LOW };
 
+	private static final int NUMBER_INDICES = 3;
+	private static final int DATE_IND_POS = 0;
+    private static final int LOC_IND_POS = 1;
+    private static final int PRI_IND_POS = 2;
+	
 	public static final int DEFAULT_EVENT_DURATION = 2;
 	private static final int ARGUMENT_NUMBER = 4;
 	private static final int DESC_POS = 0;
@@ -176,11 +184,8 @@ public class Parser {
 
 	private Command initializeAdd(String[] args, boolean isWithKeyWord) throws NoDescriptionException {
 		args = removeKeyWordIfReq(args, isWithKeyWord);
-		int dateStartIndex = getDateStartIndex(args);
-		int locationStartIndex = getLastIndex(LOCATION_MARKERS, args);
-		int priorityIndex = getLastIndex(PRIORITY_MARKERS, args);
-		priorityIndex = fixPriorityIndex(priorityIndex, args);
-		String[] segments = getSegments(dateStartIndex, locationStartIndex, priorityIndex, args);
+		Integer[] indices = getIndices(args);
+		String[] segments = getSegments(indices[DATE_IND_POS], indices[LOC_IND_POS], indices[PRI_IND_POS], args);
 		Calendar[] dates = parseDates(segments);
 		if (segments[DESC_POS].equals(EMPTY)) {
 			throw new NoDescriptionException();
@@ -191,7 +196,6 @@ public class Parser {
 				segments[PRI_POS]);
 		return command;
 	}
-
 	private String[] removeKeyWordIfReq(String[] args, boolean isWithKeyWord) {
 		if (isWithKeyWord) {
 			return (String[]) ArrayUtils.remove(args, 0);
@@ -227,12 +231,9 @@ public class Parser {
 		args = (String[]) ArrayUtils.remove(args, 0);
 		int taskToUpdate = Integer.parseInt(args[0]);
 		args = (String[]) ArrayUtils.remove(args, 0);
-		int dateStartIndex = getDateStartIndex(args);
-		int locationStartIndex = getLastIndex(LOCATION_MARKERS, args);
-		int priorityIndex = getLastIndex(PRIORITY_MARKERS, args);
-		priorityIndex = fixPriorityIndex(priorityIndex, args);
-		String[] segments = getSegments(dateStartIndex, locationStartIndex, priorityIndex, args);
-		Calendar[] dates = parseDates(segments);
+		Integer[] indices = getIndices(args);
+        String[] segments = getSegments(indices[DATE_IND_POS], indices[LOC_IND_POS], indices[PRI_IND_POS], args);
+        Calendar[] dates = parseDates(segments);
 		dates = fixDatesForUpdate(dates);
 		Calendar remindDate = convertToCalendar(createEmptyDate());
 		Command command = new Update(taskToUpdate, segments[DESC_POS], dates[0], dates[1], segments[LOC_POS],
@@ -278,6 +279,38 @@ public class Parser {
 	}
 
 	// @@author A0132632R
+
+    private Integer[] getIndices(String[] args){
+        int dateStartIndex = getDateStartIndex(args);
+        int locationStartIndex = getLastIndex(LOCATION_MARKERS, args);
+        int priorityIndex = getLastIndex(PRIORITY_MARKERS, args);
+        priorityIndex = fixPriorityIndex(priorityIndex, args);
+        Integer[] indices = new Integer[NUMBER_INDICES];
+        indices[DATE_IND_POS] = dateStartIndex;
+        indices[LOC_IND_POS] = locationStartIndex;
+        indices[PRI_IND_POS] = priorityIndex;
+        overrideIfUnixStyleFound(indices, args);
+        return indices;
+    }
+    
+    public static void overrideIfUnixStyleFound(Integer[] indices, String[] args){
+        if (getLastIndex(UNIX_MARKERS, args ) != -1){
+            getUnixIndices(indices, args);
+        }
+    }
+    
+    private static void getUnixIndices(Integer[] indices, String[] args){
+        for (int i = 0; i <indices.length; i++){
+            indices[i] = -1;
+        }
+        List<String> words = Arrays.asList(args);
+        indices[DATE_IND_POS] = words.indexOf(UNIX_DATE_MARKER);
+        indices[LOC_IND_POS] = words.indexOf(UNIX_LOC_MARKER);
+        indices[PRI_IND_POS] = words.indexOf(UNIX_PRI_MARKER);
+    }
+    
+
+	
 	private Command getAppropSearchCommand(String[] args) {
 		try {
 			return getSearchCommand(args);
