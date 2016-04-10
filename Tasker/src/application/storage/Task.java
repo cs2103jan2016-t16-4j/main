@@ -26,6 +26,8 @@ public abstract class Task implements Cloneable {
     protected static final int EMPTY_TASK = -1;
     protected static final int EMPTY_TIME_PARAMETER_1 = 1;
     protected static final int EMPTY_TIME_PARAMETER_2 = 0;
+	protected static final int ONE_DAY = 86400000;
+	protected static final int TWO_HOUR = 7200000;
     protected static final String EMPTY_DATE_STRING = "";
     protected static final String EMPTY_STRING = "";
     protected static final String EMPTY_TIME_STRING = "";
@@ -37,6 +39,10 @@ public abstract class Task implements Cloneable {
     protected static final String KEYWORD_SPACE = " ";
     protected static final Calendar NO_DATE = null;
     protected static final Calendar NO_TIME = null;
+	protected static final String HIGH = "high";
+	protected static final String MEDIUM = "medium";
+	protected static final String LOW = "low";
+	
 
 	/**
 	 * Task default constructor.
