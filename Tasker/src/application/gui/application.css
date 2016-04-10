@@ -1,11 +1,18 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
 
-/*.list-view .list-cell{
-	-fx-background-color: white;
-	-fx-alignment: center;
-	-fx-label-padding: 0.0 0.0 5.0 0.0;
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: #00acc1;
+    -fx-text-fill: white;
 }
-*/
+
+.list-cell{
+    -fx-cell-hover-color: #80DEEA;
+    -fx-background-color: white;
+}
+
+.list-cell:filled:hover {
+    -fx-cell-hover-color: #80DEEA;
+}
 /* @@author A0125417L */
 .list-view .scroll-bar:horizontal .increment-arrow,
 .list-view .scroll-bar:horizontal .decrement-arrow,

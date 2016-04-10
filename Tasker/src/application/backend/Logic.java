@@ -96,9 +96,7 @@ public class Logic {
             Calendar startDate = taskUnderConsideration.getStartDate();
             Calendar endDate = taskUnderConsideration.getEndDate();
             logger.info("Adding to list if clashing");
-            if (endDate.compareTo(task.getStartDate()) > 0){
-                tasksClashing.add(taskUnderConsideration);
-            } else if (startDate.compareTo(task.getEndDate()) < 0){
+            if (endDate.compareTo(task.getStartDate()) > 0 && startDate.compareTo(task.getEndDate()) < 0 ){
                 tasksClashing.add(taskUnderConsideration);
             }
         }

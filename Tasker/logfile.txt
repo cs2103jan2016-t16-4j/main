@@ -7991,3 +7991,1116 @@ INFO: executing above parsed command
 10.04.2016 07:29:06 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
 10.04.2016 07:29:06 - INFO    - application.backend.Logic - executeCommand - adding command to history
  ----------------------   End  Sun Apr 10 19:29:06 SGT 2016 ---------------------- 
+ ----------------------  Start Sun Apr 10 19:38:23 SGT 2016 ---------------------- 
+10.04.2016 07:38:23 - INFO    - application.gui.Tasker - start - Setting up gui
+10.04.2016 07:38:26 - INFO    - application.storage.FileManager - loadDirectoryFile - Loading directory file
+10.04.2016 07:38:26 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+10.04.2016 07:38:26 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+10.04.2016 07:38:28 - INFO    - application.gui.ResourceLoader - load - Loading Resource
+10.04.2016 07:38:41 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: play tennis
+10.04.2016 07:38:41 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 07:38:41 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 07:38:41 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: play
+10.04.2016 07:38:41 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 07:38:41 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 07:38:41 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 07:38:41 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 07:38:41 - INFO    - application.storage.TaskManager - add - Adding Floating Task
+10.04.2016 07:38:41 - INFO    - application.storage.FileManager - saveFile - Saving file
+10.04.2016 07:38:41 - INFO    - application.storage.FileManager - saveAllTasks - Saving tasks into file
+10.04.2016 07:38:41 - INFO    - application.storage.FileManager - saveFile - Saving file
+10.04.2016 07:38:41 - INFO    - application.storage.FileManager - saveAllTasks - Saving tasks into file
+10.04.2016 07:38:41 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 07:38:41 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:38:41 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:38:41 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:38:41 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:38:41 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:38:43 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:38:43 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:38:43 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:38:43 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:38:43 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:38:57 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:38:57 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:38:57 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:38:57 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:38:57 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:39:03 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: exit
+10.04.2016 07:39:03 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 07:39:03 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 07:39:03 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: exit
+10.04.2016 07:39:03 - INFO    - application.backend.Parser - convertToCommand - Making exit command object
+10.04.2016 07:39:03 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 07:39:03 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 07:39:03 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 07:39:03 - INFO    - application.backend.Exit - execute - Exiting through exit command
+ ----------------------   End  Sun Apr 10 19:39:03 SGT 2016 ---------------------- 
+ ----------------------  Start Sun Apr 10 19:39:22 SGT 2016 ---------------------- 
+10.04.2016 07:39:22 - INFO    - application.gui.Tasker - start - Setting up gui
+10.04.2016 07:39:26 - INFO    - application.storage.FileManager - loadDirectoryFile - Loading directory file
+10.04.2016 07:39:26 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+10.04.2016 07:39:26 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+10.04.2016 07:39:27 - INFO    - application.gui.ResourceLoader - load - Loading Resource
+10.04.2016 07:39:44 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: play football
+10.04.2016 07:39:44 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 07:39:44 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 07:39:44 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: play
+10.04.2016 07:39:44 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 07:39:44 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 07:39:44 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 07:39:44 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 07:39:44 - INFO    - application.storage.TaskManager - add - Adding Floating Task
+10.04.2016 07:39:45 - INFO    - application.storage.FileManager - saveFile - Saving file
+10.04.2016 07:39:45 - INFO    - application.storage.FileManager - saveAllTasks - Saving tasks into file
+10.04.2016 07:39:45 - INFO    - application.storage.FileManager - saveFile - Saving file
+10.04.2016 07:39:45 - INFO    - application.storage.FileManager - saveAllTasks - Saving tasks into file
+10.04.2016 07:39:45 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 07:39:45 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:39:45 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:39:45 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:39:45 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:39:45 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:39:57 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:39:57 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:39:57 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:39:57 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:39:57 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:40:12 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:40:12 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:40:12 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:40:12 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:40:12 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:40:27 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:40:27 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:40:27 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:40:27 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:40:27 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:40:43 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:40:43 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:40:43 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:40:43 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:40:43 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:40:48 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: exit
+10.04.2016 07:40:48 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 07:40:48 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 07:40:48 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: exit
+10.04.2016 07:40:48 - INFO    - application.backend.Parser - convertToCommand - Making exit command object
+10.04.2016 07:40:48 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 07:40:48 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 07:40:48 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 07:40:48 - INFO    - application.backend.Exit - execute - Exiting through exit command
+ ----------------------   End  Sun Apr 10 19:40:48 SGT 2016 ---------------------- 
+ ----------------------  Start Sun Apr 10 19:41:53 SGT 2016 ---------------------- 
+10.04.2016 07:41:53 - INFO    - application.gui.Tasker - start - Setting up gui
+10.04.2016 07:41:57 - INFO    - application.storage.FileManager - loadDirectoryFile - Loading directory file
+10.04.2016 07:41:57 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+10.04.2016 07:41:57 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+10.04.2016 07:41:59 - INFO    - application.gui.ResourceLoader - load - Loading Resource
+10.04.2016 07:42:21 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: read moby dick
+10.04.2016 07:42:21 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 07:42:21 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 07:42:21 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: read
+10.04.2016 07:42:21 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 07:42:22 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 07:42:22 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 07:42:22 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 07:42:22 - INFO    - application.storage.TaskManager - add - Adding Floating Task
+10.04.2016 07:42:22 - INFO    - application.storage.FileManager - saveFile - Saving file
+10.04.2016 07:42:22 - INFO    - application.storage.FileManager - saveAllTasks - Saving tasks into file
+10.04.2016 07:42:22 - INFO    - application.storage.FileManager - saveFile - Saving file
+10.04.2016 07:42:22 - INFO    - application.storage.FileManager - saveAllTasks - Saving tasks into file
+10.04.2016 07:42:22 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 07:42:22 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:42:22 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:42:22 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:42:22 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:42:22 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:42:29 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:42:29 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:42:29 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:42:29 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:42:29 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:42:43 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:42:43 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:42:43 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:42:43 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:42:43 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:42:58 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:42:58 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:42:58 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:42:58 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:42:58 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:43:13 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:43:13 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:43:13 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:43:13 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:43:13 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:43:28 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:43:28 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:43:28 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:43:28 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:43:28 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:43:29 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: exit
+10.04.2016 07:43:29 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 07:43:29 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 07:43:29 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: exit
+10.04.2016 07:43:29 - INFO    - application.backend.Parser - convertToCommand - Making exit command object
+10.04.2016 07:43:29 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 07:43:29 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 07:43:29 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 07:43:29 - INFO    - application.backend.Exit - execute - Exiting through exit command
+ ----------------------   End  Sun Apr 10 19:43:29 SGT 2016 ---------------------- 
+ ----------------------  Start Sun Apr 10 19:44:58 SGT 2016 ---------------------- 
+10.04.2016 07:44:58 - INFO    - application.gui.Tasker - start - Setting up gui
+10.04.2016 07:45:02 - INFO    - application.storage.FileManager - loadDirectoryFile - Loading directory file
+10.04.2016 07:45:02 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+10.04.2016 07:45:02 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+10.04.2016 07:45:03 - INFO    - application.gui.ResourceLoader - load - Loading Resource
+10.04.2016 07:45:14 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: read open
+10.04.2016 07:45:14 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 07:45:14 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 07:45:14 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: read
+10.04.2016 07:45:14 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 07:45:14 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 07:45:14 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 07:45:14 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 07:45:14 - INFO    - application.storage.TaskManager - add - Adding Floating Task
+10.04.2016 07:45:14 - INFO    - application.storage.FileManager - saveFile - Saving file
+10.04.2016 07:45:14 - INFO    - application.storage.FileManager - saveAllTasks - Saving tasks into file
+10.04.2016 07:45:14 - INFO    - application.storage.FileManager - saveFile - Saving file
+10.04.2016 07:45:14 - INFO    - application.storage.FileManager - saveAllTasks - Saving tasks into file
+10.04.2016 07:45:14 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 07:45:15 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:45:15 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:45:15 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:45:15 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:45:15 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:45:18 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:45:18 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:45:18 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:45:18 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:45:18 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:45:33 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:45:33 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:45:33 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:45:33 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:45:33 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:45:48 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:45:48 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:45:48 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:45:48 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:45:48 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:46:03 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:46:03 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:46:03 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:46:03 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:46:03 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:46:18 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:46:18 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:46:18 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:46:18 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:46:18 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:46:33 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:46:33 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:46:33 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:46:33 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:46:33 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:46:48 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:46:48 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:46:48 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:46:48 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:46:48 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:47:03 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:47:03 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:47:03 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:47:03 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:47:03 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:47:18 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:47:18 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:47:18 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:47:18 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:47:18 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:47:33 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:47:33 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:47:33 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:47:33 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:47:33 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:47:48 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:47:48 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:47:48 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:47:48 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:47:48 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:48:03 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:48:03 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:48:03 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:48:03 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:48:03 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:48:18 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:48:18 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:48:18 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:48:18 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:48:18 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:48:33 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:48:33 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:48:33 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:48:33 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:48:33 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:48:48 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:48:48 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:48:48 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:48:48 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:48:48 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:49:03 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:49:03 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:49:03 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:49:03 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:49:03 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:49:18 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:49:18 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:49:18 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:49:18 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:49:18 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:49:33 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:49:33 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:49:33 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:49:33 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:49:33 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:49:48 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:49:48 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:49:48 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:49:48 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:49:48 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:50:03 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:50:03 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:50:03 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:50:03 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:50:03 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:50:18 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:50:18 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:50:18 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:50:18 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:50:18 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:50:33 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:50:33 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:50:33 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:50:33 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:50:33 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:50:48 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:50:48 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:50:48 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:50:48 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:50:48 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:51:03 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:51:03 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:51:03 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:51:03 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:51:03 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:51:18 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:51:18 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:51:18 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:51:18 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:51:18 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:51:33 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:51:33 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:51:33 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:51:33 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:51:33 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:51:48 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:51:48 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:51:48 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:51:48 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:51:48 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:51:57 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: exit
+10.04.2016 07:51:57 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 07:51:57 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 07:51:57 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: exit
+10.04.2016 07:51:57 - INFO    - application.backend.Parser - convertToCommand - Making exit command object
+10.04.2016 07:51:57 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 07:51:57 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 07:51:57 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 07:51:57 - INFO    - application.backend.Exit - execute - Exiting through exit command
+ ----------------------   End  Sun Apr 10 19:51:57 SGT 2016 ---------------------- 
+ ----------------------  Start Sun Apr 10 19:52:02 SGT 2016 ---------------------- 
+10.04.2016 07:52:02 - INFO    - application.gui.Tasker - start - Setting up gui
+10.04.2016 07:52:05 - INFO    - application.storage.FileManager - loadDirectoryFile - Loading directory file
+10.04.2016 07:52:05 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+10.04.2016 07:52:06 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+10.04.2016 07:52:07 - INFO    - application.gui.ResourceLoader - load - Loading Resource
+10.04.2016 07:52:29 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: update 1 by day after tomorrow
+10.04.2016 07:52:29 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 07:52:29 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 07:52:29 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: update
+10.04.2016 07:52:29 - INFO    - application.backend.Parser - convertToCommand - Making update command object
+10.04.2016 07:52:29 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 07:52:29 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 07:52:29 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 07:52:29 - INFO    - application.storage.TaskManager - update - Updating Task
+10.04.2016 07:52:29 - INFO    - application.storage.TaskManager - updateTaskParameters - Updated Deadline Task's end date
+10.04.2016 07:52:29 - INFO    - application.storage.TaskManager - convertEventTask - Converting to Deadline Task
+10.04.2016 07:52:29 - INFO    - application.storage.FileManager - saveFile - Saving file
+10.04.2016 07:52:29 - INFO    - application.storage.FileManager - saveAllTasks - Saving tasks into file
+10.04.2016 07:52:29 - INFO    - application.storage.FileManager - saveFile - Saving file
+10.04.2016 07:52:29 - INFO    - application.storage.FileManager - saveAllTasks - Saving tasks into file
+10.04.2016 07:52:29 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 07:52:29 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:52:29 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:52:29 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:52:29 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:52:29 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:52:37 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:52:37 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:52:37 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:52:37 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:52:37 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:52:52 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:52:52 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:52:52 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:52:52 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:52:52 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:53:07 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:53:07 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:53:07 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:53:07 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:53:07 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:53:22 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:53:22 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:53:22 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:53:22 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:53:22 - INFO    - application.backend.Logic - getClashes - main task not event. returning task without checking for clashes.
+10.04.2016 07:53:34 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: exit
+10.04.2016 07:53:34 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 07:53:34 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 07:53:34 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: exit
+10.04.2016 07:53:34 - INFO    - application.backend.Parser - convertToCommand - Making exit command object
+10.04.2016 07:53:34 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 07:53:34 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 07:53:34 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 07:53:34 - INFO    - application.backend.Exit - execute - Exiting through exit command
+ ----------------------   End  Sun Apr 10 19:53:34 SGT 2016 ---------------------- 
+ ----------------------  Start Sun Apr 10 19:54:04 SGT 2016 ---------------------- 
+10.04.2016 07:54:04 - INFO    - application.gui.Tasker - start - Setting up gui
+10.04.2016 07:54:08 - INFO    - application.storage.FileManager - loadDirectoryFile - Loading directory file
+10.04.2016 07:54:08 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+10.04.2016 07:54:08 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+10.04.2016 07:54:09 - INFO    - application.gui.ResourceLoader - load - Loading Resource
+10.04.2016 07:54:52 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: class from 2 pm to 3 pm tomorrow
+10.04.2016 07:54:52 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 07:54:52 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 07:54:52 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: class
+10.04.2016 07:54:52 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 07:54:52 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 07:54:52 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 07:54:52 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 07:54:52 - INFO    - application.storage.TaskManager - add - Adding Event Task
+10.04.2016 07:54:52 - INFO    - application.storage.FileManager - saveFile - Saving file
+10.04.2016 07:54:52 - INFO    - application.storage.FileManager - saveAllTasks - Saving tasks into file
+10.04.2016 07:54:52 - INFO    - application.storage.FileManager - saveFile - Saving file
+10.04.2016 07:54:52 - INFO    - application.storage.FileManager - saveAllTasks - Saving tasks into file
+10.04.2016 07:54:52 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 07:54:52 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:54:52 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:54:52 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:54:52 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:54:52 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 07:54:52 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:54:52 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:54:52 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:54:52 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:54:52 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:54:52 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:54:52 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:54:52 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:54:52 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:54:54 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:54:54 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:54:54 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:54:54 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:54:54 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 07:54:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:54:54 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:54:54 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:54:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:54:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:54:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:54:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:54:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:54:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:07 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: class 2 from 1 pm to 4 pm tomorrow
+10.04.2016 07:55:07 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 07:55:07 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 07:55:07 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: class
+10.04.2016 07:55:07 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 07:55:07 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 07:55:07 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 07:55:07 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 07:55:07 - INFO    - application.storage.TaskManager - add - Adding Event Task
+10.04.2016 07:55:07 - INFO    - application.storage.FileManager - saveFile - Saving file
+10.04.2016 07:55:07 - INFO    - application.storage.FileManager - saveAllTasks - Saving tasks into file
+10.04.2016 07:55:07 - INFO    - application.storage.FileManager - saveFile - Saving file
+10.04.2016 07:55:07 - INFO    - application.storage.FileManager - saveAllTasks - Saving tasks into file
+10.04.2016 07:55:07 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 07:55:07 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:55:07 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:55:07 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:55:07 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:55:07 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 07:55:07 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:07 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:55:07 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:55:07 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:07 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:55:07 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:55:07 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:07 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:07 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:07 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:07 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:07 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:10 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:55:10 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:55:10 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:55:10 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:55:10 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 07:55:10 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:10 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:55:10 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:55:10 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:10 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:55:10 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:55:10 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:10 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:10 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:10 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:10 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:10 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:24 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:55:24 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:55:24 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:55:24 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:55:24 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 07:55:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:24 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:55:24 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:55:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:24 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:55:24 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:55:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:39 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:55:39 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:55:39 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:55:39 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:55:39 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 07:55:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:39 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:55:39 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:55:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:39 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:55:39 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:55:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:43 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: class 3 from 5 pm to 6 pm tomorrow
+10.04.2016 07:55:43 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 07:55:43 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 07:55:43 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: class
+10.04.2016 07:55:43 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+10.04.2016 07:55:43 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 07:55:43 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 07:55:43 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 07:55:43 - INFO    - application.storage.TaskManager - add - Adding Event Task
+10.04.2016 07:55:43 - INFO    - application.storage.FileManager - saveFile - Saving file
+10.04.2016 07:55:43 - INFO    - application.storage.FileManager - saveAllTasks - Saving tasks into file
+10.04.2016 07:55:43 - INFO    - application.storage.FileManager - saveFile - Saving file
+10.04.2016 07:55:43 - INFO    - application.storage.FileManager - saveAllTasks - Saving tasks into file
+10.04.2016 07:55:43 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 07:55:43 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:55:43 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:55:43 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:55:43 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:55:43 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 07:55:43 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:43 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:55:43 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:55:43 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:43 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:55:43 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:55:43 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:43 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:55:43 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:55:43 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:43 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:43 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:43 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:43 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:43 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:54 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:55:54 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:55:54 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:55:54 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:55:54 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 07:55:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:54 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:55:54 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:55:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:54 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:55:54 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:55:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:54 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:55:54 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:55:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:55:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:09 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:56:09 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:56:09 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:56:09 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:56:09 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 07:56:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:09 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:56:09 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:56:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:09 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:56:09 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:56:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:09 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:56:09 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:56:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:24 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:56:24 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:56:24 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:56:24 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:56:24 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 07:56:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:24 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:56:24 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:56:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:24 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:56:24 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:56:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:24 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:56:24 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:56:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:39 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:56:39 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:56:39 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:56:39 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:56:39 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 07:56:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:39 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:56:39 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:56:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:39 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:56:39 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:56:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:39 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:56:39 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:56:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:54 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:56:54 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:56:54 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:56:54 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:56:54 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 07:56:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:54 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:56:54 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:56:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:54 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:56:54 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:56:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:54 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:56:54 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:56:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:56:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:09 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:57:09 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:57:09 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:57:09 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:57:09 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 07:57:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:09 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:57:09 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:57:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:09 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:57:09 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:57:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:09 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:57:09 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:57:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:24 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:57:24 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:57:24 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:57:24 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:57:24 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 07:57:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:24 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:57:24 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:57:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:24 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:57:24 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:57:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:24 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:57:24 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:57:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:39 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:57:39 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:57:39 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:57:39 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:57:39 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 07:57:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:39 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:57:39 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:57:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:39 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:57:39 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:57:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:39 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:57:39 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:57:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:54 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:57:54 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:57:54 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:57:54 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:57:54 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 07:57:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:54 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:57:54 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:57:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:54 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:57:54 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:57:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:54 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:57:54 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:57:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:57:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:09 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:58:09 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:58:09 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:58:09 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:58:09 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 07:58:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:09 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:58:09 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:58:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:09 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:58:09 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:58:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:09 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:58:09 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:58:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:24 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:58:24 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:58:24 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:58:24 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:58:24 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 07:58:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:24 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:58:24 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:58:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:24 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:58:24 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:58:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:24 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:58:24 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:58:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:39 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:58:39 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:58:39 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:58:39 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:58:39 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 07:58:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:39 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:58:39 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:58:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:39 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:58:39 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:58:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:39 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:58:39 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:58:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:54 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:58:54 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:58:54 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:58:54 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:58:54 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 07:58:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:54 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:58:54 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:58:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:54 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:58:54 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:58:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:54 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:58:54 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:58:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:58:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:09 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:59:09 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:59:09 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:59:09 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:59:09 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 07:59:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:09 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:59:09 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:59:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:09 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:59:09 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:59:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:09 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:59:09 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:59:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:24 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:59:24 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:59:24 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:59:24 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:59:24 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 07:59:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:24 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:59:24 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:59:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:24 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:59:24 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:59:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:24 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:59:24 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:59:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:39 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:59:39 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:59:39 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:59:39 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:59:39 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 07:59:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:39 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:59:39 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:59:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:39 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:59:39 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:59:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:39 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:59:39 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:59:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:54 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 07:59:54 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 07:59:54 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 07:59:54 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 07:59:54 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 07:59:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:54 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:59:54 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:59:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:54 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:59:54 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:59:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:54 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 07:59:54 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 07:59:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 07:59:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:09 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 08:00:09 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 08:00:09 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 08:00:09 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 08:00:09 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 08:00:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:09 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 08:00:09 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 08:00:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:09 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 08:00:09 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 08:00:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:09 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 08:00:09 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 08:00:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:24 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 08:00:24 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 08:00:24 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 08:00:24 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 08:00:24 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 08:00:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:24 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 08:00:24 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 08:00:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:24 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 08:00:24 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 08:00:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:24 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 08:00:24 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 08:00:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:39 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 08:00:39 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 08:00:39 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 08:00:39 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 08:00:39 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 08:00:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:39 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 08:00:39 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 08:00:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:39 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 08:00:39 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 08:00:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:39 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 08:00:39 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 08:00:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:39 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:54 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 08:00:54 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 08:00:54 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 08:00:54 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 08:00:54 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 08:00:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:54 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 08:00:54 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 08:00:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:54 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 08:00:54 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 08:00:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:54 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 08:00:54 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 08:00:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:00:54 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:01:09 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 08:01:09 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 08:01:09 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 08:01:09 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 08:01:09 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 08:01:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:01:09 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 08:01:09 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 08:01:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:01:09 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 08:01:09 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 08:01:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:01:09 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 08:01:09 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 08:01:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:01:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:01:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:01:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:01:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:01:09 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:01:24 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+10.04.2016 08:01:24 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+10.04.2016 08:01:24 - INFO    - application.backend.Logic - getClashes - adding input task to arraylist
+10.04.2016 08:01:24 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+10.04.2016 08:01:24 - INFO    - application.backend.Logic - getClashes - task is event. looping through all lists to check for clash
+10.04.2016 08:01:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:01:24 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 08:01:24 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 08:01:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:01:24 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 08:01:24 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 08:01:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:01:24 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+10.04.2016 08:01:24 - INFO    - application.backend.Logic - addIfClashing - Adding to list if clashing
+10.04.2016 08:01:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:01:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:01:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:01:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:01:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:01:24 - INFO    - application.backend.Logic - addIfClashing - checking if Event Task
+10.04.2016 08:01:37 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: exit
+10.04.2016 08:01:37 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 08:01:37 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 08:01:37 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: exit
+10.04.2016 08:01:37 - INFO    - application.backend.Parser - convertToCommand - Making exit command object
+10.04.2016 08:01:37 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 08:01:37 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 08:01:37 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 08:01:37 - INFO    - application.backend.Exit - execute - Exiting through exit command
+ ----------------------   End  Sun Apr 10 20:01:37 SGT 2016 ---------------------- 
+ ----------------------  Start Sun Apr 10 20:13:17 SGT 2016 ---------------------- 
+10.04.2016 08:13:17 - INFO    - application.gui.Tasker - start - Setting up gui
+10.04.2016 08:13:21 - INFO    - application.storage.FileManager - loadDirectoryFile - Loading directory file
+10.04.2016 08:13:21 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+10.04.2016 08:13:21 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+10.04.2016 08:13:23 - INFO    - application.gui.ResourceLoader - load - Loading Resource
+10.04.2016 08:14:00 - INFO    - application.gui.Tasker$1$1 - run - Clicked show on system tray icon
+10.04.2016 08:14:12 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: exit
+10.04.2016 08:14:12 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 08:14:12 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 08:14:12 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: exit
+10.04.2016 08:14:12 - INFO    - application.backend.Parser - convertToCommand - Making exit command object
+10.04.2016 08:14:12 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 08:14:12 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 08:14:12 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 08:14:12 - INFO    - application.backend.Exit - execute - Exiting through exit command
+ ----------------------   End  Sun Apr 10 20:14:12 SGT 2016 ---------------------- 
+ ----------------------  Start Sun Apr 10 20:15:14 SGT 2016 ---------------------- 
+10.04.2016 08:15:14 - INFO    - application.gui.Tasker - start - Setting up gui
+10.04.2016 08:15:18 - INFO    - application.storage.FileManager - loadDirectoryFile - Loading directory file
+10.04.2016 08:15:18 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+10.04.2016 08:15:18 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+10.04.2016 08:15:19 - INFO    - application.gui.ResourceLoader - load - Loading Resource
+10.04.2016 08:15:48 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: view
+10.04.2016 08:15:48 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 08:15:48 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 08:15:48 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: view
+10.04.2016 08:15:48 - INFO    - application.backend.Parser - processViewInput - Making view command object
+10.04.2016 08:15:48 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 08:15:48 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 08:15:48 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 08:15:48 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 08:16:11 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: exit
+10.04.2016 08:16:11 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 08:16:11 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 08:16:11 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: exit
+10.04.2016 08:16:11 - INFO    - application.backend.Parser - convertToCommand - Making exit command object
+10.04.2016 08:16:11 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 08:16:11 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 08:16:11 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 08:16:11 - INFO    - application.backend.Exit - execute - Exiting through exit command
+ ----------------------   End  Sun Apr 10 20:16:11 SGT 2016 ---------------------- 
+ ----------------------  Start Sun Apr 10 20:17:25 SGT 2016 ---------------------- 
+10.04.2016 08:17:25 - INFO    - application.gui.Tasker - start - Setting up gui
+10.04.2016 08:17:28 - INFO    - application.storage.FileManager - loadDirectoryFile - Loading directory file
+10.04.2016 08:17:28 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+10.04.2016 08:17:28 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+10.04.2016 08:17:30 - INFO    - application.gui.ResourceLoader - load - Loading Resource
+10.04.2016 08:17:58 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: view
+10.04.2016 08:17:58 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 08:17:58 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 08:17:58 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: view
+10.04.2016 08:17:58 - INFO    - application.backend.Parser - processViewInput - Making view command object
+10.04.2016 08:17:58 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 08:17:58 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 08:17:58 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 08:17:58 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 08:19:03 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: exit
+10.04.2016 08:19:03 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 08:19:03 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 08:19:03 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: exit
+10.04.2016 08:19:03 - INFO    - application.backend.Parser - convertToCommand - Making exit command object
+10.04.2016 08:19:03 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 08:19:03 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 08:19:03 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 08:19:03 - INFO    - application.backend.Exit - execute - Exiting through exit command
+ ----------------------   End  Sun Apr 10 20:19:03 SGT 2016 ---------------------- 
+ ----------------------  Start Sun Apr 10 20:19:08 SGT 2016 ---------------------- 
+10.04.2016 08:19:08 - INFO    - application.gui.Tasker - start - Setting up gui
+10.04.2016 08:19:11 - INFO    - application.storage.FileManager - loadDirectoryFile - Loading directory file
+10.04.2016 08:19:11 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+10.04.2016 08:19:12 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+10.04.2016 08:19:13 - INFO    - application.gui.ResourceLoader - load - Loading Resource
+10.04.2016 08:19:36 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: view
+10.04.2016 08:19:36 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 08:19:36 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 08:19:36 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: view
+10.04.2016 08:19:36 - INFO    - application.backend.Parser - processViewInput - Making view command object
+10.04.2016 08:19:36 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 08:19:36 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 08:19:36 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 08:19:36 - INFO    - application.backend.Logic - executeCommand - adding command to history
+10.04.2016 08:20:00 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: exit
+10.04.2016 08:20:00 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+10.04.2016 08:20:00 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+10.04.2016 08:20:00 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: exit
+10.04.2016 08:20:00 - INFO    - application.backend.Parser - convertToCommand - Making exit command object
+10.04.2016 08:20:00 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+10.04.2016 08:20:00 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+10.04.2016 08:20:00 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+10.04.2016 08:20:00 - INFO    - application.backend.Exit - execute - Exiting through exit command
+ ----------------------   End  Sun Apr 10 20:20:00 SGT 2016 ---------------------- 
