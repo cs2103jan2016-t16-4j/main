@@ -1,4 +1,5 @@
 package application.backend;
+//@@author A0078688A
 
 import java.util.ArrayList;
 
@@ -6,6 +7,7 @@ import application.storage.Storage;
 import application.storage.Task;
 
 public class Help implements Command {
+	public static final String HELP_MESSAGE = "Here is some help for you.";
 	private static final String COMMAND_ADD = "add:\n--Adds new tasks (keyword add is not required)\n--Adds"
 			+ " <Task> due by <date> at <Venue> and sets reminder\n--Note: by <Date>, @ <Venue>, remind <When>, priority <Level> are optional.\n"
 			+ "--Note: Use every instead of by to add recurring tasks.\n";
@@ -36,7 +38,7 @@ public class Help implements Command {
 	@Override
 	public Feedback execute(StorageConnector storageConnector, ArrayList<Task> tasksOnScreen) {
 
-		String msg = "Here is some help for you.";
+		String msg = HELP_MESSAGE;
 
 		Feedback fb = new Feedback(msg, tasksOnScreen, null);
 		fb.setHelpFlag();
