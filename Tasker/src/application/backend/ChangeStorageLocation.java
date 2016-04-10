@@ -13,7 +13,7 @@ import application.storage.Task;
  * Checks if URL exists and change directory or sends back a flag for gui to prompt user with a directory prompt
  */
 
-public class ChangeStorageLocation implements Command {
+public class ChangeStorageLocation implements UndoableCommand {
 
 	// Initialization
 	private static Logger logger = LoggerHandler.getLog();
@@ -35,9 +35,13 @@ public class ChangeStorageLocation implements Command {
 	private static final String MESSAGE_STORAGE_NO_INPUT = "No Location Input: Opening Directory Chooser";
 	private static final String MESSAGE_STORAGE_URL_FOUND = "Storage changed: ";
 
+	private static final String MESSAGE_UNDO_CHANGE = "Reverted storage location to: ";
+    private static final String MESSAGE_UNDO_ERROR = "We encountered some problem undoing the storage change.";
+
 	// Variables
 	private String arguments;
 	private String prevLocation;
+	private StorageConnector storageConnector;
 	
 	ChangeStorageLocation(String arguments) {
 		this.arguments = arguments;
@@ -46,6 +50,7 @@ public class ChangeStorageLocation implements Command {
 	@Override
 	public Feedback execute(StorageConnector storageConnector, ArrayList<Task> tasksOnScreen) {
 		logger.info(ENTER_CHANGE_STORAGE_LOGGER_MSG);
+		this.storageConnector = storageConnector;
 		Feedback feedback = null;
 		feedback = checkUrlInput(storageConnector, tasksOnScreen, feedback);
 		return feedback;
@@ -109,4 +114,30 @@ public class ChangeStorageLocation implements Command {
 		feedback.setCalFlag();
 		return feedback;
 	}
+	
+	//@@author A0132632R
+	public Feedback undo() throws NothingToUndoException{
+	    if (prevLocation == null){
+	        throw new NothingToUndoException();
+	    }else{
+	        return revertStorageLocation();
+	    }
+	}
+	
+	private Feedback revertStorageLocation(){
+	    try{
+	        return setStorageLocationToPrevious();
+	    }catch(IOException e){
+	        Feedback feedback = new Feedback(MESSAGE_UNDO_ERROR, storageConnector.getOpenList(), null);
+            feedback.setCalFlag();
+            return feedback;
+	    }
+	}
+
+    private Feedback setStorageLocationToPrevious() throws IOException {
+        storageConnector.setDirectory(prevLocation);
+        Feedback feedback = new Feedback(MESSAGE_UNDO_CHANGE + arguments, storageConnector.getOpenList(), null);
+        feedback.setCalFlag();
+        return feedback;
+    }
 }

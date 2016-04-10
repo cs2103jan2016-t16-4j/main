@@ -26,8 +26,10 @@ public class StorageConnector {
         this.storage = storage;
     }
     
-    public void setDirectory(String filePath) throws IOException{
-        storage.setDirectory(filePath);
+    public String setDirectory(String filePath) throws IOException{
+        String prevPath = storage.setDirectory(filePath);
+        assert(prevPath != null);
+        return prevPath;
     }
     
     public void initialise() throws IOException{
