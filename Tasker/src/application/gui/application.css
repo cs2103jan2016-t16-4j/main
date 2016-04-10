@@ -1,5 +1,3 @@
-/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
-
 /* @@author A0132632R */
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
     -fx-background-color: #00acc1;
@@ -14,7 +12,9 @@
 .list-cell:filled:hover {
     -fx-cell-hover-color: #80DEEA;
 }
+
 /* @@author A0125417L */
+
 .list-view .scroll-bar:horizontal .increment-arrow,
 .list-view .scroll-bar:horizontal .decrement-arrow,
 .list-view .scroll-bar:horizontal .increment-button,
@@ -27,5 +27,7 @@
 }
 
 .data0.chart-pie { -fx-pie-color: #C8E6C9; }
+
 .data1.chart-pie { -fx-pie-color: #B2EBF2; }
+
 .data2.chart-pie { -fx-pie-color: #B71C1C; }

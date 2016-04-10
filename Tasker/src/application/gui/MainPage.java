@@ -138,6 +138,7 @@ public class MainPage extends AnchorPane {
 
 	// Error Messages
 	private static final String FXML_LOAD_FAILED = "Failed to load ListView FXML file";
+	private static final String DIRECTORY_NOT_CHANGED_MESSAGE = "Directory Not Changed";
 
 	// Variables
 	private static int pointer = START;
@@ -203,30 +204,9 @@ public class MainPage extends AnchorPane {
 		taskToFocus = null;
 		initializeHiddenPanel();
 		updateViews(tasksOnScreen, taskToFocus);
-		// setupTimer();
 	}
 
 	// @@author A0125417L
-
-	// Timer for on the fly update
-	// private void setupTimer() {
-	// Timer timer = new Timer();
-	// timer.schedule(new TimerTask() {
-	// public void run() {
-	// Platform.runLater(new Runnable() {
-	// @Override
-	// public void run() {
-	// updateViews(tasksOnScreen, taskToFocus);
-	// try {
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	//
-	// }
-	// });
-	// }
-	// }, 0, 15000);
-	// }
 
 	// Setup hidden panel
 	private void initializeHiddenPanel() {
@@ -439,7 +419,6 @@ public class MainPage extends AnchorPane {
 					this.displayList.getStyleClass().add("select");
 				}
 				for (Task task : clashList) {
-					System.out.println(task.getTaskDescription());
 					this.displayList.getSelectionModel().select(task);
 				}
 			}
@@ -485,7 +464,6 @@ public class MainPage extends AnchorPane {
 						text = textInputArea.getText();
 						commands.add(text);
 						Feedback feedback = backendFacade.executeCommand(text, tasksOnScreen);
-						// System.out.println(feedback.getMessage());
 						tasksOnScreen = feedback.getTasks();
 						taskToFocus = feedback.getTaskToScrollTo();
 						notifyUser(taskToFocus);
@@ -499,7 +477,6 @@ public class MainPage extends AnchorPane {
 						closePanel();
 					} catch (Exception e) {
 						feedbackLabel.setText(MESSAGE_ERROR);
-						e.printStackTrace();
 					}
 				}
 				if (ke.getCode().equals(KeyCode.UP)) {
@@ -596,18 +573,15 @@ public class MainPage extends AnchorPane {
 		final File selectedDirectory = dirChooser.showDialog(primaryStage);
 		if (selectedDirectory != null) {
 			try {
-				backendFacade.executeCommand("storage " + selectedDirectory.getPath().toString() + BACKSLASH,
+				backendFacade.executeCommand(STORAGE_TEXT + SPACE + selectedDirectory.getPath().toString() + BACKSLASH,
 						tasksOnScreen);
 			} catch (NoDescriptionException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			// feedbackLabel.setText(
-			// String.format(MESSAGE_DIRECTORY_CHANGED,
-			// selectedDirectory.getPath().toString(), BACKSLASH));
-			// } else {
-			// backendFacade.setDirectory(EMPTY_STRING);
-			// feedbackLabel.setText(DIRECTORY_NOT_CHANGED_MESSAGE);
+		} else {
+			backendFacade.setDirectory(EMPTY_STRING);
+			feedbackLabel.setText(DIRECTORY_NOT_CHANGED_MESSAGE);
 		}
 	}
 
@@ -814,43 +788,43 @@ public class MainPage extends AnchorPane {
 
 	private void showExitDialog() {
 		textInputArea.setText(EXIT_HINT_INPUT);
-		feedbackLabel.setText("");
+		feedbackLabel.setText(EMPTY_STRING);
 		helpLabel.setText(EXIT_HINT_MESSAGE);
 	}
 
 	private void showStorageDialog() {
 		textInputArea.setText(STORAGE_HINT_INPUT);
-		feedbackLabel.setText("");
+		feedbackLabel.setText(EMPTY_STRING);
 		helpLabel.setText(STORAGE_HINT_MESSAGE);
 	}
 
 	private void showUndoDialog() {
 		textInputArea.setText(UNDO_HINT_INPUT);
-		feedbackLabel.setText("");
+		feedbackLabel.setText(EMPTY_STRING);
 		helpLabel.setText(UNDO_HINT_MESSAGE);
 	}
 
 	private void showSearchDialog() {
 		textInputArea.setText(SEARCH_HINT_INPUT);
-		feedbackLabel.setText("");
+		feedbackLabel.setText(EMPTY_STRING);
 		helpLabel.setText(SEARCH_HINT_MESSAGE);
 	}
 
 	private void showCloseDialog() {
 		textInputArea.setText(DONE_HINT_INPUT);
-		feedbackLabel.setText("");
+		feedbackLabel.setText(EMPTY_STRING);
 		helpLabel.setText(DONE_HINT_MESSAGE);
 	}
 
 	private void showUpdateDialog() {
 		textInputArea.setText(UPDATE_HINT_INPUT);
-		feedbackLabel.setText("");
+		feedbackLabel.setText(EMPTY_STRING);
 		helpLabel.setText(UPDATE_HINT_MESSAGE);
 	}
 
 	private void showDeleteDialog() {
 		textInputArea.setText(DELETE_HINT_INPUT);
-		feedbackLabel.setText("");
+		feedbackLabel.setText(EMPTY_STRING);
 		helpLabel.setText(DELETE_HINT_MESSAGE);
 	}
 
@@ -874,8 +848,7 @@ public class MainPage extends AnchorPane {
 	}
 
 	private void showAddDialog() {
-
 		textInputArea.setText(ADD_HINT_INPUT);
-		feedbackLabel.setText("");
+		feedbackLabel.setText(EMPTY_STRING);
 	}
 }

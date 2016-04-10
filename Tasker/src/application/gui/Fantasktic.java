@@ -24,7 +24,11 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-public class Tasker extends Application {
+/*
+ * This class sets the scene and startup for Fantasktic
+ */
+
+public class Fantasktic extends Application {
 
 	// Logger Messages
 	private static final String CLOSE_CLICK_TRAY_LOGGER_MSG = "Clicked close on system tray icon";
@@ -40,14 +44,14 @@ public class Tasker extends Application {
 
 	// Constants
 	private static final String ROBOT_GIF_URL = "robot.gif";
-	private static final String APPLICATION_NAME = "Tasker";
+	private static final String APPLICATION_NAME = "Fantasktic";
 	private static final String EMPTY_STRING = "";
 	private static final String BACKSLASH = "\\";
 	private static final String CSS_URL = "application/gui/application.css";
 	private static final String LOGO_URL = "robot.jpg";
 	private static final String DIRECTORY_CHOOSER_TITLE = "Pick Where To Store Tasks";
 	private static final String CURRENT_DIRECTORY = "user.dir";
-	private static final String SYSTEM_TRAY_HINT = "Tasker is still running in the background.";
+	private static final String SYSTEM_TRAY_HINT = "Fantasktic is still running in the background.";
 	private static final String SHOW_MENU_TEXT = "Show";
 	private static final String EXIT_MENU_TEXT = "Exit";
 
@@ -211,15 +215,21 @@ public class Tasker extends Application {
 	// create a popup menu for right clicking system tray icon
 	private PopupMenu popupMenuConfiguration(final ActionListener closeListener, ActionListener showListener) {
 		PopupMenu popup = new PopupMenu();
+		addShowMenuToPopup(showListener, popup);
+		addExitMenuToPopup(closeListener, popup);
+		return popup;
+	}
 
-		MenuItem showItem = new MenuItem(SHOW_MENU_TEXT);
-		showItem.addActionListener(showListener);
-		popup.add(showItem);
-
+	private void addExitMenuToPopup(final ActionListener closeListener, PopupMenu popup) {
 		MenuItem closeItem = new MenuItem(EXIT_MENU_TEXT);
 		closeItem.addActionListener(closeListener);
 		popup.add(closeItem);
-		return popup;
+	}
+
+	private void addShowMenuToPopup(ActionListener showListener, PopupMenu popup) {
+		MenuItem showItem = new MenuItem(SHOW_MENU_TEXT);
+		showItem.addActionListener(showListener);
+		popup.add(showItem);
 	}
 
 	// Message when minimized
