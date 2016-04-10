@@ -75,6 +75,7 @@ public class DateObject extends HBox {
 									wholeList.indexOf(item) + OFFSET);
 							setGraphic(calItem);
 						} else {
+							assert (item == null);
 							setGraphic(null);
 						}
 					}
@@ -89,12 +90,11 @@ public class DateObject extends HBox {
 		Calendar cal = Calendar.getInstance();
 		int overdueCheck = NOT_OVERDUE_VARIABLE;
 		if (!(item instanceof EventTask)) {
-			assert (item.getEndDate() != null);
 			if (item.getEndDate() != null) {
 				overdueCheck = item.getEndDate().getTime().compareTo(cal.getTime());
 			}
 		} else {
-			assert (item.getStartDate() != null);
+			assert (item instanceof EventTask);
 			if (item.getStartDate() != null) {
 				overdueCheck = item.getStartDate().getTime().compareTo(cal.getTime());
 			}
@@ -122,6 +122,7 @@ public class DateObject extends HBox {
 		if (date != null) {
 			this.dateLabel.setText(date.toUpperCase());
 		} else {
+			assert (date == null);
 			this.dateLabel.setText(UNDATED_TEXT);
 		}
 	}
