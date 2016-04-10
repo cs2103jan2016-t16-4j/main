@@ -21,22 +21,14 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-	minWidth="-Infinity" prefHeight="750.0" prefWidth="1107.0"
-	style="-fx-background-color: white;" type="AnchorPane" xmlns="http://javafx.com/javafx/8"
-	xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1107.0" style="-fx-background-color: white;" type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-		<Rectangle arcWidth="5.0" fill="#00acc1" height="172.0"
-			smooth="false" stroke="#fcf8f800" strokeType="INSIDE" strokeWidth="0.0"
-			style="-fx-border-color: transparent;" width="1116.0">
+		<Rectangle arcWidth="5.0" fill="#00acc1" height="172.0" smooth="false" stroke="#fcf8f800" strokeType="INSIDE" strokeWidth="0.0" style="-fx-border-color: transparent;" width="1116.0">
 			<effect>
-				<DropShadow color="#000000bc" height="30.0" offsetY="5.0"
-					radius="12.25" />
+				<DropShadow color="#000000bc" height="30.0" offsetY="5.0" radius="12.25" />
 			</effect>
 		</Rectangle>
-		<Label fx:id="feedbackLabel" alignment="TOP_LEFT" layoutX="135.0"
-			layoutY="107.0" prefHeight="52.0" prefWidth="953.0" text="Feedback Bar"
-			textFill="WHITE">
+		<Label fx:id="feedbackLabel" alignment="TOP_LEFT" layoutX="135.0" layoutY="107.0" prefHeight="52.0" prefWidth="953.0" text="Feedback Bar" textFill="WHITE">
 			<padding>
 				<Insets left="12.0" />
 			</padding>
@@ -44,9 +36,7 @@
 				<Font name="System Bold" size="18.0" />
 			</font>
 		</Label>
-		<TextField fx:id="textInputArea" layoutX="20.0" layoutY="14.0"
-			prefHeight="59.0" prefWidth="1066.0" promptText="What would you like us to do for you?"
-			style="-fx-background-color: white; -fx-background-radius: 0;">
+		<TextField fx:id="textInputArea" layoutX="20.0" layoutY="14.0" prefHeight="59.0" prefWidth="1066.0" promptText="What would you like us to do for you?" style="-fx-background-color: white; -fx-background-radius: 0;">
 			<font>
 				<Font size="22.0" />
 			</font>
@@ -57,9 +47,7 @@
 				<Cursor fx:constant="TEXT" />
 			</cursor>
 		</TextField>
-		<Label fx:id="helpLabel" alignment="TOP_LEFT" layoutX="85.0"
-			layoutY="81.0" prefHeight="29.0" prefWidth="1003.0" text="Help Bar"
-			textFill="WHITE">
+		<Label fx:id="helpLabel" alignment="TOP_LEFT" layoutX="85.0" layoutY="81.0" prefHeight="29.0" prefWidth="1003.0" text="Help Bar" textFill="WHITE">
 			<font>
 				<Font name="System Bold" size="18.0" />
 			</font>
@@ -67,8 +55,7 @@
 				<Insets left="12.0" />
 			</padding>
 		</Label>
-		<Label alignment="TOP_LEFT" layoutX="20.0" layoutY="107.0"
-			prefHeight="52.0" prefWidth="122.0" text="Feedback :" textFill="WHITE">
+		<Label alignment="TOP_LEFT" layoutX="20.0" layoutY="107.0" prefHeight="52.0" prefWidth="122.0" text="Feedback :" textFill="WHITE">
 			<font>
 				<Font name="System Bold" size="18.0" />
 			</font>
@@ -76,8 +63,7 @@
 				<Insets left="12.0" />
 			</padding>
 		</Label>
-		<Label alignment="TOP_LEFT" layoutX="20.0" layoutY="81.0"
-			prefHeight="52.0" prefWidth="122.0" text="Help :" textFill="WHITE">
+		<Label alignment="TOP_LEFT" layoutX="20.0" layoutY="81.0" prefHeight="52.0" prefWidth="122.0" text="Help :" textFill="WHITE">
 			<font>
 				<Font name="System Bold" size="18.0" />
 			</font>
@@ -86,33 +72,30 @@
 			</padding>
 		</Label>
 		<!-- @@author A0125417L -->
-		<StackPane fx:id="stackPane" layoutX="23.0" layoutY="184.0"
-			prefHeight="566.0" prefWidth="1066.0" style="-fx-background-insets: 0;">
+		<StackPane fx:id="stackPane" layoutX="23.0" layoutY="184.0" prefHeight="566.0" prefWidth="1066.0" style="-fx-background-insets: 0;">
 			<children>
-				<ListView fx:id="displayList" prefHeight="501.0" prefWidth="1066.0"
-					style="-fx-background-insets: 0;" />
-				<ListView fx:id="calendarList" prefHeight="461.0"
-					prefWidth="1066.0" style="-fx-background-insets: 0;" />
+				<ListView fx:id="displayList" prefHeight="501.0" prefWidth="1066.0" style="-fx-background-insets: 0;" />
+				<ListView fx:id="calendarList" prefHeight="461.0" prefWidth="1066.0" style="-fx-background-insets: 0;" />
 			</children>
 		</StackPane>
-		<AnchorPane fx:id="hiddenMenu" layoutX="-333.0" layoutY="184.0"
-			prefHeight="575.0" prefWidth="328.0" style="-fx-background-color: #D3D3D3;">
+		<AnchorPane fx:id="hiddenMenu" layoutX="-335.0" layoutY="243.0" prefHeight="448.0" prefWidth="328.0" style="-fx-background-color: #ECEFF1;">
 			<children>
-				<Label fx:id="Summary" layoutX="98.0" layoutY="21.0"
-					style="-fx-underline: true; -fx-font-weight: bold;" text="Summary">
+				<Label fx:id="Summary" alignment="CENTER" contentDisplay="CENTER" layoutX="17.0" layoutY="21.0" prefHeight="27.0" prefWidth="293.0" style="-fx-underline: true; -fx-font-weight: bold;" text="SUMMARY" textFill="#616060">
 					<font>
 						<Font size="24.0" />
 					</font>
 				</Label>
-				<Label fx:id="overdueLabel" alignment="CENTER" layoutX="106.0"
-					layoutY="57.0" text="Overdue Tasks:" />
-				<Label fx:id="completedLabel" alignment="CENTER" layoutX="93.0"
-					layoutY="87.0" text="Completed Tasks:" />
-				<Label fx:id="remainingLabel" alignment="CENTER" layoutX="99.0"
-					layoutY="119.0" text="Remaning Tasks:" />
-				<PieChart fx:id="pieChart" layoutX="2.0" layoutY="247.0"
-					prefHeight="259.0" prefWidth="326.0" />
+				<Label layoutX="62.0" layoutY="70.0" prefHeight="27.0" prefWidth="160.0" text="OVERDUE TASKS:" textFill="#6b6a6a" />
+				<Label alignment="CENTER" layoutX="62.0" layoutY="97.0" text="COMPLETED TASKS:" textFill="#6b6a6a" />
+				<Label layoutX="62.0" layoutY="124.0" prefHeight="27.0" prefWidth="160.0" text="REMAINING TASKS:" textFill="#6b6a6a" />
+            <Label fx:id="overdueLabel" layoutX="241.0" layoutY="70.0" text="0" textFill="#6b6a6a" />
+				<PieChart fx:id="pieChart" layoutX="1.0" layoutY="167.0" prefHeight="259.0" prefWidth="326.0" />
+            <Label fx:id="completedLabel" layoutX="241.0" layoutY="97.0" text="0" textFill="#6b6a6a" />
+            <Label fx:id="remainingLabel" layoutX="241.0" layoutY="124.0" text="0" textFill="#6b6a6a" />
 			</children>
+         <effect>
+            <DropShadow color="#000000bf" offsetX="2.0" offsetY="2.0" />
+         </effect>
 		</AnchorPane>
 	</children>
 	<effect>
