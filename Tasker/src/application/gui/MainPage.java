@@ -16,6 +16,7 @@ import org.controlsfx.control.Notifications;
 import application.logger.LoggerHandler;
 import application.backend.Feedback;
 import application.backend.BackendFacade;
+import application.storage.EventTask;
 import application.storage.FloatingTask;
 import application.storage.Task;
 import javafx.animation.TranslateTransition;
@@ -33,7 +34,6 @@ import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -49,7 +49,7 @@ import javafx.util.Duration;
  * 
  */
 
-public class CalendarViewPage extends AnchorPane {
+public class MainPage extends AnchorPane {
 
 	// Constants
 	private static final int FIRST_WORD = 0;
@@ -73,7 +73,7 @@ public class CalendarViewPage extends AnchorPane {
 	private static final String A_TEXT = "a";
 	private static final String V_TEXT = "v";
 	private static final String HELP_TEXT = "help";
-	private static final String LISTVIEW_FXML_URL = "ListView.fxml";
+	private static final String MAIN_PAGE_FXML_URL = "MainPage.fxml";
 	private static final String LIST_FLAG = "list";
 	private static final String CAL_FLAG = "cal";
 	private static final String HELP_FLAG = HELP_TEXT;
@@ -171,10 +171,10 @@ public class CalendarViewPage extends AnchorPane {
 	private PieChart pieChart;
 
 	// @@author A0132632R
-	public CalendarViewPage(ArrayList<Task> taskList, BackendFacade logicFacade) {
+	public MainPage(ArrayList<Task> taskList, BackendFacade logicFacade) {
 		tasksOnScreen = taskList;
 		this.logicFacade = logicFacade;
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(LISTVIEW_FXML_URL));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(MAIN_PAGE_FXML_URL));
 		loadFromFxml(fxmlLoader);
 		initialize();
 		initializeInputArea();
@@ -299,9 +299,16 @@ public class CalendarViewPage extends AnchorPane {
 	// Check if task is overdue
 	private int checkIfOverdue(Task item, Calendar cal) {
 		int overdueCheck = overdueCheckVariable;
-		assert (item.getEndDate() != null);
-		if (item.getEndDate() != null) {
-			overdueCheck = item.getEndDate().getTime().compareTo(cal.getTime());
+		if (!(item instanceof EventTask)) {
+			assert (item.getEndDate() != null);
+			if (item.getEndDate() != null) {
+				overdueCheck = item.getEndDate().getTime().compareTo(cal.getTime());
+			}
+		} else {
+			assert (item.getStartDate() != null);
+			if (item.getStartDate() != null) {
+				overdueCheck = item.getStartDate().getTime().compareTo(cal.getTime());
+			}
 		}
 		return overdueCheck;
 	}
@@ -361,12 +368,8 @@ public class CalendarViewPage extends AnchorPane {
 
 	// Method that calls other methods to update the data
 	private void updateViews(ArrayList<Task> taskList, Task taskToFocus) {
-		ArrayList<Task> clashList = null;
-		if (taskToFocus != null) {
-			clashList = logicFacade.getClashes(taskToFocus);
-		}
 		updateCalendarList(taskList, taskToFocus);
-		updateDisplayList(taskList, clashList);
+		updateDisplayList(taskList, taskToFocus);
 		updateSummary();
 	}
 
@@ -409,18 +412,15 @@ public class CalendarViewPage extends AnchorPane {
 	}
 
 	// Updates data of the task view
-	private void updateDisplayList(ArrayList<Task> taskList, ArrayList<Task> clashList) {
+	private void updateDisplayList(ArrayList<Task> taskList, Task taskToFocus) {
 		this.displayList.getItems().clear();
 		assert (taskList.size() != EMPTY);
 		if (taskList.size() != EMPTY) {
 			ObservableList<Task> list = makeDisplayList(taskList);
 			this.displayList.setItems(list);
-			if (clashList != null) {
-				// this.displayList.scrollTo(clashList);
-				this.displayList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-				for (Task task : clashList) {
-					this.displayList.getSelectionModel().select(task);
-				}
+			if (taskToFocus != null) {
+				this.displayList.scrollTo(taskToFocus);
+				this.displayList.getSelectionModel().select(taskToFocus);
 			}
 		}
 	}
@@ -777,6 +777,7 @@ public class CalendarViewPage extends AnchorPane {
 		return secondLetter;
 	}
 
+	// @@author A0078688A
 	private void showExitDialog() {
 		textInputArea.setText("Exit");
 		feedbackLabel.setText("");

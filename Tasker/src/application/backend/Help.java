@@ -8,7 +8,7 @@ import application.storage.Task;
 public class Help implements Command {
 	private static final String COMMAND_ADD = "add:\n--Adds new tasks (keyword add is not required)\n--Adds"
 			+ " <Task> due by <date> at <Venue> and sets reminder\n--Note: by <Date>, @ <Venue>, remind <When>, priority <Level> are optional.\n"
-			+ "--Note: Use ¡°instead of¡± to add recurring tasks.\n";
+			+ "--Note: Use every instead of by to add recurring tasks.\n";
 	private static final String COMMAND_SEARCH = "search:\n--Search for tasks\n--Search by <Name> or priority <Level> or due <Date>\n";
 	private static final String COMMAND_DELETE = "delete:\n --Delete tasks\n--Deletes tasks by name or number assigned to the task\n";
 	private static final String COMMAND_UPDATE = "update:\n --Updates a task\n--Updates task to change description or details.\n"

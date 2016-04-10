@@ -24,7 +24,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-public class GuiMain extends Application {
+public class Tasker extends Application {
 
 	// Logger Messages
 	private static final String CLOSE_CLICK_TRAY_LOGGER_MSG = "Clicked close on system tray icon";
@@ -66,7 +66,7 @@ public class GuiMain extends Application {
 		try {
 			setEnvironment();
 			initializeSaveDirectory(primaryStage);
-			CalendarViewPage page = new CalendarViewPage(taskList, logicFacade);
+			MainPage page = new MainPage(taskList, logicFacade);
 			Platform.setImplicitExit(false);
 			Scene scene = new Scene(page);
 			scene.getStylesheets().clear();
