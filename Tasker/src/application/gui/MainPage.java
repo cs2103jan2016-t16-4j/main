@@ -128,7 +128,6 @@ public class MainPage extends AnchorPane {
 	private static final String MESSAGE_FEEDBACK_INTRO = "We'll give you feedback on your commands here.";
 	private static final String MESSAGE_ERROR = "There was some problem processing your request. "
 			+ "Please check your input format.";
-	private static String MESSAGE_TASK = "%1$s: %2$s";
 	private static String MESSAGE_DIRECTORY_CHANGED = "Directory Changed: %1$s%2$s";
 	private static final String DIRECTORY_NOT_CHANGED_MESSAGE = "Directory Not Changed!";
 
@@ -142,7 +141,7 @@ public class MainPage extends AnchorPane {
 	private String text = EMPTY_STRING;
 	private static ArrayList<String> commands = new ArrayList<String>();
 	private ArrayList<Task> tasksOnScreen;
-	private BackendFacade logicFacade;
+	private BackendFacade backendFacade;
 	TranslateTransition openPanel;
 	TranslateTransition closePanel;
 
@@ -171,9 +170,9 @@ public class MainPage extends AnchorPane {
 	private PieChart pieChart;
 
 	// @@author A0132632R
-	public MainPage(ArrayList<Task> taskList, BackendFacade logicFacade) {
+	public MainPage(ArrayList<Task> taskList, BackendFacade backendFacade) {
 		tasksOnScreen = taskList;
-		this.logicFacade = logicFacade;
+		this.backendFacade = backendFacade;
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(MAIN_PAGE_FXML_URL));
 		loadFromFxml(fxmlLoader);
 		initialize();
@@ -375,16 +374,17 @@ public class MainPage extends AnchorPane {
 
 	// Update the side panel
 	private void updateSummary() {
-		completedLabel.setText(String.format(MESSAGE_TASK, COMPLETED_TASKS_TEXT, logicFacade.getCompletedTaskCount()));
-		remainingLabel.setText(String.format(MESSAGE_TASK, REMAINING_TASKS_TEXT, logicFacade.getRemainingTaskCount()));
-		overdueLabel.setText(String.format(MESSAGE_TASK, OVERDUE_TASKS_TEXT, logicFacade.getOverdueTaskCount()));
+		completedLabel.setText(String.valueOf(backendFacade.getCompletedTaskCount()));
+		remainingLabel.setText(String.valueOf(backendFacade.getRemainingTaskCount()));
+		overdueLabel.setText(String.valueOf(backendFacade.getOverdueTaskCount()));
 		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-				new PieChart.Data(COMPLETED_TASKS_TEXT, logicFacade.getCompletedTaskCount()),
-				new PieChart.Data(REMAINING_TASKS_TEXT, logicFacade.getRemainingTaskCount()),
-				new PieChart.Data(OVERDUE_TASKS_TEXT, logicFacade.getOverdueTaskCount()));
+				new PieChart.Data(COMPLETED_TASKS_TEXT, backendFacade.getCompletedTaskCount()),
+				new PieChart.Data(REMAINING_TASKS_TEXT, backendFacade.getRemainingTaskCount()),
+				new PieChart.Data(OVERDUE_TASKS_TEXT, backendFacade.getOverdueTaskCount()));
 		pieChart.setData(pieChartData);
 		pieChart.setLabelsVisible(false);
 		pieChart.setLegendSide(Side.BOTTOM);
+
 	}
 
 	// Notification behavior for adding or updating tasks
@@ -463,7 +463,7 @@ public class MainPage extends AnchorPane {
 					try {
 						text = textInputArea.getText();
 						commands.add(text);
-						Feedback feedback = logicFacade.executeCommand(text, tasksOnScreen);
+						Feedback feedback = backendFacade.executeCommand(text, tasksOnScreen);
 						System.out.println(feedback.getMessage());
 						tasksOnScreen = feedback.getTasks();
 						taskToFocus = feedback.getTaskToScrollTo();
@@ -601,11 +601,11 @@ public class MainPage extends AnchorPane {
 	public void directoryPrompt(Stage primaryStage, DirectoryChooser dirChooser) throws IOException {
 		final File selectedDirectory = dirChooser.showDialog(primaryStage);
 		if (selectedDirectory != null) {
-			logicFacade.setDirectory(selectedDirectory.getPath().toString() + BACKSLASH);
+			backendFacade.setDirectory(selectedDirectory.getPath().toString() + BACKSLASH);
 			feedbackLabel.setText(
 					String.format(MESSAGE_DIRECTORY_CHANGED, selectedDirectory.getPath().toString(), BACKSLASH));
 		} else {
-			logicFacade.setDirectory(EMPTY_STRING);
+			backendFacade.setDirectory(EMPTY_STRING);
 			feedbackLabel.setText(DIRECTORY_NOT_CHANGED_MESSAGE);
 		}
 	}

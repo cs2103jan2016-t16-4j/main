@@ -1,12 +1,11 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
 
-.list-view .list-cell{
+/*.list-view .list-cell{
 	-fx-background-color: white;
 	-fx-alignment: center;
 	-fx-label-padding: 0.0 0.0 5.0 0.0;
 }
-
-
+*/
 /* @@author A0125417L */
 .list-view .scroll-bar:horizontal .increment-arrow,
 .list-view .scroll-bar:horizontal .decrement-arrow,
@@ -18,3 +17,7 @@
 .list-view .scroll-bar:vertical .decrement-button{
     -fx-padding:0.0;
 }
+
+.data0.chart-pie { -fx-pie-color: #C8E6C9; }
+.data1.chart-pie { -fx-pie-color: #B2EBF2; }
+.data2.chart-pie { -fx-pie-color: #B71C1C; }

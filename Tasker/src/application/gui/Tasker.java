@@ -53,7 +53,7 @@ public class Tasker extends Application {
 
 	// Variables
 	private TrayIcon trayIcon;
-	private BackendFacade logicFacade;
+	private BackendFacade backendFacade;
 	private ArrayList<Task> taskList;
 
 	public static void main(String[] args) {
@@ -66,7 +66,7 @@ public class Tasker extends Application {
 		try {
 			setEnvironment();
 			initializeSaveDirectory(primaryStage);
-			MainPage page = new MainPage(taskList, logicFacade);
+			MainPage page = new MainPage(taskList, backendFacade);
 			Platform.setImplicitExit(false);
 			Scene scene = new Scene(page);
 			scene.getStylesheets().clear();
@@ -99,19 +99,19 @@ public class Tasker extends Application {
 	}
 
 	private void setEnvironment() {
-		this.logicFacade = new BackendFacade();
+		this.backendFacade = new BackendFacade();
 	}
 
 	// Checks if user has used the program at least once if not prompt to save
 	// file
 	private void initializeSaveDirectory(Stage primaryStage) throws IOException {
-		if (!logicFacade.checkIfFileExists()) {
+		if (!backendFacade.checkIfFileExists()) {
 			DirectoryChooser dirChooser = new DirectoryChooser();
 			configureDirectoryChooser(dirChooser);
 			directoryPrompt(primaryStage, dirChooser);
-			taskList = logicFacade.loadDataFile();
+			taskList = backendFacade.loadDataFile();
 		} else {
-			taskList = logicFacade.loadDataFile();
+			taskList = backendFacade.loadDataFile();
 		}
 	}
 
@@ -119,9 +119,9 @@ public class Tasker extends Application {
 	public void directoryPrompt(Stage primaryStage, DirectoryChooser dirChooser) throws IOException {
 		final File selectedDirectory = dirChooser.showDialog(primaryStage);
 		if (selectedDirectory != null) {
-			logicFacade.setDirectory(selectedDirectory.getPath().toString() + BACKSLASH);
+			backendFacade.setDirectory(selectedDirectory.getPath().toString() + BACKSLASH);
 		} else {
-			logicFacade.setDirectory(EMPTY_STRING);
+			backendFacade.setDirectory(EMPTY_STRING);
 		}
 	}
 

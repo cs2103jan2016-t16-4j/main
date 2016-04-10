@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Logger;
 import application.logger.LoggerHandler;
+import application.storage.EventTask;
 import application.storage.Task;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -87,9 +88,16 @@ public class DateObject extends HBox {
 	private int checkIfOverdue(Task item) {
 		Calendar cal = Calendar.getInstance();
 		int overdueCheck = NOT_OVERDUE_VARIABLE;
-		assert (item.getEndDate() != null);
-		if (item.getEndDate() != null) {
-			overdueCheck = item.getEndDate().getTime().compareTo(cal.getTime());
+		if (!(item instanceof EventTask)) {
+			assert (item.getEndDate() != null);
+			if (item.getEndDate() != null) {
+				overdueCheck = item.getEndDate().getTime().compareTo(cal.getTime());
+			}
+		} else {
+			assert (item.getStartDate() != null);
+			if (item.getStartDate() != null) {
+				overdueCheck = item.getStartDate().getTime().compareTo(cal.getTime());
+			}
 		}
 		return overdueCheck;
 	}
