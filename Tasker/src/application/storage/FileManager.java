@@ -125,7 +125,6 @@ public class FileManager {
 				logger.log(Level.SEVERE, "Error finding file.");
 			}
 		}
-		System.out.println(list.size());
 		return list;
 	}
 
