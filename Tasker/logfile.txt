@@ -12269,3 +12269,53 @@ INFO: executing above parsed command
 10.04.2016 11:32:08 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
 10.04.2016 11:32:08 - INFO    - application.backend.Exit - execute - Exiting through exit command
  ----------------------   End  Sun Apr 10 23:32:08 SGT 2016 ---------------------- 
+ ----------------------  Start Mon Apr 11 02:51:51 SGT 2016 ---------------------- 
+11.04.2016 02:51:51 - INFO    - application.gui.Fantasktic - start - Setting up gui
+11.04.2016 02:51:55 - INFO    - application.storage.FileManager - loadDirectoryFile - Loading directory file
+11.04.2016 02:51:55 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+11.04.2016 02:51:56 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+11.04.2016 02:51:57 - INFO    - application.gui.ResourceLoader - load - Loading Resource
+11.04.2016 02:52:47 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: summary
+11.04.2016 02:52:47 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+11.04.2016 02:52:47 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+11.04.2016 02:52:47 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: summary
+11.04.2016 02:52:47 - INFO    - application.backend.Parser - convertToCommand - Making summary command object
+11.04.2016 02:52:47 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+11.04.2016 02:52:47 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+11.04.2016 02:52:47 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+11.04.2016 02:52:47 - INFO    - application.backend.Logic - executeCommand - adding command to history
+11.04.2016 02:55:33 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: exit
+11.04.2016 02:55:33 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+11.04.2016 02:55:33 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+11.04.2016 02:55:33 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: exit
+11.04.2016 02:55:33 - INFO    - application.backend.Parser - convertToCommand - Making exit command object
+11.04.2016 02:55:33 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+11.04.2016 02:55:33 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+11.04.2016 02:55:33 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+11.04.2016 02:55:33 - INFO    - application.backend.Exit - execute - Exiting through exit command
+ ----------------------   End  Mon Apr 11 02:55:33 SGT 2016 ---------------------- 
+ ----------------------  Start Mon Apr 11 03:05:01 SGT 2016 ---------------------- 
+11.04.2016 03:05:01 - INFO    - application.gui.Fantasktic - start - Setting up gui
+11.04.2016 03:05:04 - INFO    - application.storage.FileManager - loadDirectoryFile - Loading directory file
+11.04.2016 03:05:04 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+11.04.2016 03:05:04 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+11.04.2016 03:05:06 - INFO    - application.gui.ResourceLoader - load - Loading Resource
+11.04.2016 03:06:02 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: summary
+11.04.2016 03:06:02 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+11.04.2016 03:06:02 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+11.04.2016 03:06:02 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: summary
+11.04.2016 03:06:02 - INFO    - application.backend.Parser - convertToCommand - Making summary command object
+11.04.2016 03:06:02 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+11.04.2016 03:06:02 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+11.04.2016 03:06:02 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+11.04.2016 03:06:02 - INFO    - application.backend.Logic - executeCommand - adding command to history
+11.04.2016 03:06:49 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: exit
+11.04.2016 03:06:49 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+11.04.2016 03:06:49 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+11.04.2016 03:06:49 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: exit
+11.04.2016 03:06:49 - INFO    - application.backend.Parser - convertToCommand - Making exit command object
+11.04.2016 03:06:49 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+11.04.2016 03:06:49 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+11.04.2016 03:06:49 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+11.04.2016 03:06:49 - INFO    - application.backend.Exit - execute - Exiting through exit command
+ ----------------------   End  Mon Apr 11 03:06:49 SGT 2016 ---------------------- 

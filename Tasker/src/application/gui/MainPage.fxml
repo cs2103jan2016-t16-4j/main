@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.chart.PieChart?>
@@ -12,9 +21,9 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1107.0" style="-fx-background-color: white;" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1107.0" style="-fx-background-color: white;" type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-		<Rectangle arcWidth="5.0" fill="#00acc1" height="172.0" smooth="false" stroke="#fcf8f800" strokeType="INSIDE" strokeWidth="0.0" style="-fx-border-color: transparent;" width="1116.0">
+		<Rectangle arcWidth="5.0" fill="#00acc1" height="172.0" smooth="false" stroke="#fcf8f800" strokeType="INSIDE" strokeWidth="0.0" style="-fx-border-color: transparent;" width="1122.0">
 			<effect>
 				<DropShadow color="#000000bc" height="30.0" offsetY="5.0" radius="12.25" />
 			</effect>
@@ -63,26 +72,42 @@
 			</padding>
 		</Label>
 		<!-- @@author A0125417L -->
-		<StackPane fx:id="stackPane" layoutX="23.0" layoutY="184.0" prefHeight="566.0" prefWidth="1066.0" style="-fx-background-insets: 0;">
+		<StackPane fx:id="stackPane" layoutX="23.0" layoutY="184.0" prefHeight="510.0" prefWidth="1066.0" style="-fx-background-insets: 0;">
 			<children>
 				<ListView fx:id="displayList" prefHeight="501.0" prefWidth="1066.0" style="-fx-background-insets: 0;" />
-				<ListView fx:id="calendarList" prefHeight="461.0" prefWidth="1066.0" style="-fx-background-insets: 0;" />
+				<ListView fx:id="calendarList" prefHeight="447.0" prefWidth="1066.0" style="-fx-background-insets: 0;" />
 			</children>
 		</StackPane>
-		<AnchorPane fx:id="hiddenMenu" layoutX="-335.0" layoutY="243.0" prefHeight="448.0" prefWidth="328.0" style="-fx-background-color: #ECEFF1;">
+		<AnchorPane fx:id="hiddenMenu" layoutX="-335.0" layoutY="215.0" prefHeight="448.0" prefWidth="328.0" style="-fx-background-color: #ECEFF1;">
 			<children>
-				<Label fx:id="Summary" alignment="CENTER" contentDisplay="CENTER" layoutX="17.0" layoutY="21.0" prefHeight="27.0" prefWidth="293.0" style="-fx-underline: true; -fx-font-weight: bold;" text="SUMMARY" textFill="#616060">
-					<font>
-						<Font size="24.0" />
-					</font>
-				</Label>
-				<Label layoutX="62.0" layoutY="70.0" prefHeight="27.0" prefWidth="160.0" text="OVERDUE TASKS:" textFill="#6b6a6a" />
-				<Label alignment="CENTER" layoutX="62.0" layoutY="106.0" text="COMPLETED TASKS:" textFill="#6b6a6a" />
-				<Label layoutX="62.0" layoutY="133.0" prefHeight="27.0" prefWidth="160.0" text="REMAINING TASKS:" textFill="#6b6a6a" />
-            <Label fx:id="overdueLabel" layoutX="243.0" layoutY="75.0" text="0" textFill="#6b6a6a" />
-				<PieChart fx:id="pieChart" layoutX="1.0" layoutY="167.0" prefHeight="259.0" prefWidth="326.0" />
-            <Label fx:id="completedLabel" layoutX="243.0" layoutY="106.0" text="0" textFill="#6b6a6a" />
-            <Label fx:id="remainingLabel" layoutX="243.0" layoutY="138.0" text="0" textFill="#6b6a6a" />
+            <VBox layoutX="64.0" layoutY="21.0" prefHeight="90.0" prefWidth="200.0">
+               <children>
+      				<Label fx:id="Summary" alignment="CENTER" contentDisplay="CENTER" minWidth="-Infinity" prefHeight="27.0" prefWidth="200.0" style="-fx-underline: true; -fx-font-weight: bold;" text="SUMMARY" textFill="#616060">
+      					<font>
+      						<Font size="24.0" />
+      					</font>
+      				</Label>
+                  <HBox prefHeight="32.0" prefWidth="200.0">
+                     <children>
+            				<Label prefHeight="0.0" prefWidth="176.0" text="OVERDUE TASKS:" textFill="#6b6a6a" />
+                        <Label fx:id="overdueLabel" alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="25.0" text="0" textFill="#6b6a6a" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="17.0" prefWidth="200.0">
+                     <children>
+            				<Label prefHeight="0.0" prefWidth="177.0" text="COMPLETED TASKS:" textFill="#6b6a6a" />
+                        <Label fx:id="completedLabel" alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="23.0" text="0" textFill="#6b6a6a" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="18.0" prefWidth="200.0">
+                     <children>
+            				<Label prefHeight="0.0" prefWidth="177.0" text="REMAINING TASKS:" textFill="#6b6a6a" />
+                        <Label fx:id="remainingLabel" alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="23.0" text="0" textFill="#6b6a6a" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+				<PieChart fx:id="pieChart" layoutX="1.0" layoutY="147.0" prefHeight="259.0" prefWidth="326.0" />
 			</children>
          <effect>
             <DropShadow color="#000000bf" offsetX="2.0" offsetY="2.0" />
