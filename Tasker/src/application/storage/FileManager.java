@@ -17,11 +17,10 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import application.logger.LoggerHandler;
+
 /**
  * FileManager is used to save/load tasks into/into text file.
  * It also holds the current storage location path, and the data files (open and close lists) path.
@@ -106,7 +105,7 @@ public class FileManager {
 	}
 
 	/**
-	 * Loads the given file of tasks (close,open) into ArrayList<Task>.
+	 * Loads the user tasks file (open and close list) into a list.
 	 */
 	public ArrayList<Task> loadFile(String filePath) {
 		File file = new File(filePath);
@@ -114,20 +113,12 @@ public class FileManager {
 		ArrayList<Task> list = new ArrayList<Task>();
 		logger.log(Level.INFO, "Loading tasks into list");
 		if (file.exists()) {
-			String readText;
 			try {
 				in = new BufferedReader(new FileReader(filePath));
 				if (filePath.equalsIgnoreCase(dataFilePath)) {
-					// skip first line first for data file
-					readText = in.readLine();
-					Gson gson = new GsonBuilder().registerTypeAdapter(Task.class, new TaskSerializer())
-							.registerTypeAdapter(EventTask.class, new TaskSerializer())
-							.registerTypeAdapter(DeadlineTask.class, new TaskSerializer())
-							.registerTypeAdapter(FloatingTask.class, new TaskSerializer()).create();
-					while ((readText = in.readLine()) != null) {
-						Task task = gson.fromJson(readText, Task.class);
-						list.add(task);
-					}
+					// skip first line first if its data file (open list)
+					String readText = in.readLine();
+					loadTasksIntoFile(in, list);
 					in.close();
 				}
 			} catch (IOException e) {
@@ -135,6 +126,21 @@ public class FileManager {
 			}
 		}
 		return list;
+	}
+
+	/**
+	 * Loads the given file of tasks (close,open) into ArrayList<Task>.
+	 */
+	private void loadTasksIntoFile(BufferedReader in, ArrayList<Task> list) throws IOException {
+		String readText;
+		Gson gson = new GsonBuilder().registerTypeAdapter(Task.class, new TaskSerializer())
+				.registerTypeAdapter(EventTask.class, new TaskSerializer())
+				.registerTypeAdapter(DeadlineTask.class, new TaskSerializer())
+				.registerTypeAdapter(FloatingTask.class, new TaskSerializer()).create();
+		while ((readText = in.readLine()) != null) {
+			Task task = gson.fromJson(readText, Task.class);
+			list.add(task);
+		}
 	}
 
 	/**
@@ -148,22 +154,30 @@ public class FileManager {
 			String readText;
 
 			readText = in.readLine();
-			if (readText == null) {
-				closedFilePath = FILE_CLOSED_NAME;
-				dataFilePath = FILE_DATA_NAME;
-				File directoryFile = new File(FILE_DIRECTORY_NAME);
-				String absolutePath = directoryFile.getAbsolutePath();
-				readText = absolutePath.substring(DIRECTORY_BEGIN_INDEX, absolutePath.lastIndexOf(File.separator))+ KEYWORD_SLASH;
-			} else {
-				closedFilePath = readText + FILE_CLOSED_NAME;
-				dataFilePath = readText + FILE_DATA_NAME;
-			}
+			readText = loadFilePaths(readText);
 			in.close();
 			return readText;
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Error loading directory file.");
 			return null;
 		}
+	}
+
+	/**
+	 * Set the file paths up to save open list and close list subsequently and return the storage directory of data files.
+	 */
+	private String loadFilePaths(String readText) {
+		if (readText == null) {
+			closedFilePath = FILE_CLOSED_NAME;
+			dataFilePath = FILE_DATA_NAME;
+			File directoryFile = new File(FILE_DIRECTORY_NAME);
+			String absolutePath = directoryFile.getAbsolutePath();
+			readText = absolutePath.substring(DIRECTORY_BEGIN_INDEX, absolutePath.lastIndexOf(File.separator))+ KEYWORD_SLASH;
+		} else {
+			closedFilePath = readText + FILE_CLOSED_NAME;
+			dataFilePath = readText + FILE_DATA_NAME;
+		}
+		return readText;
 	}
 
 	/**
@@ -193,22 +207,29 @@ public class FileManager {
 	 * Saves all tasks into the file path specified.
 	 */
 	private void saveAllTasks(ArrayList<Task> list, String filePath) {
-		PrintWriter fwz;
 		logger.log(Level.INFO, "Saving tasks into file");
 		try {
-			fwz = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
-			Gson gson = new GsonBuilder().registerTypeAdapter(Task.class, new TaskSerializer())
-					.registerTypeAdapter(EventTask.class, new TaskSerializer())
-					.registerTypeAdapter(DeadlineTask.class, new TaskSerializer())
-					.registerTypeAdapter(FloatingTask.class, new TaskSerializer()).create();
-			for (int i = 0; i < list.size(); i++) {
-				String json = gson.toJson(list.get(i));
-				fwz.println(json);
-			}
-			fwz.close();
+			saveTasksIntoFile(list, filePath);
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Error saving all tasks.");
 		}
+	}
+
+	/**
+	 * Saves all tasks into the file.
+	 */
+	private void saveTasksIntoFile(ArrayList<Task> list, String filePath) throws IOException {
+		PrintWriter fwz;
+		fwz = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
+		Gson gson = new GsonBuilder().registerTypeAdapter(Task.class, new TaskSerializer())
+				.registerTypeAdapter(EventTask.class, new TaskSerializer())
+				.registerTypeAdapter(DeadlineTask.class, new TaskSerializer())
+				.registerTypeAdapter(FloatingTask.class, new TaskSerializer()).create();
+		for (int i = 0; i < list.size(); i++) {
+			String json = gson.toJson(list.get(i));
+			fwz.println(json);
+		}
+		fwz.close();
 	}
 
 	/**
@@ -270,22 +291,29 @@ public class FileManager {
 				fw.println(path);
 
 				// migration of data files
-				Path newClosedFilePath = Paths.get(closedFilePath);
-				if (oldClosedFilePath.toFile().exists()) {
-					Files.copy(oldClosedFilePath, newClosedFilePath, StandardCopyOption.REPLACE_EXISTING);
-					Files.deleteIfExists(oldClosedFilePath);
-				}
-				Path newDataFilePath = Paths.get(dataFilePath);
-				if (oldDataFilePath.toFile().exists()) {
-					Files.copy(oldDataFilePath, newDataFilePath, StandardCopyOption.REPLACE_EXISTING);
-					Files.deleteIfExists(oldDataFilePath);
-				}
+				migrateFilesAndDeleteExistingFiles(oldClosedFilePath, oldDataFilePath);				
 				fw.close();
 				return true;
 			} catch (IOException e) {
 				logger.log(Level.SEVERE, "Error setting directory");
 				return false;
 			}
+		}
+	}
+	
+	/**
+	 * Migrate any existing data files to new directory and delete the existing data files.
+	 */
+	private void migrateFilesAndDeleteExistingFiles(Path oldClosedFilePath, Path oldDataFilePath) throws IOException {
+		Path newClosedFilePath = Paths.get(closedFilePath);
+		if (oldClosedFilePath.toFile().exists()) {
+			Files.copy(oldClosedFilePath, newClosedFilePath, StandardCopyOption.REPLACE_EXISTING);
+			Files.deleteIfExists(oldClosedFilePath);
+		}
+		Path newDataFilePath = Paths.get(dataFilePath);
+		if (oldDataFilePath.toFile().exists()) {
+			Files.copy(oldDataFilePath, newDataFilePath, StandardCopyOption.REPLACE_EXISTING);
+			Files.deleteIfExists(oldDataFilePath);
 		}
 	}
 }
