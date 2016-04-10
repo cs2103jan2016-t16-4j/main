@@ -49,7 +49,7 @@ import javafx.util.Duration;
  * 
  */
 
-public class CalendarViewPage extends AnchorPane {
+public class MainPage extends AnchorPane {
 
 	// Constants
 	private static final int FIRST_WORD = 0;
@@ -171,7 +171,7 @@ public class CalendarViewPage extends AnchorPane {
 	private PieChart pieChart;
 
 	// @@author A0132632R
-	public CalendarViewPage(ArrayList<Task> taskList, LogicFacade logicFacade) {
+	public MainPage(ArrayList<Task> taskList, LogicFacade logicFacade) {
 		tasksOnScreen = taskList;
 		this.logicFacade = logicFacade;
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(LISTVIEW_FXML_URL));

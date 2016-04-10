@@ -66,7 +66,7 @@ public class Tasker extends Application {
 		try {
 			setEnvironment();
 			initializeSaveDirectory(primaryStage);
-			CalendarViewPage page = new CalendarViewPage(taskList, logicFacade);
+			MainPage page = new MainPage(taskList, logicFacade);
 			Platform.setImplicitExit(false);
 			Scene scene = new Scene(page);
 			scene.getStylesheets().clear();
