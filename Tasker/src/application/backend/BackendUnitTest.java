@@ -1,7 +1,7 @@
 package application.backend;
 //@@author A0132632R
 import application.storage.Storage;
-import application.storage.StorageStubForLogic;
+import application.storage.StorageStubForBackend;
 import application.storage.Task;
 
 import static org.junit.Assert.assertEquals;
@@ -17,7 +17,7 @@ import org.junit.Test;
 public class BackendUnitTest {
     private static final int SIZE = 10;
     
-    private Storage storage = new StorageStubForLogic(SIZE);
+    private Storage storage = new StorageStubForBackend(SIZE);
     private StorageConnector storageConnector = new StorageConnector(storage);
     private Logic logic = new Logic(storageConnector);
 

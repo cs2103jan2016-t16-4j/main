@@ -7,10 +7,10 @@ import java.util.Calendar;
  * @author Pratyush
  *
  */
-public class StorageStubForLogic extends Storage {
+public class StorageStubForBackend extends Storage {
     ArrayList<Task> tasks = new ArrayList<Task>();
     private int size;
-    public StorageStubForLogic(int size) {
+    public StorageStubForBackend(int size) {
         this.size = size;
         createListForTest(size);
     }

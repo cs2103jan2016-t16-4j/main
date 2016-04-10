@@ -18,6 +18,8 @@ import org.joda.time.LocalDateTime;
 import org.ocpsoft.prettytime.nlp.PrettyTimeParser;
 import org.ocpsoft.prettytime.shade.edu.emory.mathcs.backport.java.util.Collections;
 
+import application.logger.LoggerHandler;
+
 /**
  * This class takes in a userInput and interprets it. If user input
  * is not erroneous, it returns a command object which contains all the
@@ -29,7 +31,6 @@ import org.ocpsoft.prettytime.shade.edu.emory.mathcs.backport.java.util.Collecti
  */
 
 public class Parser {
-	private static final String LOGGER_NAME = "logfile";
 	private static final String MESSAGE_NULL_ERROR = "command cannot be null";
 	private static final String KEYWORD_ADD = "add";
 	private static final String KEYWORD_SEARCH = "search";
@@ -81,7 +82,7 @@ public class Parser {
 	private static final boolean WITH_KEYWORD = true; // For add function. Since
 														// we accept no keyword.
 
-	private static Logger logger = Logger.getLogger(LOGGER_NAME);
+	private static Logger logger = LoggerHandler.getLog();
 
 	private PrettyTimeParser dateParser = new PrettyTimeParser();
 
