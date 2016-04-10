@@ -482,6 +482,7 @@ public class Parser {
 		return getString(parts, 0, parts.length - 1);
 	}
 
+	//changes date format from dd/mm/yyyy to mm/dd/yyyy if encountered
     private void changeDateIfInDdMmYyyy(String[] parts, int i, String part) throws ParseException {
         DateFormat originalFormat = new SimpleDateFormat("d/M/yyyy");
         DateFormat targetFormat = new SimpleDateFormat("MM/dd/yyyy");

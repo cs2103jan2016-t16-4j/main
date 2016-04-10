@@ -10,7 +10,7 @@ public class Summary implements Command {
 	
 	@Override
 	public Feedback execute(StorageConnector storageConnector, ArrayList<Task> tasksOnScreen) {
-		String message = "Here is a message of your tasks";
+		String message = "Here is a summary of your tasks.";
 		Feedback fb = new Feedback(message, tasksOnScreen, null);
 		fb.setSummaryFlag();
 		return fb;

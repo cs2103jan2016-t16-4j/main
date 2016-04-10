@@ -37,7 +37,8 @@ public class ChangeStorageLocation implements Command {
 
 	// Variables
 	private String arguments;
-
+	private String prevLocation;
+	
 	ChangeStorageLocation(String arguments) {
 		this.arguments = arguments;
 	}
@@ -67,7 +68,7 @@ public class ChangeStorageLocation implements Command {
 			Feedback feedback) {
 		if (new File(arguments).isDirectory()) {
 			try {
-				storageConnector.setDirectory(arguments + BACKSLASH);
+				prevLocation = storageConnector.setDirectory(arguments + BACKSLASH);
 				feedback = validDirectoryFound(tasksOnScreen);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

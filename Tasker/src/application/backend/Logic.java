@@ -74,14 +74,13 @@ public class Logic {
         ArrayList<Task> openTasks = storageConnector.getOpenList();
         logger.info("initiating arraylist");
         ArrayList<Task> tasksClashing = new ArrayList<Task>();
-        logger.info("adding input task to arraylist");
-        tasksClashing.add(task);
         logger.info("checking if main task is an event");
         if (!(task instanceof EventTask)){
             logger.info("main task not event. returning task without checking for clashes.");
+            tasksClashing.add(task);
             return tasksClashing;
         }
-        logger.info("task is event. looping through all lists to check for clash");
+        logger.info("task is an event. looping through all lists to check for clash");
         for (Task taskUnderConsideration : openTasks){
             addIfClashing(tasksClashing, task, taskUnderConsideration);
         }
