@@ -4,9 +4,12 @@ package application.backend;
 
 import java.util.ArrayList;
 
-import application.storage.Storage;
 import application.storage.Task;
-
+/**
+ * This is the class for the Command object which allows users to get back to viewing all tasks.
+ * @author Pratyush
+ *
+ */
 public class Home implements Command{
 
     private static final String MESSAGE_BACK_HOME = "You are back home!";

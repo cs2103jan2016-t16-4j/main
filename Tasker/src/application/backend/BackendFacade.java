@@ -5,8 +5,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import application.storage.Task;
-
-public class LogicFacade {
+/**
+ * This is the facade class for the backend package. This is the class that is 
+ * accessed by all other packages.
+ * @author Pratyush
+ *
+ */
+public class BackendFacade {
     private Logic logic = new Logic();
     
     public boolean checkIfFileExists() throws IOException{

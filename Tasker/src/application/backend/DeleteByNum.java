@@ -4,7 +4,6 @@ package application.backend;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import application.storage.Storage;
 import application.storage.Task;
 
 public class DeleteByNum implements UndoableCommand {
@@ -25,17 +24,21 @@ public class DeleteByNum implements UndoableCommand {
     public Feedback execute(StorageConnector storageConnector, ArrayList<Task> tasks){
         this.storageConnector = storageConnector;
         try {
-            int idOfTaskToDelete = tasks.get(numToDelete).getTaskIndex();
-            deletedTask = storageConnector.deleteTask(idOfTaskToDelete);
-            String feedbackMessage = String.format(MESSAGE_DELETE_FEEDBACK,deletedTask.toString());
-            Feedback feedback = new Feedback(feedbackMessage, storageConnector.getOpenList(), null);
-            feedback.setCalFlag();
-            return feedback;
+            return deleteTask(storageConnector, tasks);
         } catch (IOException e) {
             return getFeedbackCal(MESSAGE_DELETE_FAILURE, storageConnector.getOpenList(), null);
         } catch (IndexOutOfBoundsException e) {
             return getFeedbackCal(MESSAGE_INDEX_PROBLEM, storageConnector.getOpenList(), null);
         }
+    }
+
+    private Feedback deleteTask(StorageConnector storageConnector, ArrayList<Task> tasks) throws IOException {
+        int idOfTaskToDelete = tasks.get(numToDelete).getTaskIndex();
+        deletedTask = storageConnector.deleteTask(idOfTaskToDelete);
+        String feedbackMessage = String.format(MESSAGE_DELETE_FEEDBACK,deletedTask.toString());
+        Feedback feedback = new Feedback(feedbackMessage, storageConnector.getOpenList(), null);
+        feedback.setCalFlag();
+        return feedback;
     }
     
     public Feedback undo(){

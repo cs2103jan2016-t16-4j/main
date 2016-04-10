@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 import org.controlsfx.control.Notifications;
 import application.logger.LoggerHandler;
 import application.backend.Feedback;
-import application.backend.LogicFacade;
+import application.backend.BackendFacade;
 import application.storage.FloatingTask;
 import application.storage.Task;
 import javafx.animation.TranslateTransition;
@@ -142,7 +142,7 @@ public class CalendarViewPage extends AnchorPane {
 	private String text = EMPTY_STRING;
 	private static ArrayList<String> commands = new ArrayList<String>();
 	private ArrayList<Task> tasksOnScreen;
-	private LogicFacade logicFacade;
+	private BackendFacade logicFacade;
 	TranslateTransition openPanel;
 	TranslateTransition closePanel;
 
@@ -171,7 +171,7 @@ public class CalendarViewPage extends AnchorPane {
 	private PieChart pieChart;
 
 	// @@author A0132632R
-	public CalendarViewPage(ArrayList<Task> taskList, LogicFacade logicFacade) {
+	public CalendarViewPage(ArrayList<Task> taskList, BackendFacade logicFacade) {
 		tasksOnScreen = taskList;
 		this.logicFacade = logicFacade;
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(LISTVIEW_FXML_URL));

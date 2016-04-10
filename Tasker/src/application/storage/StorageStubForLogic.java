@@ -15,16 +15,21 @@ public class StorageStubForLogic extends Storage {
         createListForTest(size);
     }
     
+    //To create a list for testing. Making logic isolated from actual storage while testing.
     public void createListForTest(int numTasks){
         tasks.clear();
         for (int i = 1; i <= numTasks ; i++){
             Task task = new EventTask("Task " + i , Calendar.getInstance(), Calendar.getInstance(), "Test House", Calendar.getInstance(), "LOW", i);
+            task.getStartDate().add(Calendar.HOUR_OF_DAY, 4);
+            task.getEndDate().add(Calendar.HOUR_OF_DAY, 4);
             tasks.add(task);
         }
+        tasks.get(size/2).setPriority("HIGH");//To test for searchByPriority
     }
     
     @Override
     public ArrayList<Task> getOpenList(){
+        createListForTest(size);
         return tasks;
     }
     
@@ -42,6 +47,12 @@ public class StorageStubForLogic extends Storage {
     }
     
     @Override
+    public Task closeTask(int index){
+        createListForTest(size);
+        return getTaskById(index);
+    }
+    
+    @Override
     public ArrayList<Task> updateTask(int idTaskToDelete, String description, 
             Calendar startDateTime, Calendar endDateTime
             ,String location
@@ -53,6 +64,30 @@ public class StorageStubForLogic extends Storage {
         tasksFromUpdate.add(task);
         tasksFromUpdate.add(task);
         return tasksFromUpdate;
+    }
+    
+    @Override
+    public ArrayList<Task> searchTaskByName(String name){
+        createListForTest(size);
+        ArrayList<Task> matches = new ArrayList<Task>();
+        for (Task task: tasks){
+            if (task.getTaskDescription().contains(name)){
+                matches.add(task);
+            }
+        }
+        return matches;
+    }
+    
+    @Override
+    public ArrayList<Task> searchTaskByPriority(String priority){
+        createListForTest(size);
+        ArrayList<Task> matches = new ArrayList<Task>();
+        for (Task task: tasks){
+            if (task.getPriority().equalsIgnoreCase(priority)){
+                matches.add(task);
+            }
+        }
+        return matches;
     }
     
     private Task getTaskById(int id){

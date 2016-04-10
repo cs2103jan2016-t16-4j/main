@@ -10,7 +10,11 @@ import application.storage.EventTask;
 import application.storage.Task;
 
 //@@author A0132632R
-
+/**
+ * This class can be thought of as the decision maker for the backend package.
+ * @author Pratyush
+ *
+ */
 public class Logic {
 
 	// Constants
@@ -31,14 +35,6 @@ public class Logic {
 	    this.storageConnector = storageConnector;
 	}
 	
-	private ArrayList<Task> setEnvironment() throws IOException {
-		logger.info("Checking if file exists");
-		checkIfFileExists();
-		logger.info("Loading tasks");
-		return loadDataFile();
-	}
-	// @@author A0132632R
-
 	/**
 	 * This method should be called to parse and execute user entered commands
 	 *  (which may be in natural language style).

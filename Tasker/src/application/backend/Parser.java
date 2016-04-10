@@ -44,7 +44,8 @@ public class Parser {
 	private static final String KEYWORD_SUMMARY = "summary";
 	private static final String KEYWORD_EXIT = "exit";
 	private static final String EMPTY = "";
-
+	private static final String SPACE = "\\s+";
+	
 	private static final String[] DATE_MARKERS_START = { "from" };
 	private static final String[] DATE_MARKERS_END = { "to", "till" };
 	private static final String[] DATE_MARKERS_DEADLINE = { "by" };
@@ -65,6 +66,7 @@ public class Parser {
 	private static final int DATE_IND_POS = 0;
 	private static final int LOC_IND_POS = 1;
 	private static final int PRI_IND_POS = 2;
+	private static final int NOT_PRESENT = -1;
 
 	public static final int DEFAULT_EVENT_DURATION = 2;
 	private static final int ARGUMENT_NUMBER = 4;
@@ -100,19 +102,18 @@ public class Parser {
 		logger.info("Checking for error in user command: " + userCommand);
 		checkForError(userCommand);
 		logger.info("Splitting command into array of its words");
-		String[] inputArgs = userCommand.trim().split("\\s+");
+		String[] inputArgs = userCommand.trim().split(SPACE);
 		logger.info("Getting command key word");
-		String commandKeyword = inputArgs[0]; // Always going to be zero so
-												// inputing magic number for now
+		String commandKeyword = inputArgs[0]; // Keyword position always going to be 0
 		logger.info("Converting to command object: " + commandKeyword);
 		Command command = convertToCommand(commandKeyword, inputArgs);
 		logger.info("Returning command object");
 		return command;
 	}
 
+	//Converting to relevant command object using switch case
 	public Command convertToCommand(String keyword, String[] args) throws NoDescriptionException {
 		Command command;
-
 		switch (keyword.toLowerCase()) {
 		case KEYWORD_ADD:
 			logger.info("Making add command object");
@@ -181,6 +182,8 @@ public class Parser {
 
 	}
 
+	//Processing "home" input to see if it is truly home command or whether it 
+	//is simply the beginning of a task description. Making command object accordingly.
 	private Command processHomeInput(String[] args) throws NoDescriptionException {
 		Command command;
 		if (args.length == 1) {
@@ -193,6 +196,9 @@ public class Parser {
 		return command;
 	}
 
+	//Processing "view" input to see if it is truly view command or whether it 
+    //is simply the beginning of a task description. Making command object accordingly.
+    
 	private Command processViewInput(String[] args) throws NoDescriptionException {
 		Command command;
 		if (args.length == 1) {
@@ -323,23 +329,26 @@ public class Parser {
     }
     
     public void overrideIfUnixStyleFound(Integer[] indices, String[] args){
-        if (getLastIndex(UNIX_MARKERS, args ) != -1){
+        if (getLastIndex(UNIX_MARKERS, args ) != NOT_PRESENT){
             getUnixIndices(indices, args);
         }
     }
     
     private void getUnixIndices(Integer[] indices, String[] args){
         for (int i = 0; i <indices.length; i++){
-            indices[i] = -1;
+            indices[i] = NOT_PRESENT;
         }
         List<String> words = Arrays.asList(args);
+        getUnixIndices(indices, words);
+        if (indices[DATE_IND_POS] != NOT_PRESENT){
+            args[indices[DATE_IND_POS] - 1] = EMPTY; //Setting the unix marker to empty since it can be ignored now
+        }
+    }
+
+    private void getUnixIndices(Integer[] indices, List<String> words) {
         indices[DATE_IND_POS] = words.indexOf(UNIX_DATE_MARKER) + 1; //Ignoring the unix marker
         indices[LOC_IND_POS] = words.indexOf(UNIX_LOC_MARKER);
         indices[PRI_IND_POS] = words.indexOf(UNIX_PRI_MARKER);
-        System.out.println("ARGS LENGTH" + args.length);
-        if (indices[DATE_IND_POS] != -1){
-            args[indices[DATE_IND_POS] - 1] = EMPTY; //Setting the unix marker to empty
-        }
     }
     	
 	private Command getAppropSearchCommand(String[] args) {
@@ -353,9 +362,9 @@ public class Parser {
 
 	private Command getSearchCommand(String[] args) throws NotDateException {
 		String[] argsForDate = (String[]) ArrayUtils.remove(args, 0);
-		if (args[0].equalsIgnoreCase("by")) {
+		if (Arrays.asList(DATE_MARKERS_DEADLINE).contains(args[0])) {
 			return getSearchByDateCommand(argsForDate);
-		} else if (args[0].equalsIgnoreCase("on")) {
+		} else if (Arrays.asList(DATE_MARKERS_FULL_DAY_EVENT).contains(args[0])) {
 			return getSearchOnDateCommand(argsForDate);
 		} else if (args.length > 1 && args[0].equalsIgnoreCase("priority")
 				&& Arrays.asList(PRIORITY_LEVELS).contains(args[1])) {

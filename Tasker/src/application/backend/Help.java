@@ -36,7 +36,7 @@ public class Help implements Command {
 	@Override
 	public Feedback execute(StorageConnector storageConnector, ArrayList<Task> tasksOnScreen) {
 
-		String msg = "help";
+		String msg = "Here is some help for you.";
 
 		Feedback fb = new Feedback(msg, tasksOnScreen, null);
 		fb.setHelpFlag();

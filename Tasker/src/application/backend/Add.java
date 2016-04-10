@@ -6,7 +6,6 @@ package application.backend;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import application.storage.Storage;
 import application.storage.Task;
 
 import java.io.IOException;

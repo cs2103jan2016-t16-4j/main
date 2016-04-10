@@ -2,15 +2,18 @@ package application.backend;
 //@@author A0132632R
 
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
-import application.gui.Ui;
 import application.storage.Task;
 
-
+/**
+ * This class is used to send back feedback from the execution of a command
+ * to the logic component, which then sends it back to the GUI, which uses it 
+ * to display information to the user.
+ * @author Pratyush
+ *
+ */
 
 public class Feedback {
-    private static final String LOGGER_NAME = "logfile";
     private static final String LIST_FLAG = "list";
     private static final String CAL_FLAG = "cal";
     private static final String HELP_FLAG = "help";
@@ -22,7 +25,6 @@ public class Feedback {
     private Task taskToScroll;
     private String feedbackMessage;
     private ArrayList<Task> tasksToDisplay;
-    private static Logger logger = Logger.getLogger(LOGGER_NAME);
     
     Feedback(String message, ArrayList<Task> tasks, Task taskToScroll){
         this.feedbackMessage = message;
@@ -52,10 +54,6 @@ public class Feedback {
 
     public void setStorageFlag(){
         flag = STORAGE_FLAG;
-    }
-    public void display(Ui ui){
-        logger.info("feedback object using ui to display itself to user");
-        ui.showToUser(feedbackMessage, tasksToDisplay);
     }
     
     public ArrayList<Task> getTasks(){

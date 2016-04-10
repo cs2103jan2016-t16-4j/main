@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 import application.logger.LoggerHandler;
-import application.backend.LogicFacade;
+import application.backend.BackendFacade;
 import application.storage.Task;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -53,7 +53,7 @@ public class GuiMain extends Application {
 
 	// Variables
 	private TrayIcon trayIcon;
-	private LogicFacade logicFacade;
+	private BackendFacade logicFacade;
 	private ArrayList<Task> taskList;
 
 	public static void main(String[] args) {
@@ -99,7 +99,7 @@ public class GuiMain extends Application {
 	}
 
 	private void setEnvironment() {
-		this.logicFacade = new LogicFacade();
+		this.logicFacade = new BackendFacade();
 	}
 
 	// Checks if user has used the program at least once if not prompt to save
