@@ -50,9 +50,8 @@ public class FileManager {
 	public void clear(String filePath) {
 		File file = new File(filePath);
 		if (file.exists()) {
-			PrintWriter fw;
 			try {
-				fw = new PrintWriter(filePath);
+				PrintWriter fw = new PrintWriter(filePath);
 				fw.print(EMPTY);
 				fw.close();
 			} catch (FileNotFoundException e) {
@@ -109,12 +108,11 @@ public class FileManager {
 	 */
 	public ArrayList<Task> loadFile(String filePath) {
 		File file = new File(filePath);
-		BufferedReader in;
 		ArrayList<Task> list = new ArrayList<Task>();
 		logger.log(Level.INFO, "Loading tasks into list");
 		if (file.exists()) {
 			try {
-				in = new BufferedReader(new FileReader(filePath));
+				BufferedReader in = new BufferedReader(new FileReader(filePath));
 				if (filePath.equalsIgnoreCase(dataFilePath)) {
 					// skip first line first if its data file (open list)
 					String readText = in.readLine();
@@ -148,13 +146,10 @@ public class FileManager {
 	 * Loads the directory file and initialise the close, data file path and return storage directory path of data files.
 	 */
 	public String loadDirectoryFile() {
-		BufferedReader in;
 		try {
-			in = new BufferedReader(new FileReader(FILE_DIRECTORY_NAME));
+			BufferedReader in = new BufferedReader(new FileReader(FILE_DIRECTORY_NAME));
 			logger.log(Level.INFO, "Loading directory file");
-			String readText;
-
-			readText = in.readLine();
+			String readText = in.readLine();
 			readText = loadFilePaths(readText);
 			in.close();
 			return readText;
@@ -187,9 +182,8 @@ public class FileManager {
 	public int loadTaskIndex() {
 		File f = new File(dataFilePath);
 		if (f.exists()) {
-			BufferedReader in;
 			try {
-				in = new BufferedReader(new FileReader(dataFilePath));
+				BufferedReader in = new BufferedReader(new FileReader(dataFilePath));
 				String readText;
 				readText = in.readLine();
 				in.close();
@@ -198,7 +192,6 @@ public class FileManager {
 				logger.log(Level.SEVERE, "Error initialising data file task index.");
 				return NO_TASK;
 			}
-
 		} else {
 			return NO_TASK;
 		}
@@ -220,8 +213,7 @@ public class FileManager {
 	 * Saves all tasks into the file.
 	 */
 	private void saveTasksIntoFile(ArrayList<Task> list, String filePath) throws IOException {
-		PrintWriter fwz;
-		fwz = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
+		PrintWriter fwz = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)));
 		Gson gson = new GsonBuilder().registerTypeAdapter(Task.class, new TaskSerializer())
 				.registerTypeAdapter(EventTask.class, new TaskSerializer())
 				.registerTypeAdapter(DeadlineTask.class, new TaskSerializer())
@@ -259,9 +251,8 @@ public class FileManager {
 		// #clear datafile first
 		clear(dataFilePath);
 
-		PrintWriter fw;
 		try {
-			fw = new PrintWriter(new BufferedWriter(new FileWriter(dataFilePath, true)));
+			PrintWriter fw = new PrintWriter(new BufferedWriter(new FileWriter(dataFilePath, true)));
 			fw.println(index);
 			fw.close();
 		} catch (IOException e) {
@@ -279,9 +270,8 @@ public class FileManager {
 		} else {
 			clear(FILE_DIRECTORY_NAME);
 			logger.log(Level.INFO, "New directory choosen");
-			PrintWriter fw;
 			try {
-				fw = new PrintWriter(FILE_DIRECTORY_NAME);
+				PrintWriter fw = new PrintWriter(FILE_DIRECTORY_NAME);
 				// get current path
 				Path oldClosedFilePath = Paths.get(closedFilePath);
 				Path oldDataFilePath = Paths.get(dataFilePath);
@@ -292,7 +282,8 @@ public class FileManager {
 				fw.println(path);
 
 				// migration of data files
-				migrateFilesAndDeleteExistingFiles(oldClosedFilePath, oldDataFilePath);				
+				migrateFilesAndDeleteExistingFiles(oldClosedFilePath, oldDataFilePath);
+				
 				fw.close();
 				return true;
 			} catch (IOException e) {
