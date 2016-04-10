@@ -400,44 +400,44 @@ public class StorageTest {
 	public void testGetPriority() {
 		DeadlineTask deadlineTask = new DeadlineTask();
 		Calendar endDate = Calendar.getInstance();
-		endDate.roll(Calendar.SECOND, -1);
+		endDate.add(Calendar.SECOND, -1);
 		deadlineTask.setEndDate(endDate);
 		deadlineTask.setEndTime(endDate);
 		assertTrue(deadlineTask.getPriority()=="high");
 		deadlineTask.setPriority("");
 		
 		Calendar a = Calendar.getInstance();
-		a.roll(Calendar.MINUTE, 1);
+		a.add(Calendar.MINUTE, 1);
 		deadlineTask.setEndDate(a);
 		deadlineTask.setEndTime(a);
 		assertTrue(deadlineTask.getPriority()=="high");
 		deadlineTask.setPriority("");
 		
 		Calendar b = Calendar.getInstance();
-		b.roll(Calendar.HOUR, 1);
+		b.add(Calendar.HOUR, 1);
 		deadlineTask.setEndDate(b);
 		deadlineTask.setEndTime(b);
 		assertTrue(deadlineTask.getPriority()=="high");
 		deadlineTask.setPriority("");
 		
 		Calendar c = Calendar.getInstance();
-		c.roll(Calendar.HOUR, 3);
+		c.add(Calendar.HOUR, 3);
 		deadlineTask.setEndDate(c);
 		deadlineTask.setEndTime(c);
 		assertTrue(deadlineTask.getPriority()=="medium");
 		deadlineTask.setPriority("");
 		
 		Calendar d = Calendar.getInstance();
-		System.out.println(d.getTime().toString());
-		d.roll(Calendar.HOUR, 23);
-		System.out.println(d.getTime().toString());
+//		System.out.println(d.getTime().toString());
+		d.add(Calendar.HOUR, 23);
+//		System.out.println(d.getTime().toString());
 		deadlineTask.setEndDate(d);
 		deadlineTask.setEndTime(d);
 		assertTrue(deadlineTask.getPriority()=="medium");
 		deadlineTask.setPriority("");
 		
 		Calendar e = Calendar.getInstance();
-		e.roll(Calendar.HOUR, 25);
+		e.add(Calendar.HOUR, 25);
 		deadlineTask.setEndDate(e);
 		deadlineTask.setEndTime(e);
 		assertTrue(deadlineTask.getPriority()=="low");
