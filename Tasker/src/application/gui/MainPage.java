@@ -106,6 +106,14 @@ public class MainPage extends AnchorPane {
 	private static final int TRANSITION_TIME = 350;
 	private static final int overdueCheckVariable = 0;
 	private static final int STACK_PANE_FIRST_CHILD = 0;
+	private static final String ADD_HINT_INPUT = "[desc] from [start date] to [end date] at [location] priority [priority]";
+	private static final String DELETE_HINT_INPUT = "delete [task description/number]";
+	private static final String UPDATE_HINT_INPUT = "update [task number] [new task desc]";
+	private static final String DONE_HINT_INPUT = "Done [task number]";
+	private static final String SEARCH_HINT_INPUT = "search [task decription/priority [level]/[task description] by [date]]";
+	private static final String UNDO_HINT_INPUT = "Undo";
+	private static final String STORAGE_HINT_INPUT = "Storage";
+	private static final String EXIT_HINT_INPUT = "Exit";
 
 	// Initialization
 	private static Logger logger = LoggerHandler.getLog();
@@ -536,6 +544,9 @@ public class MainPage extends AnchorPane {
 			calendarList.toFront();
 			break;
 		case HELP_FLAG:
+			
+			//@@author A0078688A
+			
 			String selected = showHelpDialog();
 			switch (selected) {
 			case "Add":
@@ -553,13 +564,13 @@ public class MainPage extends AnchorPane {
 			case "Search":
 				showSearchDialog();
 				break;
-			case "Undo":
+			case UNDO_HINT_INPUT:
 				showUndoDialog();
 				break;
-			case "Storage":
+			case STORAGE_HINT_INPUT:
 				showStorageDialog();
 				break;
-			case "Exit":
+			case EXIT_HINT_INPUT:
 				showExitDialog();
 				break;
 			default:
@@ -579,6 +590,7 @@ public class MainPage extends AnchorPane {
 		}
 	}
 
+	
 	// Toggle hidden panel
 	private void toggleHiddenPanel() {
 		if (hiddenMenu.getTranslateX() != STARTPOSITION) {
@@ -787,50 +799,50 @@ public class MainPage extends AnchorPane {
 
 	// @@author A0078688A
 	private void showExitDialog() {
-		textInputArea.setText("Exit");
+		textInputArea.setText(EXIT_HINT_INPUT);
 		feedbackLabel.setText("");
 		helpLabel.setText(EXIT_HINT_MESSAGE);
 	}
 
 	private void showStorageDialog() {
-		textInputArea.setText("Storage");
+		textInputArea.setText(STORAGE_HINT_INPUT);
 		feedbackLabel.setText("");
 		helpLabel.setText(STORAGE_HINT_MESSAGE);
 	}
 
 	private void showUndoDialog() {
-		textInputArea.setText("Undo");
+		textInputArea.setText(UNDO_HINT_INPUT);
 		feedbackLabel.setText("");
 		helpLabel.setText(UNDO_HINT_MESSAGE);
 	}
 
 	private void showSearchDialog() {
-		textInputArea.setText("search [task decription/priority [level]/[task description] by [date]]");
+		textInputArea.setText(SEARCH_HINT_INPUT);
 		feedbackLabel.setText("");
 		helpLabel.setText(SEARCH_HINT_MESSAGE);
 	}
 
 	private void showCloseDialog() {
-		textInputArea.setText("Done [task number]");
+		textInputArea.setText(DONE_HINT_INPUT);
 		feedbackLabel.setText("");
 		helpLabel.setText(DONE_HINT_MESSAGE);
 	}
 
 	private void showUpdateDialog() {
-		textInputArea.setText("update [task number] [new task desc]");
+		textInputArea.setText(UPDATE_HINT_INPUT);
 		feedbackLabel.setText("");
 		helpLabel.setText(UPDATE_HINT_MESSAGE);
 	}
 
 	private void showDeleteDialog() {
-		textInputArea.setText("delete [task description/number]");
+		textInputArea.setText(DELETE_HINT_INPUT);
 		feedbackLabel.setText("");
 		helpLabel.setText(DELETE_HINT_MESSAGE);
 	}
 
 	private String showHelpDialog() {
 		ChoiceDialog<String> dialog;
-		final String[] arrayData = { "Add", "Delete", "Update", "Close", "Search", "Undo", "Storage", "Exit" };
+		final String[] arrayData = { "Add", "Delete", "Update", "Close", "Search", UNDO_HINT_INPUT, STORAGE_HINT_INPUT, EXIT_HINT_INPUT };
 		List<String> dialogData;
 		dialogData = Arrays.asList(arrayData);
 		dialog = new ChoiceDialog<String>(dialogData.get(0), dialogData);
@@ -847,17 +859,8 @@ public class MainPage extends AnchorPane {
 	}
 
 	private void showAddDialog() {
-		// final String COMMAND_ADD = "add:\n--Adds new tasks (keyword add is
-		// not required)\n--Adds"
-		// + " <Task> due by <date> at <Venue> and sets reminder\n--Note: by
-		// <Date>, @ <Venue>, remind <When>, priority <Level> are optional.\n";
-		// Alert alert1 = new Alert(AlertType.INFORMATION);
-		// alert1.setTitle("Add Commands");
-		// alert1.setHeaderText(null);
-		// alert1.setContentText(COMMAND_ADD);
-		//
-		// alert1.showAndWait();
-		textInputArea.setText("[desc] from [start date] to [end date] at [location] priority [priority]");
+
+		textInputArea.setText(ADD_HINT_INPUT);
 		feedbackLabel.setText("");
 	}
 }
