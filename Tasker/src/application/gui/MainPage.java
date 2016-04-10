@@ -34,6 +34,7 @@ import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -367,8 +368,12 @@ public class MainPage extends AnchorPane {
 
 	// Method that calls other methods to update the data
 	private void updateViews(ArrayList<Task> taskList, Task taskToFocus) {
+		ArrayList<Task> clashList = null;
+		if (taskToFocus != null) {
+			clashList = backendFacade.getClashes(taskToFocus);
+		}
 		updateCalendarList(taskList, taskToFocus);
-		updateDisplayList(taskList, taskToFocus);
+		updateDisplayList(taskList, clashList);
 		updateSummary();
 	}
 
@@ -412,15 +417,18 @@ public class MainPage extends AnchorPane {
 	}
 
 	// Updates data of the task view
-	private void updateDisplayList(ArrayList<Task> taskList, Task taskToFocus) {
+	private void updateDisplayList(ArrayList<Task> taskList, ArrayList<Task> clashList) {
 		this.displayList.getItems().clear();
 		assert (taskList.size() != EMPTY);
 		if (taskList.size() != EMPTY) {
 			ObservableList<Task> list = makeDisplayList(taskList);
 			this.displayList.setItems(list);
-			if (taskToFocus != null) {
-				this.displayList.scrollTo(taskToFocus);
-				this.displayList.getSelectionModel().select(taskToFocus);
+			if (clashList != null) {
+				// this.displayList.scrollTo(clashList);
+				this.displayList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+				for (Task task : clashList) {
+					this.displayList.getSelectionModel().select(task);
+				}
 			}
 		}
 	}
