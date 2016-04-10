@@ -115,7 +115,7 @@ public class FileManager {
 				BufferedReader in = new BufferedReader(new FileReader(filePath));
 				if (filePath.equalsIgnoreCase(dataFilePath)) {
 					// skip first line first if its data file (open list)
-					String readText = in.readLine();
+					in.readLine();
 				}
 				list = loadTasksIntoFile(in, list);
 				in.close();
