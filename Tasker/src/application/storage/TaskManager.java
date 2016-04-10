@@ -22,6 +22,7 @@ public class TaskManager {
     private static final int EMPTY_TIME_PARAMETER_2 = 0;
     private static final int INVALID_TASK = -1;
     private static final int INVALID_INDEX = -1;
+    private static final int INVALID_TASK_INDEX = 0;
     private static final String EMPTY_STRING = "";
     private static final String FLOATING_TASK = "FLOATING_TASK";
     private static final String DEADLINE_TASK = "DEADLINE_TASK";
@@ -112,9 +113,9 @@ public class TaskManager {
 //				break;
 //			}
 //		}
-//		return openList;
+		// return openList;
+		assert (taskIndex > INVALID_TASK_INDEX);
 		int indexOfTask = findIndexOfTaskInList(openList, taskIndex);
-		assert (indexOfTask > INVALID_INDEX);
 		if (indexOfTask > INVALID_INDEX) {
 			openList.remove(indexOfTask);
 			logger.log(Level.INFO, "Deleted Task");
@@ -127,6 +128,7 @@ public class TaskManager {
 	 * Search "name" in the open list and and return search results.
 	 */
 	public ArrayList<Task> searchName(ArrayList<Task> openList, String searchTask) {
+		assert(searchTask != null);
 		String[] splitArray = searchTask.split(SPACE);
 		ArrayList<Task> searchList = new ArrayList<Task>();
 		logger.log(Level.INFO, "Searching tasks with name");
@@ -146,6 +148,7 @@ public class TaskManager {
 	 * Search the tasks by a specified date in the open list and return search results.
 	 */
 	public ArrayList<Task> searchDateBy(ArrayList<Task> openList, Calendar searchDate) {
+		assert(searchDate != null);
 		ArrayList<Task> searchList = new ArrayList<Task>();
 		logger.log(Level.INFO, "Searching tasks by date");
 		for (int i = 0; i < openList.size(); i++) {
@@ -178,6 +181,7 @@ public class TaskManager {
 	 * Search the tasks on a specified date in the open list and return search results.
 	 */
 	public ArrayList<Task> searchDateOn(ArrayList<Task> openList, Calendar searchDate) {
+		assert(searchDate != null);
 		ArrayList<Task> searchList = new ArrayList<Task>();
 		logger.log(Level.INFO, "Searching tasks on date");
 		for (int i = 0; i < openList.size(); i++) {
@@ -243,6 +247,7 @@ public class TaskManager {
 	}
 //@@author A0110422E	
 	public ArrayList<Task> searchPriority(ArrayList<Task> openList, String searchPriority) {
+		assert(searchPriority != null);
 		ArrayList<Task> searchList = new ArrayList<Task>();
 		for (int i = 0; i < openList.size(); i++) {
 			Task obj = openList.get(i);
@@ -286,9 +291,9 @@ public class TaskManager {
 			String taskDescription, Calendar startDate, Calendar endDate,
 			String location, Calendar remindDate, String priority, int taskIndex) {
 		
+		assert (taskIndex > INVALID_TASK_INDEX);
 		// find task
 		int indexOfTask = findIndexOfTaskInList(openList, taskIndex);
-		assert (indexOfTask>INVALID_INDEX);
 		logger.log(Level.INFO, "Updating Task");
 		
 		// update task
@@ -513,7 +518,7 @@ public class TaskManager {
 		String originalLocation = originalTask.getLocation();
 		String originalPriority = originalTask.getPriority();
 		
-		assert (taskIndex > INVALID_INDEX);
+		assert (taskIndex > INVALID_TASK_INDEX);
 		switch (taskType) {
 		case (FLOATING_TASK):
 			return updatedToFloatingTask(taskDescription, startDate, endDate, location, remindDate, priority, taskIndex,
@@ -592,7 +597,7 @@ public class TaskManager {
 	private Task updateTaskParameters(Task obj, String taskDescription, Calendar startDate, Calendar endDate,
 			String location, Calendar remindDate, String priority, int taskIndex) {
 		
-		assert (taskIndex > INVALID_INDEX);
+		assert (taskIndex > INVALID_TASK_INDEX);
 		// update task
 		if (!taskDescription.equalsIgnoreCase(EMPTY_STRING)) {
 			obj.setTaskDescription(taskDescription);
