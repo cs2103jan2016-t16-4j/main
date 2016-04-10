@@ -21,6 +21,7 @@ public class Logic {
 
 	// Constants
 	private static final int START_COUNT = 0;
+	private static final int OVERDUE_CHECK_VARIABLE = 0;
 	
 	// Initialization
 	private Parser parser = new Parser();
@@ -153,25 +154,17 @@ public class Logic {
 	private int countOverdue(int overdueCount, ArrayList<Task> taskList, Calendar cal) {
 		for (Task task : taskList) {
 			if (!(task instanceof EventTask)) {
-				assert (task.getEndDate() != null);
 				if (task.getEndDate() != null) {
-					if (task.getEndDate().getTime().compareTo(cal.getTime()) < 0) {
+					if (task.getEndDate().getTime().compareTo(cal.getTime()) < OVERDUE_CHECK_VARIABLE) {
 						overdueCount++;
 					}
 				}
 			} else {
-				assert (task.getStartDate() != null);
 				if (task.getStartDate() != null) {
-					if (task.getStartDate().getTime().compareTo(cal.getTime()) < 0) {
+					if (task.getStartDate().getTime().compareTo(cal.getTime()) < OVERDUE_CHECK_VARIABLE) {
 						overdueCount++;
 					}
 				}
-				// if (task.getEndDate() != null) {
-				// if (task.getEndDate().getTime().compareTo(cal.getTime()) <
-				// COMPARE_OVERDUE_VARIABLE) {
-				// overdueCount++;
-				// }
-				// }
 			}
 
 		}

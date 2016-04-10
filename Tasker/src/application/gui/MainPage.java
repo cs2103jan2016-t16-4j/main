@@ -9,18 +9,16 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.logging.Logger;
 import org.controlsfx.control.Notifications;
 import application.logger.LoggerHandler;
 import application.backend.Feedback;
+import application.backend.NoDescriptionException;
 import application.backend.BackendFacade;
 import application.storage.EventTask;
 import application.storage.FloatingTask;
 import application.storage.Task;
 import javafx.animation.TranslateTransition;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -106,14 +104,6 @@ public class MainPage extends AnchorPane {
 	private static final int TRANSITION_TIME = 350;
 	private static final int overdueCheckVariable = 0;
 	private static final int STACK_PANE_FIRST_CHILD = 0;
-	private static final String ADD_HINT_INPUT = "[desc] from [start date] to [end date] at [location] priority [priority]";
-	private static final String DELETE_HINT_INPUT = "delete [task description/number]";
-	private static final String UPDATE_HINT_INPUT = "update [task number] [new task desc]";
-	private static final String DONE_HINT_INPUT = "Done [task number]";
-	private static final String SEARCH_HINT_INPUT = "search [task decription/priority [level]/[task description] by [date]]";
-	private static final String UNDO_HINT_INPUT = "Undo";
-	private static final String STORAGE_HINT_INPUT = "Storage";
-	private static final String EXIT_HINT_INPUT = "Exit";
 
 	// Initialization
 	private static Logger logger = LoggerHandler.getLog();
@@ -137,8 +127,14 @@ public class MainPage extends AnchorPane {
 	private static final String MESSAGE_FEEDBACK_INTRO = "We'll give you feedback on your commands here.";
 	private static final String MESSAGE_ERROR = "There was some problem processing your request. "
 			+ "Please check your input format.";
-	private static String MESSAGE_DIRECTORY_CHANGED = "Directory Changed: %1$s%2$s";
-	private static final String DIRECTORY_NOT_CHANGED_MESSAGE = "Directory Not Changed!";
+	private static final String ADD_HINT_INPUT = "[desc] from [start date] to [end date] at [location] priority [priority]";
+	private static final String DELETE_HINT_INPUT = "delete [task description/number]";
+	private static final String UPDATE_HINT_INPUT = "update [task number] [new task desc]";
+	private static final String DONE_HINT_INPUT = "Done [task number]";
+	private static final String SEARCH_HINT_INPUT = "search [task decription/priority [level]/[task description] by [date]]";
+	private static final String UNDO_HINT_INPUT = "Undo";
+	private static final String STORAGE_HINT_INPUT = "Storage";
+	private static final String EXIT_HINT_INPUT = "Exit";
 
 	// Error Messages
 	private static final String FXML_LOAD_FAILED = "Failed to load ListView FXML file";
@@ -207,30 +203,30 @@ public class MainPage extends AnchorPane {
 		taskToFocus = null;
 		initializeHiddenPanel();
 		updateViews(tasksOnScreen, taskToFocus);
-		setupTimer();
+		// setupTimer();
 	}
 
 	// @@author A0125417L
 
 	// Timer for on the fly update
-	private void setupTimer() {
-		Timer timer = new Timer();
-		timer.schedule(new TimerTask() {
-			public void run() {
-				Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
-						updateViews(tasksOnScreen, taskToFocus);
-						try {
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-
-					}
-				});
-			}
-		}, 0, 15000);
-	}
+	// private void setupTimer() {
+	// Timer timer = new Timer();
+	// timer.schedule(new TimerTask() {
+	// public void run() {
+	// Platform.runLater(new Runnable() {
+	// @Override
+	// public void run() {
+	// updateViews(tasksOnScreen, taskToFocus);
+	// try {
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	//
+	// }
+	// });
+	// }
+	// }, 0, 15000);
+	// }
 
 	// Setup hidden panel
 	private void initializeHiddenPanel() {
@@ -432,9 +428,18 @@ public class MainPage extends AnchorPane {
 			ObservableList<Task> list = makeDisplayList(taskList);
 			this.displayList.setItems(list);
 			if (clashList != null) {
-				// this.displayList.scrollTo(clashList);
 				this.displayList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+				if (clashList.size() > 1) {
+					Notifications.create().title("Clash has been detected").text("Clashes are highlighted")
+							.showInformation();
+					this.displayList.getStyleClass().clear();
+					this.displayList.getStyleClass().add("clash");
+				} else {
+					this.displayList.getStyleClass().clear();
+					this.displayList.getStyleClass().add("select");
+				}
 				for (Task task : clashList) {
+					System.out.println(task.getTaskDescription());
 					this.displayList.getSelectionModel().select(task);
 				}
 			}
@@ -480,7 +485,7 @@ public class MainPage extends AnchorPane {
 						text = textInputArea.getText();
 						commands.add(text);
 						Feedback feedback = backendFacade.executeCommand(text, tasksOnScreen);
-						//System.out.println(feedback.getMessage());
+						// System.out.println(feedback.getMessage());
 						tasksOnScreen = feedback.getTasks();
 						taskToFocus = feedback.getTaskToScrollTo();
 						notifyUser(taskToFocus);
@@ -544,38 +549,7 @@ public class MainPage extends AnchorPane {
 			calendarList.toFront();
 			break;
 		case HELP_FLAG:
-			
-			//@@author A0078688A
-			
-			String selected = showHelpDialog();
-			switch (selected) {
-			case "Add":
-				showAddDialog();
-				break;
-			case "Delete":
-				showDeleteDialog();
-				break;
-			case "Update":
-				showUpdateDialog();
-				break;
-			case "Close":
-				showCloseDialog();
-				break;
-			case "Search":
-				showSearchDialog();
-				break;
-			case UNDO_HINT_INPUT:
-				showUndoDialog();
-				break;
-			case STORAGE_HINT_INPUT:
-				showStorageDialog();
-				break;
-			case EXIT_HINT_INPUT:
-				showExitDialog();
-				break;
-			default:
-				break;
-			}
+			helpFunction();
 			break;
 		case LIST_FLAG:
 			displayList.toFront();
@@ -590,7 +564,6 @@ public class MainPage extends AnchorPane {
 		}
 	}
 
-	
 	// Toggle hidden panel
 	private void toggleHiddenPanel() {
 		if (hiddenMenu.getTranslateX() != STARTPOSITION) {
@@ -621,12 +594,19 @@ public class MainPage extends AnchorPane {
 	public void directoryPrompt(Stage primaryStage, DirectoryChooser dirChooser) throws IOException {
 		final File selectedDirectory = dirChooser.showDialog(primaryStage);
 		if (selectedDirectory != null) {
-			backendFacade.setDirectory(selectedDirectory.getPath().toString() + BACKSLASH);
-			feedbackLabel.setText(
-					String.format(MESSAGE_DIRECTORY_CHANGED, selectedDirectory.getPath().toString(), BACKSLASH));
-		} else {
-			backendFacade.setDirectory(EMPTY_STRING);
-			feedbackLabel.setText(DIRECTORY_NOT_CHANGED_MESSAGE);
+			try {
+				backendFacade.executeCommand("storage " + selectedDirectory.getPath().toString() + BACKSLASH,
+						tasksOnScreen);
+			} catch (NoDescriptionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// feedbackLabel.setText(
+			// String.format(MESSAGE_DIRECTORY_CHANGED,
+			// selectedDirectory.getPath().toString(), BACKSLASH));
+			// } else {
+			// backendFacade.setDirectory(EMPTY_STRING);
+			// feedbackLabel.setText(DIRECTORY_NOT_CHANGED_MESSAGE);
 		}
 	}
 
@@ -798,6 +778,39 @@ public class MainPage extends AnchorPane {
 	}
 
 	// @@author A0078688A
+
+	private void helpFunction() {
+		String selected = showHelpDialog();
+		switch (selected) {
+		case "Add":
+			showAddDialog();
+			break;
+		case "Delete":
+			showDeleteDialog();
+			break;
+		case "Update":
+			showUpdateDialog();
+			break;
+		case "Close":
+			showCloseDialog();
+			break;
+		case "Search":
+			showSearchDialog();
+			break;
+		case UNDO_HINT_INPUT:
+			showUndoDialog();
+			break;
+		case STORAGE_HINT_INPUT:
+			showStorageDialog();
+			break;
+		case EXIT_HINT_INPUT:
+			showExitDialog();
+			break;
+		default:
+			break;
+		}
+	}
+
 	private void showExitDialog() {
 		textInputArea.setText(EXIT_HINT_INPUT);
 		feedbackLabel.setText("");
@@ -842,7 +855,8 @@ public class MainPage extends AnchorPane {
 
 	private String showHelpDialog() {
 		ChoiceDialog<String> dialog;
-		final String[] arrayData = { "Add", "Delete", "Update", "Close", "Search", UNDO_HINT_INPUT, STORAGE_HINT_INPUT, EXIT_HINT_INPUT };
+		final String[] arrayData = { "Add", "Delete", "Update", "Close", "Search", UNDO_HINT_INPUT, STORAGE_HINT_INPUT,
+				EXIT_HINT_INPUT };
 		List<String> dialogData;
 		dialogData = Arrays.asList(arrayData);
 		dialog = new ChoiceDialog<String>(dialogData.get(0), dialogData);
