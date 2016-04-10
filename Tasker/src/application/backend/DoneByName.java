@@ -7,7 +7,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+/**
+ * This class is an UndoableCommand object which closes a task that the user has specified by name.
+ * Check UndoableCommand documentation for insight on what the public methods do.
+ * @author RuiMing
+ *
+ */
 public class DoneByName implements UndoableCommand {
     private static final int FIRST_INDEX = 0;
     private static final String FEEDBACK_CLOSE = "Closed Task: %1$s";
@@ -17,8 +22,7 @@ public class DoneByName implements UndoableCommand {
     private static final String MESSAGE_NOTHING_TO_CLOSE = "There is no task with that description.";
     private static final String MESSAGE_UNDO_FAILURE = "We encountered a problem while undoing.";
     private static final String MESSAGE_UNDO_FEEDBACK = "Unclosed: %1$s";
-    
-    
+
     Logger logger = null;
 
     String taskToClose;
@@ -55,7 +59,7 @@ public class DoneByName implements UndoableCommand {
         assert (storageConnector != null);
         assert (taskList.size() > 0);
         this.storageConnector = storageConnector;
-        if(taskList.size()== 0){
+        if (taskList.size() == 0) {
             Feedback fb = new Feedback(MESSAGE_NOTHING_TO_CLOSE, storageConnector.getOpenList(), null);
             fb.setCalFlag();
             return fb;
@@ -71,40 +75,39 @@ public class DoneByName implements UndoableCommand {
             return fb;
         }
     }
-    
-    //@@author A0132632R
 
-    
-    public Feedback undo() throws NothingToUndoException{
+    // @@author A0132632R
+
+    public Feedback undo() throws NothingToUndoException {
         try {
-            if (closedTask != null){
+            if (closedTask != null) {
                 storageConnector.uncloseTask(closedTask.getTaskIndex());
-                String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK,closedTask.toString());
+                String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK, closedTask.toString());
                 return getFeedbackList(feedbackMessage, storageConnector.getOpenList(), closedTask);
-            }else{
+            } else {
                 throw new NothingToUndoException();
             }
-        }catch(IOException e){
+        } catch (IOException e) {
             return getFeedbackCal(MESSAGE_UNDO_FAILURE, storageConnector.getOpenList(), null);
         }
     }
-    
-  //@@author A0132632R
 
-    private Feedback getFeedbackCal(String message, ArrayList<Task> tasks, Task task){
+    // @@author A0132632R
+
+    private Feedback getFeedbackCal(String message, ArrayList<Task> tasks, Task task) {
         Feedback fb = new Feedback(message, tasks, task);
         fb.setCalFlag();
         return fb;
     }
 
-    private Feedback getFeedbackList(String message, ArrayList<Task> tasks, Task task){
+    private Feedback getFeedbackList(String message, ArrayList<Task> tasks, Task task) {
         Feedback fb = new Feedback(message, tasks, task);
         fb.setListFlag();
         return fb;
     }
 }
 
-//@@author
+// @@author
 
 /*
  * private String closeSingleTask(ArrayList<Task> taskList, Storage storage)

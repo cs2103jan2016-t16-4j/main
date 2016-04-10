@@ -5,7 +5,14 @@ import java.util.ArrayList;
 
 import application.storage.Task;
 
-
+/**
+ * This class is a Command object which shows the user all his completed tasks. 
+ * Check Command class documentation for insight on
+ * what the public methods do.
+ * 
+ * @author Pratyush
+ *
+ */
 public class ShowDoneTasks implements Command{
 
     private static final String MESSAGE_CLOSED = "Here are the tasks you have closed.";

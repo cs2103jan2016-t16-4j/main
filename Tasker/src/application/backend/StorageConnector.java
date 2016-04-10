@@ -9,108 +9,109 @@ import application.storage.Task;
 
 //@@author A0132632R
 /**
- * This class serves as a connector between backend and storage. 
- * All requests to storage from the backend package are routed through this class.
+ * This class serves as a connector between backend and storage. All requests to
+ * storage from the backend package are routed through this class.
+ * 
  * @author Pratyush
  *
  */
 
 public class StorageConnector {
     Storage storage = new Storage();
-    
-    public StorageConnector(){
+
+    public StorageConnector() {
     }
-    
-    //For testing purposes
-    protected StorageConnector(Storage storage){
+
+    // For testing purposes
+    protected StorageConnector(Storage storage) {
         this.storage = storage;
     }
-    
-    public String setDirectory(String filePath) throws IOException{
+
+    public String setDirectory(String filePath) throws IOException {
         String prevPath = storage.setDirectory(filePath);
-        assert(prevPath != null);
+        assert (prevPath != null);
         return prevPath;
     }
-    
-    public void initialise() throws IOException{
+
+    public void initialise() throws IOException {
         storage.initialise();
     }
-    
-    public ArrayList<Task> getOpenList(){
+
+    public ArrayList<Task> getOpenList() {
         ArrayList<Task> tasks = storage.getOpenList();
-        assert(tasks != null);
+        assert (tasks != null);
         return tasks;
     }
-    
-    public boolean directoryExists() throws IOException{
+
+    public boolean directoryExists() throws IOException {
         return storage.directoryExists();
     }
-    
-    public Task addTaskInList(String description, Calendar startDateTime
-            ,Calendar endDateTime, String location, Calendar remindDate,String priority) throws IOException{
-        Task addedTask =  storage.addTaskInList(description, startDateTime, endDateTime, location, remindDate, priority);
-        assert(addedTask != null);
+
+    public Task addTaskInList(String description, Calendar startDateTime, 
+                              Calendar endDateTime, String location,
+                              Calendar remindDate, String priority) throws IOException {
+        Task addedTask = storage.addTaskInList(description, startDateTime, endDateTime, location, remindDate, priority);
+        assert (addedTask != null);
         return addedTask;
     }
-    
-    public Task deleteTask(int index) throws IOException{
+
+    public Task deleteTask(int index) throws IOException {
         Task deletedTask = storage.deleteTask(index);
-        assert(deletedTask != null);
+        assert (deletedTask != null);
         return deletedTask;
     }
-    
-    public ArrayList<Task> searchTaskByName(String taskToDelete){
+
+    public ArrayList<Task> searchTaskByName(String taskToDelete) {
         ArrayList<Task> tasks = storage.searchTaskByName(taskToDelete);
-        assert(tasks != null);
+        assert (tasks != null);
         return tasks;
     }
-    
-    public Task uncloseTask(int index) throws IOException{
+
+    public Task uncloseTask(int index) throws IOException {
         Task task = storage.uncloseTask(index);
-        assert(task != null);
+        assert (task != null);
         return task;
     }
-    
-    public Task closeTask(int index) throws IOException{
+
+    public Task closeTask(int index) throws IOException {
         Task task = storage.closeTask(index);
-        assert(task != null);
+        assert (task != null);
         return task;
     }
-    
-    public ArrayList<Task> searchTaskByDate(Calendar date){
+
+    public ArrayList<Task> searchTaskByDate(Calendar date) {
         ArrayList<Task> tasks = storage.searchTaskByDate(date);
-        assert(tasks != null);
+        assert (tasks != null);
         return tasks;
     }
-    
+
     public ArrayList<Task> searchTaskByPriority(String priority) {
         ArrayList<Task> tasks = storage.searchTaskByPriority(priority);
-        assert(tasks != null);
+        assert (tasks != null);
         return tasks;
     }
-    
-    public ArrayList<Task> searchTaskOnDate(Calendar date){
+
+    public ArrayList<Task> searchTaskOnDate(Calendar date) {
         ArrayList<Task> tasks = storage.searchTaskOnDate(date);
-        assert(tasks != null);
+        assert (tasks != null);
         return tasks;
     }
-    
-    public ArrayList<Task> getClosedList(){
+
+    public ArrayList<Task> getClosedList() {
         ArrayList<Task> closedTasks = storage.getCloseList();
-        assert(closedTasks != null);
+        assert (closedTasks != null);
         return closedTasks;
     }
-    
+
     public ArrayList<Task> updateTask(int idTaskToDelete, String description, 
-            Calendar startDateTime, Calendar endDateTime
-            ,String location
-            , Calendar remindDate, String priority) throws IOException, CloneNotSupportedException{
+                                      Calendar startDateTime, Calendar endDateTime, 
+                                      String location, Calendar remindDate, String priority)
+                                      throws IOException, CloneNotSupportedException {
         ArrayList<Task> tasks = storage.updateTask(idTaskToDelete, description, 
-                startDateTime, endDateTime
-                ,location
-                , remindDate, priority);
-        assert(tasks != null);
+                                                   startDateTime, endDateTime, location,
+                                                   remindDate, priority);
+        assert (tasks != null);
         return tasks;
     }
-    
+
 }
