@@ -6,7 +6,12 @@ import application.storage.Task;
 
 import static org.junit.Assert.assertEquals;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.junit.Test;
 /**
@@ -30,6 +35,38 @@ public class BackendUnitTest {
         assertEquals("football coaching", fb2.getTaskToScrollTo().getTaskDescription());
         Feedback fb3 = logic.executeCommand("add football coaching from now to then at NUS -d from 2 pm tomorrow", tasksOnScreen);
         assertEquals("football coaching from now to then at NUS", fb3.getTaskToScrollTo().getTaskDescription());   
+    }
+    
+    @Test
+    public void addTestForDate() throws NoDescriptionException{
+        ArrayList<Task> tasksOnScreen = storage.getOpenList(); 
+        Feedback fb = logic.executeCommand("cs2103 lecture from 4 pm to 6 pm friday", tasksOnScreen);
+        assertIfDateMatches(fb.getTaskToScrollTo(), "15/04/2016 4:00 PM", "15/04/2016 6:00 PM");
+        Feedback fb2 = logic.executeCommand("cs2103 lecture from 15/04/2016 4 pm to 6 pm ", tasksOnScreen);
+        assertIfDateMatches(fb2.getTaskToScrollTo(), "15/04/2016 4:00 PM", "15/04/2016 6:00 PM");
+        Feedback fb3 = logic.executeCommand("read moby dick", tasksOnScreen);
+        assertIfDateMatches(fb3.getTaskToScrollTo(), "", "");
+        Feedback fb4 = logic.executeCommand("submit cs2103 project by monday 11:59 pm", tasksOnScreen);
+        assertIfDateMatches(fb4.getTaskToScrollTo(), "", "11/04/2016 11:59 PM");
+    }
+    
+    private void assertIfDateMatches(Task task, String startDate, String endDate){
+        Calendar start = getDate(startDate);
+        Calendar end = getDate(endDate);
+        assertEquals(start, task.getStartDate());
+        assertEquals(end, task.getEndDate());
+    }
+
+    private Calendar getDate(String startDate) {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm aaa");
+        try{
+            Date date = df.parse(startDate);
+            Calendar calDate = Calendar.getInstance();
+            calDate.setTime(date);
+            return calDate;
+        }catch(ParseException e){
+            return null;
+        }
     }
     
     //Testing via equivalence partitioning

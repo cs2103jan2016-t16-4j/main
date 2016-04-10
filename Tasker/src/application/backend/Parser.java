@@ -237,7 +237,6 @@ public class Parser {
 	private Command initializeSearch(String[] args) {
 		args = (String[]) ArrayUtils.remove(args, 0);
 		Command command = getAppropSearchCommand(args);
-		System.out.println("Search initialised");
 		return command;
 	}
 
@@ -465,8 +464,6 @@ public class Parser {
 		changeSegmentsIfNeeded(segments, tempDates1.size());
 		Calendar startDate = getStartDate(dateTypeKeyword, tempDates1, tempDates2);
 		Calendar endDate = getEndDate(dateTypeKeyword, tempDates1, tempDates2);
-		System.out.println(startDate);
-		System.out.println(endDate);
 		Calendar[] dates = { startDate, endDate };
 		return dates;
 	}
@@ -474,17 +471,23 @@ public class Parser {
 	//NLP date parser package only accepts MM/DD/YYYY so fixing format if needed
 	private String fixDateFormatIfNeeded(String dateString) {
 		String[] parts = dateString.split("\\s+");
+		int i = 0;
 		for (String part : parts) {
 			try {
-				DateFormat originalFormat = new SimpleDateFormat("d/M/yyyy");
-				DateFormat targetFormat = new SimpleDateFormat("MM/dd/yyyy");
-				Date date = originalFormat.parse(part);
-				part = targetFormat.format(date);
+				changeDateIfInDdMmYyyy(parts, i, part);
 			} catch (ParseException e) {
 			}
+			i++;
 		}
 		return getString(parts, 0, parts.length - 1);
 	}
+
+    private void changeDateIfInDdMmYyyy(String[] parts, int i, String part) throws ParseException {
+        DateFormat originalFormat = new SimpleDateFormat("d/M/yyyy");
+        DateFormat targetFormat = new SimpleDateFormat("MM/dd/yyyy");
+        Date date = originalFormat.parse(part);
+        parts[i] = targetFormat.format(date);
+    }
     
 	//adding date string to description string if it turns out that date string has no dates
 	private void changeSegmentsIfNeeded(String[] segments, int size) {
@@ -504,7 +507,6 @@ public class Parser {
 		} else {
 			date = fixTimeInDate(tempDates1.get(0), tempDates2.get(0));
 		}
-		// System.out.println(date);
 		return convertToCalendar(date);
 	}
 
@@ -639,7 +641,6 @@ public class Parser {
 		if (dateIndex == NOT_PRESENT && locationIndex == NOT_PRESENT) {
 			description = getString(args, 0, end - 1);
 		} else if ((dateIndex < locationIndex || locationIndex == NOT_PRESENT) && dateIndex != NOT_PRESENT) {
-			System.out.println(dateIndex);
 			description = getString(args, 0, dateIndex - 1);
 		} else {
 			description = getString(args, 0, locationIndex - 1);

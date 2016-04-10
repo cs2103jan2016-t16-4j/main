@@ -37,9 +37,17 @@ public class StorageStubForBackend extends Storage {
     public Task addTaskInList(String description, Calendar startDateTime
             ,Calendar endDateTime, String location, Calendar remindDate,String priority){
         createListForTest(size);
-        Task task = new EventTask(description, startDateTime,endDateTime,location,remindDate, priority, tasks.size() + 1);
+        Task task;
+        if (startDateTime == null && endDateTime == null){
+            task = new FloatingTask(description, location, remindDate, priority, tasks.size() + 1);
+        } else if (startDateTime == null){
+            task = new DeadlineTask(description,endDateTime, location, remindDate, priority, tasks.size() + 1);
+        } else{
+            task = new EventTask(description, startDateTime,endDateTime,location,remindDate, priority, tasks.size() + 1);
+        }
         return task;
     }
+    
     @Override
     public Task deleteTask(int index){
         createListForTest(size);
