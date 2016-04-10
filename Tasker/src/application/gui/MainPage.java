@@ -359,7 +359,7 @@ public class MainPage extends AnchorPane {
 		ArrayList<Task> clashList = null;
 		clashList = getClashList(taskToFocus, clashList);
 		updateCalendarList(taskList, taskToFocus);
-		updateDisplayList(taskList, clashList);
+		updateDisplayList(taskList, clashList, taskToFocus);
 		updateSummary();
 	}
 
@@ -419,23 +419,24 @@ public class MainPage extends AnchorPane {
 	}
 
 	// Updates data of the task view
-	private void updateDisplayList(ArrayList<Task> taskList, ArrayList<Task> clashList) {
+	private void updateDisplayList(ArrayList<Task> taskList, ArrayList<Task> clashList, Task taskToFocus2) {
 		this.displayList.getItems().clear();
 		if (taskList.size() != EMPTY) {
 			ObservableList<Task> list = makeDisplayList(taskList);
 			this.displayList.setItems(list);
-			selectAllClashItems(clashList);
+			selectAllClashItems(clashList, taskToFocus);
 		}
 	}
 
 	// Selects all clash items or the task that has been added or updated
-	private void selectAllClashItems(ArrayList<Task> clashList) {
+	private void selectAllClashItems(ArrayList<Task> clashList, Task taskToFocus2) {
 		if (clashList != null) {
 			notifyIfClash(clashList);
 			this.displayList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 			for (Task task : clashList) {
 				this.displayList.getSelectionModel().select(task);
 			}
+			this.displayList.getSelectionModel().select(taskToFocus);
 		}
 	}
 
@@ -443,12 +444,12 @@ public class MainPage extends AnchorPane {
 	private void notifyIfClash(ArrayList<Task> clashList) {
 		if (clashList.size() > 1) {
 			Notifications.create().title(CLASH_NOTIFICATION_TITLE).text(CLASH_NOTIFICATION_MSG).showInformation();
-			this.displayList.getStyleClass().clear();
-			this.displayList.getStyleClass().add("clash");
-		} else {
-			assert (clashList.size() <= 1);
-			this.displayList.getStyleClass().clear();
-			this.displayList.getStyleClass().add("select");
+			// this.displayList.getStyleClass().clear();
+			// this.displayList.getStyleClass().add("clash");
+			// } else {
+			// assert (clashList.size() <= 1);
+			// this.displayList.getStyleClass().clear();
+			// this.displayList.getStyleClass().add("select");
 		}
 	}
 
@@ -533,12 +534,7 @@ public class MainPage extends AnchorPane {
 	private void previousRecentlyUsedCommands() {
 		// if used commands list is not empty
 		if (!commands.isEmpty()) {
-			if (!commands.contains(textInputArea.getText())) {
-				pointer = commands.size();
-			} else {
-				assert (commands.contains(textInputArea.getText()));
-				pointer = commands.indexOf(textInputArea.getText());
-			}
+			checkPointerPosition();
 			// if pointer is not at the front end
 			if (pointer != START) {
 				textInputArea.setText(commands.get(pointer - previous));
@@ -549,16 +545,21 @@ public class MainPage extends AnchorPane {
 	// Next recently used commands upon down pressed in the text area
 	private void nextRecentlyUsedCommand() {
 		if (!commands.isEmpty()) {
-			if (!commands.contains(textInputArea.getText())) {
-				pointer = commands.size();
-			} else {
-				assert (commands.contains(textInputArea.getText()));
-				pointer = commands.indexOf(textInputArea.getText());
-			}
+			checkPointerPosition();
 			// if pointer is not at the end
 			if (pointer != commands.size() - OFFSET) {
 				textInputArea.setText(commands.get(pointer + NEXT));
 			}
+		}
+	}
+
+	// Check pointer position for recently used commands
+	private void checkPointerPosition() {
+		if (!commands.contains(textInputArea.getText())) {
+			pointer = commands.size();
+		} else {
+			assert (commands.contains(textInputArea.getText()));
+			pointer = commands.indexOf(textInputArea.getText());
 		}
 	}
 

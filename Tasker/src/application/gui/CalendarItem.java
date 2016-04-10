@@ -18,7 +18,7 @@ public class CalendarItem extends AnchorPane {
 
 	// Exception Messages
 	private static final String FXML_LOAD_FAIL_MSG = "Failed to load calendar item fxml file";
-	
+
 	// Constants
 	private static final String LOW = "low";
 	private static final String MEDIUM = "medium";
@@ -26,7 +26,7 @@ public class CalendarItem extends AnchorPane {
 	private static final int overdueCheckVariable = 0;
 	private static final String CALENDAR_ITEM_FXML_URL = "CalendarItem.fxml";
 	private static final String EMPTY = "";
-	
+
 	// Formatting
 	private static final String RED = "#EF9A9A";
 	private static final String GREEN = "#A5D6A7";
@@ -111,6 +111,7 @@ public class CalendarItem extends AnchorPane {
 		if (!location.equals(EMPTY)) {
 			this.locationLabel.setText(location);
 		} else {
+			assert (location.equals(EMPTY));
 			this.locationLabel.setText(EMPTY);
 		}
 	}
