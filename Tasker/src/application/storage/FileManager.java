@@ -118,20 +118,21 @@ public class FileManager {
 				if (filePath.equalsIgnoreCase(dataFilePath)) {
 					// skip first line first if its data file (open list)
 					String readText = in.readLine();
-					loadTasksIntoFile(in, list);
-					in.close();
 				}
+				list = loadTasksIntoFile(in, list);
+				in.close();
 			} catch (IOException e) {
 				logger.log(Level.SEVERE, "Error finding file.");
 			}
 		}
+		System.out.println(list.size());
 		return list;
 	}
 
 	/**
 	 * Loads the given file of tasks (close,open) into ArrayList<Task>.
 	 */
-	private void loadTasksIntoFile(BufferedReader in, ArrayList<Task> list) throws IOException {
+	private ArrayList<Task> loadTasksIntoFile(BufferedReader in, ArrayList<Task> list) throws IOException {
 		String readText;
 		Gson gson = new GsonBuilder().registerTypeAdapter(Task.class, new TaskSerializer())
 				.registerTypeAdapter(EventTask.class, new TaskSerializer())
@@ -141,6 +142,7 @@ public class FileManager {
 			Task task = gson.fromJson(readText, Task.class);
 			list.add(task);
 		}
+		return list;
 	}
 
 	/**
