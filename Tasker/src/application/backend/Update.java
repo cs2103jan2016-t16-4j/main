@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import application.storage.Storage;
 import application.storage.Task;
 
 
@@ -52,21 +51,7 @@ public class Update implements UndoableCommand{
    
     public Feedback execute(StorageConnector storageConnector, ArrayList<Task> tasks){
         try{
-            this.storageConnector = storageConnector;
-            
-            int idTaskToDelete = tasks.get(taskPosition).getTaskIndex();
-            ArrayList<Task> returnedTasks = storageConnector.updateTask(idTaskToDelete, description, 
-                    startDateTime, endDateTime
-                    ,location
-                    , remindDate, priority);
-            origTask = returnedTasks.get(INDEX_ORIGINAL_TASK);
-            updatedTask = returnedTasks.get(INDEX_UPDATED_TASK);
-            String feedbackMessage = String.format(MESSAGE_UPDATE_FEEDBACK, "From: " 
-                    + origTask.toString() + "\n" + "To: " + updatedTask.toString());
-            //System.out.println("Orig:" + origTask.getStartDate());
-            //System.out.println("Updated:" + updatedTask.getStartDate());
-            
-            return getFeedbackList(feedbackMessage, storageConnector.getOpenList(), updatedTask);
+            return updateTask(storageConnector, tasks);
         } catch (IOException e){
             return getFeedbackCal(MESSAGE_UPDATE_ERROR, storageConnector.getOpenList(), null);
         } catch (CloneNotSupportedException e){
@@ -75,14 +60,27 @@ public class Update implements UndoableCommand{
             return getFeedbackCal(MESSAGE_INDEX_ERROR, storageConnector.getOpenList(), null);
         }
     }
+
+
+    private Feedback updateTask(StorageConnector storageConnector, ArrayList<Task> tasks) throws IOException, CloneNotSupportedException {
+        this.storageConnector = storageConnector;
+        int idTaskToDelete = tasks.get(taskPosition).getTaskIndex();
+        ArrayList<Task> returnedTasks = storageConnector.updateTask(idTaskToDelete, description, 
+                startDateTime, endDateTime, location , remindDate, priority);
+        origTask = returnedTasks.get(INDEX_ORIGINAL_TASK);
+        updatedTask = returnedTasks.get(INDEX_UPDATED_TASK);
+        String feedbackMessage = String.format(MESSAGE_UPDATE_FEEDBACK, "From: " 
+                + origTask.toString() + "\n" + "To: " + updatedTask.toString());
+        return getFeedbackList(feedbackMessage, storageConnector.getOpenList(), updatedTask);
+    }
     
     
     public Feedback undo(){
         try {
             Task deletedTask = storageConnector.deleteTask(updatedTask.getTaskIndex());
             Task revertedTask = storageConnector.addTaskInList(origTask.getTaskDescription(), origTask.getStartDate(),
-            origTask.getEndDate(),  origTask.getLocation(),  origTask.getRemindDate(),
-            origTask.getPriority());
+                    origTask.getEndDate(),  origTask.getLocation(),  origTask.getRemindDate(),
+                    origTask.getPriority());
             String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK,"From: " 
                     + deletedTask.toString() + "\n" + "To: " + revertedTask.toString());
             return getFeedbackList(feedbackMessage, storageConnector.getOpenList(), revertedTask);

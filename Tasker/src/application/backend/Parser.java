@@ -362,12 +362,12 @@ public class Parser {
 
 	private Command getSearchCommand(String[] args) throws NotDateException {
 		String[] argsForDate = (String[]) ArrayUtils.remove(args, 0);
-		if (Arrays.asList(DATE_MARKERS_DEADLINE).contains(args[0])) {
+		if (Arrays.asList(DATE_MARKERS_DEADLINE).contains(args[0].toLowerCase())) {
 			return getSearchByDateCommand(argsForDate);
-		} else if (Arrays.asList(DATE_MARKERS_FULL_DAY_EVENT).contains(args[0])) {
+		} else if (Arrays.asList(DATE_MARKERS_FULL_DAY_EVENT).contains(args[0].toLowerCase())) {
 			return getSearchOnDateCommand(argsForDate);
-		} else if (args.length > 1 && args[0].equalsIgnoreCase("priority")
-				&& Arrays.asList(PRIORITY_LEVELS).contains(args[1])) {
+		} else if (args.length > 1 && Arrays.asList(PRIORITY_MARKERS).contains(args[0].toLowerCase())
+				&& Arrays.asList(PRIORITY_LEVELS).contains(args[1].toLowerCase())) {
 			return getSearchByPriorityCommand(argsForDate);
 		} else
 			return getSearchByName(args);
@@ -408,6 +408,7 @@ public class Parser {
 		return convertToCalendar(date);
 	}
 
+	//If time not specified, setting time to 11:59 PM
 	private LocalDateTime fixDateForSearch(Date date1, Date date2) {
 		if (date1.equals(date2)) {
 			return new LocalDateTime(date1);
@@ -469,6 +470,7 @@ public class Parser {
 		return dates;
 	}
 
+	//NLP date parser package only accepts MM/DD/YYYY so fixing format if needed
 	private String fixDateFormatIfNeeded(String dateString) {
 		String[] parts = dateString.split("\\s+");
 		for (String part : parts) {
@@ -482,7 +484,8 @@ public class Parser {
 		}
 		return getString(parts, 0, parts.length - 1);
 	}
-
+    
+	//adding date string to description string if it turns out that date string has no dates
 	private void changeSegmentsIfNeeded(String[] segments, int size) {
 		if (size == 0) {
 			segments[DESC_POS] = segments[DESC_POS].trim() + " " + segments[DATE_POS];
@@ -490,48 +493,62 @@ public class Parser {
 		}
 	}
 
+	//Getting start date based on which arguments were specified by user
 	private Calendar getStartDate(String keyword, List<Date> tempDates1, List<Date> tempDates2) {
 		LocalDateTime date;
 		if (tempDates1.size() == 0) {
 			date = null;
 		} else if (tempDates1.size() == 1) {
-			if (Arrays.asList(DATE_MARKERS_START).indexOf(keyword) != -1) {
-				date = fixDate(tempDates1.get(0), tempDates2.get(0));
-			} else if (Arrays.asList(DATE_MARKERS_END).indexOf(keyword) != -1) {
-				date = createEmptyDate();
-			} else if (Arrays.asList(DATE_MARKERS_FULL_DAY_EVENT).indexOf(keyword) != -1) {
-				date = fixDate(tempDates1.get(0), tempDates2.get(0));
-				date = date.withMillisOfDay(0);
-			} else {
-				date = null;
-			}
+			date = processSingleDateForStart(keyword, tempDates1, tempDates2);
 		} else {
-			date = fixDate(tempDates1.get(0), tempDates2.get(0));
+			date = fixTimeInDate(tempDates1.get(0), tempDates2.get(0));
 		}
 		// System.out.println(date);
 		return convertToCalendar(date);
 	}
 
+    private LocalDateTime processSingleDateForStart(String keyword, List<Date> tempDates1, List<Date> tempDates2) {
+        LocalDateTime date;
+        if (Arrays.asList(DATE_MARKERS_START).indexOf(keyword) != -1) {
+        	date = fixTimeInDate(tempDates1.get(0), tempDates2.get(0));
+        } else if (Arrays.asList(DATE_MARKERS_END).indexOf(keyword) != -1) {
+        	date = createEmptyDate();
+        } else if (Arrays.asList(DATE_MARKERS_FULL_DAY_EVENT).indexOf(keyword) != -1) {
+        	date = fixTimeInDate(tempDates1.get(0), tempDates2.get(0));
+        	date = date.withMillisOfDay(0);
+        } else {
+        	date = null;
+        }
+        return date;
+    }
+
+	//Getting end date based on which arguments were specified by user
 	private Calendar getEndDate(String keyword, List<Date> tempDates1, List<Date> tempDates2) {
 		LocalDateTime date;
 		if (tempDates1.size() == 0) {
 			date = null;
 		} else if (tempDates1.size() == 1) {
-			if (Arrays.asList(DATE_MARKERS_START).indexOf(keyword) != -1) {
-				date = createEmptyDate();
-			} else if (Arrays.asList(DATE_MARKERS_FULL_DAY_EVENT).indexOf(keyword) != -1) {
-				date = fixDate(tempDates1.get(0), tempDates2.get(0));
-				date = date.withTime(23, 59, 59, 999);
-			} else {
-				date = fixDate(tempDates1.get(0), tempDates2.get(0));
-			}
+			date = processSingleDateForEnd(keyword, tempDates1, tempDates2);
 		} else {
-			date = fixDate(tempDates1.get(1), tempDates2.get(1));
+			date = fixTimeInDate(tempDates1.get(1), tempDates2.get(1));
 		}
-		// System.out.println(date);
 		return convertToCalendar(date);
 	}
 
+    private LocalDateTime processSingleDateForEnd(String keyword, List<Date> tempDates1, List<Date> tempDates2) {
+        LocalDateTime date;
+        if (Arrays.asList(DATE_MARKERS_START).indexOf(keyword) != -1) {
+        	date = createEmptyDate();
+        } else if (Arrays.asList(DATE_MARKERS_FULL_DAY_EVENT).indexOf(keyword) != -1) {
+        	date = fixTimeInDate(tempDates1.get(0), tempDates2.get(0));
+        	date = date.withTime(23, 59, 59, 999);
+        } else {
+        	date = fixTimeInDate(tempDates1.get(0), tempDates2.get(0));
+        }
+        return date;
+    }
+
+	//fixing dates so that if one of the times in an event was not specified, a default time is used
 	private Calendar[] fixDatesForAdd(Calendar[] dates) {
 		Calendar startDate = dates[0];
 		Calendar endDate = dates[1];
@@ -549,6 +566,7 @@ public class Parser {
 		return fixedDates;
 	}
 
+    //fixing dates for update so that if no date specified, it is set to empty which can be ignored
 	private Calendar[] fixDatesForUpdate(Calendar[] dates) {
 		Calendar startDate = dates[0];
 		Calendar endDate = dates[1];
@@ -560,7 +578,8 @@ public class Parser {
 		return fixedDates;
 	}
 
-	private LocalDateTime fixDate(Date date1, Date date2) {
+    //fixing dates so that unspecified time can be set to empty
+	private LocalDateTime fixTimeInDate(Date date1, Date date2) {
 		if (date1.equals(date2)) {
 			return new LocalDateTime(date1);
 		} else {
@@ -577,6 +596,7 @@ public class Parser {
 		return date;
 	}
 
+	//Convert Joda LocalDateTime object to Calendar object
 	private Calendar convertToCalendar(LocalDateTime date) {
 		if (date == null) {
 			return null;
@@ -587,6 +607,7 @@ public class Parser {
 		return cal;
 	}
 
+	//Get segments of user input based on keyword indices
 	private String[] getSegments(int dateIndex, int locationIndex, int priorityIndex, String[] args) {
 		String description = getDescription(dateIndex, locationIndex, priorityIndex, args);
 		String date = getDateString(dateIndex, locationIndex, priorityIndex, args);
@@ -599,9 +620,9 @@ public class Parser {
 		segments[PRI_POS] = priority.trim();
 		return segments;
 	}
-
+	
 	private String getPriority(int priorityIndex, String[] args) {
-		if (priorityIndex == -1) {
+		if (priorityIndex == NOT_PRESENT) {
 			return EMPTY;
 		} else {
 			return args[priorityIndex + 1];
@@ -611,12 +632,12 @@ public class Parser {
 	private String getDescription(int dateIndex, int locationIndex, int priorityIndex, String[] args) {
 		String description;
 		int end = args.length;
-		if (priorityIndex != -1) {
+		if (priorityIndex != NOT_PRESENT) {
 			end = priorityIndex;
 		}
-		if (dateIndex == -1 && locationIndex == -1) {
+		if (dateIndex == NOT_PRESENT && locationIndex == NOT_PRESENT) {
 			description = getString(args, 0, end - 1);
-		} else if ((dateIndex < locationIndex || locationIndex == -1) && dateIndex != -1) {
+		} else if ((dateIndex < locationIndex || locationIndex == NOT_PRESENT) && dateIndex != NOT_PRESENT) {
 			System.out.println(dateIndex);
 			description = getString(args, 0, dateIndex - 1);
 		} else {
@@ -624,14 +645,15 @@ public class Parser {
 		}
 		return description;
 	}
-
+	
+	//makes sure priority is actually specified as an argument and not as part of task description
 	private int fixPriorityIndex(int priorityIndex, String[] args) {
 		int priorityLevelPosition = priorityIndex + 1;
 		List<String> levels = Arrays.asList(PRIORITY_LEVELS);
 		if (priorityLevelPosition == args.length) {
-			return -1;
+			return NOT_PRESENT;
 		} else if (!levels.contains(args[priorityLevelPosition].toLowerCase())) {
-			return -1;
+			return NOT_PRESENT;
 		} else {
 			return priorityIndex;
 		}
@@ -665,14 +687,6 @@ public class Parser {
 		}
 	}
 
-	private String getString(String[] args, int start, int end) {
-		String string = EMPTY;
-		for (int i = start; i <= end; i++) {
-			string = string + args[i] + " ";
-		}
-		return string.trim();
-	}
-
 	private int getDateStartIndex(String[] args) {
 		ArrayList<Integer> indices = new ArrayList<Integer>();
 		int eventDateIndex = getLastIndex(DATE_MARKERS_START, args);
@@ -687,6 +701,7 @@ public class Parser {
 		return dateIndex;
 	}
 
+	//Gets last index of any one of an array of keywords, in an array of users command words
 	private static int getLastIndex(String[] keywords, String[] commandWords) {
 		int[] positions = new int[keywords.length];
 		String[] commandLowerCase = new String[commandWords.length];
@@ -700,7 +715,16 @@ public class Parser {
 		return ((int) Collections.max(list));
 	}
 
-	private void checkForError(String userCommand) /* throws Error */ {
+	//Makes a single string from a String[] from start position to end position in the array
+    private String getString(String[] args, int start, int end) {
+        String string = EMPTY;
+        for (int i = start; i <= end; i++) {
+            string = string + args[i] + " ";
+        }
+        return string.trim();
+    }
+    
+    private void checkForError(String userCommand) /* throws Error */ {
 		if (userCommand == null) {
 			logger.severe("null user commands");
 			throw new Error(MESSAGE_NULL_ERROR);

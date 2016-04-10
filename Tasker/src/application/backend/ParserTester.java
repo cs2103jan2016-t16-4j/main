@@ -1,14 +1,10 @@
 package application.backend;
 //import application.storage.Storage;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import org.junit.Test;
 
-import application.storage.Storage;
 import application.storage.Task;
 
 public class ParserTester {
@@ -50,7 +46,6 @@ public class ParserTester {
                 System.out.println("IM HEREE");
                 
                 ArrayList<Task> tasks = storageConnector.getOpenList();
-                int numb = tasks.size();
                 Command cmd = parser.interpretCommand("update 2 tennis");
                 Feedback fb = cmd.execute(storageConnector, tasks);
                 System.out.println(fb.getMessage());

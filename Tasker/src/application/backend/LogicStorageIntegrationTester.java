@@ -4,11 +4,9 @@ package application.backend;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import org.junit.Test;
 
-import application.storage.Storage;
 import application.storage.Task;
 
 public class LogicStorageIntegrationTester {
