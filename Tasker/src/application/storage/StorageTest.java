@@ -59,8 +59,8 @@ public class StorageTest {
 	}
 	
 //	@Test
-	public void checkDirectory() throws IOException {
-		assertFalse(storageController.directoryExists());	
+	public void checkDirectoryExists() throws IOException {
+		assertTrue(storageController.directoryExists());	
 	}
 	
 //	@Test
@@ -395,38 +395,53 @@ public class StorageTest {
 		System.out.println("New : "+list.get(1).toString());
 		assertEquals(deadlineTask.toString(), list.get(1).toString());
 	}
+	
 //	@Test
 	public void testGetPriority() {
 		DeadlineTask deadlineTask = new DeadlineTask();
 		Calendar endDate = Calendar.getInstance();
 		endDate.roll(Calendar.SECOND, -1);
 		deadlineTask.setEndDate(endDate);
+		deadlineTask.setEndTime(endDate);
 		assertTrue(deadlineTask.getPriority()=="high");
+		deadlineTask.setPriority("");
 		
-		endDate = Calendar.getInstance();
-		endDate.roll(Calendar.MINUTE, 1);
-		deadlineTask.setEndDate(endDate);
+		Calendar a = Calendar.getInstance();
+		a.roll(Calendar.MINUTE, 1);
+		deadlineTask.setEndDate(a);
+		deadlineTask.setEndTime(a);
 		assertTrue(deadlineTask.getPriority()=="high");
+		deadlineTask.setPriority("");
 		
-		endDate = Calendar.getInstance();
-		endDate.roll(Calendar.HOUR, 1);
-		deadlineTask.setEndDate(endDate);
+		Calendar b = Calendar.getInstance();
+		b.roll(Calendar.HOUR, 1);
+		deadlineTask.setEndDate(b);
+		deadlineTask.setEndTime(b);
 		assertTrue(deadlineTask.getPriority()=="high");
+		deadlineTask.setPriority("");
 		
-		endDate = Calendar.getInstance();
-		endDate.roll(Calendar.HOUR, 3);
-		deadlineTask.setEndDate(endDate);
+		Calendar c = Calendar.getInstance();
+		c.roll(Calendar.HOUR, 3);
+		deadlineTask.setEndDate(c);
+		deadlineTask.setEndTime(c);
 		assertTrue(deadlineTask.getPriority()=="medium");
+		deadlineTask.setPriority("");
 		
-		endDate = Calendar.getInstance();
-		endDate.roll(Calendar.HOUR, 23);
-		deadlineTask.setEndDate(endDate);
+		Calendar d = Calendar.getInstance();
+		System.out.println(d.getTime().toString());
+		d.roll(Calendar.HOUR, 23);
+		System.out.println(d.getTime().toString());
+		deadlineTask.setEndDate(d);
+		deadlineTask.setEndTime(d);
 		assertTrue(deadlineTask.getPriority()=="medium");
+		deadlineTask.setPriority("");
 		
-		endDate = Calendar.getInstance();
-		endDate.roll(Calendar.HOUR, 25);
-		deadlineTask.setEndDate(endDate);
+		Calendar e = Calendar.getInstance();
+		e.roll(Calendar.HOUR, 25);
+		deadlineTask.setEndDate(e);
+		deadlineTask.setEndTime(e);
 		assertTrue(deadlineTask.getPriority()=="low");
+		deadlineTask.setPriority("");
 		
 		deadlineTask.setPriority("low");
 		assertTrue(deadlineTask.getPriority()=="low");

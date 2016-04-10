@@ -12,6 +12,7 @@ import application.storage.Task;
 //@@author A0132632R
 /**
  * This class can be thought of as the decision maker for the backend package.
+ * 
  * @author Pratyush
  *
  */
@@ -19,33 +20,36 @@ public class Logic {
 
 	// Constants
 	private static final int START_COUNT = 0;
-	private static final int COMPARE_OVERDUE_VARIABLE = 0;
-
+	
 	// Initialization
 	private Parser parser = new Parser();
 	private StorageConnector storageConnector = new StorageConnector();
 	private static Logger logger = LoggerHandler.getLog();
 	private History history = History.getInstance();
 
-	public Logic(){
+	public Logic() {
 	}
-	
-	//To enable testing
-	protected Logic (StorageConnector storageConnector){
-	    this.storageConnector = storageConnector;
+
+	// To enable testing
+	protected Logic(StorageConnector storageConnector) {
+		this.storageConnector = storageConnector;
 	}
-	
+
 	/**
 	 * This method should be called to parse and execute user entered commands
-	 *  (which may be in natural language style).
-	 * @param command  A string input of the user command
-	 * @param tasksOnScreen An ArrayList of the current tasks being displayed
-	 * @return A feedback object containing feedback which has been constructed based
-	 *  on the execution of that particular command
-	 * @throws NoDescriptionException This exception is thrown if the Parser encounters 
-	 * that the user has not entered a description for a task
+	 * (which may be in natural language style).
+	 * 
+	 * @param command
+	 *            A string input of the user command
+	 * @param tasksOnScreen
+	 *            An ArrayList of the current tasks being displayed
+	 * @return A feedback object containing feedback which has been constructed
+	 *         based on the execution of that particular command
+	 * @throws NoDescriptionException
+	 *             This exception is thrown if the Parser encounters that the
+	 *             user has not entered a description for a task
 	 */
-	
+
 	public Feedback executeCommand(String command, ArrayList<Task> tasksOnScreen) throws NoDescriptionException {
 		Feedback feedback;
 		Command cmd = parser.interpretCommand(command);
@@ -55,11 +59,15 @@ public class Logic {
 		history.add(cmd);
 		return feedback;
 	}
-	
+
 	/**
-	 * This method should be called to get all timing clashes with a particular task.
-	 * @param task The task you want to check clashes for.
-	 * @return A list of tasks that clash with this task, along with the task itself.
+	 * This method should be called to get all timing clashes with a particular
+	 * task.
+	 * 
+	 * @param task
+	 *            The task you want to check clashes for.
+	 * @return A list of tasks that clash with this task, along with the task
+	 *         itself.
 	 */
 	public ArrayList<Task> getClashes (Task task){
 	    logger.info("getting all tasks to check for clash");
@@ -137,13 +145,29 @@ public class Logic {
 	// Counts number of overdue tasks
 	private int countOverdue(int overdueCount, ArrayList<Task> taskList, Calendar cal) {
 		for (Task task : taskList) {
-			if (task.getEndDate() != null) {
-				if (task.getEndDate().getTime().compareTo(cal.getTime()) < COMPARE_OVERDUE_VARIABLE) {
-					overdueCount++;
+			if (!(task instanceof EventTask)) {
+				assert (task.getEndDate() != null);
+				if (task.getEndDate() != null) {
+					if (task.getEndDate().getTime().compareTo(cal.getTime()) < 0) {
+						overdueCount++;
+					}
 				}
+			} else {
+				assert (task.getStartDate() != null);
+				if (task.getStartDate() != null) {
+					if (task.getStartDate().getTime().compareTo(cal.getTime()) < 0) {
+						overdueCount++;
+					}
+				}
+				// if (task.getEndDate() != null) {
+				// if (task.getEndDate().getTime().compareTo(cal.getTime()) <
+				// COMPARE_OVERDUE_VARIABLE) {
+				// overdueCount++;
+				// }
+				// }
 			}
+
 		}
 		return overdueCount;
 	}
-
 }
