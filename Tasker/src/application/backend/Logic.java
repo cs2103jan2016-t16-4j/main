@@ -53,7 +53,6 @@ public class Logic {
 		feedback = cmd.execute(storageConnector, tasksOnScreen);
 		logger.info("adding command to history");
 		history.add(cmd);
-		logger.info("saving tasks to file.");
 		return feedback;
 	}
 	
@@ -63,7 +62,7 @@ public class Logic {
 	 * @return A list of tasks that clash with this task, along with the task itself.
 	 */
 	public ArrayList<Task> getClashes (Task task){
-	    logger.info("getting all tasks");
+	    logger.info("getting all tasks to check for clash");
         ArrayList<Task> openTasks = storageConnector.getOpenList();
         logger.info("initiating arraylist");
         ArrayList<Task> tasksClashing = new ArrayList<Task>();

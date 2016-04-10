@@ -464,7 +464,7 @@ public class MainPage extends AnchorPane {
 						text = textInputArea.getText();
 						commands.add(text);
 						Feedback feedback = backendFacade.executeCommand(text, tasksOnScreen);
-						System.out.println(feedback.getMessage());
+						//System.out.println(feedback.getMessage());
 						tasksOnScreen = feedback.getTasks();
 						taskToFocus = feedback.getTaskToScrollTo();
 						notifyUser(taskToFocus);
