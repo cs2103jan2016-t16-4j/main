@@ -149,7 +149,6 @@ public class Fantasktic extends Application {
 			} catch (AWTException e) {
 				logger.severe(LOAD_LOGO_FAIL_MSG);
 			}
-
 		}
 	}
 

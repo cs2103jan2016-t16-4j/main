@@ -112,6 +112,8 @@ public class MainPage extends AnchorPane {
 	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd MMM yyyy");
 
 	// Messages
+	private static final String CLASH_NOTIFICATION_MSG = "Please Note The Highlighted Clashes";
+	private static final String CLASH_NOTIFICATION_TITLE = "Clash has been detected";
 	private static final String ADD_HINT_MESSAGE = "To add: [task description] from [start] to [end] at [location] priority [priority]";
 	private static final String HELP_HINT_MESSAGE = "To get help: help";
 	private static final String DELETE_HINT_MESSAGE = "To delete: delete [task description/number]";
@@ -236,6 +238,7 @@ public class MainPage extends AnchorPane {
 									taskLocation, taskPriority, overdueCheck);
 							setGraphic(listViewItem);
 						} else {
+							assert (item == null);
 							setGraphic(null);
 						}
 					}
@@ -260,6 +263,7 @@ public class MainPage extends AnchorPane {
 							DateObject listViewItem = new DateObject(date, item, tasksOnScreen);
 							setGraphic(listViewItem.getHbox());
 						} else {
+							assert (item == null);
 							setGraphic(null);
 						}
 					}
@@ -273,7 +277,6 @@ public class MainPage extends AnchorPane {
 	// Set date accordingly
 	private String setDate(ArrayList<Task> item) {
 		String date = null;
-		assert (item.get(START).getEndDate() != null);
 		if (item.get(START).getEndDate() != null) {
 			date = FORMAT_DATE.format(item.get(START).getEndDate().getTime());
 		}
@@ -284,12 +287,11 @@ public class MainPage extends AnchorPane {
 	private int checkIfOverdue(Task item, Calendar cal) {
 		int overdueCheck = overdueCheckVariable;
 		if (!(item instanceof EventTask)) {
-			assert (item.getEndDate() != null);
 			if (item.getEndDate() != null) {
 				overdueCheck = item.getEndDate().getTime().compareTo(cal.getTime());
 			}
 		} else {
-			assert (item.getStartDate() != null);
+			assert (item instanceof EventTask);
 			if (item.getStartDate() != null) {
 				overdueCheck = item.getStartDate().getTime().compareTo(cal.getTime());
 			}
@@ -303,6 +305,7 @@ public class MainPage extends AnchorPane {
 		if (location.trim().equals(EMPTY_STRING)) {
 			return EMPTY_STRING;
 		} else {
+			assert (!location.trim().equals(EMPTY_STRING));
 			return (LOCATION_PREFIX + SPACE + location);
 		}
 	}
@@ -317,6 +320,7 @@ public class MainPage extends AnchorPane {
 				if (tempoDate.equals(FORMAT_DATE.format(taskList.get(i).getEndDate().getTime()))) {
 					temporaryList.add(taskList.get(i));
 				} else {
+					assert (!tempoDate.equals(FORMAT_DATE.format(taskList.get(i).getEndDate().getTime())));
 					dateArray.add(temporaryList);
 					temporaryList = new ArrayList<Task>();
 					temporaryList.add(taskList.get(i));
@@ -340,10 +344,10 @@ public class MainPage extends AnchorPane {
 			if (!(taskList.get(i) instanceof FloatingTask)) {
 				tempoDate = FORMAT_DATE.format(taskList.get(i).getEndDate().getTime());
 			} else {
+				assert ((taskList.get(i) instanceof FloatingTask));
 				tempoDate = null;
 			}
 		}
-		assert (temporaryList.size() != EMPTY);
 		if (temporaryList.size() != EMPTY) {
 			dateArray.add(temporaryList);
 		}
@@ -353,19 +357,35 @@ public class MainPage extends AnchorPane {
 	// Method that calls other methods to update the data
 	private void updateViews(ArrayList<Task> taskList, Task taskToFocus) {
 		ArrayList<Task> clashList = null;
-		if (taskToFocus != null) {
-			clashList = backendFacade.getClashes(taskToFocus);
-		}
+		clashList = getClashList(taskToFocus, clashList);
 		updateCalendarList(taskList, taskToFocus);
 		updateDisplayList(taskList, clashList);
 		updateSummary();
 	}
 
+	private ArrayList<Task> getClashList(Task taskToFocus, ArrayList<Task> clashList) {
+		if (taskToFocus != null) {
+			clashList = backendFacade.getClashes(taskToFocus);
+		}
+		return clashList;
+	}
+
 	// Update the side panel
 	private void updateSummary() {
+		setSummaryLabels();
+		setPieChart();
+
+	}
+
+	// Setup Labels for summary panel
+	private void setSummaryLabels() {
 		completedLabel.setText(String.valueOf(backendFacade.getCompletedTaskCount()));
 		remainingLabel.setText(String.valueOf(backendFacade.getRemainingTaskCount()));
 		overdueLabel.setText(String.valueOf(backendFacade.getOverdueTaskCount()));
+	}
+
+	// Setup pie chart for summary panel
+	private void setPieChart() {
 		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
 				new PieChart.Data(COMPLETED_TASKS_TEXT, backendFacade.getCompletedTaskCount()),
 				new PieChart.Data(REMAINING_TASKS_TEXT, backendFacade.getRemainingTaskCount()),
@@ -373,14 +393,12 @@ public class MainPage extends AnchorPane {
 		pieChart.setData(pieChartData);
 		pieChart.setLabelsVisible(false);
 		pieChart.setLegendSide(Side.BOTTOM);
-
 	}
 
 	// Notification behavior for adding or updating tasks
 	private void notifyUser(Task taskToFocus) {
 		String title = null;
 		String text = null;
-		assert (taskToFocus != null);
 		if (taskToFocus != null) {
 			if (taskToFocus.getEndDate() == null) {
 				title = REMINDER_TEXT;
@@ -403,32 +421,40 @@ public class MainPage extends AnchorPane {
 	// Updates data of the task view
 	private void updateDisplayList(ArrayList<Task> taskList, ArrayList<Task> clashList) {
 		this.displayList.getItems().clear();
-		assert (taskList.size() != EMPTY);
 		if (taskList.size() != EMPTY) {
 			ObservableList<Task> list = makeDisplayList(taskList);
 			this.displayList.setItems(list);
-			if (clashList != null) {
-				this.displayList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-				if (clashList.size() > 1) {
-					Notifications.create().title("Clash has been detected").text("Clashes are highlighted")
-							.showInformation();
-					this.displayList.getStyleClass().clear();
-					this.displayList.getStyleClass().add("clash");
-				} else {
-					this.displayList.getStyleClass().clear();
-					this.displayList.getStyleClass().add("select");
-				}
-				for (Task task : clashList) {
-					this.displayList.getSelectionModel().select(task);
-				}
+			selectAllClashItems(clashList);
+		}
+	}
+
+	// Selects all clash items or the task that has been added or updated
+	private void selectAllClashItems(ArrayList<Task> clashList) {
+		if (clashList != null) {
+			notifyIfClash(clashList);
+			this.displayList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+			for (Task task : clashList) {
+				this.displayList.getSelectionModel().select(task);
 			}
+		}
+	}
+
+	// Notify users if there is a clash or not
+	private void notifyIfClash(ArrayList<Task> clashList) {
+		if (clashList.size() > 1) {
+			Notifications.create().title(CLASH_NOTIFICATION_TITLE).text(CLASH_NOTIFICATION_MSG).showInformation();
+			this.displayList.getStyleClass().clear();
+			this.displayList.getStyleClass().add("clash");
+		} else {
+			assert (clashList.size() <= 1);
+			this.displayList.getStyleClass().clear();
+			this.displayList.getStyleClass().add("select");
 		}
 	}
 
 	// Updates data of the calendar view
 	private void updateCalendarList(ArrayList<Task> taskList, Task taskToFocus) {
 		this.calendarList.getItems().clear();
-		assert (taskList.size() != EMPTY);
 		if (taskList.size() != EMPTY) {
 			ArrayList<ArrayList<Task>> dateArray = new ArrayList<ArrayList<Task>>();
 			dateArray = getDateArray(taskList);
@@ -460,51 +486,15 @@ public class MainPage extends AnchorPane {
 
 			public void handle(KeyEvent ke) {
 				if (ke.getCode().equals(KeyCode.ENTER)) {
-					try {
-						text = textInputArea.getText();
-						commands.add(text);
-						Feedback feedback = backendFacade.executeCommand(text, tasksOnScreen);
-						tasksOnScreen = feedback.getTasks();
-						taskToFocus = feedback.getTaskToScrollTo();
-						notifyUser(taskToFocus);
-						updateViews(tasksOnScreen, taskToFocus);
-						checkFlag = feedback.getFlag();
-						feedbackLabel.setText(feedback.getMessage());
-						doFlagCommand(checkFlag, feedback);
-						if (checkFlag != HELP_FLAG) {
-							textInputArea.clear();
-						}
-						closePanel();
-					} catch (Exception e) {
-						feedbackLabel.setText(MESSAGE_ERROR);
-					}
+					executeCommands();
 				}
+
 				if (ke.getCode().equals(KeyCode.UP)) {
-					// if used commands list is not empty
-					if (!commands.isEmpty()) {
-						if (!commands.contains(textInputArea.getText())) {
-							pointer = commands.size();
-						} else {
-							pointer = commands.indexOf(textInputArea.getText());
-						}
-						// if pointer is not at the front end
-						if (pointer != START) {
-							textInputArea.setText(commands.get(pointer - previous));
-						}
-					}
+					previousRecentlyUsedCommands();
 				}
+
 				if (ke.getCode().equals(KeyCode.DOWN)) {
-					if (!commands.isEmpty()) {
-						if (!commands.contains(textInputArea.getText())) {
-							pointer = commands.size();
-						} else {
-							pointer = commands.indexOf(textInputArea.getText());
-						}
-						// if pointer is not at the end
-						if (pointer != commands.size() - OFFSET) {
-							textInputArea.setText(commands.get(pointer + NEXT));
-						}
-					}
+					nextRecentlyUsedCommand();
 				}
 			}
 		});
@@ -515,6 +505,61 @@ public class MainPage extends AnchorPane {
 			}
 		});
 
+	}
+
+	// Execute commands on enter key pressed at text area
+	private void executeCommands() {
+		try {
+			text = textInputArea.getText();
+			commands.add(text);
+			Feedback feedback = backendFacade.executeCommand(text, tasksOnScreen);
+			tasksOnScreen = feedback.getTasks();
+			taskToFocus = feedback.getTaskToScrollTo();
+			notifyUser(taskToFocus);
+			updateViews(tasksOnScreen, taskToFocus);
+			checkFlag = feedback.getFlag();
+			feedbackLabel.setText(feedback.getMessage());
+			doFlagCommand(checkFlag, feedback);
+			if (checkFlag != HELP_FLAG) {
+				textInputArea.clear();
+			}
+			closePanel();
+		} catch (Exception e) {
+			feedbackLabel.setText(MESSAGE_ERROR);
+		}
+	}
+
+	// Previous recently used commands upon up pressed in the text area
+	private void previousRecentlyUsedCommands() {
+		// if used commands list is not empty
+		if (!commands.isEmpty()) {
+			if (!commands.contains(textInputArea.getText())) {
+				pointer = commands.size();
+			} else {
+				assert (commands.contains(textInputArea.getText()));
+				pointer = commands.indexOf(textInputArea.getText());
+			}
+			// if pointer is not at the front end
+			if (pointer != START) {
+				textInputArea.setText(commands.get(pointer - previous));
+			}
+		}
+	}
+
+	// Next recently used commands upon down pressed in the text area
+	private void nextRecentlyUsedCommand() {
+		if (!commands.isEmpty()) {
+			if (!commands.contains(textInputArea.getText())) {
+				pointer = commands.size();
+			} else {
+				assert (commands.contains(textInputArea.getText()));
+				pointer = commands.indexOf(textInputArea.getText());
+			}
+			// if pointer is not at the end
+			if (pointer != commands.size() - OFFSET) {
+				textInputArea.setText(commands.get(pointer + NEXT));
+			}
+		}
 	}
 
 	// Do flag command
@@ -547,6 +592,7 @@ public class MainPage extends AnchorPane {
 		if (hiddenMenu.getTranslateX() != STARTPOSITION) {
 			openPanel.play();
 		} else {
+			assert (hiddenMenu.getTranslateX() == STARTPOSITION);
 			closePanel.setToX(+(hiddenMenu.getWidth()));
 			closePanel.play();
 		}
@@ -564,6 +610,7 @@ public class MainPage extends AnchorPane {
 		if (stackPane.getChildren().get(STACK_PANE_FIRST_CHILD).equals(displayList)) {
 			displayList.toFront();
 		} else {
+			assert (!stackPane.getChildren().get(STACK_PANE_FIRST_CHILD).equals(displayList));
 			calendarList.toFront();
 		}
 	}
@@ -580,6 +627,7 @@ public class MainPage extends AnchorPane {
 				e.printStackTrace();
 			}
 		} else {
+			assert (selectedDirectory == null);
 			backendFacade.setDirectory(EMPTY_STRING);
 			feedbackLabel.setText(DIRECTORY_NOT_CHANGED_MESSAGE);
 		}
@@ -620,6 +668,7 @@ public class MainPage extends AnchorPane {
 		if (newWord.equals(oldWord)) {
 			return;
 		} else {
+			assert (!newWord.equals(oldWord));
 			switch (newLetter.toLowerCase()) {
 			case A_TEXT:
 				checkA(helpLabel);

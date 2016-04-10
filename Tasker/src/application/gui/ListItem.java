@@ -86,7 +86,6 @@ public class ListItem extends HBox {
 	// @@author A0125417L
 
 	private void overdueCheck(int overdueCheck) {
-		assert(overdueCheck < overdueCheckVariable);
 		if (overdueCheck < overdueCheckVariable) {
 			setOverdueItems();
 		}
