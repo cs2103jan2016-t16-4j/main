@@ -428,9 +428,7 @@ public class StorageTest {
 		deadlineTask.setPriority("");
 		
 		Calendar d = Calendar.getInstance();
-//		System.out.println(d.getTime().toString());
 		d.add(Calendar.HOUR, 23);
-//		System.out.println(d.getTime().toString());
 		deadlineTask.setEndDate(d);
 		deadlineTask.setEndTime(d);
 		assertTrue(deadlineTask.getPriority()=="medium");

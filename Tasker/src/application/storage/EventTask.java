@@ -166,31 +166,35 @@ public class EventTask extends Task implements Cloneable {
 	}
 
 	// @@author A0110422E
+	/**
+	 * Return checked priority parameter 
+	 */		
 	public String getPriority() {
 		Calendar currentTime = Calendar.getInstance();
-		Calendar startTime = startDate;
-		String tempPriority = "low";
+		Calendar startTime = getStartDate();
+		String tempPriority = LOW;
 		if (startTime.before(currentTime)) {
-			setPriority("high");
+			setPriority(HIGH);
 		}
-		if (priority == "") {
-			// End time is in less than two hours or before current time
-			currentTime.roll(Calendar.HOUR, 2);
-			if (startTime.before(currentTime)) {
-				tempPriority = "high";
+		if (priority.equalsIgnoreCase(EMPTY_STRING)) {
+			// End time is in less than two hours
+			if (timeDifference(currentTime, startTime) < TWO_HOUR) {
+				tempPriority = HIGH;
 			} else {
-				currentTime.roll(Calendar.HOUR, -2);
 				// End time is between two hours and one day
-				currentTime.roll(Calendar.DATE, 1);
-				if (startTime.before(currentTime)) {
-					tempPriority = "medium";
-					currentTime.roll(Calendar.DATE, -1);
-				}
+				if (timeDifference(currentTime, startTime) < ONE_DAY) {
+					tempPriority = MEDIUM;
+				} 			
 			}
-			currentTime.roll(Calendar.DATE, -1);
 		} else {
 			tempPriority = priority;
 		}
 		return tempPriority;
+	}
+	/**
+	 * Return the time difference between two Calendar objects, in miliseconds
+	 */	
+	private long timeDifference(Calendar currentTime, Calendar startTime) {
+		return startTime.getTimeInMillis() - currentTime.getTimeInMillis();
 	}
 }
