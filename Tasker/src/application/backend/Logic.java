@@ -3,6 +3,7 @@ package application.backend;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.TreeSet;
 import java.util.logging.Logger;
 
 import application.logger.LoggerHandler;
@@ -80,23 +81,32 @@ public class Logic {
             tasksClashing.add(task);
             return tasksClashing;
         }
-        logger.info("task is an event. looping through all lists to check for clash");
+        return addAllClashingTasksIfEvent(task, openTasks, tasksClashing);
+    }
+
+	//Checks all tasks and returns an ArrayList of all the clashing tasks
+    private ArrayList<Task> addAllClashingTasksIfEvent(Task task, ArrayList<Task> openTasks, ArrayList<Task> tasksClashing) {
+        logger.info("task is an event. making tree set to hold all clashes.");
+        TreeSet<Task> setOfClashingTasks = new TreeSet<Task>();
+        logger.info("looping through all tasks to check for clashes.");
         for (Task taskUnderConsideration : openTasks){
-            addIfClashing(tasksClashing, task, taskUnderConsideration);
+            addIfClashing(setOfClashingTasks, task, taskUnderConsideration);
         }
+        logger.info("adding all elements from set to list.");
+        tasksClashing.addAll(setOfClashingTasks);
         return tasksClashing;
     }
     
-	//adds taskUnderConsideration to the ArrayList if it clashes with 'task'
-    private void addIfClashing(ArrayList<Task> tasksClashing, Task task, Task taskUnderConsideration){
+	//adds taskUnderConsideration to the TreeSet if it clashes with 'task'
+    private void addIfClashing(TreeSet<Task> setOfClashingTasks, Task task, Task taskUnderConsideration){
         logger.info("checking if Event Task");
         if (taskUnderConsideration instanceof EventTask){
             logger.info("Getting dates from task under consideration");
             Calendar startDate = taskUnderConsideration.getStartDate();
             Calendar endDate = taskUnderConsideration.getEndDate();
-            logger.info("Adding to list if clashing");
+            logger.info("Adding to tree set if clashing");
             if (endDate.compareTo(task.getStartDate()) > 0 && startDate.compareTo(task.getEndDate()) < 0 ){
-                tasksClashing.add(taskUnderConsideration);
+                setOfClashingTasks.add(taskUnderConsideration);
             }
         }
     }
