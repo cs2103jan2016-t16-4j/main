@@ -290,75 +290,99 @@ public class TaskManager {
 		int indexOfTask = findIndexOfTaskInList(openList, taskIndex);
 		assert (indexOfTask>INVALID_INDEX);
 		logger.log(Level.INFO, "Updating Task");
+		
 		// update task
 		if (openList.get(indexOfTask) instanceof FloatingTask) {
-			// convert : floating task to event task
-			if (toEventTask(startDate, endDate)) {
+			convertFloatingTask(openList, taskDescription, startDate, endDate, location, remindDate, priority,
+					taskIndex, indexOfTask);
+		} else if (openList.get(indexOfTask) instanceof DeadlineTask) {
+			convertDeadlineTask(openList, taskDescription, startDate, endDate, location, remindDate, priority,
+					taskIndex, indexOfTask);
+		} else if (openList.get(indexOfTask) instanceof EventTask) {
+			convertEventTask(openList, taskDescription, startDate, endDate, location, remindDate, priority, taskIndex,
+					indexOfTask);
+		}		
+		return openList;
+	}
+	
+	/**
+	 * Convert the FloatingTask if necessary (to DeadlineTask or EventTask).
+	 */
+	private void convertFloatingTask(ArrayList<Task> openList, String taskDescription, Calendar startDate,
+			Calendar endDate, String location, Calendar remindDate, String priority, int taskIndex, int indexOfTask) {
+		// convert : floating task to event task
+		if (toEventTask(startDate, endDate)) {
 //				openList.set(indexOfTask, updateToEventTask(openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
-				openList.set(indexOfTask, updateToTaskType(EVENT_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
-				logger.log(Level.INFO, "Converting to Event Task");
-			}
-			// convert : floating task to deadline task	
-			else if (toDeadlineTask(startDate, endDate)) {
+			openList.set(indexOfTask, updateToTaskType(EVENT_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
+			logger.log(Level.INFO, "Converting to Event Task");
+		}
+		// convert : floating task to deadline task	
+		else if (toDeadlineTask(startDate, endDate)) {
 //				openList.set(indexOfTask, updateToDeadlineTask(openList.get(indexOfTask), taskDescription, endDate, location, remindDate, priority, taskIndex));
-				openList.set(indexOfTask, updateToTaskType(DEADLINE_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
-				logger.log(Level.INFO, "Converting to Deadline Task");
-			}
-			// no conversion
-			else {
+			openList.set(indexOfTask, updateToTaskType(DEADLINE_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
+			logger.log(Level.INFO, "Converting to Deadline Task");
+		}
+		// no conversion
+		else {
 //				openList.set(indexOfTask, updateToFloatingTask(openList.get(indexOfTask), taskDescription, location, remindDate, priority, taskIndex));
-				openList.set(indexOfTask, updateToTaskType(FLOATING_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
-			}
-			
+			openList.set(indexOfTask, updateToTaskType(FLOATING_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
+		}
+	}
+	
+	/**
+	 * Convert the DeadlineTask if necessary (to FloatingTask or EventTask).
+	 */
+	private void convertDeadlineTask(ArrayList<Task> openList, String taskDescription, Calendar startDate,
+			Calendar endDate, String location, Calendar remindDate, String priority, int taskIndex, int indexOfTask) {
+		// convert : deadline task to event task
+		if (toEventTask(startDate, endDate)) {
+//				openList.set(indexOfTask, updateToEventTask(openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
+			openList.set(indexOfTask, updateToTaskType(EVENT_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
+			logger.log(Level.INFO, "Converting to Event Task");
+		}
+//			// convert : deadline task to floating task
+		else if (toFloatingTask(startDate, endDate)) {
+//			openList.set(indexOfTask, updateToFloatingTask(openList.get(indexOfTask), taskDescription, location, remindDate, priority, taskIndex));
+			openList.set(indexOfTask, updateToTaskType(FLOATING_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
+			logger.log(Level.INFO, "Converting to Floating Task");
 
 		}
-		
-		else if (openList.get(indexOfTask) instanceof DeadlineTask) {
-			// convert : deadline task to event task
-			if (toEventTask(startDate, endDate)) {
-//				openList.set(indexOfTask, updateToEventTask(openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
-				openList.set(indexOfTask, updateToTaskType(EVENT_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
-				logger.log(Level.INFO, "Converting to Event Task");
-			}
-//			// convert : deadline task to floating task
-			else if (toFloatingTask(startDate, endDate)) {
-	//			openList.set(indexOfTask, updateToFloatingTask(openList.get(indexOfTask), taskDescription, location, remindDate, priority, taskIndex));
-				openList.set(indexOfTask, updateToTaskType(FLOATING_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
-				logger.log(Level.INFO, "Converting to Floating Task");
-
-			}
 //			// no conversion
-			else {
+		else {
 //				openList.set(indexOfTask, updateToDeadlineTask(openList.get(indexOfTask), taskDescription, endDate, location,
 //						remindDate, priority, taskIndex));
-				openList.set(indexOfTask, updateToTaskType(DEADLINE_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
+			openList.set(indexOfTask, updateToTaskType(DEADLINE_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
 
-			}
 		}
-		
-		else if (openList.get(indexOfTask) instanceof EventTask) {
-//			// convert : event task to deadline task
-			if (toDeadlineTask(startDate, endDate)) {
+	}
+
+	/**
+	 * Convert the EventTask if necessary (to FloatingTask or DeadlineTask).
+	 */
+	private void convertEventTask(ArrayList<Task> openList, String taskDescription, Calendar startDate,
+			Calendar endDate, String location, Calendar remindDate, String priority, int taskIndex, int indexOfTask) {
+		//			// convert : event task to deadline task
+		if (toDeadlineTask(startDate, endDate)) {
 //				openList.set(indexOfTask, updateToDeadlineTask(openList.get(indexOfTask), taskDescription, endDate, location, remindDate, priority, taskIndex));
-				openList.set(indexOfTask, updateToTaskType(DEADLINE_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
-				logger.log(Level.INFO, "Converting to Deadline Task");
-				}
+			openList.set(indexOfTask, updateToTaskType(DEADLINE_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
+			logger.log(Level.INFO, "Converting to Deadline Task");
+			}
 //			// convert : event task to floating task
-			else if (toFloatingTask(startDate, endDate)) {
+		else if (toFloatingTask(startDate, endDate)) {
 //				openList.set(indexOfTask, updateToFloatingTask(openList.get(indexOfTask), taskDescription, location, remindDate, priority, taskIndex));
-				openList.set(indexOfTask, updateToTaskType(FLOATING_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
-				logger.log(Level.INFO, "Converting to Floating Task");
-			}
-//			// no conversion
-			else {
-//				openList.set(indexOfTask, updateToEventTask(openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
-				openList.set(indexOfTask, updateToTaskType(EVENT_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
-			}
+			openList.set(indexOfTask, updateToTaskType(FLOATING_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
+			logger.log(Level.INFO, "Converting to Floating Task");
 		}
-//		 return updated list
-			
-		return openList;
-	}	
+//			// no conversion
+		else {
+//				openList.set(indexOfTask, updateToEventTask(openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
+			openList.set(indexOfTask, updateToTaskType(EVENT_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
+		}
+	}
+
+
+	
+
 //	private EventTask updateToEventTask(Task originalTask,
 //			String taskDescription, Calendar startDate, Calendar endDate,
 //			String location, Calendar remindDate, String priority, int taskIndex) {
