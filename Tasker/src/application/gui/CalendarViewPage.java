@@ -16,6 +16,7 @@ import org.controlsfx.control.Notifications;
 import application.logger.LoggerHandler;
 import application.backend.Feedback;
 import application.backend.LogicFacade;
+import application.storage.EventTask;
 import application.storage.FloatingTask;
 import application.storage.Task;
 import javafx.animation.TranslateTransition;
@@ -33,7 +34,6 @@ import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -299,9 +299,16 @@ public class CalendarViewPage extends AnchorPane {
 	// Check if task is overdue
 	private int checkIfOverdue(Task item, Calendar cal) {
 		int overdueCheck = overdueCheckVariable;
-		assert (item.getEndDate() != null);
-		if (item.getEndDate() != null) {
-			overdueCheck = item.getEndDate().getTime().compareTo(cal.getTime());
+		if (!(item instanceof EventTask)) {
+			assert (item.getEndDate() != null);
+			if (item.getEndDate() != null) {
+				overdueCheck = item.getEndDate().getTime().compareTo(cal.getTime());
+			}
+		} else {
+			assert (item.getStartDate() != null);
+			if (item.getStartDate() != null) {
+				overdueCheck = item.getStartDate().getTime().compareTo(cal.getTime());
+			}
 		}
 		return overdueCheck;
 	}
@@ -361,12 +368,8 @@ public class CalendarViewPage extends AnchorPane {
 
 	// Method that calls other methods to update the data
 	private void updateViews(ArrayList<Task> taskList, Task taskToFocus) {
-		ArrayList<Task> clashList = null;
-		if (taskToFocus != null) {
-			clashList = logicFacade.getClashes(taskToFocus);
-		}
 		updateCalendarList(taskList, taskToFocus);
-		updateDisplayList(taskList, clashList);
+		updateDisplayList(taskList, taskToFocus);
 		updateSummary();
 	}
 
@@ -409,18 +412,15 @@ public class CalendarViewPage extends AnchorPane {
 	}
 
 	// Updates data of the task view
-	private void updateDisplayList(ArrayList<Task> taskList, ArrayList<Task> clashList) {
+	private void updateDisplayList(ArrayList<Task> taskList, Task taskToFocus) {
 		this.displayList.getItems().clear();
 		assert (taskList.size() != EMPTY);
 		if (taskList.size() != EMPTY) {
 			ObservableList<Task> list = makeDisplayList(taskList);
 			this.displayList.setItems(list);
-			if (clashList != null) {
-				// this.displayList.scrollTo(clashList);
-				this.displayList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-				for (Task task : clashList) {
-					this.displayList.getSelectionModel().select(task);
-				}
+			if (taskToFocus != null) {
+				this.displayList.scrollTo(taskToFocus);
+				this.displayList.getSelectionModel().select(taskToFocus);
 			}
 		}
 	}
@@ -777,6 +777,7 @@ public class CalendarViewPage extends AnchorPane {
 		return secondLetter;
 	}
 
+	// @@author A0078688A
 	private void showExitDialog() {
 		textInputArea.setText("Exit");
 		feedbackLabel.setText("");
