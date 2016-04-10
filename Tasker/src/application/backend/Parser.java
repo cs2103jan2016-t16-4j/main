@@ -69,7 +69,9 @@ public class Parser {
 	private static final int PRI_IND_POS = 2;
 	private static final int NOT_PRESENT = -1;
 
-	public static final int DEFAULT_EVENT_DURATION = 2;
+    public static final int EMPTY_TIME = 001;
+	public static final int DEFAULT_EVENT_DURATION_TIME = 2;
+    public static final int DEFAULT_EVENT_DURATION_DAY = 1;
 	private static final int ARGUMENT_NUMBER = 4;
 	private static final int DESC_POS = 0;
 	private static final int DATE_POS = 1;
@@ -557,18 +559,33 @@ public class Parser {
 		Calendar startDate = dates[0];
 		Calendar endDate = dates[1];
 		if (startDate != null) {
-			if (startDate.equals(convertToCalendar(createEmptyDate()))) {
+		    if (startDate.equals(convertToCalendar(createEmptyDate()))) {
 				startDate = (Calendar) endDate.clone();
-				startDate.add(Calendar.HOUR, -DEFAULT_EVENT_DURATION);
-
+				fixStartDateForAdd(startDate);
 			} else if (endDate.equals(convertToCalendar(createEmptyDate()))) {
 				endDate = (Calendar) startDate.clone();
-				endDate.add(Calendar.HOUR, +DEFAULT_EVENT_DURATION);
+				fixEndDateForAdd(endDate);
 			}
 		}
 		Calendar[] fixedDates = { startDate, endDate };
 		return fixedDates;
 	}
+
+    private void fixEndDateForAdd(Calendar endDate) {
+        if(endDate.get(Calendar.MILLISECOND) != EMPTY_TIME){
+            endDate.add(Calendar.HOUR, +DEFAULT_EVENT_DURATION_TIME);
+        }else{
+            endDate.add(Calendar.DAY_OF_MONTH, +DEFAULT_EVENT_DURATION_DAY);
+        }
+    }
+
+    private void fixStartDateForAdd(Calendar startDate) {
+        if(startDate.get(Calendar.MILLISECOND) != EMPTY_TIME){
+            startDate.add(Calendar.HOUR, -DEFAULT_EVENT_DURATION_TIME);
+        }else{
+            startDate.add(Calendar.DAY_OF_MONTH, -DEFAULT_EVENT_DURATION_DAY);
+        }
+    }
 
     //fixing dates for update so that if no date specified, it is set to empty which can be ignored
 	private Calendar[] fixDatesForUpdate(Calendar[] dates) {
