@@ -35,7 +35,7 @@ public class ChangeStorageLocation implements UndoableCommand {
 	private static final String MESSAGE_STORAGE_NO_INPUT = "No Location Input: Opening Directory Chooser";
 	private static final String MESSAGE_STORAGE_URL_FOUND = "Storage changed: ";
 
-	private static final String MESSAGE_UNDO_CHANGE = "Reverted storage location to: ";
+	private static final String MESSAGE_UNDO_CHANGE = "Reverted Storage Location To: ";
     private static final String MESSAGE_UNDO_ERROR = "We encountered some problem undoing the storage change.";
 
 	// Variables
@@ -136,7 +136,7 @@ public class ChangeStorageLocation implements UndoableCommand {
 
     private Feedback setStorageLocationToPrevious() throws IOException {
         storageConnector.setDirectory(prevLocation);
-        Feedback feedback = new Feedback(MESSAGE_UNDO_CHANGE + arguments, storageConnector.getOpenList(), null);
+        Feedback feedback = new Feedback(MESSAGE_UNDO_CHANGE + prevLocation, storageConnector.getOpenList(), null);
         feedback.setCalFlag();
         return feedback;
     }

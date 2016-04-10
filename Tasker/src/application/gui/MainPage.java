@@ -499,6 +499,7 @@ public class MainPage extends AnchorPane {
 						closePanel();
 					} catch (Exception e) {
 						feedbackLabel.setText(MESSAGE_ERROR);
+						e.printStackTrace();
 					}
 				}
 				if (ke.getCode().equals(KeyCode.UP)) {
