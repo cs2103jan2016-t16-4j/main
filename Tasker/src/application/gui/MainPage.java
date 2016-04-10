@@ -73,7 +73,7 @@ public class MainPage extends AnchorPane {
 	private static final String A_TEXT = "a";
 	private static final String V_TEXT = "v";
 	private static final String HELP_TEXT = "help";
-	private static final String LISTVIEW_FXML_URL = "ListView.fxml";
+	private static final String MAIN_PAGE_FXML_URL = "MainPage.fxml";
 	private static final String LIST_FLAG = "list";
 	private static final String CAL_FLAG = "cal";
 	private static final String HELP_FLAG = HELP_TEXT;
@@ -174,7 +174,7 @@ public class MainPage extends AnchorPane {
 	public MainPage(ArrayList<Task> taskList, LogicFacade logicFacade) {
 		tasksOnScreen = taskList;
 		this.logicFacade = logicFacade;
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(LISTVIEW_FXML_URL));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(MAIN_PAGE_FXML_URL));
 		loadFromFxml(fxmlLoader);
 		initialize();
 		initializeInputArea();
