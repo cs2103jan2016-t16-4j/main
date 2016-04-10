@@ -78,31 +78,36 @@
 				<ListView fx:id="calendarList" prefHeight="447.0" prefWidth="1066.0" style="-fx-background-insets: 0;" />
 			</children>
 		</StackPane>
-		<AnchorPane fx:id="hiddenMenu" layoutX="-335.0" layoutY="215.0" prefHeight="448.0" prefWidth="328.0" style="-fx-background-color: #ECEFF1;">
+		<AnchorPane fx:id="hiddenMenu" layoutX="-335.0" layoutY="215.0" prefHeight="448.0" prefWidth="328.0" style="-fx-background-color: white;">
 			<children>
             <VBox layoutX="64.0" layoutY="21.0" prefHeight="90.0" prefWidth="200.0">
                <children>
-      				<Label fx:id="Summary" alignment="CENTER" contentDisplay="CENTER" minWidth="-Infinity" prefHeight="27.0" prefWidth="200.0" style="-fx-underline: true; -fx-font-weight: bold;" text="SUMMARY" textFill="#616060">
+                  <Label fx:id="Summary" alignment="CENTER" contentDisplay="CENTER" minWidth="-Infinity" prefHeight="27.0" prefWidth="200.0" style="-fx-underline: true; -fx-font-weight: bold;" text="SUMMARY" textFill="#616060">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+      				<Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="10.0" prefWidth="200.0" style="-fx-underline: true; -fx-font-weight: bold;" textFill="#616060">
       					<font>
-      						<Font size="24.0" />
+      						<Font size="10.0" />
       					</font>
       				</Label>
-                  <HBox prefHeight="32.0" prefWidth="200.0">
+                  <HBox prefHeight="0.0" prefWidth="200.0">
                      <children>
             				<Label prefHeight="0.0" prefWidth="176.0" text="OVERDUE TASKS:" textFill="#6b6a6a" />
-                        <Label fx:id="overdueLabel" alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="25.0" text="0" textFill="#6b6a6a" />
+                        <Label fx:id="overdueLabel" alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="23.0" text="0" textFill="#6b6a6a" />
                      </children>
                   </HBox>
-                  <HBox prefHeight="17.0" prefWidth="200.0">
+                  <HBox prefHeight="0.0" prefWidth="200.0">
                      <children>
             				<Label prefHeight="0.0" prefWidth="177.0" text="COMPLETED TASKS:" textFill="#6b6a6a" />
-                        <Label fx:id="completedLabel" alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="23.0" text="0" textFill="#6b6a6a" />
+                        <Label fx:id="completedLabel" alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="22.0" text="0" textFill="#6b6a6a" />
                      </children>
                   </HBox>
-                  <HBox prefHeight="18.0" prefWidth="200.0">
+                  <HBox prefHeight="0.0" prefWidth="200.0">
                      <children>
             				<Label prefHeight="0.0" prefWidth="177.0" text="REMAINING TASKS:" textFill="#6b6a6a" />
-                        <Label fx:id="remainingLabel" alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="23.0" text="0" textFill="#6b6a6a" />
+                        <Label fx:id="remainingLabel" alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="22.0" text="0" textFill="#6b6a6a" />
                      </children>
                   </HBox>
                </children>
