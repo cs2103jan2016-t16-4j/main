@@ -33,7 +33,7 @@ public class ChangeStorageLocation implements UndoableCommand {
 	// Messages
 	private static final String MESSAGE_STORAGE_URL_NOT_FOUND = "Storage Location Invalid: Opening Directory Chooser";
 	private static final String MESSAGE_STORAGE_NO_INPUT = "No Location Input: Opening Directory Chooser";
-	private static final String MESSAGE_STORAGE_URL_FOUND = "Storage changed: ";
+	private static final String MESSAGE_STORAGE_URL_FOUND = "Storage Location Changed To: ";
 
 	private static final String MESSAGE_UNDO_CHANGE = "Reverted Storage Location To: ";
 	private static final String MESSAGE_UNDO_ERROR = "We encountered some problem undoing the storage change.";

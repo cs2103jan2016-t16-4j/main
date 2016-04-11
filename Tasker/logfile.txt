@@ -12610,3 +12610,107 @@ INFO: executing above parsed command
 11.04.2016 04:02:32 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
 11.04.2016 04:02:32 - INFO    - application.backend.Exit - execute - Exiting through exit command
  ----------------------   End  Mon Apr 11 16:02:32 SGT 2016 ---------------------- 
+ ----------------------  Start Mon Apr 11 16:19:03 SGT 2016 ---------------------- 
+11.04.2016 04:19:03 - INFO    - application.gui.Fantasktic - start - Setting up gui
+11.04.2016 04:19:07 - INFO    - application.storage.FileManager - loadDirectoryFile - Loading directory file
+11.04.2016 04:19:07 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+11.04.2016 04:19:07 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+11.04.2016 04:19:09 - INFO    - application.gui.ResourceLoader - load - Loading Resource
+11.04.2016 04:19:09 - INFO    - application.gui.ResourceLoader - load - Loading Resource
+11.04.2016 04:23:44 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: play tennis from 5 pm to 6 pm tomorrow
+11.04.2016 04:23:44 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+11.04.2016 04:23:44 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+11.04.2016 04:23:44 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: play
+11.04.2016 04:23:44 - INFO    - application.backend.Parser - convertToCommand - Making add command object
+11.04.2016 04:23:44 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+11.04.2016 04:23:44 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+11.04.2016 04:23:44 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+11.04.2016 04:23:44 - INFO    - application.storage.TaskManager - add - Adding Event Task
+11.04.2016 04:23:44 - INFO    - application.storage.FileManager - saveFile - Saving file
+11.04.2016 04:23:44 - INFO    - application.storage.FileManager - saveAllTasks - Saving tasks into file
+11.04.2016 04:23:44 - INFO    - application.storage.FileManager - saveFile - Saving file
+11.04.2016 04:23:44 - INFO    - application.storage.FileManager - saveAllTasks - Saving tasks into file
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - executeCommand - adding command to history
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - getClashes - getting all tasks to check for clash
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - getClashes - initiating arraylist
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - getClashes - checking if main task is an event
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addAllClashingTasksIfEvent - task is an event. looping through all tasks to check for clashes.
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - checking if task under consideration is an Event Task
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Checking if clashing
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - checking if task under consideration is an Event Task
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Checking if clashing
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - checking if task under consideration is an Event Task
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Checking if clashing
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - checking if task under consideration is an Event Task
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Checking if clashing
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - checking if task under consideration is an Event Task
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Checking if clashing
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - checking if task under consideration is an Event Task
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Checking if clashing
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - checking if task under consideration is an Event Task
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Checking if clashing
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - checking if task under consideration is an Event Task
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Checking if clashing
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - checking if task under consideration is an Event Task
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Checking if clashing
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - checking if task under consideration is an Event Task
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Checking if clashing
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - checking if task under consideration is an Event Task
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Checking if clashing
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - checking if task under consideration is an Event Task
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Checking if clashing
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - checking if task under consideration is an Event Task
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Checking if clashing
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - checking if task under consideration is an Event Task
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Getting dates from task under consideration
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Checking if clashing
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - Clashing. Adding to Tree Set
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - checking if task under consideration is an Event Task
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - checking if task under consideration is an Event Task
+11.04.2016 04:23:45 - INFO    - application.backend.Logic - addIfClashing - checking if task under consideration is an Event Task
+11.04.2016 04:25:26 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: storage 
+11.04.2016 04:25:26 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+11.04.2016 04:25:26 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+11.04.2016 04:25:26 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: storage
+11.04.2016 04:25:26 - INFO    - application.backend.Parser - convertToCommand - Making storage location change command object
+11.04.2016 04:25:26 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+11.04.2016 04:25:26 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+11.04.2016 04:25:26 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+11.04.2016 04:25:26 - INFO    - application.backend.ChangeStorageLocation - execute - Executing change storage function
+11.04.2016 04:25:26 - INFO    - application.backend.Logic - executeCommand - adding command to history
+11.04.2016 04:25:52 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: storage C:\Users\Pratyush\Desktop
+11.04.2016 04:25:52 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+11.04.2016 04:25:52 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+11.04.2016 04:25:52 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: storage
+11.04.2016 04:25:52 - INFO    - application.backend.Parser - convertToCommand - Making storage location change command object
+11.04.2016 04:25:52 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+11.04.2016 04:25:52 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+11.04.2016 04:25:52 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+11.04.2016 04:25:52 - INFO    - application.backend.ChangeStorageLocation - execute - Executing change storage function
+11.04.2016 04:25:52 - INFO    - application.storage.FileManager - loadDirectoryFile - Loading directory file
+11.04.2016 04:25:52 - INFO    - application.storage.FileManager - setDirectory - New directory choosen
+11.04.2016 04:25:52 - INFO    - application.backend.Logic - executeCommand - adding command to history
+11.04.2016 04:26:19 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: undo
+11.04.2016 04:26:19 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+11.04.2016 04:26:19 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+11.04.2016 04:26:19 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: undo
+11.04.2016 04:26:19 - INFO    - application.backend.Parser - convertToCommand - Making undo command object
+11.04.2016 04:26:19 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+11.04.2016 04:26:19 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+11.04.2016 04:26:19 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+11.04.2016 04:26:19 - INFO    - application.storage.FileManager - loadDirectoryFile - Loading directory file
+11.04.2016 04:26:19 - INFO    - application.storage.FileManager - setDirectory - New directory choosen
+11.04.2016 04:26:19 - INFO    - application.backend.Logic - executeCommand - adding command to history
