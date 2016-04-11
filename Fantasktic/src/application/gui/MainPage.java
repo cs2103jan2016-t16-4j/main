@@ -353,15 +353,39 @@ public class MainPage extends AnchorPane {
     }
 
     /*
-     * Set the data for the calendar view
+     * Set the data for the calendar view, unrefactored as there is a bug
      */
     private ArrayList<ArrayList<Task>> getDateArray(ArrayList<Task> taskList) {
         String tempoDate = null;
         ArrayList<ArrayList<Task>> dateArray = new ArrayList<ArrayList<Task>>();
         ArrayList<Task> temporaryList = new ArrayList<Task>();
         for (int i = START; i < taskList.size(); i++) {
-            checkIfNonFloatingTask(taskList, tempoDate, dateArray, temporaryList, i);
-            temporaryList = checkIfReachedFloatingTask(taskList, tempoDate, dateArray, temporaryList, i);
+//            checkIfNonFloatingTask(taskList, tempoDate, dateArray, temporaryList, i);
+//            temporaryList = checkIfReachedFloatingTask(taskList, tempoDate, dateArray, temporaryList, i);
+        	  if (!(taskList.get(i) instanceof FloatingTask) && tempoDate != null) {
+                  if (tempoDate.equals(FORMAT_DATE.format(taskList.get(i).getEndDate().getTime()))) {
+                      temporaryList.add(taskList.get(i));
+                  } else {
+                      assert (!tempoDate.equals(FORMAT_DATE.format(taskList.get(i).getEndDate().getTime())));
+                      dateArray.add(temporaryList);
+                      temporaryList = new ArrayList<Task>();
+                      temporaryList.add(taskList.get(i));
+                  }
+              }
+
+              if (!(taskList.get(i) instanceof FloatingTask) && tempoDate == null) {
+                  temporaryList.add(taskList.get(i));
+              }
+              
+              if ((taskList.get(i) instanceof FloatingTask) && tempoDate != null) {
+                  dateArray.add(temporaryList);
+                  temporaryList = new ArrayList<Task>();
+                  temporaryList.add(taskList.get(i));
+              }
+
+              if ((taskList.get(i) instanceof FloatingTask) && tempoDate == null) {
+                  temporaryList.add(taskList.get(i));
+              }
             tempoDate = setTempoDate(taskList, i);
         }
         checkTemporaryListBeforeAdd(dateArray, temporaryList);
@@ -374,23 +398,23 @@ public class MainPage extends AnchorPane {
      * If its the same, add to that task list else add the task list to the list
      * of task lists, create a new task list and add to the new task list
      */
-    private void checkIfNonFloatingTask(ArrayList<Task> taskList, String tempoDate,
-            ArrayList<ArrayList<Task>> dateArray, ArrayList<Task> temporaryList, int i) {
-        if (!(taskList.get(i) instanceof FloatingTask) && tempoDate != null) {
-            if (tempoDate.equals(FORMAT_DATE.format(taskList.get(i).getEndDate().getTime()))) {
-                temporaryList.add(taskList.get(i));
-            } else {
-                assert (!tempoDate.equals(FORMAT_DATE.format(taskList.get(i).getEndDate().getTime())));
-                dateArray.add(temporaryList);
-                temporaryList = new ArrayList<Task>();
-                temporaryList.add(taskList.get(i));
-            }
-        }
-
-        if (!(taskList.get(i) instanceof FloatingTask) && tempoDate == null) {
-            temporaryList.add(taskList.get(i));
-        }
-    }
+//    private void checkIfNonFloatingTask(ArrayList<Task> taskList, String tempoDate,
+//            ArrayList<ArrayList<Task>> dateArray, ArrayList<Task> temporaryList, int i) {
+//        if (!(taskList.get(i) instanceof FloatingTask) && tempoDate != null) {
+//            if (tempoDate.equals(FORMAT_DATE.format(taskList.get(i).getEndDate().getTime()))) {
+//                temporaryList.add(taskList.get(i));
+//            } else {
+//                assert (!tempoDate.equals(FORMAT_DATE.format(taskList.get(i).getEndDate().getTime())));
+//                dateArray.add(temporaryList);
+//                temporaryList = new ArrayList<Task>();
+//                temporaryList.add(taskList.get(i));
+//            }
+//        }
+//
+//        if (!(taskList.get(i) instanceof FloatingTask) && tempoDate == null) {
+//            temporaryList.add(taskList.get(i));
+//        }
+//    }
 
     /*
      * As floating tasks are at the end of the list, checks if the temporary
@@ -400,19 +424,19 @@ public class MainPage extends AnchorPane {
      * continue adding floating task to the list if temporary date is of
      * floating task
      */
-    private ArrayList<Task> checkIfReachedFloatingTask(ArrayList<Task> taskList, String tempoDate,
-            ArrayList<ArrayList<Task>> dateArray, ArrayList<Task> temporaryList, int i) {
-        if ((taskList.get(i) instanceof FloatingTask) && tempoDate != null) {
-            dateArray.add(temporaryList);
-            temporaryList = new ArrayList<Task>();
-            temporaryList.add(taskList.get(i));
-        }
-
-        if ((taskList.get(i) instanceof FloatingTask) && tempoDate == null) {
-            temporaryList.add(taskList.get(i));
-        }
-        return temporaryList;
-    }
+//    private ArrayList<Task> checkIfReachedFloatingTask(ArrayList<Task> taskList, String tempoDate,
+//            ArrayList<ArrayList<Task>> dateArray, ArrayList<Task> temporaryList, int i) {
+//        if ((taskList.get(i) instanceof FloatingTask) && tempoDate != null) {
+//            dateArray.add(temporaryList);
+//            temporaryList = new ArrayList<Task>();
+//            temporaryList.add(taskList.get(i));
+//        }
+//
+//        if ((taskList.get(i) instanceof FloatingTask) && tempoDate == null) {
+//            temporaryList.add(taskList.get(i));
+//        }
+//        return temporaryList;
+//    }
 
     /*
      * Checks if the temporary list is empty before adding to prevent null
