@@ -31,7 +31,6 @@ import javafx.stage.WindowEvent;
 
 public class Fantasktic extends Application {
 
-	private static final String CURSOR_URL = "Cursor.png";
 	// Logger Messages
 	private static final String CLOSE_CLICK_TRAY_LOGGER_MSG = "Clicked close on system tray icon";
 	private static final String SHOW_CLICK_TRAY_LOGGER_MSG = "Clicked show on system tray icon";
@@ -45,6 +44,7 @@ public class Fantasktic extends Application {
 	private static Logger logger = LoggerHandler.getLog();
 
 	// Constants
+	private static final String CURSOR_URL = "cursor.png";
 	private static final String ROBOT_GIF_URL = "robot.gif";
 	private static final String APPLICATION_NAME = "Fantasktic";
 	private static final String EMPTY_STRING = "";
@@ -111,7 +111,7 @@ public class Fantasktic extends Application {
 	
 	// Set Cursor Image
 	private void setCursor(Scene scene) {
-		Image cursor = new Image(CURSOR_URL);
+		Image cursor = new Image(ResourceLoader.load(CURSOR_URL));
 		scene.setCursor(new ImageCursor(cursor));
 	}
 
