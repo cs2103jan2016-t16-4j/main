@@ -50,8 +50,10 @@ import javafx.util.Duration;
 
 public class MainPage extends AnchorPane {
 
-
 	// Constants
+	private static final String SUMMARY_TEXT = "summary";
+	private static final String SU_TEXT = "su";
+	private static final String ST_TEXT = "st";
 	private static final String HOME_TEXT = "home";
 	private static final String HO_TEXT = "ho";
 	private static final String HE_TEXT = "he";
@@ -82,7 +84,7 @@ public class MainPage extends AnchorPane {
 	private static final String HELP_FLAG = HELP_TEXT;
 	private static final String STORAGE_FLAG = STORAGE_TEXT;
 	private static final String VIEW_CHANGE_FLAG = "view";
-	private static final String SUMMARY_FLAG = "summary";
+	private static final String SUMMARY_FLAG = SUMMARY_TEXT;
 	private static final String SPACE = " ";
 	private static final String EMPTY_STRING = "";
 	private static final String LOCATION_PREFIX = "AT";
@@ -123,10 +125,12 @@ public class MainPage extends AnchorPane {
 	private static final String DELETE_HINT_MESSAGE = "To delete: delete [task description/number]";
 	private static final String SEARCH_HINT_MESSAGE = "To search: search [task description/priority [level]/by [date]/on [date]]";
 	private static final String EXIT_HINT_MESSAGE = "To exit: exit";
+	private static final String HOME_HINT_MESSAGE = "To go back home and view all tasks: home";
 	private static final String UPDATE_HINT_MESSAGE = "To update: update [task number] [new task description"
 			+ "/priority [level]/from [start] to [end]/at [location]] ";
 	private static final String UNDO_HINT_MESSAGE = "To undo: undo";
 	private static final String STORAGE_HINT_MESSAGE = "To change storage: storage [url]";
+	private static final String SUMMARY_HINT_MESSAGE = "To view an overview of tasks: summary";
 	private static final String DONE_HINT_MESSAGE = "To mark task as complete: done [task number]";
 	private static final String VIEW_HINT_MESSAGE = "To Toggle Views: view";
 	private static final String MESSAGE_HELP_INTRO = "Start typing and we'll help you out!";
@@ -849,6 +853,7 @@ public class MainPage extends AnchorPane {
 	}
 
 	private void checkS(String newValue, Label helpLabel, String newWord) {
+		helpLabel.setText(SEARCH_HINT_MESSAGE);
 		if (!newValue.isEmpty() && newValue.length() > S_TEXT.length()) {
 			if (getTwoLetters(newValue).equalsIgnoreCase(SE_TEXT)) {
 				helpLabel.setText(SEARCH_HINT_MESSAGE);
@@ -857,12 +862,21 @@ public class MainPage extends AnchorPane {
 						checkA(helpLabel);
 					}
 				}
-			}
-		} else {
-			helpLabel.setText(STORAGE_HINT_MESSAGE);
-		}
-		if (!newValue.isEmpty() && newValue.length() >= STORAGE_TEXT.length()) {
-			if (!newWord.equalsIgnoreCase(STORAGE_TEXT)) {
+			} else if (getTwoLetters(newValue).equalsIgnoreCase(ST_TEXT)) {
+				helpLabel.setText(STORAGE_HINT_MESSAGE);
+				if (!newValue.isEmpty() && newValue.length() >= STORAGE_TEXT.length()) {
+					if (!newWord.equalsIgnoreCase(STORAGE_TEXT)) {
+						checkA(helpLabel);
+					}
+				}
+			} else if (getTwoLetters(newValue).equalsIgnoreCase(SU_TEXT)) {
+				helpLabel.setText(SUMMARY_HINT_MESSAGE);
+				if (!newValue.isEmpty() && newValue.length() >= SUMMARY_TEXT.length()) {
+					if (!newWord.equalsIgnoreCase(SUMMARY_TEXT)) {
+						checkA(helpLabel);
+					}
+				}
+			} else {
 				checkA(helpLabel);
 			}
 		}
@@ -932,15 +946,16 @@ public class MainPage extends AnchorPane {
 					}
 				}
 			} else if (getTwoLetters(newValue).equalsIgnoreCase(HO_TEXT)) {
-				helpLabel.setText(HOME_TEXT);
+				helpLabel.setText(HOME_HINT_MESSAGE);
 				if (!newValue.isEmpty() && newValue.length() >= HOME_TEXT.length()) {
 					if (!newWord.equalsIgnoreCase(HOME_TEXT)) {
 						checkA(helpLabel);
 					}
 				}
+			} else {
+				checkA(helpLabel);
 			}
 		}
-
 	}
 
 	private String getFirstLetter(String input) {
