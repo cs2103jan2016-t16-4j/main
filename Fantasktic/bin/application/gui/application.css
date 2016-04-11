@@ -1,0 +1,51 @@
+/* @@author A0132632R */
+
+.list-cell{
+    -fx-cell-hover-color: #80DEEA;
+    -fx-background-color: white;
+}
+
+/* @@author A0125417L */
+
+.list-view .scroll-bar:horizontal .increment-arrow,
+.list-view .scroll-bar:horizontal .decrement-arrow,
+.list-view .scroll-bar:horizontal .increment-button,
+.list-view .scroll-bar:horizontal .decrement-button, 
+.list-view .scroll-bar:vertical .increment-arrow,
+.list-view .scroll-bar:vertical .decrement-arrow,
+.list-view .scroll-bar:vertical .increment-button,
+.list-view .scroll-bar:vertical .decrement-button{
+    -fx-padding:0.0;
+}
+
+.data0.chart-pie { 
+	-fx-pie-color: #C8E6C9;
+}
+
+.data1.chart-pie { 
+	-fx-pie-color: #B2EBF2;
+}
+
+.data2.chart-pie { 
+	-fx-pie-color: #B71C1C;
+}
+
+.displayList .list-cell:filled:selected:focused {
+    -fx-background-color: #00acc1;
+    -fx-text-fill: white;
+}
+
+.displayList .list-cell:filled:selected{
+    -fx-background-color: #F44336;
+    -fx-text-fill: white;
+}
+
+.calendarItem .list-cell:filled:selected:focused {
+    -fx-background-color: #00acc1;
+    -fx-text-fill: white;
+}
+
+.calendarItem .list-cell:filled:selected{
+    -fx-background-color: #F44336;
+    -fx-text-fill: white;
+}
