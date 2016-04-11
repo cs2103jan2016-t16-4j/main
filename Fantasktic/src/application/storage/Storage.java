@@ -185,6 +185,14 @@ public class Storage implements Cloneable {
 		databaseManager.updateOpenList(taskManager.sortPriority(databaseManager.getOpenList()));
 		return databaseManager.getOpenList();
 	}
+	
+	/**
+	 * Replaces the specified task with a new task.
+	 */
+	public void replaceTask(int taskIndex, Task task) {
+		databaseManager.updateOpenList(taskManager.replaceTask(databaseManager.getOpenList(), taskIndex, task));
+		saveFile();
+	}
 
 	/**
 	 * Update a task, save the file and return the original and updated task.
