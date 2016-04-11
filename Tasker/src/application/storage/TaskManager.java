@@ -34,6 +34,9 @@ public class TaskManager {
 	private static Logger logger = LoggerHandler.getLog();
 
 //@@author A0110422E	
+	/**
+	 * Add a new task. The type of task will be determined by input parameters
+	 */
 	public ArrayList<Task> add(ArrayList<Task> openList,
 			String taskDescription, Calendar startDate, Calendar endDate,
 			String location, Calendar remindDate, String priority, int taskIndex) {
@@ -58,48 +61,69 @@ public class TaskManager {
 		}
 		return openList;
 	}
-	
+	/**
+	 * Return a lists of list after transferring a selected task from open list to closed list
+	 */
 	public ArrayList<ArrayList<Task>> close(ArrayList<Task> closedList, ArrayList<Task> openList, int taskIndex) {
 		ArrayList<ArrayList<Task>> lists = new ArrayList<ArrayList<Task>>();
-		boolean isSuccessClose = false;
 	
-		int index = -1;
-		for (int i = 0; i < openList.size(); i++) {				
-			if (openList.get(i).getTaskIndex() == taskIndex) {
-				index = i;
-				isSuccessClose = true;
-				break;
-				}
-		}
-		if (isSuccessClose) {
-			closedList.add(openList.get(index));
-			openList.remove(index);
-		}
-		lists.add(closedList);
-		lists.add(openList);
+		int index = INVALID_INDEX;
+		index = findTaskInList(openList, taskIndex, index);
+		transferTaskFromListToList(openList, closedList, index);
+		compileLists(closedList, openList, lists);
 		return lists;
 	}
-	
+	/**
+	 * Return a lists of list after transferring a selected task from closed list to open list
+	 */
 	public ArrayList<ArrayList<Task>> unclose(ArrayList<Task> closedList, ArrayList<Task> openList, int taskIndex){
-		ArrayList<ArrayList<Task>> lists = new ArrayList<ArrayList<Task>>();
-		boolean isSuccessUnclose = false;		
+		ArrayList<ArrayList<Task>> lists = new ArrayList<ArrayList<Task>>();		
 		
-		int index = -1;
+		int index = INVALID_INDEX;
+		index = findTaskInList(closedList, taskIndex, index);
+		transferTaskFromListToList(closedList, openList, index);	
+		compileLists(closedList, openList, lists);
+		return lists;
+	}
+	/**
+	 * Shift the selected task from one list to another
+	 */
+	private void transferTaskFromListToList(ArrayList<Task> closedList, ArrayList<Task> openList, int index) {
+		if (isTaskFound(index)) {
+			openList.add(closedList.get(index));
+			closedList.remove(index);
+		}
+	}
+	/**
+	 * Search through closed list, and return the index of the result
+	 */
+	private int findTaskInList(ArrayList<Task> closedList, int taskIndex, int index) {
 		for (int i = 0; i < closedList.size(); i++) {				
-			if (closedList.get(i).getTaskIndex() == taskIndex) {
+			if (isTheRightTask(closedList, taskIndex, i)) {
 				index = i;
-				isSuccessUnclose = true;
 				break;
 				}
 		}
-		if (isSuccessUnclose) {
-			openList.add(closedList.get(closedList.size()-1));
-			closedList.remove(closedList.size()-1);
-		}		
-		
+		return index;
+	}
+	/**
+	 * Check if task is found
+	 */
+	private boolean isTaskFound(int index) {
+		return index != INVALID_INDEX;
+	}
+	/**
+	 * Return True if the task of given index is found
+	 */
+	private boolean isTheRightTask(ArrayList<Task> openList, int taskIndex, int i) {
+		return openList.get(i).getTaskIndex() == taskIndex;
+	}
+	/**
+	 * Append closed list and open list to a list
+	 */
+	private void compileLists(ArrayList<Task> closedList, ArrayList<Task> openList, ArrayList<ArrayList<Task>> lists) {
 		lists.add(closedList);
 		lists.add(openList);
-		return lists;
 	}	
 
 //@@author A0125522R
@@ -486,7 +510,7 @@ public class TaskManager {
 	 */
 	private int findIndexOfTaskInList(ArrayList<Task> openList, int taskIndex) {
 		for (int i = 0; i < openList.size(); i++) {
-			if (openList.get(i).getTaskIndex() == taskIndex) {
+			if (isTheRightTask(openList, taskIndex, i)) {
 				return i;
 			}
 		}
