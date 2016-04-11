@@ -26,9 +26,9 @@ public class StorageTest {
     private static final int EMPTY = 1;
 	static final String CUSTOM_DIRECTORY1 = "E:\\eclipse\\workspace\\";
 	static final String CUSTOM_DIRECTORY2 = "E:\\eclipse\\workspace\\CS2103_Tasker\\";
-	static final String FILE_CLOSED_NAME = "TaskerDataHistory.txt";
-	static final String FILE_DATA_NAME = "TaskerData.txt";
-	static final String FILE_DIRECTORY_NAME = "TaskerDirectory.txt";
+	static final String FILE_CLOSED_NAME = "FantaskticHistory.txt";
+	static final String FILE_DATA_NAME = "FantaskticData.txt";
+	static final String FILE_DIRECTORY_NAME = "FantaskticDirectory.txt";
 	static final SimpleDateFormat FORMAT_TIME = new SimpleDateFormat("h:mm a");
 	static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("d MMM yyyy");
 	static Calendar cal1 = Calendar.getInstance();
