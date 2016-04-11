@@ -52,6 +52,7 @@ public class MainPage extends AnchorPane {
 
 	// Constants
 	private static final String SUMMARY_TEXT = "summary";
+	private static final String VIEW_TEXT = "view";
 	private static final String SU_TEXT = "su";
 	private static final String ST_TEXT = "st";
 	private static final String HOME_TEXT = "home";
@@ -69,10 +70,12 @@ public class MainPage extends AnchorPane {
 	private static final String UPDATE_TEXT = "update";
 	private static final String UNDO_TEXT = "undo";
 	private static final String UN_TEXT = "un";
+	private static final String UP_TEXT = "up";
 	private static final String U_TEXT = "u";
 	private static final String DELETE_TEXT = "delete";
 	private static final String DONE_TEXT = "done";
 	private static final String DO_TEXT = "do";
+	private static final String DE_TEXT = "de";
 	private static final String D_TEXT = "d";
 	private static final String H_TEXT = "h";
 	private static final String A_TEXT = "a";
@@ -83,7 +86,7 @@ public class MainPage extends AnchorPane {
 	private static final String CAL_FLAG = "cal";
 	private static final String HELP_FLAG = HELP_TEXT;
 	private static final String STORAGE_FLAG = STORAGE_TEXT;
-	private static final String VIEW_CHANGE_FLAG = "view";
+	private static final String VIEW_CHANGE_FLAG = VIEW_TEXT;
 	private static final String SUMMARY_FLAG = SUMMARY_TEXT;
 	private static final String SPACE = " ";
 	private static final String EMPTY_STRING = "";
@@ -806,6 +809,7 @@ public class MainPage extends AnchorPane {
 		if (!oldValue.isEmpty() && oldValue != null) {
 			oldWord = getFirstWord(oldValue);
 		}
+
 		if (!newValue.isEmpty() && newValue != null) {
 			newWord = getFirstWord(newValue);
 			newLetter = getFirstLetter(newValue);
@@ -839,7 +843,7 @@ public class MainPage extends AnchorPane {
 				checkS(newValue, helpLabel, newWord);
 				break;
 			case V_TEXT:
-				checkV(helpLabel);
+				checkV(newValue, helpLabel, newWord);
 				break;
 			default:
 				checkA(helpLabel);
@@ -848,113 +852,110 @@ public class MainPage extends AnchorPane {
 		}
 	}
 
-	private void checkV(Label helpLabel) {
-		helpLabel.setText(VIEW_HINT_MESSAGE);
+	/*
+	 * Checks for change in v to switch between view and default hints
+	 */
+	private void checkV(String newValue, Label helpLabel, String newWord) {
+		checkString(newValue, helpLabel, newWord, VIEW_HINT_MESSAGE, VIEW_TEXT);
 	}
 
+	/*
+	 * Checks for change in s to switch between search, storage, summary and
+	 * default hints
+	 */
 	private void checkS(String newValue, Label helpLabel, String newWord) {
 		helpLabel.setText(SEARCH_HINT_MESSAGE);
 		if (!newValue.isEmpty() && newValue.length() > S_TEXT.length()) {
 			if (getTwoLetters(newValue).equalsIgnoreCase(SE_TEXT)) {
-				helpLabel.setText(SEARCH_HINT_MESSAGE);
-				if (!newValue.isEmpty() && newValue.length() >= SEARCH_TEXT.length()) {
-					if (!newWord.equalsIgnoreCase(SEARCH_TEXT)) {
-						checkA(helpLabel);
-					}
-				}
+				checkString(newValue, helpLabel, newWord, SEARCH_HINT_MESSAGE, SEARCH_TEXT);
 			} else if (getTwoLetters(newValue).equalsIgnoreCase(ST_TEXT)) {
-				helpLabel.setText(STORAGE_HINT_MESSAGE);
-				if (!newValue.isEmpty() && newValue.length() >= STORAGE_TEXT.length()) {
-					if (!newWord.equalsIgnoreCase(STORAGE_TEXT)) {
-						checkA(helpLabel);
-					}
-				}
+				checkString(newValue, helpLabel, newWord, STORAGE_HINT_MESSAGE, STORAGE_TEXT);
 			} else if (getTwoLetters(newValue).equalsIgnoreCase(SU_TEXT)) {
-				helpLabel.setText(SUMMARY_HINT_MESSAGE);
-				if (!newValue.isEmpty() && newValue.length() >= SUMMARY_TEXT.length()) {
-					if (!newWord.equalsIgnoreCase(SUMMARY_TEXT)) {
-						checkA(helpLabel);
-					}
-				}
+				checkString(newValue, helpLabel, newWord, SUMMARY_HINT_MESSAGE, SUMMARY_TEXT);
 			} else {
 				checkA(helpLabel);
 			}
 		}
 	}
 
+	/*
+	 * Checks for change in e to switch between exit and default hints
+	 */
 	private void checkE(String newValue, Label helpLabel, String newWord) {
-		helpLabel.setText(EXIT_HINT_MESSAGE);
-		if (!newValue.isEmpty() && newValue.length() > EXIT_TEXT.length()) {
-			if (!newWord.equalsIgnoreCase(EXIT_TEXT)) {
-				checkA(helpLabel);
-			}
-		}
+		checkString(newValue, helpLabel, newWord, EXIT_HINT_MESSAGE, EXIT_TEXT);
 	}
 
+	/*
+	 * Checks for change in u to switch between update, undo and default hints
+	 */
 	private void checkU(String newValue, Label helpLabel, String newWord) {
+		helpLabel.setText(UPDATE_HINT_MESSAGE);
 		if (!newValue.isEmpty() && newValue.length() > U_TEXT.length()) {
 			if (getTwoLetters(newValue).equalsIgnoreCase(UN_TEXT)) {
-				helpLabel.setText(UNDO_HINT_MESSAGE);
-				if (!newValue.isEmpty() && newValue.length() >= UNDO_TEXT.length()) {
-					if (!newWord.equalsIgnoreCase(UNDO_TEXT)) {
-						checkA(helpLabel);
-					}
-				}
-			}
-		} else {
-			helpLabel.setText(UPDATE_HINT_MESSAGE);
-		}
-		if (!newValue.isEmpty() && newValue.length() >= UPDATE_TEXT.length()) {
-			if (!newWord.equalsIgnoreCase(UPDATE_TEXT)) {
+				checkString(newValue, helpLabel, newWord, UNDO_HINT_MESSAGE, UNDO_TEXT);
+			} else if (getTwoLetters(newValue).equalsIgnoreCase(UP_TEXT)) {
+				checkString(newValue, helpLabel, newWord, UPDATE_HINT_MESSAGE, UPDATE_TEXT);
+			} else {
 				checkA(helpLabel);
 			}
 		}
 	}
 
+	/*
+	 * Checks for change in d to switch between done, delete and default hints
+	 */
 	private void checkD(String newValue, Label helpLabel, String newWord) {
+		helpLabel.setText(DELETE_HINT_MESSAGE);
 		if (!newValue.isEmpty() && newValue.length() > D_TEXT.length()) {
 			if (getTwoLetters(newValue).equalsIgnoreCase(DO_TEXT)) {
-				helpLabel.setText(DONE_HINT_MESSAGE);
-				if (!newValue.isEmpty() && newValue.length() >= DONE_TEXT.length()) {
-					if (!newWord.equalsIgnoreCase(DONE_TEXT)) {
-						checkA(helpLabel);
-					}
-				}
-			}
-		} else {
-			helpLabel.setText(DELETE_HINT_MESSAGE);
-		}
-		if (!newValue.isEmpty() && newValue.length() >= DELETE_TEXT.length()) {
-			if (!newWord.equalsIgnoreCase(DELETE_TEXT)) {
+				checkString(newValue, helpLabel, newWord, DONE_HINT_MESSAGE, DONE_TEXT);
+			} else if (getTwoLetters(newValue).equalsIgnoreCase(DE_TEXT)) {
+				checkString(newValue, helpLabel, newWord, DELETE_HINT_MESSAGE, DELETE_TEXT);
+			} else {
 				checkA(helpLabel);
 			}
 		}
 	}
 
+	/*
+	 * Default hint
+	 */
 	private void checkA(Label helpLabel) {
 		helpLabel.setText(ADD_HINT_MESSAGE);
 	}
 
+	/*
+	 * Checks for change in h to switch between 
+	 */
 	private void checkH(String newValue, Label helpLabel, String newWord) {
 		helpLabel.setText(HELP_HINT_MESSAGE);
 		if (!newValue.isEmpty() && newValue.length() > H_TEXT.length()) {
 			if (getTwoLetters(newValue).equalsIgnoreCase(HE_TEXT)) {
-				helpLabel.setText(HELP_HINT_MESSAGE);
-				if (!newValue.isEmpty() && newValue.length() >= HELP_TEXT.length()) {
-					if (!newWord.equalsIgnoreCase(HELP_TEXT)) {
-						checkA(helpLabel);
-					}
-				}
+				checkString(newValue, helpLabel, newWord, HELP_HINT_MESSAGE, HELP_TEXT);
 			} else if (getTwoLetters(newValue).equalsIgnoreCase(HO_TEXT)) {
-				helpLabel.setText(HOME_HINT_MESSAGE);
-				if (!newValue.isEmpty() && newValue.length() >= HOME_TEXT.length()) {
-					if (!newWord.equalsIgnoreCase(HOME_TEXT)) {
-						checkA(helpLabel);
-					}
-				}
+				checkString(newValue, helpLabel, newWord, HOME_HINT_MESSAGE, HOME_TEXT);
 			} else {
 				checkA(helpLabel);
 			}
+		}
+	}
+
+	/*
+	 * Checks the string and sets hint message accordingly
+	 */
+	private void checkString(String newValue, Label helpLabel, String newWord, String message, String command) {
+		helpLabel.setText(message);
+		if (!newValue.isEmpty() && newValue.length() >= command.length()) {
+			defaultText(helpLabel, newWord, command);
+		}
+	}
+
+	/*
+	 * Checks if label is correct else, set default label
+	 */
+	private void defaultText(Label helpLabel, String newWord, String check) {
+		if (!newWord.equalsIgnoreCase(check)) {
+			checkA(helpLabel);
 		}
 	}
 
