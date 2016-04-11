@@ -11,8 +11,12 @@ import application.logger.LoggerHandler;
  */
 
 public class ResourceLoader {
+	
+	// Constants
 	private static final String LOADING_RESOURCE_LOGGER_MSG = "Loading Resource";
 	private static final String SLASH = "/";
+	
+	// Initialization
 	private static Logger logger = LoggerHandler.getLog();
 
 	public static InputStream load(String path) {

@@ -34,8 +34,8 @@ public class Parser {
 
     // Messages
     private static final String MESSAGE_NULL_ERROR = "command cannot be null";
-    
-    //Keywords
+
+    // Keywords
     private static final String KEYWORD_ADD = "add";
     private static final String KEYWORD_SEARCH = "search";
     private static final String KEYWORD_HOME = "home";
@@ -49,10 +49,10 @@ public class Parser {
     private static final String KEYWORD_SUMMARY = "summary";
     private static final String KEYWORD_EXIT = "exit";
     private static final String EMPTY = "";
-    
+
     private static final String SPACE = "\\s+";
 
-    //Input Segment markers
+    // Input Segment markers
     private static final String[] DATE_MARKERS_START = { "from" };
     private static final String[] DATE_MARKERS_END = { "to", "till" };
     private static final String[] DATE_MARKERS_DEADLINE = { "by" };
@@ -64,24 +64,25 @@ public class Parser {
     private static final String UNIX_PRI_MARKER = "-p";
     private static final String[] UNIX_MARKERS = { UNIX_DATE_MARKER, UNIX_LOC_MARKER, UNIX_PRI_MARKER };
 
-    //Priority levels
+    // Priority levels
     private static final String PRIORITY_HIGH = "high";
     private static final String PRIORITY_MEDIUM = "medium";
     private static final String PRIORITY_LOW = "low";
     private static final String[] PRIORITY_LEVELS = { PRIORITY_HIGH, PRIORITY_MEDIUM, PRIORITY_LOW };
 
-    //Indices information
+    // Indices information
     private static final int NUMBER_INDICES = 3;
     private static final int DATE_IND_POS = 0;
     private static final int LOC_IND_POS = 1;
     private static final int PRI_IND_POS = 2;
     private static final int NOT_PRESENT = -1;
 
-    //certain constants to use while processing input
+    // certain constants to use while processing input
     public static final int EMPTY_TIME = 001;
     public static final int DEFAULT_EVENT_DURATION_TIME = 2;
     public static final int DEFAULT_EVENT_DURATION_DAY = 1;
-    private static final int ARGUMENT_NUMBER = 4;
+    private static final int ARGUMENT_NUMBER = 4; // Number of arguments we
+                                                  // accept from user
     private static final int DESC_POS = 0;
     private static final int DATE_POS = 1;
     private static final int LOC_POS = 2;
@@ -91,9 +92,8 @@ public class Parser {
     private static final int SECOND_WORD = 1;
 
     // For add function. Since we accept add without keyword.
-    private static final boolean WITH_KEYWORD = true; 
-    
-    
+    private static final boolean WITH_KEYWORD = true;
+
     private static Logger logger = LoggerHandler.getLog();
     private PrettyTimeParser dateParser = new PrettyTimeParser();
 
@@ -196,12 +196,13 @@ public class Parser {
         }
         logger.info("Returning command object");
         return command;
-
     }
 
-    // Processing "home" input to see if it is truly home command or whether it
-    // is simply the beginning of a task description. Making command object
-    // accordingly.
+    /* 
+     * Processing "home" input to see if it is truly home command or whether it
+     * is simply the beginning of a task description. Making command object
+     * accordingly.
+     */
     private Command processHomeInput(String[] args) throws NoDescriptionException {
         Command command;
         if (args.length == 1) {
@@ -214,10 +215,11 @@ public class Parser {
         return command;
     }
 
-    // Processing "view" input to see if it is truly view command or whether it
-    // is simply the beginning of a task description. Making command object
-    // accordingly.
-
+    /*
+     *  Processing "view" input to see if it is truly view command or whether it
+     *  is simply the beginning of a task description. Making command object
+     *  accordingly.
+     */
     private Command processViewInput(String[] args) throws NoDescriptionException {
         Command command;
         if (args.length == 1) {
@@ -230,23 +232,23 @@ public class Parser {
         return command;
     }
 
-    //initialising add command object based on arguments
     private Command initializeAdd(String[] args, boolean isWithKeyWord) throws NoDescriptionException {
         args = removeKeyWordIfReq(args, isWithKeyWord);
         Integer[] indices = getIndices(args);
-        String[] segments = getSegments(indices[DATE_IND_POS], indices[LOC_IND_POS], indices[PRI_IND_POS], args);
+        String[] segments = getSegments(indices[DATE_IND_POS], indices[LOC_IND_POS], 
+                                        indices[PRI_IND_POS], args);
         Calendar[] dates = parseDates(segments);
         if (segments[DESC_POS].equals(EMPTY)) {
             throw new NoDescriptionException();
         }
         Calendar[] datesFixed = fixDatesForAdd(dates);
         Calendar remindDate = convertToCalendar(createEmptyDate());
-        Command command = new Add(segments[DESC_POS], datesFixed[0], datesFixed[1], segments[LOC_POS], remindDate,
-                segments[PRI_POS]);
+        Command command = new Add(segments[DESC_POS], datesFixed[0], datesFixed[1], 
+                                  segments[LOC_POS], remindDate,
+                                  segments[PRI_POS]);
         return command;
     }
 
-    //removing first word if add was with keyword
     private String[] removeKeyWordIfReq(String[] args, boolean isWithKeyWord) {
         if (isWithKeyWord) {
             return (String[]) ArrayUtils.remove(args, 0);
@@ -254,24 +256,20 @@ public class Parser {
         return args;
     }
 
-    //initialising search command object based on arguments
     private Command initializeSearch(String[] args) {
         args = (String[]) ArrayUtils.remove(args, 0);
         Command command = getAppropSearchCommand(args);
         return command;
     }
 
-    //initialising home command object
     private Command initializeHome() {
         return new Home();
     }
 
-    //initialising view change command 
     private Command initializeViewChange() {
         return new ViewChange();
     }
 
-    //initialising delete command object based on arguments
     private Command initializeDelete(String[] args) {
         args = (String[]) ArrayUtils.remove(args, 0);
         try {
@@ -281,7 +279,6 @@ public class Parser {
         }
     }
 
-    //initialising update command object based on arguments
     private Command initializeUpdate(String[] args) {
         args = (String[]) ArrayUtils.remove(args, 0);
         int taskToUpdate = Integer.parseInt(args[0]);
@@ -292,11 +289,10 @@ public class Parser {
         dates = fixDatesForUpdate(dates);
         Calendar remindDate = convertToCalendar(createEmptyDate());
         Command command = new Update(taskToUpdate, segments[DESC_POS], dates[0], dates[1], segments[LOC_POS],
-                remindDate, segments[PRI_POS]);
+                                     remindDate, segments[PRI_POS]);
         return command;
     }
 
-    //initialising done command object based on arguments
     private Command initializeDone(String[] args) {
         args = (String[]) ArrayUtils.remove(args, 0);
         try {
@@ -306,19 +302,16 @@ public class Parser {
         }
     }
 
-    //initialising undo command object
     private Command initializeUndo() {
         Command command = new Undo();
         return command;
     }
 
-    //initialising help command object
     private Command initializeHelp() {
         Command command = new Help();
         return command;
     }
 
-    //initialising summary command object 
     private Command initializeSummary() {
         Command command = new Summary();
         return command;
@@ -332,6 +325,7 @@ public class Parser {
         if (args.length == STORAGE_CHANGE_LIMIT) {
             command = new ChangeStorageLocation(args[SECOND_WORD]);
         } else {
+            assert (args.length != STORAGE_CHANGE_LIMIT);
             command = new ChangeStorageLocation(EMPTY);
         }
         return command;
@@ -344,7 +338,6 @@ public class Parser {
 
     // @@author A0132632R
 
-    //get indices of different components of input
     private Integer[] getIndices(String[] args) {
         int dateStartIndex = getDateStartIndex(args);
         int locationStartIndex = getLastIndex(LOCATION_MARKERS, args);
@@ -358,7 +351,6 @@ public class Parser {
         return indices;
     }
 
-    //change indices if unix style markers located. Means its in troubleshooting input format
     public void overrideIfUnixStyleFound(Integer[] indices, String[] args) {
         if (getLastIndex(UNIX_MARKERS, args) != NOT_PRESENT) {
             getUnixIndices(indices, args);
@@ -370,14 +362,13 @@ public class Parser {
             indices[i] = NOT_PRESENT;
         }
         List<String> words = Arrays.asList(args);
-        getUnixIndicesFromList(indices, words);
+        getUnixIndices(indices, words);
         if (indices[DATE_IND_POS] != NOT_PRESENT) {
-            // Setting the unix marker to empty since it can be ignored now
-            args[indices[DATE_IND_POS] - 1] = EMPTY; 
+            args[indices[DATE_IND_POS] - 1] = EMPTY; // Setting the unix marker to empty since we dont need it anymore
         }
     }
 
-    private void getUnixIndicesFromList(Integer[] indices, List<String> words) {
+    private void getUnixIndices(Integer[] indices, List<String> words) {
         indices[DATE_IND_POS] = words.indexOf(UNIX_DATE_MARKER) + 1; // Ignoring the unix marker
         indices[LOC_IND_POS] = words.indexOf(UNIX_LOC_MARKER);
         indices[PRI_IND_POS] = words.indexOf(UNIX_PRI_MARKER);
@@ -392,7 +383,6 @@ public class Parser {
 
     }
 
-    //get correct search command based on arguments following 'search' keyword
     private Command getSearchCommand(String[] args) throws NotDateException {
         String[] argsForDate = (String[]) ArrayUtils.remove(args, 0);
         if (Arrays.asList(DATE_MARKERS_DEADLINE).contains(args[0].toLowerCase())) {
@@ -454,7 +444,6 @@ public class Parser {
         }
     }
 
-    //get correct delete command based on arguments following 'delete' keyword
     private Command getAppropDeleteCommand(String[] args) {
         if (args.length == 1) {
             int index = Integer.parseInt(args[0]) - ARRAY_INDEXING_OFFSET;
@@ -471,7 +460,6 @@ public class Parser {
         return command;
     }
 
-    //get correct done command based on arguments following 'done' keyword
     private Command getAppropDoneCommand(String[] args) {
         if (args.length == 0) {
             return new ShowDoneTasks();
@@ -490,7 +478,6 @@ public class Parser {
         return command;
     }
 
-    //parse dates from date string segment of input
     private Calendar[] parseDates(String[] segments) {
         String dateString = segments[DATE_POS];
         dateString = fixDateFormatIfNeeded(dateString);
@@ -504,7 +491,8 @@ public class Parser {
         return dates;
     }
 
-    // NLP date parser package only accepts MM/DD/YYYY so fixing format if needed
+    // NLP date parser package only accepts MM/DD/YYYY so fixing format if
+    // needed
     private String fixDateFormatIfNeeded(String dateString) {
         String[] parts = dateString.split("\\s+");
         int i = 0;
@@ -589,7 +577,8 @@ public class Parser {
         return date;
     }
 
-    // fixing dates so that if one of the times in an event was not specified, a default time is used
+    // fixing dates so that if one of the times in an event was not specified, a
+    // default time is used
     private Calendar[] fixDatesForAdd(Calendar[] dates) {
         Calendar startDate = dates[0];
         Calendar endDate = dates[1];
@@ -702,7 +691,8 @@ public class Parser {
         return description;
     }
 
-    // makes sure priority is actually specified as an argument and not as part of task description
+    // makes sure priority is actually specified as an argument and not as part
+    // of task description
     private int fixPriorityIndex(int priorityIndex, String[] args) {
         int priorityLevelPosition = priorityIndex + 1;
         List<String> levels = Arrays.asList(PRIORITY_LEVELS);
@@ -757,7 +747,10 @@ public class Parser {
         return dateIndex;
     }
 
-    // Gets last index of any one of an array of keywords, in an array of users command words
+    /* 
+     * Gets last index of any one of an array of keywords, in an array of users
+     * command words
+     */
     private static int getLastIndex(String[] keywords, String[] commandWords) {
         int[] positions = new int[keywords.length];
         String[] commandLowerCase = new String[commandWords.length];
@@ -771,7 +764,10 @@ public class Parser {
         return ((int) Collections.max(list));
     }
 
-    // Makes a single string from a String[] from start position to end position in the array
+    /*
+     * Makes a single string from a String[] from start position to end position
+     * in the array
+     */
     private String getString(String[] args, int start, int end) {
         String string = EMPTY;
         for (int i = start; i <= end; i++) {

@@ -22,7 +22,7 @@ public class SearchByDate implements Command {
 	private static final int EMPTY = 0;
 
 	// Messages
-	private static final String MESSAGE_SEARCH_RESULTS = "Here are the results of your search!";
+	private static final String MESSAGE_SEARCH_RESULTS = "Here are the results of your search! Use home command to view all tasks!";
 	private static final String MESSAGE_SEARCH_NOT_FOUND = "Search Not Found";
 
 	// Initialization
@@ -48,6 +48,7 @@ public class SearchByDate implements Command {
 		if (taskList.size() != EMPTY) {
 			return searchFound(MESSAGE_SEARCH_RESULTS, taskList, null);
 		} else {
+			assert (taskList.size() == EMPTY);
 			return searchNotFound(storageConnector);
 		}
 	}

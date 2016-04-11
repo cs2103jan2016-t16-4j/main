@@ -44,6 +44,7 @@ public class Fantasktic extends Application {
 	private static Logger logger = LoggerHandler.getLog();
 
 	// Constants
+	private static final String CURSOR_URL = "cursor.png";
 	private static final String ROBOT_GIF_URL = "robot.gif";
 	private static final String APPLICATION_NAME = "Fantasktic";
 	private static final String EMPTY_STRING = "";
@@ -77,8 +78,7 @@ public class Fantasktic extends Application {
 			scene.getStylesheets().clear();
 			scene.getStylesheets().add(CSS_URL);
 			primaryStage.setScene(scene);
-			Image cursor = new Image("Cursor.png");
-			scene.setCursor(new ImageCursor(cursor));
+			setCursor(scene);
 			customiseGUIMenuBar(primaryStage);
 			primaryStage.setResizable(false);
 			primaryStage.show();
@@ -107,6 +107,12 @@ public class Fantasktic extends Application {
 
 	private void setEnvironment() {
 		this.backendFacade = new BackendFacade();
+	}
+	
+	// Set Cursor Image
+	private void setCursor(Scene scene) {
+		Image cursor = new Image(ResourceLoader.load(CURSOR_URL));
+		scene.setCursor(new ImageCursor(cursor));
 	}
 
 	// Checks if user has used the program at least once if not prompt to save

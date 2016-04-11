@@ -50,6 +50,7 @@ import javafx.util.Duration;
 
 public class MainPage extends AnchorPane {
 
+	private static final int CLASH_DETECTION_VARIABLE = 1;
 	// Constants
 	private static final int FIRST_WORD = 0;
 	private static final int ONE_LETTER = 1;
@@ -82,7 +83,6 @@ public class MainPage extends AnchorPane {
 	private static final String SPACE = " ";
 	private static final String EMPTY_STRING = "";
 	private static final String LOCATION_PREFIX = "AT";
-	private static final String BACKSLASH = "\\";
 	private static final String DIRECTORY_CHOOSER_TITLE = "Pick Where To Store Tasks";
 	private static final String CURRENT_DIRECTORY = "user.dir";
 	private static final int TASK_NUM_OFFSET = 1;
@@ -243,7 +243,6 @@ public class MainPage extends AnchorPane {
 						}
 					}
 				};
-
 				return cell;
 			}
 		});
@@ -428,28 +427,26 @@ public class MainPage extends AnchorPane {
 		}
 	}
 
-	// Selects all clash items or the task that has been added or updated
-	private void selectAllClashItems(ArrayList<Task> clashList, Task taskToFocus2) {
+	// Selects all clash items in red and/or the task that has been added or
+	// updated blue
+	private void selectAllClashItems(ArrayList<Task> clashList, Task taskToFocus) {
 		if (clashList != null) {
 			notifyIfClash(clashList);
 			this.displayList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 			for (Task task : clashList) {
-				this.displayList.getSelectionModel().select(task);
+				if (!task.equals(taskToFocus)) {
+					this.displayList.getSelectionModel().select(task);
+				}
 			}
 			this.displayList.getSelectionModel().select(taskToFocus);
+			this.displayList.scrollTo(taskToFocus);
 		}
 	}
 
 	// Notify users if there is a clash or not
 	private void notifyIfClash(ArrayList<Task> clashList) {
-		if (clashList.size() > 1) {
+		if (clashList.size() > CLASH_DETECTION_VARIABLE) {
 			Notifications.create().title(CLASH_NOTIFICATION_TITLE).text(CLASH_NOTIFICATION_MSG).showInformation();
-			// this.displayList.getStyleClass().clear();
-			// this.displayList.getStyleClass().add("clash");
-			// } else {
-			// assert (clashList.size() <= 1);
-			// this.displayList.getStyleClass().clear();
-			// this.displayList.getStyleClass().add("select");
 		}
 	}
 
@@ -621,8 +618,9 @@ public class MainPage extends AnchorPane {
 		final File selectedDirectory = dirChooser.showDialog(primaryStage);
 		if (selectedDirectory != null) {
 			try {
-				backendFacade.executeCommand(STORAGE_TEXT + SPACE + selectedDirectory.getPath().toString() + BACKSLASH,
-						tasksOnScreen);
+				Feedback feedback = backendFacade
+						.executeCommand(STORAGE_TEXT + SPACE + selectedDirectory.getPath().toString(), tasksOnScreen);
+				feedbackLabel.setText(feedback.getMessage());
 			} catch (NoDescriptionException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

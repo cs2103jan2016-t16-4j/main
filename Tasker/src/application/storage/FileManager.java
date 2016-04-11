@@ -48,6 +48,7 @@ public class FileManager {
 	 * Clears the given file.
 	 */
 	public void clear(String filePath) {
+		assert(filePath != null);
 		File file = new File(filePath);
 		if (file.exists()) {
 			try {
@@ -64,6 +65,7 @@ public class FileManager {
 	 * Return the path of close list.
 	 */
 	public String getClosedFilePath() {
+		assert(closedFilePath != null);
 		return closedFilePath;
 	}
 
@@ -71,6 +73,7 @@ public class FileManager {
 	 * Return the path of data list.
 	 */
 	public String getDataFilePath() {
+		assert(dataFilePath != null);
 		return dataFilePath;
 	}
 	
@@ -107,6 +110,7 @@ public class FileManager {
 	 * Loads the user tasks file (open and close list) into a list.
 	 */
 	public ArrayList<Task> loadFile(String filePath) {
+		assert(filePath != null);
 		File file = new File(filePath);
 		ArrayList<Task> list = new ArrayList<Task>();
 		logger.log(Level.INFO, "Loading tasks into list");
@@ -229,6 +233,7 @@ public class FileManager {
 	 * Saves a given file.
 	 */
 	public void saveFile(ArrayList<Task> list, String filePath) {
+		assert(filePath != null);
 		File f = new File(filePath);
 		logger.log(Level.INFO, "Saving file");
 		if (!f.exists()) {
@@ -264,6 +269,7 @@ public class FileManager {
 	 * Set the storage directory at the path that the user specified.
 	 */
 	public boolean setDirectory(String path) {
+		assert(path != null);
 		if (path.equalsIgnoreCase(EMPTY_PATH)) {
 			logger.log(Level.INFO, "No directory choosen.");
 			return false;
@@ -275,7 +281,6 @@ public class FileManager {
 				// get current path
 				Path oldClosedFilePath = Paths.get(closedFilePath);
 				Path oldDataFilePath = Paths.get(dataFilePath);
-
 				// store new path
 				closedFilePath = path + FILE_CLOSED_NAME;
 				dataFilePath = path + FILE_DATA_NAME;
@@ -299,13 +304,17 @@ public class FileManager {
 	private void migrateFilesAndDeleteExistingFiles(Path oldClosedFilePath, Path oldDataFilePath) throws IOException {
 		Path newClosedFilePath = Paths.get(closedFilePath);
 		if (oldClosedFilePath.toFile().exists()) {
-			Files.copy(oldClosedFilePath, newClosedFilePath, StandardCopyOption.REPLACE_EXISTING);
-			Files.deleteIfExists(oldClosedFilePath);
+			if (!oldClosedFilePath.equals(newClosedFilePath)) {
+				Files.copy(oldClosedFilePath, newClosedFilePath, StandardCopyOption.REPLACE_EXISTING);
+				Files.deleteIfExists(oldClosedFilePath);
+			}
 		}
 		Path newDataFilePath = Paths.get(dataFilePath);
 		if (oldDataFilePath.toFile().exists()) {
-			Files.copy(oldDataFilePath, newDataFilePath, StandardCopyOption.REPLACE_EXISTING);
-			Files.deleteIfExists(oldDataFilePath);
+			if (!oldDataFilePath.equals(newDataFilePath)) {
+				Files.copy(oldDataFilePath, newDataFilePath, StandardCopyOption.REPLACE_EXISTING);
+				Files.deleteIfExists(oldDataFilePath);
+			}
 		}
 	}
 }

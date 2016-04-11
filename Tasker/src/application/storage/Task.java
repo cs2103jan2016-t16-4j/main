@@ -37,6 +37,8 @@ public abstract class Task implements Cloneable {
     protected static final String KEYWORD_QUOTE = "\"";
     protected static final String KEYWORD_TO = " to ";
     protected static final String KEYWORD_SPACE = " ";
+    protected static final String KEYWORD_FULLSTOP = ". ";
+    protected static final String KEYWORD_PRIORITY = "Priority ";
     protected static final Calendar NO_DATE = null;
     protected static final Calendar NO_TIME = null;
 	protected static final String HIGH = "high";

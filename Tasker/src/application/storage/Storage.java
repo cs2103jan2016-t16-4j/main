@@ -188,7 +188,7 @@ public class Storage implements Cloneable {
 			String priority) {
 		ArrayList<Task> list = new ArrayList<Task>();
 		
-		// add original/old task 
+		// add original/old task into list for return
 		int taskIndex = -1;
 		for (int i = 0; i<databaseManager.getOpenList().size(); i++) {
 			if (databaseManager.getOpenList().get(i).getTaskIndex()==index) {
@@ -198,7 +198,7 @@ public class Storage implements Cloneable {
 			}
 		}
 		
-		// update task
+		// update task and add into list for return
 		databaseManager.updateOpenList(taskManager.update(
 				databaseManager.getOpenList(), taskDescription, startDate,
 				endDate, location, remindDate, priority, index));

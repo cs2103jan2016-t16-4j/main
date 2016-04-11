@@ -107,20 +107,12 @@ public class TaskManager {
 	 * Find and delete the task in the open list.
 	 */
 	public ArrayList<Task> delete(ArrayList<Task> openList, int taskIndex) {
-//		for (int i = 0; i < openList.size(); i++) {
-//			if (openList.get(i).getTaskIndex() == taskIndex) {
-//				openList.remove(i);
-//				break;
-//			}
-//		}
-		// return openList;
 		assert (taskIndex > INVALID_TASK_INDEX);
 		int indexOfTask = findIndexOfTaskInList(openList, taskIndex);
 		if (indexOfTask > INVALID_INDEX) {
 			openList.remove(indexOfTask);
 			logger.log(Level.INFO, "Deleted Task");
 		}
-
 		return openList;
 	}
 	
@@ -153,19 +145,6 @@ public class TaskManager {
 		logger.log(Level.INFO, "Searching tasks by date");
 		for (int i = 0; i < openList.size(); i++) {
 			Task obj = openList.get(i);
-//			if (obj instanceof DeadlineTask) {
-//				if (obj.getEndTime().get(Calendar.YEAR) != EMPTY) {
-//					if (((DeadlineTask) obj).getEndDate().compareTo(searchDate) <= 0) {
-//						searchList.add(obj);
-//					}
-//				}
-//			} else if (obj instanceof EventTask) {
-//				if (((EventTask) obj).getEndTime().get(Calendar.YEAR) != EMPTY) {
-//					if (((EventTask) obj).getEndDate().compareTo(searchDate) <= 0) {
-//						searchList.add(obj);
-//					}
-//				}
-//			}
 			if (obj.getEndDate()!=null) {
 				if (!isDateEmpty(obj.getEndDate())) {
 					if (obj.getEndDate().compareTo(searchDate)<=DATE_IS_BY_AND_ON){
@@ -186,6 +165,7 @@ public class TaskManager {
 		logger.log(Level.INFO, "Searching tasks on date");
 		for (int i = 0; i < openList.size(); i++) {
 			Task obj = openList.get(i);
+			// check end date first if its deadline task
 			if (obj.getEndDate()!=null) {
 				if (!isDateEmpty(obj.getEndDate())) { 
 					if (isDatesSame(searchDate, obj.getEndDate())) {
@@ -194,6 +174,7 @@ public class TaskManager {
 					}
 				}
 			}
+			// else check start date too if its event task
 			if (obj.getStartDate()!=null) {
 				if (!isDateEmpty(obj.getStartDate())) {
 					if (isDatesSame(searchDate, obj.getStartDate())) {
@@ -202,37 +183,6 @@ public class TaskManager {
 					}
 				}
 			}
-			// check if deadline task --> check end date only
-//			if (obj instanceof DeadlineTask) {
-//				if (((DeadlineTask) obj).getEndDate().get(Calendar.YEAR) != EMPTY) {
-//					if (((DeadlineTask) obj).getEndDate().get(Calendar.YEAR) == searchDate.get(Calendar.YEAR)
-//							&& ((DeadlineTask) obj).getEndDate().get(Calendar.MONTH) == searchDate.get(Calendar.MONTH)
-//							&& ((DeadlineTask) obj).getEndDate().get(Calendar.DATE) == searchDate.get(Calendar.DATE)) {
-//						searchList.add(obj);
-//						continue;
-//					}
-//				}
-//				// check if event task --> check start/end date 
-//			} else if (obj instanceof EventTask) {
-//				if (((EventTask) obj).getStartDate().get(Calendar.YEAR) != EMPTY) {
-//					if (((EventTask) obj).getStartDate().get(Calendar.YEAR) == searchDate.get(Calendar.YEAR)
-//							&& ((EventTask) obj).getStartDate().get(Calendar.MONTH) == searchDate.get(Calendar.MONTH)
-//							&& ((EventTask) obj).getStartDate().get(Calendar.DATE) == searchDate.get(Calendar.DATE)) {
-//						searchList.add(obj);
-//						continue;
-//					}
-//				}
-//				if (((EventTask) obj).getEndDate().get(Calendar.YEAR) != EMPTY) {
-//					if (((EventTask) obj).getEndDate().get(Calendar.YEAR) == searchDate.get(Calendar.YEAR)
-//							&& ((EventTask) obj).getEndDate().get(Calendar.MONTH) == searchDate.get(Calendar.MONTH)
-//							&& ((EventTask) obj).getEndDate().get(Calendar.DATE) == searchDate.get(Calendar.DATE)) {
-//						searchList.add(obj);
-//						continue;
-//					}
-//
-//				}
-//
-//			}
 		}
 		return searchList;
 	}
@@ -315,21 +265,19 @@ public class TaskManager {
 	 */
 	private void convertFloatingTask(ArrayList<Task> openList, String taskDescription, Calendar startDate,
 			Calendar endDate, String location, Calendar remindDate, String priority, int taskIndex, int indexOfTask) {
+		assert(openList != null);
 		// convert : floating task to event task
 		if (toEventTask(startDate, endDate)) {
-//				openList.set(indexOfTask, updateToEventTask(openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
 			openList.set(indexOfTask, updateToTaskType(EVENT_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
 			logger.log(Level.INFO, "Converting to Event Task");
 		}
 		// convert : floating task to deadline task	
 		else if (toDeadlineTask(startDate, endDate)) {
-//				openList.set(indexOfTask, updateToDeadlineTask(openList.get(indexOfTask), taskDescription, endDate, location, remindDate, priority, taskIndex));
 			openList.set(indexOfTask, updateToTaskType(DEADLINE_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
 			logger.log(Level.INFO, "Converting to Deadline Task");
 		}
 		// no conversion
 		else {
-//				openList.set(indexOfTask, updateToFloatingTask(openList.get(indexOfTask), taskDescription, location, remindDate, priority, taskIndex));
 			openList.set(indexOfTask, updateToTaskType(FLOATING_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
 		}
 	}
@@ -339,25 +287,20 @@ public class TaskManager {
 	 */
 	private void convertDeadlineTask(ArrayList<Task> openList, String taskDescription, Calendar startDate,
 			Calendar endDate, String location, Calendar remindDate, String priority, int taskIndex, int indexOfTask) {
+		assert(openList != null);
 		// convert : deadline task to event task
 		if (toEventTask(startDate, endDate)) {
-//				openList.set(indexOfTask, updateToEventTask(openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
 			openList.set(indexOfTask, updateToTaskType(EVENT_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
 			logger.log(Level.INFO, "Converting to Event Task");
 		}
-//			// convert : deadline task to floating task
+		// convert : deadline task to floating task
 		else if (toFloatingTask(startDate, endDate)) {
-//			openList.set(indexOfTask, updateToFloatingTask(openList.get(indexOfTask), taskDescription, location, remindDate, priority, taskIndex));
 			openList.set(indexOfTask, updateToTaskType(FLOATING_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
 			logger.log(Level.INFO, "Converting to Floating Task");
-
 		}
-//			// no conversion
+		// no conversion
 		else {
-//				openList.set(indexOfTask, updateToDeadlineTask(openList.get(indexOfTask), taskDescription, endDate, location,
-//						remindDate, priority, taskIndex));
 			openList.set(indexOfTask, updateToTaskType(DEADLINE_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
-
 		}
 	}
 
@@ -366,143 +309,22 @@ public class TaskManager {
 	 */
 	private void convertEventTask(ArrayList<Task> openList, String taskDescription, Calendar startDate,
 			Calendar endDate, String location, Calendar remindDate, String priority, int taskIndex, int indexOfTask) {
-		//			// convert : event task to deadline task
+		assert(openList != null);
+		// convert : event task to deadline task
 		if (toDeadlineTask(startDate, endDate)) {
-//				openList.set(indexOfTask, updateToDeadlineTask(openList.get(indexOfTask), taskDescription, endDate, location, remindDate, priority, taskIndex));
 			openList.set(indexOfTask, updateToTaskType(DEADLINE_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
 			logger.log(Level.INFO, "Converting to Deadline Task");
 			}
-//			// convert : event task to floating task
+		// convert : event task to floating task
 		else if (toFloatingTask(startDate, endDate)) {
-//				openList.set(indexOfTask, updateToFloatingTask(openList.get(indexOfTask), taskDescription, location, remindDate, priority, taskIndex));
 			openList.set(indexOfTask, updateToTaskType(FLOATING_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
 			logger.log(Level.INFO, "Converting to Floating Task");
 		}
-//			// no conversion
+		// no conversion
 		else {
-//				openList.set(indexOfTask, updateToEventTask(openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
 			openList.set(indexOfTask, updateToTaskType(EVENT_TASK, openList.get(indexOfTask), taskDescription, startDate, endDate, location, remindDate, priority, taskIndex));
 		}
 	}
-
-
-	
-
-//	private EventTask updateToEventTask(Task originalTask,
-//			String taskDescription, Calendar startDate, Calendar endDate,
-//			String location, Calendar remindDate, String priority, int taskIndex) {
-//		
-//		EventTask eventTask;
-//		if (originalTask instanceof FloatingTask) {
-//			eventTask = new EventTask(originalTask.getTaskDescription(), Calendar.getInstance(), Calendar.getInstance(), originalTask.getLocation(), originalTask.getRemindDate(), originalTask.getPriority(), originalTask.getTaskIndex());
-//		}
-//		else if (originalTask instanceof DeadlineTask) {
-//			eventTask = new EventTask(originalTask.getTaskDescription(), Calendar.getInstance(), ((DeadlineTask) originalTask).getEndDate(), originalTask.getLocation(), originalTask.getRemindDate(), originalTask.getPriority(), originalTask.getTaskIndex());
-//		}
-//		else {
-//			eventTask = new EventTask(originalTask.getTaskDescription(), ((EventTask) originalTask).getStartDate(), ((EventTask) originalTask).getEndDate(), originalTask.getLocation(), originalTask.getRemindDate(), originalTask.getPriority(), originalTask.getTaskIndex());
-//		}
-//				
-//		// update task
-//		if (!taskDescription.equalsIgnoreCase("")) {
-//			eventTask.setTaskDescription(taskDescription);
-//		}
-//		if (startDate.get(Calendar.YEAR)!=EMPTY_DATE) {
-//			eventTask.setStartDate(startDate);
-//		}
-//		if (!(startDate.get(Calendar.MILLISECOND)==EMPTY_DATE && startDate.get(Calendar.HOUR_OF_DAY)==0 && startDate.get(Calendar.MINUTE)==0 && startDate.get(Calendar.SECOND)==0)) {
-//			eventTask.setStartTime(startDate);
-//		}
-//		if (endDate.get(Calendar.YEAR)!=EMPTY_DATE) {
-//			eventTask.setEndDate(endDate);
-//			eventTask.setEndTime(endDate);
-//		}
-//		if (!(endDate.get(Calendar.MILLISECOND)==EMPTY_DATE && endDate.get(Calendar.HOUR_OF_DAY)==0 && endDate.get(Calendar.MINUTE)==0 && endDate.get(Calendar.SECOND)==0)) {
-//			eventTask.setEndTime(endDate);
-//			eventTask.setStartTime(startDate);
-//		}
-//		if (!location.equalsIgnoreCase("")) {
-//			eventTask.setLocation(location);
-//		}
-//		if (remindDate.get(Calendar.YEAR)!=EMPTY_DATE) {
-//			eventTask.setRemindDate(remindDate);
-//		}
-//		if (!(remindDate.get(Calendar.MILLISECOND)==EMPTY_DATE && remindDate.get(Calendar.HOUR_OF_DAY)==0 && remindDate.get(Calendar.MINUTE)==0 && remindDate.get(Calendar.SECOND)==0)) {
-//			eventTask.setRemindDate(remindDate);
-//		}
-//		if (!priority.equalsIgnoreCase("")) {
-//			eventTask.setPriority(priority);
-//		}
-//		
-//		return eventTask;
-//	}
-//	
-//	private FloatingTask updateToFloatingTask(Task originalTask, String taskDescription, String location, Calendar remindDate, String priority,
-//			int taskIndex) {
-//		
-//		FloatingTask floatingTask = new FloatingTask(originalTask.getTaskDescription(), originalTask.getLocation(), originalTask.getRemindDate(), originalTask.getPriority(), originalTask.getTaskIndex());
-//	
-//		// update task
-//		if (!taskDescription.equalsIgnoreCase("")) {
-//			floatingTask.setTaskDescription(taskDescription);
-//		}
-//
-//		if (!location.equalsIgnoreCase("")) {
-//			floatingTask.setLocation(location);
-//		}
-//		if (remindDate.get(Calendar.YEAR)!=EMPTY_DATE) {
-//			floatingTask.setRemindDate(remindDate);
-//		}
-//		if (!(remindDate.get(Calendar.MILLISECOND)==EMPTY_DATE && remindDate.get(Calendar.HOUR_OF_DAY)==0 && remindDate.get(Calendar.MINUTE)==0 && remindDate.get(Calendar.SECOND)==0)) {
-//			floatingTask.setRemindDate(remindDate);
-//		}
-//		if (!priority.equalsIgnoreCase("")) {
-//			floatingTask.setPriority(priority);
-//		}
-//		
-//		return floatingTask;
-//	}
-//
-//	private DeadlineTask updateToDeadlineTask(Task originalTask, String taskDescription, Calendar endDate, String location,
-//			Calendar remindDate, String priority, int taskIndex) {
-//		
-//		DeadlineTask deadlineTask;
-//		if (originalTask instanceof EventTask) {
-//			deadlineTask = new DeadlineTask(originalTask.getTaskDescription(), ((EventTask) originalTask).getEndDate(), originalTask.getLocation(), originalTask.getRemindDate(), originalTask.getPriority(), originalTask.getTaskIndex());
-//		}
-//		else if (originalTask instanceof FloatingTask) {
-//			deadlineTask = new DeadlineTask(originalTask.getTaskDescription(), Calendar.getInstance(), originalTask.getLocation(), originalTask.getRemindDate(), originalTask.getPriority(), originalTask.getTaskIndex());
-//		}
-//		else {
-//			deadlineTask = new DeadlineTask(originalTask.getTaskDescription(), ((DeadlineTask) originalTask).getEndDate(), originalTask.getLocation(), originalTask.getRemindDate(), originalTask.getPriority(), originalTask.getTaskIndex());
-//		}
-//		// update task
-//		if (!taskDescription.equalsIgnoreCase("")) {
-//			deadlineTask.setTaskDescription(taskDescription);
-//		}
-//
-//		if (endDate.get(Calendar.YEAR)!=EMPTY_DATE) {
-//			deadlineTask.setEndDate(endDate);
-//			deadlineTask.setEndTime(endDate);
-//		}
-//		if (!(endDate.get(Calendar.MILLISECOND)==EMPTY_DATE && endDate.get(Calendar.HOUR_OF_DAY)==0 && endDate.get(Calendar.MINUTE)==0 && endDate.get(Calendar.SECOND)==0)) {
-//			deadlineTask.setEndTime(endDate);
-//		}
-//		if (!location.equalsIgnoreCase("")) {
-//			deadlineTask.setLocation(location);
-//		}
-//		if (remindDate.get(Calendar.YEAR)!=EMPTY_DATE) {
-//			deadlineTask.setRemindDate(remindDate);
-//		}
-//		if (!(remindDate.get(Calendar.MILLISECOND)==EMPTY_DATE && remindDate.get(Calendar.HOUR_OF_DAY)==0 && remindDate.get(Calendar.MINUTE)==0 && remindDate.get(Calendar.SECOND)==0)) {
-//			deadlineTask.setRemindDate(remindDate);
-//		}
-//		if (!priority.equalsIgnoreCase("")) {
-//			deadlineTask.setPriority(priority);
-//		}
-//		
-//		return deadlineTask;
-//	}
 	
 	/**
 	 * Updates and convert a task to the task type specified.
@@ -510,7 +332,7 @@ public class TaskManager {
 	private Task updateToTaskType(String taskType, Task originalTask,
 			String taskDescription, Calendar startDate, Calendar endDate, String location, Calendar remindDate,
 			String priority, int taskIndex) {
-		
+		assert (taskIndex > INVALID_TASK_INDEX);
 		String originalTaskDescription = originalTask.getTaskDescription();
 		Calendar originalStartDate = originalTask.getStartDate();
 		Calendar originalEndDate = originalTask.getEndDate();
@@ -518,7 +340,6 @@ public class TaskManager {
 		String originalLocation = originalTask.getLocation();
 		String originalPriority = originalTask.getPriority();
 		
-		assert (taskIndex > INVALID_TASK_INDEX);
 		switch (taskType) {
 		case (FLOATING_TASK):
 			return updatedToFloatingTask(taskDescription, startDate, endDate, location, remindDate, priority, taskIndex,
@@ -543,6 +364,7 @@ public class TaskManager {
 			String location, Calendar remindDate, String priority, int taskIndex, String originalTaskDescription,
 			Calendar originalStartDate, Calendar originalEndDate, Calendar originalRemindDate, String originalLocation,
 			String originalPriority) {
+		assert(originalTask != null);
 		EventTask eventTask;
 		if (originalTask instanceof FloatingTask) {
 			eventTask = new EventTask(originalTaskDescription, Calendar.getInstance(), Calendar.getInstance(),
@@ -565,6 +387,7 @@ public class TaskManager {
 	private Task updatedToDeadlineTask(Task originalTask, String taskDescription, Calendar startDate, Calendar endDate,
 			String location, Calendar remindDate, String priority, int taskIndex, String originalTaskDescription,
 			Calendar originalEndDate, Calendar originalRemindDate, String originalLocation, String originalPriority) {
+		assert(originalTask != null);
 		DeadlineTask deadlineTask;
 		if (originalTask instanceof FloatingTask) {
 			deadlineTask = new DeadlineTask(originalTaskDescription, Calendar.getInstance(), originalLocation,
@@ -653,14 +476,10 @@ public class TaskManager {
 				((EventTask) obj).setEndTime(endDate);
 				logger.log(Level.INFO, "Updated Event Task's end time");
 			}
-			
 			return obj;
-		}
-		
+		}		
 		return obj;
 	}
-
-
 
 	/**
 	 * Find the index of the task in the open list.
@@ -760,24 +579,6 @@ class ComparatorPriority implements Comparator<Task> {
         	if (tasks[i].getPriority().equalsIgnoreCase(HIGH_PRIORITY))
         		integers[i] = HIGH_PRIORITY_VALUE;
     	}
-//    	if (o1.getPriority().equals(""))
-//    		ob1 = 4;
-//    	if (o1.getPriority().equalsIgnoreCase("low"))
-//    		ob1 = 3;
-//    	if (o1.getPriority().equalsIgnoreCase("medium"))
-//    		ob1 = 2;
-//    	if (o1.getPriority().equalsIgnoreCase("high"))
-//    		ob1 = 1;
-//    	if (o2.getPriority().equalsIgnoreCase(""))
-//    		ob2 = 4;
-//    	if (o2.getPriority().equalsIgnoreCase("low"))
-//    		ob2 = 3;
-//    	if (o2.getPriority().equalsIgnoreCase("medium"))
-//    		ob2 = 2;
-//    	if (o2.getPriority().equalsIgnoreCase("high"))
-//    		ob2 = 1;
-    	
-    	// nothing = 4, low = 3, medium = 2, high = 1
         return Integer.compare(integers[TASK_1_PRIORITY],integers[TASK_2_PRIORITY]);
     }
 }
