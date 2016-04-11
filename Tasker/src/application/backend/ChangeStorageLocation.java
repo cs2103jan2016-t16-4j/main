@@ -56,7 +56,9 @@ public class ChangeStorageLocation implements UndoableCommand {
 		return feedback;
 	}
 
-	// Check if user has input a directory or not
+	/*
+	 * Check if user has input a directory or not
+	 */
 	private Feedback checkUrlInput(StorageConnector storageConnector, ArrayList<Task> tasksOnScreen,
 			Feedback feedback) {
 		if (arguments != EMPTY_STRING) {
@@ -69,7 +71,9 @@ public class ChangeStorageLocation implements UndoableCommand {
 		return feedback;
 	}
 
-	// Checks if the input is an actual file directory
+	/*
+	 * Checks if the input is an actual file directory
+	 */
 	private Feedback checkUrlExist(StorageConnector storageConnector, ArrayList<Task> tasksOnScreen,
 			Feedback feedback) {
 		if (new File(arguments).isDirectory()) {
@@ -81,7 +85,9 @@ public class ChangeStorageLocation implements UndoableCommand {
 		return feedback;
 	}
 
-	// If input is a valid directory, execute the change storage functions
+	/*
+	 * If input is a valid directory, execute the change storage functions
+	 */
 	private Feedback validDirectoryFound(StorageConnector storageConnector, ArrayList<Task> tasksOnScreen,
 			Feedback feedback) {
 		try {
@@ -98,7 +104,9 @@ public class ChangeStorageLocation implements UndoableCommand {
 		return feedback;
 	}
 
-	// Create feedback when user did not input a directory path
+	/*
+	 * Create feedback when user did not input a directory path
+	 */
 	private Feedback noInput(ArrayList<Task> tasksOnScreen) {
 		Feedback feedback;
 		feedback = new Feedback(MESSAGE_STORAGE_NO_INPUT, tasksOnScreen, null);
@@ -106,7 +114,9 @@ public class ChangeStorageLocation implements UndoableCommand {
 		return feedback;
 	}
 
-	// Create feedback when user inputs an invalid directory path
+	/*
+	 * Create feedback when user inputs an invalid directory path
+	 */
 	private Feedback invalidDirectoryFound(ArrayList<Task> tasksOnScreen) {
 		Feedback feedback;
 		feedback = new Feedback(MESSAGE_STORAGE_URL_NOT_FOUND, tasksOnScreen, null);
@@ -114,7 +124,9 @@ public class ChangeStorageLocation implements UndoableCommand {
 		return feedback;
 	}
 
-	// Create feedback when user inputs a valid directory path
+	/*
+	 * Create feedback when user inputs a valid directory path
+	 */
 	private Feedback validDirectoryFound(ArrayList<Task> tasksOnScreen) {
 		Feedback feedback;
 		feedback = new Feedback(MESSAGE_STORAGE_URL_FOUND + arguments + BACKSLASH, tasksOnScreen, null);

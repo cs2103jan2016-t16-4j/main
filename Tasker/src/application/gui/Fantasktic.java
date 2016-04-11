@@ -18,7 +18,6 @@ import application.storage.Task;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
-import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.DirectoryChooser;
@@ -43,8 +42,6 @@ public class Fantasktic extends Application {
 	// Initialization
 	private static Logger logger = LoggerHandler.getLog();
 
-	// Constants
-	private static final String CURSOR_URL = "cursor.png";
 	private static final String ROBOT_GIF_URL = "robot.gif";
 	private static final String APPLICATION_NAME = "Fantasktic";
 	private static final String EMPTY_STRING = "";
@@ -78,7 +75,6 @@ public class Fantasktic extends Application {
 			scene.getStylesheets().clear();
 			scene.getStylesheets().add(CSS_URL);
 			primaryStage.setScene(scene);
-			setCursor(scene);
 			customiseGUIMenuBar(primaryStage);
 			primaryStage.setResizable(false);
 			primaryStage.show();
@@ -90,17 +86,24 @@ public class Fantasktic extends Application {
 		}
 	}
 
+	/*
+	 * Customises the top bar of the GUI
+	 */
 	private void customiseGUIMenuBar(Stage primaryStage) {
 		setProgramName(primaryStage);
 		setProgramLogo(primaryStage);
 	}
 
-	// Set program name
+	/*
+	 * Set program name
+	 */
 	private void setProgramName(Stage primaryStage) {
 		primaryStage.setTitle(APPLICATION_NAME);
 	}
 
-	// Set program logo
+	/*
+	 * Set program logo
+	 */
 	private void setProgramLogo(Stage primaryStage) {
 		primaryStage.getIcons().add(new Image(ResourceLoader.load(LOGO_URL)));
 	}
@@ -108,15 +111,11 @@ public class Fantasktic extends Application {
 	private void setEnvironment() {
 		this.backendFacade = new BackendFacade();
 	}
-	
-	// Set Cursor Image
-	private void setCursor(Scene scene) {
-		Image cursor = new Image(ResourceLoader.load(CURSOR_URL));
-		scene.setCursor(new ImageCursor(cursor));
-	}
 
-	// Checks if user has used the program at least once if not prompt to save
-	// file
+	/*
+	 * Checks if user has used the program at least once if not prompt to save
+	 * file
+	 */
 	private void initializeSaveDirectory(Stage primaryStage) throws IOException {
 		if (!backendFacade.checkIfFileExists()) {
 			DirectoryChooser dirChooser = new DirectoryChooser();
@@ -128,7 +127,9 @@ public class Fantasktic extends Application {
 		}
 	}
 
-	// Does the directory prompt then sends the data to logic accordingly
+	/*
+	 * Does the directory prompt then sends the data to logic accordingly
+	 */
 	public void directoryPrompt(Stage primaryStage, DirectoryChooser dirChooser) throws IOException {
 		final File selectedDirectory = dirChooser.showDialog(primaryStage);
 		if (selectedDirectory != null) {
@@ -138,13 +139,17 @@ public class Fantasktic extends Application {
 		}
 	}
 
-	// Configuration for directory chooser
+	/*
+	 * Configuration for directory chooser
+	 */
 	private void configureDirectoryChooser(final DirectoryChooser dirChooser) {
 		dirChooser.setTitle(DIRECTORY_CHOOSER_TITLE);
 		dirChooser.setInitialDirectory(new File(System.getProperty(CURRENT_DIRECTORY)));
 	}
 
-	// Create Tray Icon
+	/*
+	 * Create Tray Icon
+	 */
 	public void createTrayIcon(Stage primaryStage) {
 		if (SystemTray.isSupported()) {
 			SystemTray tray = SystemTray.getSystemTray();
@@ -153,6 +158,7 @@ public class Fantasktic extends Application {
 			ActionListener closeListener = closeTray();
 			PopupMenu popup = popupMenuConfiguration(closeListener, showListener);
 			trayIconConfiguration(showListener, popup);
+			
 			try {
 				tray.add(trayIcon);
 			} catch (AWTException e) {
@@ -161,7 +167,9 @@ public class Fantasktic extends Application {
 		}
 	}
 
-	// Configuration for Tray Icon
+	/*
+	 * Configuration for Tray Icon
+	 */
 	private void trayIconConfiguration(ActionListener showListener, PopupMenu popup) {
 		java.awt.Image image = Toolkit.getDefaultToolkit()
 				.getImage(getClass().getClassLoader().getResource((ROBOT_GIF_URL)));
@@ -170,7 +178,9 @@ public class Fantasktic extends Application {
 		trayIcon.addActionListener(showListener);
 	}
 
-	// Show Application Menu
+	/*
+	 * Show Application Menu
+	 */
 	private ActionListener showApplication(Stage primaryStage) {
 		ActionListener showListener = new ActionListener() {
 			@Override
@@ -188,7 +198,9 @@ public class Fantasktic extends Application {
 		return showListener;
 	}
 
-	// Close Menu
+	/*
+	 * Close Menu
+	 */
 	private ActionListener closeTray() {
 		ActionListener closeListener = new ActionListener() {
 			@Override
@@ -200,7 +212,9 @@ public class Fantasktic extends Application {
 		return closeListener;
 	}
 
-	// Minimize to tray
+	/*
+	 * Minimize to tray
+	 */
 	private void setToTray(Stage primaryStage) {
 		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
@@ -220,7 +234,9 @@ public class Fantasktic extends Application {
 		});
 	}
 
-	// create a popup menu for right clicking system tray icon
+	/*
+	 * create a popup menu for right clicking system tray icon
+	 */
 	private PopupMenu popupMenuConfiguration(final ActionListener closeListener, ActionListener showListener) {
 		PopupMenu popup = new PopupMenu();
 		addShowMenuToPopup(showListener, popup);
@@ -228,19 +244,27 @@ public class Fantasktic extends Application {
 		return popup;
 	}
 
+	/*
+	 * Adds exit selection to the right click menu of the system tray
+	 */
 	private void addExitMenuToPopup(final ActionListener closeListener, PopupMenu popup) {
 		MenuItem closeItem = new MenuItem(EXIT_MENU_TEXT);
 		closeItem.addActionListener(closeListener);
 		popup.add(closeItem);
 	}
 
+	/*
+	 * Adds show selection to the right click menu of the system tray
+	 */
 	private void addShowMenuToPopup(ActionListener showListener, PopupMenu popup) {
 		MenuItem showItem = new MenuItem(SHOW_MENU_TEXT);
 		showItem.addActionListener(showListener);
 		popup.add(showItem);
 	}
 
-	// Message when minimized
+	/*
+	 * Message when minimized
+	 */
 	public void showProgramIsMinimizedMsg() {
 		trayIcon.displayMessage(APPLICATION_NAME, SYSTEM_TRAY_HINT, TrayIcon.MessageType.INFO);
 	}
