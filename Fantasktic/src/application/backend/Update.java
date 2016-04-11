@@ -90,16 +90,12 @@ public class Update implements UndoableCommand {
     }
 
     private Feedback revertBack() throws IOException, CloneNotSupportedException {
-        ArrayList<Task> returnedTasks = storageConnector.updateTask(updatedTask.getTaskIndex(),
-                                           origTask.getTaskDescription(), origTask.getStartDate(), 
-                                           origTask.getEndDate(), origTask.getLocation(),
-                                           origTask.getRemindDate(), origTask.getPriority());
-        origTask = returnedTasks.get(INDEX_ORIGINAL_TASK);
-        updatedTask = returnedTasks.get(INDEX_UPDATED_TASK);
-        String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK, "From: " 
-                                                + origTask.toString() + "\n" + "To: " 
-                                                + updatedTask.toString());
-        return getFeedbackList(feedbackMessage, storageConnector.getOpenList(), updatedTask);
+        String updatedString = updatedTask.toString();
+        storageConnector.replaceTask(updatedTask.getTaskIndex(), origTask);
+        String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK, "From: " +
+                                                updatedString + "\n" + "To: " 
+                                                + origTask.toString());
+        return getFeedbackList(feedbackMessage, storageConnector.getOpenList(), origTask);
     }
 
     private Feedback getFeedbackCal(String message, ArrayList<Task> tasks, Task task) {

@@ -87,6 +87,11 @@ public class StorageStubForBackend extends Storage {
     }
     
     @Override
+    public void replaceTask(int index, Task task){
+        //Just for testing purposes
+    }
+    
+    @Override
     public ArrayList<Task> searchTaskByPriority(String priority){
         createListForTest(size);
         ArrayList<Task> matches = new ArrayList<Task>();
