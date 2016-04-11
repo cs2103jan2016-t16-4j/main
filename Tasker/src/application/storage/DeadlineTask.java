@@ -109,9 +109,6 @@ public class DeadlineTask extends Task implements Cloneable {
 		if (!getLocation().equalsIgnoreCase(EMPTY_STRING)) {
 			taskDetails += KEYWORD_AT + getLocation();
 		}
-		if (!getPriority().equalsIgnoreCase(EMPTY_STRING)) {
-			taskDetails += KEYWORD_FULLSTOP + KEYWORD_PRIORITY + getPriority();
-		}
 		taskDetails += KEYWORD_QUOTE;
 		return taskDetails;
 	}
