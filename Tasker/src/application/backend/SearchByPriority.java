@@ -18,7 +18,7 @@ public class SearchByPriority implements Command {
 	private static final String EXECUTE_SEARCH_BY_PRIORITY_LOGGER_MSG = "Executing search by priority function";
 
 	// Messages
-	private static final String MESSAGE_SEARCH_RESULTS = "Here are the results of your search!";
+	private static final String MESSAGE_SEARCH_RESULTS = "Here are the results of your search! Use home command to view all tasks!";
 	private static final String MESSAGE_SEARCH_NOT_FOUND = "Search Not Found";
 
 	// Initialization
