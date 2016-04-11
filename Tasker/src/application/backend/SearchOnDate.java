@@ -43,7 +43,9 @@ public class SearchOnDate implements Command {
 		return checkIfListEmpty(storageConnector);
 	}
 
-	// Check if list is empty
+	/*
+	 * Check if list is empty
+	 */
 	private Feedback checkIfListEmpty(StorageConnector storageConnector) {
 		if (taskList.size() != EMPTY) {
 			return searchFound();
@@ -53,14 +55,18 @@ public class SearchOnDate implements Command {
 		}
 	}
 
-	// Create feedback message for search found
+	/*
+	 * Create feedback message for search found
+	 */
 	private Feedback searchFound() {
 		Feedback fb = new Feedback(MESSAGE_SEARCH_RESULTS, taskList, null);
 		fb.setListFlag();
 		return fb;
 	}
 
-	// Create feedback message for search not found
+	/*
+	 * Create feedback message for search not found
+	 */
 	private Feedback searchNotFound(String message, ArrayList<Task> tasks, Task task) {
 		Feedback fb = new Feedback(message, tasks, task);
 		fb.setCalFlag();
