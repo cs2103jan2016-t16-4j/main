@@ -83,7 +83,6 @@ public class MainPage extends AnchorPane {
 	private static final String SPACE = " ";
 	private static final String EMPTY_STRING = "";
 	private static final String LOCATION_PREFIX = "AT";
-	private static final String BACKSLASH = "\\";
 	private static final String DIRECTORY_CHOOSER_TITLE = "Pick Where To Store Tasks";
 	private static final String CURRENT_DIRECTORY = "user.dir";
 	private static final int TASK_NUM_OFFSET = 1;
@@ -429,7 +428,8 @@ public class MainPage extends AnchorPane {
 		}
 	}
 
-	// Selects all clash items in red and/or the task that has been added or updated blue
+	// Selects all clash items in red and/or the task that has been added or
+	// updated blue
 	private void selectAllClashItems(ArrayList<Task> clashList, Task taskToFocus) {
 		if (clashList != null) {
 			notifyIfClash(clashList);
@@ -619,8 +619,9 @@ public class MainPage extends AnchorPane {
 		final File selectedDirectory = dirChooser.showDialog(primaryStage);
 		if (selectedDirectory != null) {
 			try {
-				backendFacade.executeCommand(STORAGE_TEXT + SPACE + selectedDirectory.getPath().toString() + BACKSLASH,
-						tasksOnScreen);
+				Feedback feedback = backendFacade.executeCommand(
+						STORAGE_TEXT + SPACE + selectedDirectory.getPath().toString(), tasksOnScreen);
+				feedbackLabel.setText(feedback.getMessage());
 			} catch (NoDescriptionException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
