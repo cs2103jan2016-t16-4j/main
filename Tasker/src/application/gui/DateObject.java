@@ -60,7 +60,9 @@ public class DateObject extends HBox {
 
 	}
 
-	// Setup cell factory
+	/*
+	 *  Setup cell factory
+	 */
 	private void setCellFactoryDateItems(ArrayList<Task> wholeList) {
 		this.listViewItem.setCellFactory(new Callback<ListView<Task>, ListCell<Task>>() {
 			public ListCell<Task> call(ListView<Task> param) {
@@ -68,6 +70,7 @@ public class DateObject extends HBox {
 					@Override
 					public void updateItem(Task item, boolean empty) {
 						super.updateItem(item, empty);
+						
 						if (item != null) {
 							int overdueCheck = checkIfOverdue(item);
 							CalendarItem calItem = new CalendarItem(item.getTaskDescription(), item.durationToString(),
@@ -85,30 +88,52 @@ public class DateObject extends HBox {
 		});
 	}
 
-	// Check if the items are overdue
+	/*
+	 * Check if the items are overdue
+	 */
 	private int checkIfOverdue(Task item) {
 		Calendar cal = Calendar.getInstance();
 		int overdueCheck = NOT_OVERDUE_VARIABLE;
 		if (!(item instanceof EventTask)) {
-			if (item.getEndDate() != null) {
-				overdueCheck = item.getEndDate().getTime().compareTo(cal.getTime());
-			}
+			overdueCheck = checkNonEventTaskOverdue(item, cal, overdueCheck);
 		} else {
-			assert (item instanceof EventTask);
-			if (item.getStartDate() != null) {
-				overdueCheck = item.getStartDate().getTime().compareTo(cal.getTime());
-			}
+			overdueCheck = checkEventTaskOverdue(item, cal, overdueCheck);
 		}
 		return overdueCheck;
 	}
 
-	// Update List View
+	/*
+	 * Check if non event task is overdue
+	 */
+	private int checkNonEventTaskOverdue(Task item, Calendar cal, int overdueCheck) {
+		if (item.getEndDate() != null) {
+			overdueCheck = item.getEndDate().getTime().compareTo(cal.getTime());
+		}
+		return overdueCheck;
+	}
+
+	/*
+	 * Check if event task is overdue
+	 */
+	private int checkEventTaskOverdue(Task item, Calendar cal, int overdueCheck) {
+		assert (item instanceof EventTask);
+		if (item.getStartDate() != null) {
+			overdueCheck = item.getStartDate().getTime().compareTo(cal.getTime());
+		}
+		return overdueCheck;
+	}
+
+	/*
+	 * Update List View
+	 */
 	private void updateListView(ArrayList<Task> taskList) {
 		ObservableList<Task> list = makeDisplayList(taskList);
 		this.listViewItem.setItems(list);
 	}
 
-	// Adds items to be displayed
+	/*
+	 * Adds items to be displayed
+	 */
 	private ObservableList<Task> makeDisplayList(ArrayList<Task> taskList) {
 		ObservableList<Task> displayList = FXCollections.observableArrayList();
 		for (Task task : taskList) {
@@ -117,7 +142,9 @@ public class DateObject extends HBox {
 		return displayList;
 	}
 
-	// Set date labels
+	/*
+	 * Set date labels
+	 */
 	private void setLabels(String date) {
 		if (date != null) {
 			this.dateLabel.setText(date.toUpperCase());
@@ -127,7 +154,9 @@ public class DateObject extends HBox {
 		}
 	}
 
-	// Returns HBox
+	/*
+	 * Returns HBox
+	 */
 	public HBox getHbox() {
 		return this.dateObject;
 	}

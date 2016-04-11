@@ -85,17 +85,26 @@ public class ListItem extends HBox {
 
 	// @@author A0125417L
 
+	/*
+	 * Checks if the task is overdue
+	 */
 	private void overdueCheck(int overdueCheck) {
 		if (overdueCheck < overdueCheckVariable) {
 			setOverdueItems();
 		}
 	}
 
+	/*
+	 * Formats list item accordingly to overdue format
+	 */
 	private void setOverdueItems() {
 		listNumber.setStyle(String.format(BACKGROUND_STYLE, DARK_RED));
 		this.date.setStyle(this.date.getStyle() + String.format(FONT_STYLE, DARK_RED));
 	}
 
+	/*
+	 * Set color of background color of number according to priority
+	 */
 	private void setBackground(String priority) {
 		switch (priority) {
 		case HIGH:
