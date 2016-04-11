@@ -318,8 +318,9 @@ public class Parser {
     }
 
     // @@author A0125417L
-    // Requests the logic to call for new storage location from the GUI then
-    // sends the data to Storage
+    /* 
+     * Requests the logic to call for new storage location from the GUI then sends the data to Storage
+     */
     private Command initializeStorageLocation(String[] args) {
         Command command = null;
         if (args.length == STORAGE_CHANGE_LIMIT) {
@@ -331,6 +332,9 @@ public class Parser {
         return command;
     }
 
+    /* 
+     * Requests the logic to call for exit command
+     */
     private Command initializeExit() {
         Command command = new Exit();
         return command;

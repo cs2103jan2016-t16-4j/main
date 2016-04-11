@@ -110,34 +110,46 @@ public class Logic {
 	}
 
 	// @@author A0125417L
-	// Sets directory of files
+	/*
+	 * Sets directory of files
+	 */
 	public void setDirectory(String file) throws IOException {
 		storageConnector.setDirectory(file);
 	}
 
-	// Load current tasks
+	/*
+	 * Load current tasks
+	 */
 	public ArrayList<Task> loadDataFile() throws IOException {
 		storageConnector.initialise();
 		return storageConnector.getOpenList();
 	}
 
-	// if false means user first time starting program
+	/*
+	 * if false means user first time starting program
+	 */
 	public boolean checkIfFileExists() throws IOException {
 		return storageConnector.directoryExists();
 	}
 
-	// Returns number of completed tasks
+	/*
+	 * Returns number of completed tasks
+	 */
 	public int getCompletedTaskCount() {
 		return storageConnector.getClosedList().size();
 	}
 
-	// Returns number of remaining tasks
+	/*
+	 * Returns number of remaining tasks
+	 */
 	public int getRemainingTaskCount() {
 		int remainingTask = storageConnector.getOpenList().size() - getOverdueTaskCount();
 		return remainingTask;
 	}
 
-	// Returns number of overdue tasks
+	/*
+	 * Returns number of overdue tasks
+	 */
 	public int getOverdueTaskCount() {
 		int overdueCount = START_COUNT;
 		ArrayList<Task> taskList = storageConnector.getOpenList();
@@ -146,7 +158,9 @@ public class Logic {
 		return overdueCount;
 	}
 
-	// Counts number of overdue tasks
+	/*
+	 * Counts number of overdue tasks
+	 */
 	private int countOverdue(int overdueCount, ArrayList<Task> taskList, Calendar cal) {
 		for (Task task : taskList) {
 			if (!(task instanceof EventTask)) {
@@ -158,7 +172,9 @@ public class Logic {
 		return overdueCount;
 	}
 
-	// Get overdue count for non event tasks
+	/*
+	 * Get overdue count for non event tasks
+	 */
 	private int checkOverdueNonEventTask(int overdueCount, Calendar cal, Task task) {
 		if (task.getEndDate() != null) {
 			if (task.getEndDate().getTime().compareTo(cal.getTime()) < OVERDUE_CHECK_VARIABLE) {
@@ -168,7 +184,9 @@ public class Logic {
 		return overdueCount;
 	}
 
-	// Get overdue count for event tasks
+	/*
+	 * Get overdue count for event tasks
+	 */
 	private int checkEventTaskOverdue(int overdueCount, Calendar cal, Task task) {
 		assert (task instanceof EventTask);
 		if (task.getStartDate() != null) {

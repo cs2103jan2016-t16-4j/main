@@ -64,7 +64,9 @@ public class CalendarItem extends AnchorPane {
 
 	}
 
-	// Sets all labels for the calendar item
+	/*
+	 *  Sets all labels for the calendar item
+	 */
 	private void setLabels(String name, String date, String location, String priority, int overdueCheck, int index) {
 		this.taskName.setText(name.toUpperCase());
 		this.date.setText(date.toUpperCase());
@@ -74,20 +76,26 @@ public class CalendarItem extends AnchorPane {
 		overdueCheck(overdueCheck);
 	}
 
-	// Checks if task is overdue
+	/*
+	 *  Checks if task is overdue
+	 */
 	private void overdueCheck(int overdueCheck) {
 		if (overdueCheck < overdueCheckVariable) {
 			setOverdueFormat();
 		}
 	}
 
-	// Formats for overdue tasks
+	/*
+	 *  Formats for overdue tasks
+	 */
 	private void setOverdueFormat() {
 		rectangle.setStyle(String.format(BACKGROUND_COLOR, DARK_RED));
 		this.date.setStyle(this.date.getStyle() + String.format(FONT_STYLE, DARK_RED));
 	}
 
-	// Sets the color of the rectangle by priority
+	/*
+	 *  Sets the color of the rectangle by priority
+	 */
 	private void setPriorityColor(String priority) {
 		switch (priority) {
 		case HIGH:
@@ -106,7 +114,9 @@ public class CalendarItem extends AnchorPane {
 
 	}
 
-	// Sets the location labels accordingly
+	/*
+	 *  Sets the location labels accordingly
+	 */
 	private void setLocation(String location) {
 		if (!location.equals(EMPTY)) {
 			this.locationLabel.setText(location);

@@ -50,8 +50,13 @@ import javafx.util.Duration;
 
 public class MainPage extends AnchorPane {
 
-	private static final int CLASH_DETECTION_VARIABLE = 1;
 	// Constants
+	private static final String SUMMARY_TEXT = "summary";
+	private static final String SU_TEXT = "su";
+	private static final String ST_TEXT = "st";
+	private static final String HOME_TEXT = "home";
+	private static final String HO_TEXT = "ho";
+	private static final String HE_TEXT = "he";
 	private static final int FIRST_WORD = 0;
 	private static final int ONE_LETTER = 1;
 	private static final int TWO_LETTERS = 2;
@@ -79,7 +84,7 @@ public class MainPage extends AnchorPane {
 	private static final String HELP_FLAG = HELP_TEXT;
 	private static final String STORAGE_FLAG = STORAGE_TEXT;
 	private static final String VIEW_CHANGE_FLAG = "view";
-	private static final String SUMMARY_FLAG = "summary";
+	private static final String SUMMARY_FLAG = SUMMARY_TEXT;
 	private static final String SPACE = " ";
 	private static final String EMPTY_STRING = "";
 	private static final String LOCATION_PREFIX = "AT";
@@ -104,6 +109,7 @@ public class MainPage extends AnchorPane {
 	private static final int TRANSITION_TIME = 350;
 	private static final int overdueCheckVariable = 0;
 	private static final int STACK_PANE_FIRST_CHILD = 0;
+	private static final int CLASH_DETECTION_VARIABLE = 1;
 
 	// Initialization
 	private static Logger logger = LoggerHandler.getLog();
@@ -119,10 +125,12 @@ public class MainPage extends AnchorPane {
 	private static final String DELETE_HINT_MESSAGE = "To delete: delete [task description/number]";
 	private static final String SEARCH_HINT_MESSAGE = "To search: search [task description/priority [level]/by [date]/on [date]]";
 	private static final String EXIT_HINT_MESSAGE = "To exit: exit";
+	private static final String HOME_HINT_MESSAGE = "To go back home and view all tasks: home";
 	private static final String UPDATE_HINT_MESSAGE = "To update: update [task number] [new task description"
 			+ "/priority [level]/from [start] to [end]/at [location]] ";
 	private static final String UNDO_HINT_MESSAGE = "To undo: undo";
 	private static final String STORAGE_HINT_MESSAGE = "To change storage: storage [url]";
+	private static final String SUMMARY_HINT_MESSAGE = "To view an overview of tasks: summary";
 	private static final String DONE_HINT_MESSAGE = "To mark task as complete: done [task number]";
 	private static final String VIEW_HINT_MESSAGE = "To Toggle Views: view";
 	private static final String MESSAGE_HELP_INTRO = "Start typing and we'll help you out!";
@@ -210,14 +218,18 @@ public class MainPage extends AnchorPane {
 
 	// @@author A0125417L
 
-	// Setup hidden panel
+	/*
+	 * Setup hidden panel
+	 */
 	private void initializeHiddenPanel() {
 		openPanel = new TranslateTransition(new Duration(TRANSITION_TIME), hiddenMenu);
 		openPanel.setToX(STARTPOSITION);
 		closePanel = new TranslateTransition(new Duration(TRANSITION_TIME), hiddenMenu);
 	}
 
-	// Setup cell factory for task list view
+	/*
+	 * Setup cell factory for task list view
+	 */
 	private void initialiseDisplayList() {
 		displayList.setPrefSize(BOX_WIDTH, BOX_HEIGHT);
 		this.displayList.setCellFactory(new Callback<ListView<Task>, ListCell<Task>>() {
@@ -226,6 +238,7 @@ public class MainPage extends AnchorPane {
 					@Override
 					public void updateItem(Task item, boolean empty) {
 						super.updateItem(item, empty);
+
 						if (item != null) {
 							Calendar cal = Calendar.getInstance();
 							int overdueCheck = checkIfOverdue(item, cal);
@@ -248,7 +261,9 @@ public class MainPage extends AnchorPane {
 		});
 	}
 
-	// Setup cell factory for calendar view
+	/*
+	 * Setup cell factory for calendar view
+	 */
 	private void initialiseCalendarList() {
 		calendarList.setPrefSize(BOX_WIDTH, BOX_HEIGHT);
 		this.calendarList.setCellFactory(new Callback<ListView<ArrayList<Task>>, ListCell<ArrayList<Task>>>() {
@@ -257,6 +272,7 @@ public class MainPage extends AnchorPane {
 					@Override
 					public void updateItem(ArrayList<Task> item, boolean empty) {
 						super.updateItem(item, empty);
+
 						if (item != null) {
 							String date = setDate(item);
 							DateObject listViewItem = new DateObject(date, item, tasksOnScreen);
@@ -267,13 +283,14 @@ public class MainPage extends AnchorPane {
 						}
 					}
 				};
-
 				return cell;
 			}
 		});
 	}
 
-	// Set date accordingly
+	/*
+	 * Set date accordingly
+	 */
 	private String setDate(ArrayList<Task> item) {
 		String date = null;
 		if (item.get(START).getEndDate() != null) {
@@ -282,23 +299,43 @@ public class MainPage extends AnchorPane {
 		return date;
 	}
 
-	// Check if task is overdue
+	/*
+	 * Check if task is overdue
+	 */
 	private int checkIfOverdue(Task item, Calendar cal) {
 		int overdueCheck = overdueCheckVariable;
 		if (!(item instanceof EventTask)) {
-			if (item.getEndDate() != null) {
-				overdueCheck = item.getEndDate().getTime().compareTo(cal.getTime());
-			}
+			overdueCheck = checkNonEventTaskOverdue(item, cal, overdueCheck);
 		} else {
-			assert (item instanceof EventTask);
-			if (item.getStartDate() != null) {
-				overdueCheck = item.getStartDate().getTime().compareTo(cal.getTime());
-			}
+			overdueCheck = checkEventTaskOverdue(item, cal, overdueCheck);
 		}
 		return overdueCheck;
 	}
 
-	// Format for the location section of task list view
+	/*
+	 * Check if non event task is overdue
+	 */
+	private int checkNonEventTaskOverdue(Task item, Calendar cal, int overdueCheck) {
+		if (item.getEndDate() != null) {
+			overdueCheck = item.getEndDate().getTime().compareTo(cal.getTime());
+		}
+		return overdueCheck;
+	}
+
+	/*
+	 * Check if event task is overdue
+	 */
+	private int checkEventTaskOverdue(Task item, Calendar cal, int overdueCheck) {
+		assert (item instanceof EventTask);
+		if (item.getStartDate() != null) {
+			overdueCheck = item.getStartDate().getTime().compareTo(cal.getTime());
+		}
+		return overdueCheck;
+	}
+
+	/*
+	 * Format for the location section of task list view
+	 */
 	private String getLocationString(Task task) {
 		String location = task.getLocation();
 		if (location.trim().equals(EMPTY_STRING)) {
@@ -309,51 +346,96 @@ public class MainPage extends AnchorPane {
 		}
 	}
 
-	// Set the data for the calendar view
+	/*
+	 * Set the data for the calendar view
+	 */
 	private ArrayList<ArrayList<Task>> getDateArray(ArrayList<Task> taskList) {
 		String tempoDate = null;
 		ArrayList<ArrayList<Task>> dateArray = new ArrayList<ArrayList<Task>>();
 		ArrayList<Task> temporaryList = new ArrayList<Task>();
 		for (int i = START; i < taskList.size(); i++) {
-			if (!(taskList.get(i) instanceof FloatingTask) && tempoDate != null) {
-				if (tempoDate.equals(FORMAT_DATE.format(taskList.get(i).getEndDate().getTime()))) {
-					temporaryList.add(taskList.get(i));
-				} else {
-					assert (!tempoDate.equals(FORMAT_DATE.format(taskList.get(i).getEndDate().getTime())));
-					dateArray.add(temporaryList);
-					temporaryList = new ArrayList<Task>();
-					temporaryList.add(taskList.get(i));
-				}
-			}
+			checkIfNonFloatingTask(taskList, tempoDate, dateArray, temporaryList, i);
+			temporaryList = checkIfReachedFloatingTask(taskList, tempoDate, dateArray, temporaryList, i);
+			tempoDate = setTempoDate(taskList, i);
+		}
+		checkTemporaryListBeforeAdd(dateArray, temporaryList);
+		return dateArray;
+	}
 
-			if (!(taskList.get(i) instanceof FloatingTask) && tempoDate == null) {
+	/*
+	 * If non floating task, check if previous task date is the same or not
+	 * 
+	 * If its the same, add to that task list else add the task list to the list
+	 * of task lists, create a new task list and add to the new task list
+	 */
+	private void checkIfNonFloatingTask(ArrayList<Task> taskList, String tempoDate,
+			ArrayList<ArrayList<Task>> dateArray, ArrayList<Task> temporaryList, int i) {
+		if (!(taskList.get(i) instanceof FloatingTask) && tempoDate != null) {
+			if (tempoDate.equals(FORMAT_DATE.format(taskList.get(i).getEndDate().getTime()))) {
 				temporaryList.add(taskList.get(i));
-			}
-
-			if ((taskList.get(i) instanceof FloatingTask) && tempoDate != null) {
+			} else {
+				assert (!tempoDate.equals(FORMAT_DATE.format(taskList.get(i).getEndDate().getTime())));
 				dateArray.add(temporaryList);
 				temporaryList = new ArrayList<Task>();
 				temporaryList.add(taskList.get(i));
 			}
-
-			if ((taskList.get(i) instanceof FloatingTask) && tempoDate == null) {
-				temporaryList.add(taskList.get(i));
-			}
-
-			if (!(taskList.get(i) instanceof FloatingTask)) {
-				tempoDate = FORMAT_DATE.format(taskList.get(i).getEndDate().getTime());
-			} else {
-				assert ((taskList.get(i) instanceof FloatingTask));
-				tempoDate = null;
-			}
 		}
+
+		if (!(taskList.get(i) instanceof FloatingTask) && tempoDate == null) {
+			temporaryList.add(taskList.get(i));
+		}
+	}
+
+	/*
+	 * As floating tasks are at the end of the list, checks if the temporary
+	 * date is a non floating task date and current task is a floating task
+	 * 
+	 * If they are then, create a new temporary list to add floating task else
+	 * continue adding floating task to the list if temporary date is of
+	 * floating task
+	 */
+	private ArrayList<Task> checkIfReachedFloatingTask(ArrayList<Task> taskList, String tempoDate,
+			ArrayList<ArrayList<Task>> dateArray, ArrayList<Task> temporaryList, int i) {
+		if ((taskList.get(i) instanceof FloatingTask) && tempoDate != null) {
+			dateArray.add(temporaryList);
+			temporaryList = new ArrayList<Task>();
+			temporaryList.add(taskList.get(i));
+		}
+
+		if ((taskList.get(i) instanceof FloatingTask) && tempoDate == null) {
+			temporaryList.add(taskList.get(i));
+		}
+		return temporaryList;
+	}
+
+	/*
+	 * Checks if the temporary list is empty before adding to prevent null
+	 * pointer later on when showing the calendar view
+	 */
+	private void checkTemporaryListBeforeAdd(ArrayList<ArrayList<Task>> dateArray, ArrayList<Task> temporaryList) {
 		if (temporaryList.size() != EMPTY) {
 			dateArray.add(temporaryList);
 		}
-		return dateArray;
 	}
 
-	// Method that calls other methods to update the data
+	/*
+	 * Set temporary date for checking if date is the same as previously checked
+	 * date
+	 */
+	private String setTempoDate(ArrayList<Task> taskList, int i) {
+		String tempoDate;
+		if (!(taskList.get(i) instanceof FloatingTask)) {
+			tempoDate = FORMAT_DATE.format(taskList.get(i).getEndDate().getTime());
+		} else {
+			assert ((taskList.get(i) instanceof FloatingTask));
+			tempoDate = null;
+		}
+		return tempoDate;
+	}
+
+	/*
+	 * Method that calls other methods to update the data
+	 */
 	private void updateViews(ArrayList<Task> taskList, Task taskToFocus) {
 		ArrayList<Task> clashList = null;
 		clashList = getClashList(taskToFocus, clashList);
@@ -369,21 +451,27 @@ public class MainPage extends AnchorPane {
 		return clashList;
 	}
 
-	// Update the side panel
+	/*
+	 * Update the side panel
+	 */
 	private void updateSummary() {
 		setSummaryLabels();
 		setPieChart();
 
 	}
 
-	// Setup Labels for summary panel
+	/*
+	 * Setup Labels for summary panel
+	 */
 	private void setSummaryLabels() {
 		completedLabel.setText(String.valueOf(backendFacade.getCompletedTaskCount()));
 		remainingLabel.setText(String.valueOf(backendFacade.getRemainingTaskCount()));
 		overdueLabel.setText(String.valueOf(backendFacade.getOverdueTaskCount()));
 	}
 
-	// Setup pie chart for summary panel
+	/*
+	 * Setup pie chart for summary panel
+	 */
 	private void setPieChart() {
 		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
 				new PieChart.Data(COMPLETED_TASKS_TEXT, backendFacade.getCompletedTaskCount()),
@@ -394,30 +482,62 @@ public class MainPage extends AnchorPane {
 		pieChart.setLegendSide(Side.BOTTOM);
 	}
 
-	// Notification behavior for adding or updating tasks
+	/*
+	 * Notification behavior for adding or updating tasks
+	 */
 	private void notifyUser(Task taskToFocus) {
-		String title = null;
 		String text = null;
 		if (taskToFocus != null) {
-			if (taskToFocus.getEndDate() == null) {
-				title = REMINDER_TEXT;
-				text = NO_END_DATE_TEXT;
-			}
-			if (taskToFocus.getStartDate() == null) {
-				title = REMINDER_TEXT;
-				text = NO_START_DATE_TEXT;
-			}
-			if (taskToFocus.getStartDate() == null && taskToFocus.getEndDate() == null) {
-				title = REMINDER_TEXT;
-				text = NO_DATES_TEXT;
-			}
-			if (title != null && text != null) {
-				Notifications.create().title(title).text(text).showInformation();
-			}
+			text = noEndDateNotificationSetting(taskToFocus, text);
+			text = noStartDateNotificationSetting(taskToFocus, text);
+			text = floatingTaskNotificationSetting(taskToFocus, text);
+			showNotification(text);
 		}
 	}
 
-	// Updates data of the task view
+	/*
+	 * Show notifications
+	 */
+	private void showNotification(String text) {
+		if (text != null) {
+			String title = REMINDER_TEXT;
+			Notifications.create().title(title).text(text).showInformation();
+		}
+	}
+
+	/*
+	 * Set floating task notification details
+	 */
+	private String floatingTaskNotificationSetting(Task taskToFocus, String text) {
+		if (taskToFocus.getStartDate() == null && taskToFocus.getEndDate() == null) {
+			text = NO_DATES_TEXT;
+		}
+		return text;
+	}
+
+	/*
+	 * Set no start date notification details
+	 */
+	private String noStartDateNotificationSetting(Task taskToFocus, String text) {
+		if (taskToFocus.getStartDate() == null) {
+			text = NO_START_DATE_TEXT;
+		}
+		return text;
+	}
+
+	/*
+	 * Set no end date notification details
+	 */
+	private String noEndDateNotificationSetting(Task taskToFocus, String text) {
+		if (taskToFocus.getEndDate() == null) {
+			text = NO_END_DATE_TEXT;
+		}
+		return text;
+	}
+
+	/*
+	 * Updates data of the task view
+	 */
 	private void updateDisplayList(ArrayList<Task> taskList, ArrayList<Task> clashList, Task taskToFocus2) {
 		this.displayList.getItems().clear();
 		if (taskList.size() != EMPTY) {
@@ -427,8 +547,10 @@ public class MainPage extends AnchorPane {
 		}
 	}
 
-	// Selects all clash items in red and/or the task that has been added or
-	// updated blue
+	/*
+	 * Selects all clash items in red and/or the task that has been added or
+	 * updated blue
+	 */
 	private void selectAllClashItems(ArrayList<Task> clashList, Task taskToFocus) {
 		if (clashList != null) {
 			notifyIfClash(clashList);
@@ -443,14 +565,18 @@ public class MainPage extends AnchorPane {
 		}
 	}
 
-	// Notify users if there is a clash or not
+	/*
+	 * Notify users if there is a clash or not
+	 */
 	private void notifyIfClash(ArrayList<Task> clashList) {
 		if (clashList.size() > CLASH_DETECTION_VARIABLE) {
 			Notifications.create().title(CLASH_NOTIFICATION_TITLE).text(CLASH_NOTIFICATION_MSG).showInformation();
 		}
 	}
 
-	// Updates data of the calendar view
+	/*
+	 * Updates data of the calendar view
+	 */
 	private void updateCalendarList(ArrayList<Task> taskList, Task taskToFocus) {
 		this.calendarList.getItems().clear();
 		if (taskList.size() != EMPTY) {
@@ -478,7 +604,9 @@ public class MainPage extends AnchorPane {
 		return displayList;
 	}
 
-	// Sets behavior of the text area
+	/*
+	 * Sets behavior of the text area
+	 */
 	public void initializeInputArea() {
 		textInputArea.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
@@ -505,7 +633,9 @@ public class MainPage extends AnchorPane {
 
 	}
 
-	// Execute commands on enter key pressed at text area
+	/*
+	 * Execute commands on enter key pressed at text area
+	 */
 	private void executeCommands() {
 		try {
 			text = textInputArea.getText();
@@ -527,7 +657,9 @@ public class MainPage extends AnchorPane {
 		}
 	}
 
-	// Previous recently used commands upon up pressed in the text area
+	/*
+	 * Previous recently used commands upon up pressed in the text area
+	 */
 	private void previousRecentlyUsedCommands() {
 		// if used commands list is not empty
 		if (!commands.isEmpty()) {
@@ -539,7 +671,9 @@ public class MainPage extends AnchorPane {
 		}
 	}
 
-	// Next recently used commands upon down pressed in the text area
+	/*
+	 * Next recently used commands upon down pressed in the text area
+	 */
 	private void nextRecentlyUsedCommand() {
 		if (!commands.isEmpty()) {
 			checkPointerPosition();
@@ -550,7 +684,9 @@ public class MainPage extends AnchorPane {
 		}
 	}
 
-	// Check pointer position for recently used commands
+	/*
+	 * Check pointer position for recently used commands
+	 */
 	private void checkPointerPosition() {
 		if (!commands.contains(textInputArea.getText())) {
 			pointer = commands.size();
@@ -560,7 +696,9 @@ public class MainPage extends AnchorPane {
 		}
 	}
 
-	// Do flag command
+	/*
+	 * Do flag command
+	 */
 	private void doFlagCommand(String checkFlag, Feedback feedback) throws IOException {
 		switch (checkFlag) {
 		case STORAGE_FLAG:
@@ -575,7 +713,6 @@ public class MainPage extends AnchorPane {
 		case LIST_FLAG:
 			displayList.toFront();
 			break;
-
 		case VIEW_CHANGE_FLAG:
 			switchViews();
 			break;
@@ -585,7 +722,9 @@ public class MainPage extends AnchorPane {
 		}
 	}
 
-	// Toggle hidden panel
+	/*
+	 * Toggle hidden panel
+	 */
 	private void toggleHiddenPanel() {
 		if (hiddenMenu.getTranslateX() != STARTPOSITION) {
 			openPanel.play();
@@ -596,14 +735,18 @@ public class MainPage extends AnchorPane {
 		}
 	}
 
-	// Close hidden panel
+	/*
+	 * Close hidden panel
+	 */
 	private void closePanel() {
 		if (hiddenMenu.getTranslateX() != STARTPOSITION) {
 			openPanel.play();
 		}
 	}
 
-	// Toggle Views
+	/*
+	 * Toggle Views
+	 */
 	private void switchViews() {
 		if (stackPane.getChildren().get(STACK_PANE_FIRST_CHILD).equals(displayList)) {
 			displayList.toFront();
@@ -613,7 +756,9 @@ public class MainPage extends AnchorPane {
 		}
 	}
 
-	// Prompt for directory change
+	/*
+	 * Prompt for directory change
+	 */
 	public void directoryPrompt(Stage primaryStage, DirectoryChooser dirChooser) throws IOException {
 		final File selectedDirectory = dirChooser.showDialog(primaryStage);
 		if (selectedDirectory != null) {
@@ -632,7 +777,9 @@ public class MainPage extends AnchorPane {
 		}
 	}
 
-	// Setup for directory change
+	/*
+	 * Setup for directory change
+	 */
 	private void promptStorage(Feedback feedback) throws IOException {
 		DirectoryChooser dirChooser = new DirectoryChooser();
 		configureDirectoryChooser(dirChooser);
@@ -640,13 +787,17 @@ public class MainPage extends AnchorPane {
 		directoryPrompt(stage, dirChooser);
 	}
 
-	// Configure directory change dialog
+	/*
+	 * Configure directory change dialog
+	 */
 	private void configureDirectoryChooser(final DirectoryChooser dirChooser) {
 		dirChooser.setTitle(DIRECTORY_CHOOSER_TITLE);
 		dirChooser.setInitialDirectory(new File(System.getProperty(CURRENT_DIRECTORY)));
 	}
 
-	// Update hint label
+	/*
+	 * Update hint label
+	 */
 	private void getHints(String oldValue, String newValue, Label helpLabel) {
 		String newLetter = EMPTY_STRING;
 		String oldWord = EMPTY_STRING;
@@ -702,6 +853,7 @@ public class MainPage extends AnchorPane {
 	}
 
 	private void checkS(String newValue, Label helpLabel, String newWord) {
+		helpLabel.setText(SEARCH_HINT_MESSAGE);
 		if (!newValue.isEmpty() && newValue.length() > S_TEXT.length()) {
 			if (getTwoLetters(newValue).equalsIgnoreCase(SE_TEXT)) {
 				helpLabel.setText(SEARCH_HINT_MESSAGE);
@@ -710,12 +862,21 @@ public class MainPage extends AnchorPane {
 						checkA(helpLabel);
 					}
 				}
-			}
-		} else {
-			helpLabel.setText(STORAGE_HINT_MESSAGE);
-		}
-		if (!newValue.isEmpty() && newValue.length() >= STORAGE_TEXT.length()) {
-			if (!newWord.equalsIgnoreCase(STORAGE_TEXT)) {
+			} else if (getTwoLetters(newValue).equalsIgnoreCase(ST_TEXT)) {
+				helpLabel.setText(STORAGE_HINT_MESSAGE);
+				if (!newValue.isEmpty() && newValue.length() >= STORAGE_TEXT.length()) {
+					if (!newWord.equalsIgnoreCase(STORAGE_TEXT)) {
+						checkA(helpLabel);
+					}
+				}
+			} else if (getTwoLetters(newValue).equalsIgnoreCase(SU_TEXT)) {
+				helpLabel.setText(SUMMARY_HINT_MESSAGE);
+				if (!newValue.isEmpty() && newValue.length() >= SUMMARY_TEXT.length()) {
+					if (!newWord.equalsIgnoreCase(SUMMARY_TEXT)) {
+						checkA(helpLabel);
+					}
+				}
+			} else {
 				checkA(helpLabel);
 			}
 		}
@@ -723,7 +884,7 @@ public class MainPage extends AnchorPane {
 
 	private void checkE(String newValue, Label helpLabel, String newWord) {
 		helpLabel.setText(EXIT_HINT_MESSAGE);
-		if (!newValue.isEmpty() && newValue.length() >= EXIT_TEXT.length()) {
+		if (!newValue.isEmpty() && newValue.length() > EXIT_TEXT.length()) {
 			if (!newWord.equalsIgnoreCase(EXIT_TEXT)) {
 				checkA(helpLabel);
 			}
@@ -776,12 +937,25 @@ public class MainPage extends AnchorPane {
 
 	private void checkH(String newValue, Label helpLabel, String newWord) {
 		helpLabel.setText(HELP_HINT_MESSAGE);
-		if (!newValue.isEmpty() && newValue.length() >= HELP_TEXT.length()) {
-			if (!newWord.equalsIgnoreCase(HELP_TEXT)) {
+		if (!newValue.isEmpty() && newValue.length() > H_TEXT.length()) {
+			if (getTwoLetters(newValue).equalsIgnoreCase(HE_TEXT)) {
+				helpLabel.setText(HELP_HINT_MESSAGE);
+				if (!newValue.isEmpty() && newValue.length() >= HELP_TEXT.length()) {
+					if (!newWord.equalsIgnoreCase(HELP_TEXT)) {
+						checkA(helpLabel);
+					}
+				}
+			} else if (getTwoLetters(newValue).equalsIgnoreCase(HO_TEXT)) {
+				helpLabel.setText(HOME_HINT_MESSAGE);
+				if (!newValue.isEmpty() && newValue.length() >= HOME_TEXT.length()) {
+					if (!newWord.equalsIgnoreCase(HOME_TEXT)) {
+						checkA(helpLabel);
+					}
+				}
+			} else {
 				checkA(helpLabel);
 			}
 		}
-
 	}
 
 	private String getFirstLetter(String input) {

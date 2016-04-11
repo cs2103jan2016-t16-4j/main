@@ -37,7 +37,9 @@ public class LoggerFormat extends Formatter {
 		return logMessage;
 	}
 
-	// Sets each message of the log
+	/*
+	 *  Sets each message of the log
+	 */
 	private String getMessage(String date, String className, String methodName, String level, String message) {
 		String logMessage = date + SEPARATOR + level + SEPARATOR + className + SEPARATOR + methodName + SEPARATOR
 				+ message + NEXT_LINE;
