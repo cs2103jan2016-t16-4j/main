@@ -281,7 +281,6 @@ public class FileManager {
 				// get current path
 				Path oldClosedFilePath = Paths.get(closedFilePath);
 				Path oldDataFilePath = Paths.get(dataFilePath);
-
 				// store new path
 				closedFilePath = path + FILE_CLOSED_NAME;
 				dataFilePath = path + FILE_DATA_NAME;
@@ -305,13 +304,17 @@ public class FileManager {
 	private void migrateFilesAndDeleteExistingFiles(Path oldClosedFilePath, Path oldDataFilePath) throws IOException {
 		Path newClosedFilePath = Paths.get(closedFilePath);
 		if (oldClosedFilePath.toFile().exists()) {
-			Files.copy(oldClosedFilePath, newClosedFilePath, StandardCopyOption.REPLACE_EXISTING);
-			Files.deleteIfExists(oldClosedFilePath);
+			if (!oldClosedFilePath.equals(newClosedFilePath)) {
+				Files.copy(oldClosedFilePath, newClosedFilePath, StandardCopyOption.REPLACE_EXISTING);
+				Files.deleteIfExists(oldClosedFilePath);
+			}
 		}
 		Path newDataFilePath = Paths.get(dataFilePath);
 		if (oldDataFilePath.toFile().exists()) {
-			Files.copy(oldDataFilePath, newDataFilePath, StandardCopyOption.REPLACE_EXISTING);
-			Files.deleteIfExists(oldDataFilePath);
+			if (!oldDataFilePath.equals(newDataFilePath)) {
+				Files.copy(oldDataFilePath, newDataFilePath, StandardCopyOption.REPLACE_EXISTING);
+				Files.deleteIfExists(oldDataFilePath);
+			}
 		}
 	}
 }
