@@ -49,8 +49,9 @@ public class DeleteByNum implements UndoableCommand {
         return feedback;
     }
 
-    public Feedback undo() {
+    public Feedback undo() throws NothingToUndoException {
         try {
+            raiseExceptionIfNoDeletedTask();
             storageConnector.addTaskInList(deletedTask.getTaskDescription(), deletedTask.getStartDate(),
                                            deletedTask.getEndDate(), deletedTask.getLocation(), 
                                            deletedTask.getRemindDate(), deletedTask.getPriority());
@@ -58,6 +59,12 @@ public class DeleteByNum implements UndoableCommand {
             return getFeedbackList(feedbackMessage, storageConnector.getOpenList(), deletedTask);
         } catch (IOException e) {
             return getFeedbackCal(MESSAGE_UNDO_FAILURE, storageConnector.getOpenList(), null);
+        }
+    }
+
+    private void raiseExceptionIfNoDeletedTask() throws NothingToUndoException {
+        if (deletedTask == null){
+            throw new NothingToUndoException();
         }
     }
 

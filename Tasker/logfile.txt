@@ -12543,3 +12543,70 @@ INFO: executing above parsed command
 11.04.2016 03:33:45 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
 11.04.2016 03:33:45 - INFO    - application.backend.Exit - execute - Exiting through exit command
  ----------------------   End  Mon Apr 11 03:33:45 SGT 2016 ---------------------- 
+ ----------------------  Start Mon Apr 11 15:41:28 SGT 2016 ---------------------- 
+11.04.2016 03:41:28 - INFO    - application.gui.Fantasktic - start - Setting up gui
+11.04.2016 03:41:32 - INFO    - application.storage.FileManager - loadDirectoryFile - Loading directory file
+11.04.2016 03:41:32 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+11.04.2016 03:41:33 - INFO    - application.storage.FileManager - loadFile - Loading tasks into list
+11.04.2016 03:41:34 - INFO    - application.gui.ResourceLoader - load - Loading Resource
+11.04.2016 03:43:26 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: storage
+11.04.2016 03:43:26 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+11.04.2016 03:43:26 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+11.04.2016 03:43:26 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: storage
+11.04.2016 03:43:26 - INFO    - application.backend.Parser - convertToCommand - Making storage location change command object
+11.04.2016 03:43:26 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+11.04.2016 03:43:26 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+11.04.2016 03:43:26 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+11.04.2016 03:43:26 - INFO    - application.backend.ChangeStorageLocation - execute - Executing change storage function
+11.04.2016 03:43:26 - INFO    - application.backend.Logic - executeCommand - adding command to history
+11.04.2016 03:45:21 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: storage C:\Users\Pratyush\Desktop\
+11.04.2016 03:45:21 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+11.04.2016 03:45:21 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+11.04.2016 03:45:21 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: storage
+11.04.2016 03:45:21 - INFO    - application.backend.Parser - convertToCommand - Making storage location change command object
+11.04.2016 03:45:21 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+11.04.2016 03:45:21 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+11.04.2016 03:45:21 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+11.04.2016 03:45:21 - INFO    - application.backend.ChangeStorageLocation - execute - Executing change storage function
+11.04.2016 03:45:21 - INFO    - application.storage.FileManager - loadDirectoryFile - Loading directory file
+11.04.2016 03:45:21 - INFO    - application.storage.FileManager - setDirectory - New directory choosen
+11.04.2016 03:45:21 - INFO    - application.backend.Logic - executeCommand - adding command to history
+11.04.2016 03:47:03 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: undo
+11.04.2016 03:47:03 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+11.04.2016 03:47:03 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+11.04.2016 03:47:03 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: undo
+11.04.2016 03:47:03 - INFO    - application.backend.Parser - convertToCommand - Making undo command object
+11.04.2016 03:47:03 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+11.04.2016 03:47:03 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+11.04.2016 03:47:03 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+11.04.2016 03:47:03 - INFO    - application.storage.FileManager - loadDirectoryFile - Loading directory file
+11.04.2016 03:47:03 - INFO    - application.storage.FileManager - setDirectory - New directory choosen
+11.04.2016 03:47:03 - INFO    - application.backend.Logic - executeCommand - adding command to history
+11.04.2016 03:48:21 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: summary
+11.04.2016 03:48:21 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+11.04.2016 03:48:21 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+11.04.2016 03:48:21 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: summary
+11.04.2016 03:48:21 - INFO    - application.backend.Parser - convertToCommand - Making summary command object
+11.04.2016 03:48:21 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+11.04.2016 03:48:21 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+11.04.2016 03:48:21 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+11.04.2016 03:48:21 - INFO    - application.backend.Logic - executeCommand - adding command to history
+11.04.2016 03:48:36 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: summary
+11.04.2016 03:48:36 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+11.04.2016 03:48:36 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+11.04.2016 03:48:36 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: summary
+11.04.2016 03:48:36 - INFO    - application.backend.Parser - convertToCommand - Making summary command object
+11.04.2016 03:48:36 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+11.04.2016 03:48:36 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+11.04.2016 03:48:36 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+11.04.2016 03:48:36 - INFO    - application.backend.Logic - executeCommand - adding command to history
+11.04.2016 04:02:32 - INFO    - application.backend.Parser - interpretCommand - Checking for error in user command: exit
+11.04.2016 04:02:32 - INFO    - application.backend.Parser - interpretCommand - Splitting command into array of its words
+11.04.2016 04:02:32 - INFO    - application.backend.Parser - interpretCommand - Getting command key word
+11.04.2016 04:02:32 - INFO    - application.backend.Parser - interpretCommand - Converting to command object: exit
+11.04.2016 04:02:32 - INFO    - application.backend.Parser - convertToCommand - Making exit command object
+11.04.2016 04:02:32 - INFO    - application.backend.Parser - convertToCommand - Returning command object
+11.04.2016 04:02:32 - INFO    - application.backend.Parser - interpretCommand - Returning command object
+11.04.2016 04:02:32 - INFO    - application.backend.Logic - executeCommand - executing above parsed command
+11.04.2016 04:02:32 - INFO    - application.backend.Exit - execute - Exiting through exit command
+ ----------------------   End  Mon Apr 11 16:02:32 SGT 2016 ---------------------- 

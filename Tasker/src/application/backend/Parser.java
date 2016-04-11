@@ -31,7 +31,11 @@ import application.logger.LoggerHandler;
  */
 
 public class Parser {
+
+    // Messages
     private static final String MESSAGE_NULL_ERROR = "command cannot be null";
+    
+    //Keywords
     private static final String KEYWORD_ADD = "add";
     private static final String KEYWORD_SEARCH = "search";
     private static final String KEYWORD_HOME = "home";
@@ -45,8 +49,10 @@ public class Parser {
     private static final String KEYWORD_SUMMARY = "summary";
     private static final String KEYWORD_EXIT = "exit";
     private static final String EMPTY = "";
+    
     private static final String SPACE = "\\s+";
 
+    //Input Segment markers
     private static final String[] DATE_MARKERS_START = { "from" };
     private static final String[] DATE_MARKERS_END = { "to", "till" };
     private static final String[] DATE_MARKERS_DEADLINE = { "by" };
@@ -58,17 +64,20 @@ public class Parser {
     private static final String UNIX_PRI_MARKER = "-p";
     private static final String[] UNIX_MARKERS = { UNIX_DATE_MARKER, UNIX_LOC_MARKER, UNIX_PRI_MARKER };
 
+    //Priority levels
     private static final String PRIORITY_HIGH = "high";
     private static final String PRIORITY_MEDIUM = "medium";
     private static final String PRIORITY_LOW = "low";
     private static final String[] PRIORITY_LEVELS = { PRIORITY_HIGH, PRIORITY_MEDIUM, PRIORITY_LOW };
 
+    //Indices information
     private static final int NUMBER_INDICES = 3;
     private static final int DATE_IND_POS = 0;
     private static final int LOC_IND_POS = 1;
     private static final int PRI_IND_POS = 2;
     private static final int NOT_PRESENT = -1;
 
+    //certain constants to use while processing input
     public static final int EMPTY_TIME = 001;
     public static final int DEFAULT_EVENT_DURATION_TIME = 2;
     public static final int DEFAULT_EVENT_DURATION_DAY = 1;
@@ -81,11 +90,11 @@ public class Parser {
     private static final int STORAGE_CHANGE_LIMIT = 2;
     private static final int SECOND_WORD = 1;
 
-    private static final boolean WITH_KEYWORD = true; // For add function. Since
-                                                      // we accept no keyword.
-
+    // For add function. Since we accept add without keyword.
+    private static final boolean WITH_KEYWORD = true; 
+    
+    
     private static Logger logger = LoggerHandler.getLog();
-
     private PrettyTimeParser dateParser = new PrettyTimeParser();
 
     public Parser() {

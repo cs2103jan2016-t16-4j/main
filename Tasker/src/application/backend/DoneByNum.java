@@ -60,6 +60,7 @@ public class DoneByNum implements UndoableCommand {
 
     public Feedback undo() throws NothingToUndoException {
         try {
+            raiseExceptionIfNoClosedTask();
             storageConnector.uncloseTask(closedTask.getTaskIndex());
             String feedbackMessage = String.format(MESSAGE_UNDO_FEEDBACK, closedTask.toString());
             return getFeedbackList(feedbackMessage, storageConnector.getOpenList(), closedTask);
@@ -68,7 +69,11 @@ public class DoneByNum implements UndoableCommand {
         }
     }
 
-    // @@author A0132632R
+    private void raiseExceptionIfNoClosedTask() throws NothingToUndoException {
+        if (closedTask == null){
+            throw new NothingToUndoException();
+        }
+    }
 
     private Feedback getFeedbackList(String message, ArrayList<Task> tasks, Task task) {
         Feedback fb = new Feedback(message, tasks, task);
