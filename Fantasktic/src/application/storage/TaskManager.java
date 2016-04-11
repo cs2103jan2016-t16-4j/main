@@ -292,6 +292,19 @@ public class TaskManager {
 		Collections.sort(openList, new ComparatorPriority());
 		return openList;
 	}
+	
+	/**
+	 * Replaces the specified task with a new task.
+	 */
+	public ArrayList<Task> replaceTask (ArrayList<Task> openList, int taskIndex, Task task) {
+		assert (taskIndex > INVALID_TASK_INDEX);
+		for (int i = 0; i < openList.size(); i++) {
+			if (openList.get(i).getTaskIndex() == taskIndex) {
+				openList.set(i, task);
+			}
+		}
+		return openList;
+	}
 
 	/**
 	 * Update a specified task with specified variables.
