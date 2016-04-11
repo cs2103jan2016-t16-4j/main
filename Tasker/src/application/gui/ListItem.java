@@ -77,11 +77,11 @@ public class ListItem extends HBox {
 		overdueCheck(overdueCheck);
 	}
 
-    private void setLocation(String location) {
-        if (!location.equals(EMPTY)) {
-            this.taskLocation.setText(location);
-        }
-    }
+	private void setLocation(String location) {
+		if (!location.equals(EMPTY)) {
+			this.taskLocation.setText(location);
+		}
+	}
 
 	// @@author A0125417L
 

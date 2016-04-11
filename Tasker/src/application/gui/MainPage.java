@@ -243,7 +243,6 @@ public class MainPage extends AnchorPane {
 						}
 					}
 				};
-
 				return cell;
 			}
 		});
@@ -619,8 +618,8 @@ public class MainPage extends AnchorPane {
 		final File selectedDirectory = dirChooser.showDialog(primaryStage);
 		if (selectedDirectory != null) {
 			try {
-				Feedback feedback = backendFacade.executeCommand(
-						STORAGE_TEXT + SPACE + selectedDirectory.getPath().toString(), tasksOnScreen);
+				Feedback feedback = backendFacade
+						.executeCommand(STORAGE_TEXT + SPACE + selectedDirectory.getPath().toString(), tasksOnScreen);
 				feedbackLabel.setText(feedback.getMessage());
 			} catch (NoDescriptionException e) {
 				// TODO Auto-generated catch block
