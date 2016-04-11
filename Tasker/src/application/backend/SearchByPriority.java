@@ -44,6 +44,7 @@ public class SearchByPriority implements Command {
 		if (taskList != null) {
 			return searchFound(MESSAGE_SEARCH_RESULTS, taskList, null);
 		} else {
+			assert (taskList == null);
 			return searchNotFound(storageConnector);
 		}
 	}

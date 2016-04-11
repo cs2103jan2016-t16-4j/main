@@ -48,6 +48,7 @@ public class SearchOnDate implements Command {
 		if (taskList.size() != EMPTY) {
 			return searchFound();
 		} else {
+			assert (taskList.size() == EMPTY);
 			return searchNotFound(MESSAGE_SEARCH_NOT_FOUND, storageConnector.getOpenList(), null);
 		}
 	}
