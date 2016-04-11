@@ -70,7 +70,7 @@ public class Parser {
     private static final String PRIORITY_LOW = "low";
     private static final String[] PRIORITY_LEVELS = { PRIORITY_HIGH, PRIORITY_MEDIUM, PRIORITY_LOW };
 
-    // Indices information
+    // Indices information for different segments of input
     private static final int NUMBER_INDICES = 3;
     private static final int DATE_IND_POS = 0;
     private static final int LOC_IND_POS = 1;
