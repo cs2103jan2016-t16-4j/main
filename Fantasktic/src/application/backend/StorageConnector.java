@@ -114,4 +114,8 @@ public class StorageConnector {
         return tasks;
     }
 
+    public void replaceTask(int taskIndex, Task task) {
+        storage.replaceTask(taskIndex, task);
+    }
+
 }
