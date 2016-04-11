@@ -31,6 +31,7 @@ import javafx.stage.WindowEvent;
 
 public class Fantasktic extends Application {
 
+	private static final String CURSOR_URL = "Cursor.png";
 	// Logger Messages
 	private static final String CLOSE_CLICK_TRAY_LOGGER_MSG = "Clicked close on system tray icon";
 	private static final String SHOW_CLICK_TRAY_LOGGER_MSG = "Clicked show on system tray icon";
@@ -77,8 +78,7 @@ public class Fantasktic extends Application {
 			scene.getStylesheets().clear();
 			scene.getStylesheets().add(CSS_URL);
 			primaryStage.setScene(scene);
-			Image cursor = new Image("Cursor.png");
-			scene.setCursor(new ImageCursor(cursor));
+			setCursor(scene);
 			customiseGUIMenuBar(primaryStage);
 			primaryStage.setResizable(false);
 			primaryStage.show();
@@ -107,6 +107,12 @@ public class Fantasktic extends Application {
 
 	private void setEnvironment() {
 		this.backendFacade = new BackendFacade();
+	}
+	
+	// Set Cursor Image
+	private void setCursor(Scene scene) {
+		Image cursor = new Image(CURSOR_URL);
+		scene.setCursor(new ImageCursor(cursor));
 	}
 
 	// Checks if user has used the program at least once if not prompt to save
