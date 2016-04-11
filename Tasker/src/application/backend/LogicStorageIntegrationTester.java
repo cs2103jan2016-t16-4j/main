@@ -164,7 +164,7 @@ public class LogicStorageIntegrationTester {
 		assertEquals("high", fb.getTasks().get(0).getPriority());
 		fb = logic.executeCommand("delete 1", fb.getTasks());
 	}
-	
+
 	@Test
 	public void testUpdateDate() throws NoDescriptionException, IOException {
 		ArrayList<Task> tasklist = initilaiseLoad();
@@ -178,7 +178,7 @@ public class LogicStorageIntegrationTester {
 		assertEquals("Mon Dec 19 15:00:00 SGT 2016", fb.getTasks().get(0).getEndDate().getTime().toString());
 		fb = logic.executeCommand("delete 1", fb.getTasks());
 	}
-	
+
 	@Test
 	public void testUpdateLocation() throws NoDescriptionException, IOException {
 		ArrayList<Task> tasklist = initilaiseLoad();
