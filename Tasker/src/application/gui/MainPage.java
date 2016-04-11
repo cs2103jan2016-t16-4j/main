@@ -50,7 +50,11 @@ import javafx.util.Duration;
 
 public class MainPage extends AnchorPane {
 
+
 	// Constants
+	private static final String HOME_TEXT = "home";
+	private static final String HO_TEXT = "ho";
+	private static final String HE_TEXT = "he";
 	private static final int FIRST_WORD = 0;
 	private static final int ONE_LETTER = 1;
 	private static final int TWO_LETTERS = 2;
@@ -866,7 +870,7 @@ public class MainPage extends AnchorPane {
 
 	private void checkE(String newValue, Label helpLabel, String newWord) {
 		helpLabel.setText(EXIT_HINT_MESSAGE);
-		if (!newValue.isEmpty() && newValue.length() >= EXIT_TEXT.length()) {
+		if (!newValue.isEmpty() && newValue.length() > EXIT_TEXT.length()) {
 			if (!newWord.equalsIgnoreCase(EXIT_TEXT)) {
 				checkA(helpLabel);
 			}
@@ -919,9 +923,21 @@ public class MainPage extends AnchorPane {
 
 	private void checkH(String newValue, Label helpLabel, String newWord) {
 		helpLabel.setText(HELP_HINT_MESSAGE);
-		if (!newValue.isEmpty() && newValue.length() >= HELP_TEXT.length()) {
-			if (!newWord.equalsIgnoreCase(HELP_TEXT)) {
-				checkA(helpLabel);
+		if (!newValue.isEmpty() && newValue.length() > H_TEXT.length()) {
+			if (getTwoLetters(newValue).equalsIgnoreCase(HE_TEXT)) {
+				helpLabel.setText(HELP_HINT_MESSAGE);
+				if (!newValue.isEmpty() && newValue.length() >= HELP_TEXT.length()) {
+					if (!newWord.equalsIgnoreCase(HELP_TEXT)) {
+						checkA(helpLabel);
+					}
+				}
+			} else if (getTwoLetters(newValue).equalsIgnoreCase(HO_TEXT)) {
+				helpLabel.setText(HOME_TEXT);
+				if (!newValue.isEmpty() && newValue.length() >= HOME_TEXT.length()) {
+					if (!newWord.equalsIgnoreCase(HOME_TEXT)) {
+						checkA(helpLabel);
+					}
+				}
 			}
 		}
 
