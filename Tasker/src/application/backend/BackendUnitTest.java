@@ -44,13 +44,13 @@ public class BackendUnitTest {
     @Test
     public void addTestForDate() throws NoDescriptionException {
         ArrayList<Task> tasksOnScreen = storage.getOpenList();
-        Feedback fb = logic.executeCommand("cs2103 lecture from 4 pm to 6 pm friday", tasksOnScreen);
+        Feedback fb = logic.executeCommand("cs2103 lecture from 4 pm to 6 pm 15th april", tasksOnScreen);
         assertIfDateMatches(fb.getTaskToScrollTo(), "15/04/2016 4:00 PM", "15/04/2016 6:00 PM");
         Feedback fb2 = logic.executeCommand("cs2103 lecture from 15/04/2016 4 pm to 6 pm ", tasksOnScreen);
         assertIfDateMatches(fb2.getTaskToScrollTo(), "15/04/2016 4:00 PM", "15/04/2016 6:00 PM");
         Feedback fb3 = logic.executeCommand("read moby dick", tasksOnScreen);
         assertIfDateMatches(fb3.getTaskToScrollTo(), "", "");
-        Feedback fb4 = logic.executeCommand("submit cs2103 project by monday 11:59 pm", tasksOnScreen);
+        Feedback fb4 = logic.executeCommand("submit cs2103 project by 11th april 11:59 pm", tasksOnScreen);
         assertIfDateMatches(fb4.getTaskToScrollTo(), "", "11/04/2016 11:59 PM");
     }
 
@@ -61,12 +61,12 @@ public class BackendUnitTest {
         assertEquals(end, task.getEndDate());
     }
 
-    private Calendar getDate(String startDate) {
+    private Calendar getDate(String date) {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm aaa");
         try {
-            Date date = df.parse(startDate);
+            Date dateObj = df.parse(date);
             Calendar calDate = Calendar.getInstance();
-            calDate.setTime(date);
+            calDate.setTime(dateObj);
             return calDate;
         } catch (ParseException e) {
             return null;

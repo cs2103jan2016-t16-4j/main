@@ -19,7 +19,6 @@ public class Undo implements Command {
     public Feedback execute(StorageConnector storageConnector, ArrayList<Task> tasks) {
         try {
             History history = History.getInstance();
-            System.out.println("I AM HERE INSIDE UNDO");
             return history.undo();
         } catch (EmptyStackException e) {
             return getFeedbackCal(MESSAGE_NOTHING_TO_UNDO, storageConnector.getOpenList(), null);
