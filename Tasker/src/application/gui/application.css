@@ -34,7 +34,18 @@
     -fx-background-color: #00acc1;
     -fx-text-fill: white;
 }
+
 .displayList .list-cell:filled:selected{
+    -fx-background-color: #F44336;
+    -fx-text-fill: white;
+}
+
+.calendarItem .list-cell:filled:selected:focused {
+    -fx-background-color: #00acc1;
+    -fx-text-fill: white;
+}
+
+.calendarItem .list-cell:filled:selected{
     -fx-background-color: #F44336;
     -fx-text-fill: white;
 }
