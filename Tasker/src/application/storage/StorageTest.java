@@ -395,8 +395,10 @@ public class StorageTest {
 		System.out.println("New : "+list.get(1).toString());
 		assertEquals(deadlineTask.toString(), list.get(1).toString());
 	}
-	
+
+	// @@author A0110422E	
 //	@Test
+// 	Test for Deadline Task	
 	public void testGetPriority() {
 		DeadlineTask deadlineTask = new DeadlineTask();
 		Calendar endDate = Calendar.getInstance();
@@ -449,6 +451,75 @@ public class StorageTest {
 		
 		deadlineTask.setPriority("high");
 		assertTrue(deadlineTask.getPriority()=="high");
+
+		
+// 	Test for Event Task	
+		EventTask eventTask = new EventTask();
+		Calendar startDate = Calendar.getInstance();
+		startDate.add(Calendar.SECOND, -1);
+		eventTask.setStartDate(startDate);
+		eventTask.setStartDate(startDate);
+		assertTrue(eventTask.getPriority()=="high");
+		eventTask.setPriority("");
+		
+		Calendar f = Calendar.getInstance();
+		f.add(Calendar.MINUTE, 1);
+		eventTask.setStartDate(f);
+		eventTask.setStartDate(f);
+		assertTrue(eventTask.getPriority()=="high");
+		eventTask.setPriority("");
+		
+		Calendar g = Calendar.getInstance();
+		g.add(Calendar.HOUR, 1);
+		eventTask.setStartDate(g);
+		eventTask.setStartTime(g);
+		assertTrue(eventTask.getPriority()=="high");
+		eventTask.setPriority("");
+		
+		Calendar h = Calendar.getInstance();
+		h.add(Calendar.HOUR, 3);
+		eventTask.setStartDate(h);
+		eventTask.setStartTime(h);
+		assertTrue(eventTask.getPriority()=="medium");
+		eventTask.setPriority("");
+		
+		Calendar i = Calendar.getInstance();
+		i.add(Calendar.HOUR, 23);
+		eventTask.setStartDate(i);
+		eventTask.setStartTime(i);
+		assertTrue(eventTask.getPriority()=="medium");
+		eventTask.setPriority("");
+		
+		Calendar j = Calendar.getInstance();
+		j.add(Calendar.HOUR, 25);
+		eventTask.setStartDate(j);
+		eventTask.setStartTime(j);
+		assertTrue(eventTask.getPriority()=="low");
+		eventTask.setPriority("");
+		
+		eventTask.setPriority("low");
+		assertTrue(eventTask.getPriority()=="low");
+		
+		eventTask.setPriority("medium");
+		assertTrue(eventTask.getPriority()=="medium");
+		
+		eventTask.setPriority("high");
+		assertTrue(eventTask.getPriority()=="high");
+		
+//	 	Test for floating Task	
+		FloatingTask floatingTask = new FloatingTask();
+		
+		floatingTask.setPriority("");
+		assertTrue(floatingTask.getPriority()=="low");
+		
+		floatingTask.setPriority("low");
+		assertTrue(floatingTask.getPriority()=="low");
+		
+		floatingTask.setPriority("medium");
+		assertTrue(floatingTask.getPriority()=="medium");
+		
+		floatingTask.setPriority("high");
+		assertTrue(floatingTask.getPriority()=="high");
 	}
 		
 	@After
