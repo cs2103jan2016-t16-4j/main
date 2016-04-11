@@ -905,6 +905,7 @@ public class MainPage extends AnchorPane {
 	 * Checks for change in d to switch between done, delete and default hints
 	 */
 	private void checkD(String newValue, Label helpLabel, String newWord) {
+		helpLabel.setText(DELETE_HINT_MESSAGE);
 		if (!newValue.isEmpty() && newValue.length() > D_TEXT.length()) {
 			if (getTwoLetters(newValue).equalsIgnoreCase(DO_TEXT)) {
 				checkString(newValue, helpLabel, newWord, DONE_HINT_MESSAGE, DONE_TEXT);
