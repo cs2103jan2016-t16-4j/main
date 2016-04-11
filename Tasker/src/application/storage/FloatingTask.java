@@ -3,6 +3,7 @@
 package application.storage;
 
 import java.util.Calendar;
+
 /**
  * FloatingTask is a subclass of Task class. 
  * This class is used when the user creates a task with no date specified.
@@ -75,9 +76,11 @@ public class FloatingTask extends Task implements Cloneable {
 		if (!getLocation().equalsIgnoreCase(EMPTY_STRING)) {
 			taskDetails += KEYWORD_AT + getLocation();
 		}
+		
 		if (!getPriority().equalsIgnoreCase(EMPTY_STRING)) {
 			taskDetails += KEYWORD_FULLSTOP + KEYWORD_PRIORITY + getPriority();
 		}
+		
 		taskDetails += KEYWORD_QUOTE;
 		return taskDetails;
 	}

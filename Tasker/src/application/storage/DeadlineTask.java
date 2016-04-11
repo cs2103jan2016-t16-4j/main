@@ -5,9 +5,9 @@ package application.storage;
 import java.util.Calendar;
 
 /**
- * DeadlineTask is a subclass of Task class. 
- * This class is used when the user creates a task with a deadline.
- * It has an extra parameter, endDate, to denote the task deadline.
+ * DeadlineTask is a subclass of Task class. This class is used when the user
+ * creates a task with a deadline. It has an extra parameter, endDate, to denote
+ * the task deadline.
  */
 public class DeadlineTask extends Task implements Cloneable {
 	private Calendar endDate;
@@ -75,7 +75,7 @@ public class DeadlineTask extends Task implements Cloneable {
 	public Calendar getEndDate() {
 		return endDate;
 	}
-	
+
 	/**
 	 * Returns the deadline time.
 	 */
@@ -109,9 +109,11 @@ public class DeadlineTask extends Task implements Cloneable {
 		if (!getLocation().equalsIgnoreCase(EMPTY_STRING)) {
 			taskDetails += KEYWORD_AT + getLocation();
 		}
+		
 		if (!getPriority().equalsIgnoreCase(EMPTY_STRING)) {
 			taskDetails += KEYWORD_FULLSTOP + KEYWORD_PRIORITY + getPriority();
 		}
+		
 		taskDetails += KEYWORD_QUOTE;
 		return taskDetails;
 	}
@@ -128,8 +130,8 @@ public class DeadlineTask extends Task implements Cloneable {
 
 	// @@author A0110422E
 	/**
-	 * Return checked priority parameter 
-	 */		
+	 * Return checked priority parameter
+	 */
 	public String getPriority() {
 		Calendar currentTime = Calendar.getInstance();
 		Calendar endTime = getEndDate();
@@ -145,16 +147,17 @@ public class DeadlineTask extends Task implements Cloneable {
 				// End time is between two hours and one day
 				if (timeDifference(currentTime, endTime) < ONE_DAY) {
 					tempPriority = MEDIUM;
-				} 			
+				}
 			}
 		} else {
 			tempPriority = priority;
 		}
 		return tempPriority;
 	}
+
 	/**
 	 * Return the time difference between two Calendar objects, in miliseconds
-	 */	
+	 */
 	private long timeDifference(Calendar currentTime, Calendar endTime) {
 		return endTime.getTimeInMillis() - currentTime.getTimeInMillis();
 	}

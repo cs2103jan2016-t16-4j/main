@@ -17,13 +17,13 @@ public class DatabaseManager {
 	private ArrayList<Task> openList = new ArrayList<Task>();
 	
 	/**
-	 * Returns the close list (tasks that are done)
+	 * Returns the close list (tasks that are done).
 	 */
 	public ArrayList<Task> getCloseList() {
 		return closeList;
 	}
 	/**
-	 * Returns the open list (current ongoing tasks)
+	 * Returns the open list (current ongoing tasks).
 	 */
 	public ArrayList<Task> getOpenList() {
 		return openList;

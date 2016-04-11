@@ -3,10 +3,11 @@
 package application.storage;
 
 import java.util.Calendar;
+
 /**
- * EventTask is a subclass of Task class. 
- * This class is used when the user creates a task with a event duration. 
- * It has an two extra parameter, startDate and endDate, to denote the task duration.
+ * EventTask is a subclass of Task class. This class is used when the user
+ * creates a task with a event duration. It has an two extra parameter,
+ * startDate and endDate, to denote the task duration.
  */
 public class EventTask extends Task implements Cloneable {
 	private Calendar startDate;
@@ -24,7 +25,7 @@ public class EventTask extends Task implements Cloneable {
 		setPriority(EMPTY_STRING);
 		setTaskIndex(EMPTY_TASK);
 	}
-	
+
 	/**
 	 * Creates a EventTask object with specified variables.
 	 */
@@ -45,7 +46,7 @@ public class EventTask extends Task implements Cloneable {
 	public void setStartDate(Calendar startDate) {
 		this.startDate.set(startDate.get(Calendar.YEAR), startDate.get(Calendar.MONTH), startDate.get(Calendar.DATE));
 	}
-	
+
 	/**
 	 * Set the start time (hour, minute, seconds, milliseconds).
 	 */
@@ -86,7 +87,7 @@ public class EventTask extends Task implements Cloneable {
 	public Calendar getStartTime() {
 		return startDate;
 	}
-	
+
 	/**
 	 * Returns the end date.
 	 */
@@ -110,12 +111,14 @@ public class EventTask extends Task implements Cloneable {
 		String startingTime = timeToString(startDate);
 		String endingDate = dateToString(endDate);
 		String endingTime = timeToString(endDate);
+
 		// display start date, if exist
 		if (!startingDate.equals(EMPTY_DATE_STRING)) {
 			durationMessage += startingDate;
 			if (!startingTime.equals(EMPTY_TIME_STRING)) {
 				durationMessage += KEYWORD_SPACE + startingTime;
-			} // if start date and end date is same, display same date + both time
+			} 
+			// if start and end date is same, display same date + both time
 			if (startingDate.equalsIgnoreCase(endingDate)) {
 				if (startingTime.equals(EMPTY_TIME_STRING)) {
 					durationMessage += endingTime;
@@ -125,12 +128,14 @@ public class EventTask extends Task implements Cloneable {
 				return durationMessage;
 			}
 		}
+
 		// display start date and end date, if both exist
 		if ((!startingDate.equals(EMPTY_DATE_STRING)) && (!endingDate.equals(EMPTY_DATE_STRING))) {
 			durationMessage += KEYWORD_TO + endingDate;
 			if (!endingTime.equals(EMPTY_TIME_STRING)) {
 				durationMessage += KEYWORD_SPACE + endingTime;
-			} // display only end date, if exist
+			}
+		// display only end date, if exist
 		} else if (startingDate.equals(EMPTY_DATE_STRING) && (!endingDate.equals(EMPTY_DATE_STRING))) {
 			durationMessage += KEYWORD_BY + endingDate;
 			if (!endingTime.equals(EMPTY_TIME_STRING)) {
@@ -139,7 +144,7 @@ public class EventTask extends Task implements Cloneable {
 		}
 		return durationMessage;
 	}
-	
+
 	/**
 	 * Returns the task details in String.
 	 */
@@ -150,9 +155,11 @@ public class EventTask extends Task implements Cloneable {
 		if (!getLocation().equalsIgnoreCase(EMPTY_STRING)) {
 			taskDetails += KEYWORD_AT + getLocation();
 		}
+		
 		if (!getPriority().equalsIgnoreCase(EMPTY_STRING)) {
 			taskDetails += KEYWORD_FULLSTOP + KEYWORD_PRIORITY + getPriority();
 		}
+		
 		taskDetails += KEYWORD_QUOTE;
 		return taskDetails;
 	}
@@ -170,8 +177,8 @@ public class EventTask extends Task implements Cloneable {
 
 	// @@author A0110422E
 	/**
-	 * Return checked priority parameter 
-	 */		
+	 * Return checked priority parameter
+	 */
 	public String getPriority() {
 		Calendar currentTime = Calendar.getInstance();
 		Calendar startTime = getStartDate();
@@ -179,6 +186,7 @@ public class EventTask extends Task implements Cloneable {
 		if (startTime.before(currentTime)) {
 			setPriority(HIGH);
 		}
+		
 		if (priority.equalsIgnoreCase(EMPTY_STRING)) {
 			// End time is in less than two hours
 			if (timeDifference(currentTime, startTime) < TWO_HOUR) {
@@ -187,16 +195,17 @@ public class EventTask extends Task implements Cloneable {
 				// End time is between two hours and one day
 				if (timeDifference(currentTime, startTime) < ONE_DAY) {
 					tempPriority = MEDIUM;
-				} 			
+				}
 			}
 		} else {
 			tempPriority = priority;
 		}
 		return tempPriority;
 	}
+
 	/**
 	 * Return the time difference between two Calendar objects, in miliseconds
-	 */	
+	 */
 	private long timeDifference(Calendar currentTime, Calendar startTime) {
 		return startTime.getTimeInMillis() - currentTime.getTimeInMillis();
 	}
