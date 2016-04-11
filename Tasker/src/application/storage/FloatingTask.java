@@ -75,9 +75,6 @@ public class FloatingTask extends Task implements Cloneable {
 		if (!getLocation().equalsIgnoreCase(EMPTY_STRING)) {
 			taskDetails += KEYWORD_AT + getLocation();
 		}
-		if (!getPriority().equalsIgnoreCase(EMPTY_STRING)) {
-			taskDetails += KEYWORD_FULLSTOP + KEYWORD_PRIORITY + getPriority();
-		}
 		taskDetails += KEYWORD_QUOTE;
 		return taskDetails;
 	}
@@ -91,4 +88,15 @@ public class FloatingTask extends Task implements Cloneable {
 		return newTask;
 	}
 
+	// @@author A0110422E
+	/**
+	 * Return checked priority parameter 
+	 */		
+	public String getPriority() {		
+		if (priority.equalsIgnoreCase(EMPTY_STRING)){
+			return LOW;
+		} else {
+			return priority;
+		}
+	}
 }
